@@ -47,3 +47,25 @@ export function updateBeeVisuals() {
 
   useGameStore.setState({ bees: updated });
 }
+export function addBee() {
+  const state = useGameStore.getState();
+  const newId = `bee-${state.bees.length + 1}`;
+
+  const randomX = Math.floor(Math.random() * 10);
+  const randomY = Math.floor(Math.random() * 10);
+
+  useGameStore.setState({
+    bees: [
+      ...state.bees,
+      {
+        id: newId,
+        job: "idle",
+        gridX: randomX,
+        gridY: randomY,
+        visualX: randomX * CELL_SIZE,
+        visualY: randomY * CELL_SIZE,
+        speed: 4,
+      },
+    ],
+  });
+}
