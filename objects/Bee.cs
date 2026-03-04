@@ -1,32 +1,42 @@
 using Godot;
-using System;
 
 public partial class Bee : Node2D
 {
+    public enum State
+    {
+        Idling,
+        Moving,
+        Pollinating,
+    }
 
-	bool isMoving = false;
-	Vector2 target;
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		GD.Print("Hello");
-	}
+    public State state = State.Idling;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-		if (!isMoving)
-		{
-			target = GD.Randf() * GetViewportRect().Size;
-			isMoving = true;
-		}
-		else
-		{
-			Position = Position.Lerp(target, (float)delta * 1f);
-			if (Position.DistanceTo(target) < 10f)
-			{
-				isMoving = false;
-			}
-		}
-	}
+    public int carryingHoney = 0;
+    public Vector2 targetPosition;
+
+    public override void _Ready() { }
+
+    public override void _Process(double delta)
+    {
+        switch (state)
+        {
+            case State.Idling:
+                break;
+            case State.Moving:
+                Move(delta);
+                if ((Position - targetPosition).IsZeroApprox())
+                {
+                    // if (GridSystem.isFlowerAt(targetPosition)) state = State.Pollinating;
+                    state = State.Idling;
+                }
+                break;
+            case State.Pollinating:
+                break;
+        }
+    }
+
+    void Move(double delta)
+    {
+        Position = Position.MoveToward(targetPosition, GameStore.BeeSpeed * (float)delta);
+    }
 }

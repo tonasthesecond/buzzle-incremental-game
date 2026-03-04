@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bc5lu4256k033" path="res://objects/Bee.cs" id="1_xww1r"]
 
-[node name="Bee" type="CharacterBody2D" unique_id=384287205]
+[node name="Bee" type="CharacterBody2D" unique_id=384287205 groups=["bees"]]
 script = ExtResource("1_xww1r")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=42996263]
