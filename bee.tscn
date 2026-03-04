@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bvxt44oxdw1xf"]
+
+[ext_resource type="Script" uid="uid://bh5hta6df4as1" path="res://Bee.cs" id="1_xww1r"]
+
+[node name="Bee" type="Node2D" unique_id=140254316]
+script = ExtResource("1_xww1r")
