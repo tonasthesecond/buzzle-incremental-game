@@ -1,19 +1,7 @@
 [gd_scene format=3 uid="uid://bpag1univam2w"]
 
-[ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bee.tscn" id="1_80nbo"]
+[ext_resource type="PackedScene" uid="uid://c21xfdym36lru" path="res://systems/bee_system.tscn" id="1_80nbo"]
 
 [node name="Game" type="Node" unique_id=1808904952]
 
-[node name="Bee" parent="." unique_id=384287205 instance=ExtResource("1_80nbo")]
-
-[node name="Bee2" parent="." unique_id=1021327606 instance=ExtResource("1_80nbo")]
-position = Vector2(966, 118)
-
-[node name="Bee3" parent="." unique_id=1548557216 instance=ExtResource("1_80nbo")]
-position = Vector2(109, 456)
-
-[node name="Bee4" parent="." unique_id=955057593 instance=ExtResource("1_80nbo")]
-position = Vector2(413, 142)
-
-[node name="Bee5" parent="." unique_id=742029648 instance=ExtResource("1_80nbo")]
-position = Vector2(499, 340)
+[node name="BeeSystem" parent="." unique_id=1960770250 instance=ExtResource("1_80nbo")]

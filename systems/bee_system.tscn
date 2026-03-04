@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c21xfdym36lru"]
+
+[ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_x68jw"]
+
+[node name="BeeSystem" type="Node" unique_id=1960770250]
+script = ExtResource("1_x68jw")
