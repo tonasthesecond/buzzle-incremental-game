@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bvxt44oxdw1xf"]
+
+[ext_resource type="Script" uid="uid://bc5lu4256k033" path="res://objects/Bee.cs" id="1_xww1r"]
+
+[node name="Bee" type="CharacterBody2D" unique_id=384287205]
+script = ExtResource("1_xww1r")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=42996263]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
