@@ -5,12 +5,13 @@ using Godot;
 /// </summary>
 public abstract partial class GameSystem : Node
 {
+    // allow the system to be disabled
     [Export]
     public bool enabled = true;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {
-        if (!enabled)
-            QueueFree();
+        if (enabled)
+            Services.Register(this);
     }
 }

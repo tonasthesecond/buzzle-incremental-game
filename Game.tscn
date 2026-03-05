@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bpag1univam2w"]
+
+[ext_resource type="Script" uid="uid://bgws27p3v0aaf" path="res://Test.cs" id="1_u44n3"]
+[ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://objects/Grid.cs" id="2_xkndl"]
+
+[node name="Game" type="Node" unique_id=1808904952]
+script = ExtResource("1_u44n3")
+
+[node name="BeeSystem" type="Node" parent="." unique_id=474014426]
+script = ExtResource("1_wbfu4")
+metadata/_custom_type_script = "uid://b2qhw754acagl"
+
+[node name="Grid" type="Node2D" parent="." unique_id=1617903665]
+position = Vector2(329, 113)
+script = ExtResource("2_xkndl")
+metadata/_custom_type_script = "uid://bw2wen42y1dki"
