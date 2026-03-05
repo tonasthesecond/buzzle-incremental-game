@@ -1,14 +1,14 @@
 using Godot;
 
-public partial class BeeSystem : Node
+[GlobalClass]
+public partial class BeeSystem : GameSystem
 {
     public int BeeCount = 0;
-    public int BeeSpeed = 200;
     private PackedScene beeScene;
 
     public override void _Ready()
     {
-        beeScene = GD.Load<PackedScene>("res://objects/bee.tscn");
+        beeScene = GD.Load<PackedScene>("res://objects/Bee.tscn");
         // TEST: spawn 10 bees
         for (int i = 0; i < 10; i++)
         {
@@ -23,10 +23,11 @@ public partial class BeeSystem : Node
         {
             if (bee.state == Bee.State.Idling)
             {
-                bee.targetPosition = new Vector2(
-                    (float)GD.Randf() * GetViewport().GetVisibleRect().Size.X,
-                    (float)GD.Randf() * GetViewport().GetVisibleRect().Size.Y
-                );
+                int randomX = (int)GD.RandRange(0, Services.Get<Grid>().Width - 1);
+                int randomY = (int)GD.RandRange(0, Services.Get<Grid>().Height - 1);
+                bee.targetPosition = Services
+                    .Get<Grid>()
+                    .GridToWorld(new Vector2I(randomX, randomY));
                 bee.state = Bee.State.Moving;
             }
         }
