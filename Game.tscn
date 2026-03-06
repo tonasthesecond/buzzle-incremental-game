@@ -12,6 +12,6 @@ script = ExtResource("1_wbfu4")
 metadata/_custom_type_script = "uid://b2qhw754acagl"
 
 [node name="Grid" type="Node2D" parent="." unique_id=1617903665]
-position = Vector2(329, 113)
+position = Vector2(140, 93)
 script = ExtResource("2_xkndl")
 metadata/_custom_type_script = "uid://bw2wen42y1dki"
