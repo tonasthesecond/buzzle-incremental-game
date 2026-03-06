@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bbh6aex2oxcg6"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/BaseTile.tscn" id="1_11w1l"]
+[ext_resource type="Script" uid="uid://bybv3vp6ucy4h" path="res://objects/HiveTile.cs" id="2_u4imk"]
+
+[node name="HiveTile" unique_id=1691567109 instance=ExtResource("1_11w1l")]
+script = ExtResource("2_u4imk")
+
+[node name="ColorRect" parent="Sprite2D" parent_id_path=PackedInt32Array(186752286) index="0" unique_id=1413907441]
+color = Color(0.7692845, 0.5995115, 0.20449775, 1)
