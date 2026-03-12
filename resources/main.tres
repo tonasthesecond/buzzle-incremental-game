@@ -1,0 +1,15 @@
+[gd_resource type="Theme" format=3 uid="uid://chnmma08ljpaf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_40t7p"]
+bg_color = Color(0.37751505, 0.3775151, 0.37751493, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[resource]
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_40t7p")

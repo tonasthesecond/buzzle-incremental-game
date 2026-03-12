@@ -5,3 +5,6 @@
 
 [node name="FlowerTile" unique_id=1691567109 instance=ExtResource("1_b1m6c")]
 script = ExtResource("2_kxyx6")
+
+[node name="ColorRect" parent="Sprite2D" parent_id_path=PackedInt32Array(186752286) index="0" unique_id=1413907441]
+color = Color(0.19761395, 0.6692042, 0.9331377, 1)

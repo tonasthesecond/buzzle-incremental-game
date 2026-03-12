@@ -17,6 +17,7 @@ public partial class Grid : Node2D
         // register tile service
         Services.Register(this);
 
+        // register tile types
         RegisterTile<HiveTile>(GD.Load<PackedScene>("res://objects/HiveTile.tscn"));
         RegisterTile<FlowerTile>(GD.Load<PackedScene>("res://objects/FlowerTile.tscn"));
 

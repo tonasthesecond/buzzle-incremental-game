@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://nlrkgudwjhur"]
+
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main.tres" id="1_hxywa"]
+[ext_resource type="Script" uid="uid://d0pf7rkei7v27" path="res://ui/UpgradesContainer.cs" id="2_ricil"]
+[ext_resource type="Script" uid="uid://dhig1korxkm6t" path="res://resources/upgrade_options/BeeAmountUO.cs" id="3_yx50a"]
+[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://resources/upgrade_options/BeeCapacityUO.cs" id="4_r0chq"]
+[ext_resource type="PackedScene" uid="uid://ck8u8w51dthbx" path="res://ui/UpgradeOptionPanel.tscn" id="5_r0chq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ricil"]
+bg_color = Color(0.19818029, 0.19818029, 0.19818014, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Resource" id="Resource_xnycg"]
+script = ExtResource("3_yx50a")
+metadata/_custom_type_script = "uid://dhig1korxkm6t"
+
+[sub_resource type="Resource" id="Resource_telqp"]
+script = ExtResource("4_r0chq")
+metadata/_custom_type_script = "uid://hno7niifmwh"
+
+[node name="UpgradesContainer" type="PanelContainer" unique_id=1980333547]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hxywa")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ricil")
+script = ExtResource("2_ricil")
+UpgradeOptions = Array[Object]([SubResource("Resource_xnycg"), SubResource("Resource_telqp")])
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=420475352]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=892014149]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="OptionsContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer" unique_id=1332029476]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="UpgradeOptionPanel" parent="MarginContainer/ScrollContainer/OptionsContainer" unique_id=520876519 instance=ExtResource("5_r0chq")]
+layout_mode = 2
+
+[node name="UpgradeOptionPanel2" parent="MarginContainer/ScrollContainer/OptionsContainer" unique_id=199498015 instance=ExtResource("5_r0chq")]
+layout_mode = 2
+
+[node name="UpgradeOptionPanel3" parent="MarginContainer/ScrollContainer/OptionsContainer" unique_id=1236321235 instance=ExtResource("5_r0chq")]
+layout_mode = 2

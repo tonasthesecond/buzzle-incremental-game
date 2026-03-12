@@ -47,7 +47,7 @@ public class HarvesterJob : BeeJob
             }
 
             // Travel to flower and harvest
-            beeSystem.TryClaimTile(flower);
+            beeSystem.ClaimTile(flower);
             bee.Show();
             await bee.TravelTo(flower.GlobalPosition);
 
@@ -94,7 +94,7 @@ public class PollinatorJob : BeeJob
             }
 
             // Load up from hive
-            beeSystem.TryClaimTile(flower);
+            beeSystem.ClaimTile(flower);
             int loadAmount = Mathf.Min(GameStore.BeeCapacity, bee.Home.Honey);
             bee.Home.Honey -= loadAmount;
             bee.carryingHoney = loadAmount;
