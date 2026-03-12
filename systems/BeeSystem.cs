@@ -23,23 +23,23 @@ public partial class BeeSystem : GameSystem
                 for (int i = 0; i < GameStore.BeeCount; i++)
                 {
                     Bee? bee = SpawnBee(hive);
-                    bee.Position = hive.GlobalPosition;
-                    if (i % 2 == 0)
-                        bee.SetJob(new PollinatorJob());
-                    else
-                        bee.SetJob(new HarvesterJob());
                 }
             })
             .CallDeferred();
     }
 
-    // public override void _Process(double delta) { }
+    public override void _Process(double delta) { }
 
     public Bee? SpawnBee(HiveTile home)
     {
+        if (home.Bees.Count >= GameStore.HiveBeeCapacity)
+        {
+            // TODO: add error messages
+            return null;
+        }
         Bee bee = beeScene.Instantiate<Bee>();
-        bee.Home = home;
         AddChild(bee);
+        bee.Setup(home, getAlternateBeeJob());
         return bee;
     }
 
@@ -47,6 +47,7 @@ public partial class BeeSystem : GameSystem
     {
         HiveTile[] hives = Services.Get<Grid>().GetTilesOfType<HiveTile>();
         if (hives.Length == 0)
+            // TODO: add error messages
             return null;
         return SpawnBee(Utils.GetRandom(hives));
     }
@@ -60,5 +61,13 @@ public partial class BeeSystem : GameSystem
             bees.Add(node);
         }
         return bees.ToArray();
+    }
+
+    private IBeeJob getAlternateBeeJob()
+    {
+        if (GetBees().Length % 2 == 0)
+            return new HarvesterJob();
+        else
+            return new PollinatorJob();
     }
 }

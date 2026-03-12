@@ -50,6 +50,14 @@ public partial class Bee : Node2D
         wasMoving = moving;
     }
 
+    public void Setup(HiveTile home, IBeeJob job)
+    {
+        Home = home;
+        GlobalPosition = Home.GlobalPosition;
+        SetJob(job);
+        Hide();
+    }
+
     void Move(double delta)
     {
         Position = Position.MoveToward(targetPosition, GameStore.BeeSpeed * (float)delta);

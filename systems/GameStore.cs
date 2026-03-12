@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Godot;
 
 public partial class GameStore : Node
@@ -19,9 +20,9 @@ public partial class GameStore : Node
             Instance.EmitSignal(SignalName.OnHoneyChanged, honey);
         }
     }
-    private static int honey = 0;
+    private static int honey = 11;
 
-    public static int BeeCount = 1;
+    public static int BeeCount = 2;
     public static float BeeSpeed = 50;
     public static int BeeCapacity = 1;
 
@@ -36,6 +37,10 @@ public partial class GameStore : Node
         { "Gold", new FlowerType(5, 10, "res://flowers/GoldFlower.png") },
     };
     public static readonly FlowerType DefaultFlowerType = FlowerTypes["Red"];
+
+    public static readonly Dictionary<string, string> Colors = JsonSerializer.Deserialize<
+        Dictionary<string, string>
+    >(FileAccess.GetFileAsString("res://resources/colors.json"));
 
     public static FlowerType GetRandomFlowerType()
     {

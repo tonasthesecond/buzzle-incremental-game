@@ -18,13 +18,23 @@ public abstract partial class UpgradeOption : Resource
 
     public bool Buy(out string? fail_message)
     {
-        // TODO: check if enough honey
+        // check if enough honey
+        int cost = GetCost();
+        if (GameStore.Honey < cost)
+        {
+            fail_message = "Not enough honey";
+            return false;
+        }
+
+        // check any other conditions
         if (FailCondition(out fail_message))
             return false;
 
+        // buy upgrade
+        GameStore.Honey -= cost;
         Level++;
-        // TODO: deduct cost
         Apply();
+
         fail_message = null;
         return true;
     }

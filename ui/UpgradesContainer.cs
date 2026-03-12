@@ -1,21 +1,23 @@
 #nullable enable
-using System;
 using Godot;
 
 public partial class UpgradesContainer : PanelContainer
 {
     [Export]
-    public Godot.Collections.Array<UpgradeOption> UpgradeOptions;
+    public required Godot.Collections.Array<UpgradeOption> UpgradeOptions;
 
     private PackedScene upgradePanelScene = GD.Load<PackedScene>(
         "res://ui/UpgradeOptionPanel.tscn"
     );
 
-    private Container optionsContainer;
+    private Container optionsContainer = null!;
 
     public override void _Ready()
     {
         optionsContainer = GetNode<Container>("%OptionsContainer");
+
+        // connect signals
+        GameStore.Instance.OnHoneyChanged += (_) => UpdatePanels();
 
         // free template children
         foreach (var child in optionsContainer.GetChildren())
@@ -46,7 +48,17 @@ public partial class UpgradesContainer : PanelContainer
 
     private void UpdatePanel(UpgradeOptionPanel panel, UpgradeOption uo)
     {
-        panel.Setup(uo.GetText(), $"{uo.GetCost()}", " Buy ");
+        string priceTextColor;
+        if (GameStore.Honey < uo.GetCost())
+        {
+            priceTextColor = GameStore.Colors["price_not_enough"];
+        }
+        else
+        {
+            priceTextColor = GameStore.Colors["price_enough"];
+        }
+        panel.Setup(uo.GetText(), uo.GetCost().ToString(), " Buy ");
+        panel.PriceLabel.Modulate = Color.FromString(priceTextColor, Colors.White);
     }
 
     private void UpdatePanels()
