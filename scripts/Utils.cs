@@ -15,4 +15,6 @@ public partial class Utils : RefCounted
     {
         return from.Lerp(to, 1f - Mathf.Exp(-delta * smoothness));
     }
+
+    public static T GetRandom<T>(T[] array) => array[GD.Randi() % array.Length];
 }

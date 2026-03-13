@@ -21,4 +21,22 @@ public partial class HiveTile : BaseTile
     {
         Bees.Remove(bee);
     }
+
+    /// Deposits the given amount of honey into the hive, returning the leftover amount that couldn't be deposited.
+    public int DepositMax(int amount)
+    {
+        int possibleAmount = int.Min(amount, GameStore.HiveHoneyCapacity - Honey);
+        Honey += possibleAmount;
+        GameStore.Honey += possibleAmount;
+        return amount - possibleAmount;
+    }
+
+    /// Takes the given amount of honey from the hive, clamping it to the hive's reserve.
+    public int TakePossible(int amount)
+    {
+        int possibleAmount = int.Min(amount, Honey);
+        Honey -= possibleAmount;
+        GameStore.Honey -= possibleAmount;
+        return possibleAmount;
+    }
 }

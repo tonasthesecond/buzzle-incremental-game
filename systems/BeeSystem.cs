@@ -1,35 +1,28 @@
+#nullable enable
 using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
 public partial class BeeSystem : GameSystem
 {
-    public int BeeCount = 0;
-    private PackedScene beeScene;
-    private HashSet<Node> claimedTiles = new();
+    private PackedScene beeScene = GD.Load<PackedScene>("res://objects/Bee.tscn");
+    private HashSet<BaseTile> claimedTiles = new();
 
-    public bool IsClaimed(Node tile) => claimedTiles.Contains(tile);
+    public bool IsClaimed(BaseTile tile) => claimedTiles.Contains(tile);
 
-    public bool TryClaimTile(Node tile) => claimedTiles.Add(tile);
+    public bool ClaimTile(BaseTile tile) => claimedTiles.Add(tile);
 
-    public void ReleaseTile(Node tile) => claimedTiles.Remove(tile);
+    public void ReleaseTile(BaseTile tile) => claimedTiles.Remove(tile);
 
     public override void _Ready()
     {
-        beeScene = GD.Load<PackedScene>("res://objects/Bee.tscn");
-
         Callable
             .From(() =>
             {
                 var hive = Services.Get<Grid>().GetClosestTileOfType<HiveTile>(Vector2.Zero);
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < GameStore.BeeCount; i++)
                 {
-                    Bee bee = SpawnBee(hive);
-                    bee.Position = hive.GlobalPosition;
-                    if (i % 2 == 0)
-                        bee.SetJob(new PollinatorJob());
-                    else
-                        bee.SetJob(new HarvesterJob());
+                    Bee? bee = SpawnBee(hive);
                 }
             })
             .CallDeferred();
@@ -37,20 +30,44 @@ public partial class BeeSystem : GameSystem
 
     public override void _Process(double delta) { }
 
-    public Bee SpawnBee(HiveTile home)
+    public Bee? SpawnBee(HiveTile home)
     {
+        if (home.Bees.Count >= GameStore.HiveBeeCapacity)
+        {
+            // TODO: add error messages
+            return null;
+        }
         Bee bee = beeScene.Instantiate<Bee>();
-        bee.Home = home;
         AddChild(bee);
+        bee.Setup(home, getAlternateBeeJob());
         return bee;
+    }
+
+    public Bee? SpawnBeeAnywhere()
+    {
+        HiveTile[] hives = Services.Get<Grid>().GetTilesOfType<HiveTile>();
+        if (hives.Length == 0)
+            // TODO: add error messages
+            return null;
+        return SpawnBee(Utils.GetRandom(hives));
     }
 
     public Bee[] GetBees()
     {
         var nodes = GetTree().GetNodesInGroup("bees");
-        Bee[] bees = new Bee[nodes.Count];
-        for (int i = 0; i < nodes.Count; i++)
-            bees[i] = nodes[i] as Bee;
-        return bees;
+        List<Bee> bees = new();
+        foreach (Bee node in nodes)
+        {
+            bees.Add(node);
+        }
+        return bees.ToArray();
+    }
+
+    private IBeeJob getAlternateBeeJob()
+    {
+        if (GetBees().Length % 2 == 0)
+            return new HarvesterJob();
+        else
+            return new PollinatorJob();
     }
 }

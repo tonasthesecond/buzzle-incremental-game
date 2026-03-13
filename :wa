@@ -2,8 +2,26 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-public class GameStore
+public class GameStore : Node
 {
+    public static GameStore Instance { get; private set; }
+
+    [Signal]
+    public delegate void OnHoneyChanged(int newHoney);
+    public static int Honey
+    {
+        get => honey;
+        set
+        {
+            if (honey == value)
+                return;
+            honey = value;
+            Instance.EmitSignal(nameof(OnHoneyChanged), honey);
+        }
+    }
+    private static int honey = 0;
+
+    public static int BeeCount = 10;
     public static float BeeSpeed = 50;
     public static int BeeCapacity = 1;
 
@@ -24,5 +42,10 @@ public class GameStore
         var keys = FlowerTypes.Keys.ToList();
         string key = keys[(int)GD.Randi() % keys.Count];
         return FlowerTypes[key];
+    }
+
+    public override void _Ready()
+    {
+        Instance = this;
     }
 }

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://ck8u8w51dthbx"]
+
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main.tres" id="1_o5uga"]
+[ext_resource type="Script" uid="uid://xk46j6sfluqn" path="res://ui/UpgradeOptionPanel.cs" id="2_ke062"]
+
+[node name="UpgradeOptionPanel" type="PanelContainer" unique_id=520876519]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 41.0
+grow_horizontal = 2
+theme = ExtResource("1_o5uga")
+script = ExtResource("2_ke062")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1170378469]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1379391540]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=202806183]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "buy some bees"
+fit_content = true
+autowrap_mode = 2
+vertical_alignment = 1
+
+[node name="PriceLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1122432241]
+unique_name_in_owner = true
+layout_mode = 2
+text = "10"
+
+[node name="BuyButton" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1257407269]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+text = " Buy "
