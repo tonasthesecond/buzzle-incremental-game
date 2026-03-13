@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://objects/Grid.cs" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://nlrkgudwjhur" path="res://ui/UpgradesContainer.tscn" id="4_sb48q"]
 [ext_resource type="Script" uid="uid://b12o31mdwwyla" path="res://TestLabel.cs" id="5_t88pq"]
+[ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_u44n3")
@@ -27,3 +28,5 @@ offset_top = 15.0
 offset_right = 430.0
 offset_bottom = 38.0
 script = ExtResource("5_t88pq")
+[node name="Camera" parent="." unique_id=1085878987 instance=ExtResource("4_sb48q")]
+position = Vector2(320, 241)
