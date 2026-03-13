@@ -13,11 +13,11 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="Resource" id="Resource_xnycg"]
+[sub_resource type="Resource" id="Resource_r0chq"]
 script = ExtResource("3_yx50a")
 metadata/_custom_type_script = "uid://dhig1korxkm6t"
 
-[sub_resource type="Resource" id="Resource_telqp"]
+[sub_resource type="Resource" id="Resource_xnycg"]
 script = ExtResource("4_r0chq")
 metadata/_custom_type_script = "uid://hno7niifmwh"
 
@@ -30,7 +30,7 @@ grow_vertical = 2
 theme = ExtResource("1_hxywa")
 theme_override_styles/panel = SubResource("StyleBoxFlat_ricil")
 script = ExtResource("2_ricil")
-UpgradeOptions = Array[Object]([SubResource("Resource_xnycg"), SubResource("Resource_telqp")])
+UpgradeOptions = Array[Object]([SubResource("Resource_r0chq"), SubResource("Resource_xnycg")])
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=420475352]
 layout_mode = 2

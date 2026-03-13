@@ -2,13 +2,26 @@ using Godot;
 
 public partial class Camera : Camera2D
 {
-    [Export] public float PanSpeed = 1.0f;
-    [Export] public float ZoomSpeed = 0.3f;
-    [Export] public float MinZoom = 0.3f;
-    [Export] public float MaxZoom = 2.0f;
-    [Export] public bool UseSmoothing = true;
-    [Export] public float SmoothSpeed = 10.0f;
-    [Export] public Vector2 CenterPosition = Vector2.Zero; // Where "center" is
+    [Export]
+    public float PanSpeed = 1.0f;
+
+    [Export]
+    public float ZoomSpeed = 0.3f;
+
+    [Export]
+    public float MinZoom = 0.3f;
+
+    [Export]
+    public float MaxZoom = 2.0f;
+
+    [Export]
+    public bool UseSmoothing = true;
+
+    [Export]
+    public float SmoothSpeed = 10.0f;
+
+    [Export]
+    public Vector2 CenterPosition = Vector2.Zero; // Where "center" is
 
     private Vector2 _targetPosition;
     private Vector2 _targetZoom;
@@ -20,7 +33,7 @@ public partial class Camera : Camera2D
     {
         _targetPosition = Position;
         _targetZoom = Zoom;
-        
+
         // Make this the active camera
         MakeCurrent();
     }
@@ -63,8 +76,10 @@ public partial class Camera : Camera2D
                 ZoomAtCenter(Zoom * (1 - ZoomSpeed));
             }
             // Start dragging with middle mouse or right click
-            else if (mouseButton.ButtonIndex == MouseButton.Middle ||
-                     mouseButton.ButtonIndex == MouseButton.Right)
+            else if (
+                mouseButton.ButtonIndex == MouseButton.Middle
+                || mouseButton.ButtonIndex == MouseButton.Right
+            )
             {
                 if (mouseButton.Pressed)
                 {
@@ -78,7 +93,7 @@ public partial class Camera : Camera2D
                 }
             }
         }
-        
+
         // Pan/drag with mouse
         if (@event is InputEventMouseMotion mouseMotion && _isDragging)
         {
@@ -91,7 +106,7 @@ public partial class Camera : Camera2D
     {
         // Clamp zoom between min and max
         newZoom = newZoom.Clamp(new Vector2(MinZoom, MinZoom), new Vector2(MaxZoom, MaxZoom));
-        
+
         // Zoom toward center of screen
         _targetZoom = newZoom;
     }
@@ -102,3 +117,4 @@ public partial class Camera : Camera2D
         _targetZoom = new Vector2(1, 1); // Reset zoom to default
     }
 }
+
