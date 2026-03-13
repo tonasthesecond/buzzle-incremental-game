@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bgws27p3v0aaf" path="res://Test.cs" id="1_u44n3"]
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://objects/Grid.cs" id="2_xkndl"]
-[ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/camera.tscn" id="4_sb48q"]
+[ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_u44n3")
@@ -18,4 +18,4 @@ script = ExtResource("2_xkndl")
 metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
 [node name="Camera" parent="." unique_id=1085878987 instance=ExtResource("4_sb48q")]
-position = Vector2(317, 241)
+position = Vector2(320, 241)
