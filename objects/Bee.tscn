@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bvxt44oxdw1xf"]
 
 [ext_resource type="Script" uid="uid://bc5lu4256k033" path="res://objects/Bee.cs" id="1_xww1r"]
-[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/Bee.png" id="2_efjr8"]
+[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="2_efjr8"]
 
 [node name="Bee" type="CharacterBody2D" unique_id=384287205 groups=["bees"]]
 z_index = 1
