@@ -9,6 +9,6 @@ public class Services
 
     public static void Unregister(object service) => _services.Remove(service.GetType());
 
-    public static T Get<T>()
+    public static T? Get<T>()
         where T : class => _services.TryGetValue(typeof(T), out var s) ? (T)s : null;
 }

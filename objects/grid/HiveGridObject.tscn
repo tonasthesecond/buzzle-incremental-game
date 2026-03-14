@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bbh6aex2oxcg6"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_11w1l"]
+[ext_resource type="Script" uid="uid://bybv3vp6ucy4h" path="res://objects/grid/HiveGridObject.cs" id="2_u4imk"]
+[ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_ypjnr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpe26"]
+atlas = ExtResource("3_ypjnr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ctgj"]
+atlas = ExtResource("3_ypjnr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lyr4u"]
+atlas = ExtResource("3_ypjnr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p4mtr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpe26")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ctgj")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lyr4u")
+}],
+"loop": true,
+"name": &"half",
+"speed": 5.0
+}]
+
+[node name="HiveTile" unique_id=1691567109 instance=ExtResource("1_11w1l")]
+script = ExtResource("2_u4imk")
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_p4mtr")
+animation = &"full"
+speed_scale = 0.0

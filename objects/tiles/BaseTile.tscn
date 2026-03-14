@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bl1b65io17tnk"]
+
+[ext_resource type="Script" uid="uid://mlnmj6vkcmva" path="res://objects/tiles/BaseTile.cs" id="1_5488n"]
+
+[node name="BaseTile" type="Node2D" unique_id=1083697076]
+script = ExtResource("1_5488n")
+metadata/_custom_type_script = "uid://mlnmj6vkcmva"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=682421836]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
