@@ -27,6 +27,7 @@ public partial class Grid : Node2D
         for (int x = 0; x < 5; x++)
         for (int y = 0; y < 5; y++)
             PlaceTile<GreenTile>(new Vector2I(x, y));
+        PlaceTile<GreenTile>(new Vector2I(5, 2));
 
         PlaceObject<HiveGridObject>(new Vector2I(2, 2), out var hive);
 
