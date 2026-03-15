@@ -1,11 +1,11 @@
 using Godot;
 
 [GlobalClass]
-public partial class FlowerTile : BaseTile
+public partial class BaseFlower : BaseGridObject
 {
-    public FlowerType type;
-
-    bool isPollinated = false;
+    public bool IsPollinated = false;
+    public int HoneyCost { get; set; } = 1;
+    public int HoneyAmount { get; set; } = 2;
 
     private int honey = 0;
     public int Honey
@@ -18,26 +18,26 @@ public partial class FlowerTile : BaseTile
             // If honey is depleted, the flower is no longer pollinated.
             if (honey <= 0)
             {
-                isPollinated = false;
+                IsPollinated = false;
                 Modulate = Colors.DarkGray;
             }
         }
     }
 
-    public void Init(FlowerType type)
-    {
-        this.type = type;
-        Modulate = Colors.DarkGray;
-    }
-
     public void Pollinate(int honeyAddition)
     {
         Honey += honeyAddition;
-        if (Honey >= type.HoneyCost)
+        if (Honey >= HoneyCost)
         {
             Modulate = Colors.White;
-            isPollinated = true;
-            Honey = type.HoneyAmount;
+            IsPollinated = true;
+            Honey = HoneyAmount;
         }
+    }
+
+    public override void _Ready()
+    {
+        IsPollinated = false;
+        Modulate = Colors.DarkGray;
     }
 }

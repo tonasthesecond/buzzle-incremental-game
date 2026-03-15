@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://c2qtlcd6aihjj"]
+
+[ext_resource type="Script" uid="uid://c0k7inugat8q5" path="res://ui/Selectable.cs" id="1_1tg3v"]
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_ouei4"]
+[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="2_1tg3v"]
+
+[node name="Selectable" type="Panel" unique_id=920582071]
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+script = ExtResource("1_1tg3v")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1745203407]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Button" type="TextureButton" parent="MarginContainer" unique_id=1176052002]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("1_ouei4")
+toggle_mode = true
+texture_normal = ExtResource("2_1tg3v")
+texture_pressed = ExtResource("2_1tg3v")
+texture_hover = ExtResource("2_1tg3v")
+stretch_mode = 4

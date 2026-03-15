@@ -2,10 +2,26 @@
 
 [ext_resource type="Script" uid="uid://bgws27p3v0aaf" path="res://Test.cs" id="1_u44n3"]
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
-[ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://objects/Grid.cs" id="2_xkndl"]
-[ext_resource type="PackedScene" path="res://ui/Camera.tscn" id="4_sb48q"]
-[ext_resource type="PackedScene" uid="uid://nlrkgudwjhur" path="res://ui/UpgradesContainer.tscn" id="5_sb48q"]
+[ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
+[ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
+[ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 [ext_resource type="Script" uid="uid://b12o31mdwwyla" path="res://TestLabel.cs" id="5_t88pq"]
+[ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
+[ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
+
+[sub_resource type="Resource" id="Resource_joorw"]
+
+[sub_resource type="Resource" id="Resource_2vekm"]
+script = ExtResource("8_joorw")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="Resource" id="Resource_yx171"]
+script = ExtResource("8_joorw")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="Resource" id="Resource_yhmtn"]
+script = ExtResource("8_joorw")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_u44n3")
@@ -19,6 +35,8 @@ position = Vector2(52, 60)
 script = ExtResource("2_xkndl")
 metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
+[node name="Tilemap" parent="Grid" unique_id=905306547 instance=ExtResource("3_r0x5m")]
+
 [node name="Label" type="Label" parent="." unique_id=2093737051]
 offset_left = 390.0
 offset_top = 15.0
@@ -28,8 +46,29 @@ script = ExtResource("5_t88pq")
 
 [node name="UIContainer" type="CanvasLayer" parent="." unique_id=1744404542]
 
-[node name="UpgradesContainer" parent="UIContainer" unique_id=1980333547 instance=ExtResource("5_sb48q")]
-offset_left = 445.0
-
 [node name="Camera" parent="UIContainer" unique_id=1085878987 instance=ExtResource("4_sb48q")]
 position = Vector2(165, 218)
+
+[node name="MarginContainer" type="MarginContainer" parent="UIContainer" unique_id=1434174203]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UIContainer/MarginContainer" unique_id=1044632810]
+layout_mode = 2
+
+[node name="SelectContainer" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
+layout_mode = 2
+SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
+
+[node name="SelectContainer2" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
+layout_mode = 2
+SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])

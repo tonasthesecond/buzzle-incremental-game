@@ -1,113 +1,160 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 
 public interface IBeeJob
 {
-    void Start(Bee bee);
-}
-
-public abstract class BeeJob : IBeeJob
-{
-    public async void Start(Bee bee)
-    {
-        await bee.ToSignal(bee.GetTree(), SceneTree.SignalName.ProcessFrame);
-        await Run(bee);
-    }
-
-    protected abstract Task Run(Bee bee);
+    void Tick(Bee bee);
 }
 
 public class IdleJob : IBeeJob
 {
-    public void Start(Bee bee) { }
+    public void Tick(Bee bee)
+    {
+        bee.Hide();
+    }
 }
 
-public class HarvesterJob : BeeJob
+public class HarvesterJob : IBeeJob
 {
-    protected override async Task Run(Bee bee)
+    private enum State
+    {
+        SeekingFlower,
+        TravelingToFlower,
+        TravelingHome,
+    }
+
+    private State state = State.SeekingFlower;
+    private BaseFlower? flower;
+
+    public void Tick(Bee bee)
     {
         var grid = Services.Get<Grid>();
         var beeSystem = Services.Get<BeeSystem>();
 
-        bee.Home.AddBee(bee);
-
-        while (true)
+        switch (state)
         {
-            // Wait for an unclaimed flower that actually has honey
-            FlowerTile flower = null;
-            while (flower == null)
-            {
-                flower = grid.GetTilesOfType<FlowerTile>()
-                    .Where(f => !beeSystem.IsClaimed(f) && f.Honey > 0)
+            case State.SeekingFlower:
+                var eligible = grid.GetObjectsOfType<BaseFlower>()
+                    .Where(f => f.Honey > 0)
+                    .ToArray();
+
+                if (eligible.Length == 0)
+                {
+                    bee.SetJob(new IdleJob());
+                    return;
+                }
+
+                flower = eligible
+                    .Where(f => !beeSystem.IsClaimed(f))
                     .OrderBy(_ => GD.Randf())
                     .FirstOrDefault();
+
                 if (flower == null)
-                    await bee.ToSignal(bee.GetTree(), SceneTree.SignalName.ProcessFrame);
-            }
+                    return; // all claimed, retry next frame
 
-            // Travel to flower and harvest
-            beeSystem.ClaimTile(flower);
-            bee.Show();
-            await bee.TravelTo(flower.GlobalPosition);
+                beeSystem.ClaimObject(flower);
+                bee.Show();
+                bee.MoveTo(flower.GlobalPosition);
+                state = State.TravelingToFlower;
+                break;
 
-            beeSystem.ReleaseTile(flower);
-            int honeyHarvestAmount = Mathf.Min(GameStore.BeeCapacity, flower.Honey);
-            bee.carryingHoney += honeyHarvestAmount;
-            flower.Honey -= honeyHarvestAmount;
+            case State.TravelingToFlower:
+                if (bee.IsMoving)
+                    return;
 
-            // Return to home hive and deposit
-            await bee.TravelTo(bee.Home.GlobalPosition);
+                beeSystem.ReleaseObject(flower!);
+                if (flower!.Honey <= 0)
+                {
+                    state = State.SeekingFlower;
+                    return;
+                } // picked clean mid-flight
 
-            bee.Home.DepositMax(bee.carryingHoney); // TODO: process leftover
-            bee.carryingHoney = 0;
-            bee.Hide();
+                int amount = Mathf.Min(GameStore.BeeCapacityHoney, flower.Honey);
+                bee.carryingHoney += amount;
+                flower.Honey -= amount;
+                bee.MoveTo(bee.Home.GlobalPosition);
+                state = State.TravelingHome;
+                break;
+
+            case State.TravelingHome:
+                if (bee.IsMoving)
+                    return;
+
+                bee.Home.Deposit(bee.carryingHoney);
+                bee.carryingHoney = 0;
+                bee.SetJob(new IdleJob());
+                break;
         }
     }
 }
 
-public class PollinatorJob : BeeJob
+public class PollinatorJob : IBeeJob
 {
-    protected override async Task Run(Bee bee)
+    private enum State
+    {
+        SeekingFlower,
+        TravelingToFlower,
+        TravelingHome,
+    }
+
+    private State state = State.SeekingFlower;
+    private BaseFlower? flower;
+
+    public void Tick(Bee bee)
     {
         var grid = Services.Get<Grid>();
         var beeSystem = Services.Get<BeeSystem>();
 
-        bee.Home.AddBee(bee);
-
-        while (true)
+        switch (state)
         {
-            // Wait until hive has honey to spend
-            while (bee.Home.Honey <= 0)
-                await bee.ToSignal(bee.GetTree(), SceneTree.SignalName.ProcessFrame);
+            case State.SeekingFlower:
+                if (GameStore.Honey <= 0)
+                    return;
+                var eligible = grid.GetObjectsOfType<BaseFlower>()
+                    .Where(f => f.Honey <= 0)
+                    .ToArray();
 
-            // Wait for an unclaimed unpollinated flower
-            FlowerTile flower = null;
-            while (flower == null)
-            {
-                flower = grid.GetTilesOfType<FlowerTile>()
-                    .Where(f => !beeSystem.IsClaimed(f) && f.Honey <= 0)
+                if (eligible.Length == 0)
+                {
+                    bee.SetJob(new IdleJob());
+                    return;
+                }
+
+                flower = eligible
+                    .Where(f => !beeSystem.IsClaimed(f))
                     .OrderBy(_ => GD.Randf())
                     .FirstOrDefault();
+
                 if (flower == null)
-                    await bee.ToSignal(bee.GetTree(), SceneTree.SignalName.ProcessFrame);
-            }
+                    return;
 
-            // Load up from hive
-            beeSystem.ClaimTile(flower);
-            bee.carryingHoney = bee.Home.TakePossible(GameStore.BeeCapacity);
+                bee.carryingHoney = bee.Home.TakePossible(GameStore.BeeCapacityHoney);
+                if (bee.carryingHoney == 0)
+                    return;
 
-            // Travel and dump honey into flower
-            bee.Show();
-            await bee.TravelTo(flower.GlobalPosition);
+                beeSystem.ClaimObject(flower);
+                bee.Show();
+                bee.MoveTo(flower.GlobalPosition);
+                state = State.TravelingToFlower;
+                break;
 
-            beeSystem.ReleaseTile(flower);
-            flower.Pollinate(bee.carryingHoney);
-            bee.carryingHoney = 0;
+            case State.TravelingToFlower:
+                if (bee.IsMoving)
+                    return;
 
-            // Return home
-            await bee.TravelTo(bee.Home.GlobalPosition);
-            bee.Hide();
+                beeSystem.ReleaseObject(flower!);
+                flower!.Pollinate(bee.carryingHoney);
+                bee.carryingHoney = 0;
+                bee.MoveTo(bee.Home.GlobalPosition);
+                state = State.TravelingHome;
+                break;
+
+            case State.TravelingHome:
+                if (bee.IsMoving)
+                    return;
+
+                bee.SetJob(new IdleJob());
+                break;
         }
     }
 }
