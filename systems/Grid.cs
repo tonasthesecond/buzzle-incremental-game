@@ -120,6 +120,28 @@ public partial class Grid : Node2D
 
     private void SyncTilemap() => Services.Get<Tilemap>().Update(tiles.Values);
 
+    /// Core placement logic, given an already-instantiated tile.
+    private bool PlaceTileInstance(BaseTile tile, Vector2I pos, out string? failMessage)
+    {
+        if (tiles.Count > 0 && !HasAdjacentTile(pos))
+        {
+            tile.QueueFree();
+            failMessage = $"No adjacent tile at {pos}";
+            return false;
+        }
+        if (tiles.ContainsKey(pos))
+            RemoveTile(pos);
+
+        AddChild(tile);
+        tile.GlobalPosition = GridToWorld(pos);
+        tile.GridPosition = pos;
+        tiles[pos] = tile;
+        SyncTilemap();
+        failMessage = null;
+        return true;
+    }
+
+    /// Place a tile by type.
     public bool PlaceTile<T>(Vector2I pos, out T? result, out string? failMessage)
         where T : BaseTile
     {
@@ -130,22 +152,8 @@ public partial class Grid : Node2D
             failMessage = $"No scene for {typeof(T).Name}";
             return false;
         }
-        if (tiles.Count > 0 && !HasAdjacentTile(pos))
-        {
-            failMessage = $"No adjacent tile at {pos}";
-            return false;
-        }
-        if (tiles.ContainsKey(pos))
-            RemoveTile(pos);
-
         result = scene.Instantiate<T>();
-        AddChild(result);
-        result.GlobalPosition = GridToWorld(pos);
-        result.GridPosition = pos;
-        tiles[pos] = result;
-        SyncTilemap();
-        failMessage = null;
-        return true;
+        return PlaceTileInstance(result, pos, out failMessage);
     }
 
     public bool PlaceTile<T>(Vector2I pos, out T? result)
@@ -153,6 +161,21 @@ public partial class Grid : Node2D
 
     public bool PlaceTile<T>(Vector2I pos)
         where T : BaseTile => PlaceTile<T>(pos, out _, out _);
+
+    /// Place a tile from a packed scene resource.
+    public bool PlaceTile(PackedScene scene, Vector2I pos, out string? failMessage)
+    {
+        var instance = scene.Instantiate();
+        if (instance is not BaseTile tile)
+        {
+            instance.QueueFree();
+            failMessage = "Scene is not a BaseTile";
+            return false;
+        }
+        return PlaceTileInstance(tile, pos, out failMessage);
+    }
+
+    public bool PlaceTile(PackedScene scene, Vector2I pos) => PlaceTile(scene, pos, out _);
 
     public bool RemoveTile(Vector2I pos, out string? failMessage)
     {

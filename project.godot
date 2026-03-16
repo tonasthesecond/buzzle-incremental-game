@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 [autoload]
 
 GameStore="*uid://ce5tcfplcvouy"
+SignalBus="*uid://cdsqosi2l6cvd"
 
 [display]
 
