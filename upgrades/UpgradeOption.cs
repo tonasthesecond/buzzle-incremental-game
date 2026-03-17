@@ -1,10 +1,14 @@
 #nullable enable
 using Godot;
 
-[GlobalClass]
 public abstract partial class UpgradeOption : Resource
 {
+    [Signal]
+    public delegate void AppliedEventHandler();
+
+    [Export]
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
+
     public abstract string GetText(); // Text to display
     public abstract int GetCost(); // Cost to buy
     public abstract void Apply(); // Apply upgrade
@@ -33,6 +37,7 @@ public abstract partial class UpgradeOption : Resource
         // buy upgrade
         GameStore.Honey -= cost;
         Level++;
+        EmitSignal(SignalName.Applied);
         Apply();
 
         fail_message = null;

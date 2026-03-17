@@ -5,61 +5,116 @@ using Godot;
 
 public partial class Tilemap : TileMapLayer
 {
+    [Export]
+    public bool DrawBottomStrips = true;
+
     private const int TerrainSet = 0;
     private const int Terrain = 0;
+    private bool previewMode = false;
+    private Vector2I? ghostPos = null;
+    private List<BaseTile> currentTiles = new();
+    private HashSet<Vector2I> realTiles = new();
+    private HashSet<Vector2I> lastBottomEdgeCells = new();
 
-    private static readonly Dictionary<Type, int> TileSources = new()
-    {
-        { typeof(GreenTile), 0 },
-        // { typeof(DirtTile), 1 },
-    };
+    // maps tile types to tile source ids
+    private static readonly Dictionary<Type, int> TileSources = new() { { typeof(GreenTile), 1 } };
 
     public override void _EnterTree()
     {
         Services.Register(this);
     }
 
+    public override void _Ready()
+    {
+        SignalBus.Instance.ResourceSelected += (resource) =>
+        {
+            if (resource is PackedScene scene && scene.Instantiate() is BaseTile)
+            {
+                previewMode = true;
+                void OnUnselected()
+                {
+                    previewMode = false;
+                    ghostPos = null;
+                    Redraw();
+                    SignalBus.Instance.ResourceUnselected -= OnUnselected;
+                }
+                SignalBus.Instance.ResourceUnselected += OnUnselected;
+            }
+        };
+    }
+
+    public override void _Process(double delta)
+    {
+        if (!previewMode)
+            return;
+
+        var mouseGrid = LocalToMap(GetLocalMousePosition());
+        if (ghostPos == mouseGrid)
+            return;
+
+        // update new ghost position
+        ghostPos = mouseGrid;
+        Redraw();
+    }
+
     /// Update the tilemap, given a list of tiles.
     public void Update(IEnumerable<BaseTile> tiles)
     {
-        var groups = new Dictionary<int, List<Vector2I>>();
+        currentTiles = tiles.ToList();
+        realTiles = new HashSet<Vector2I>(currentTiles.Select(t => t.GridPosition));
+        Redraw();
+    }
 
-        foreach (var tile in tiles)
+    /// Redraw all real tiles and the ghost (if any) from scratch.
+    private void Redraw()
+    {
+        // nuke the old tiles
+        Clear();
+        lastBottomEdgeCells.Clear();
+
+        // append ghost pos if it exists
+        var displayPos = ghostPos.HasValue
+            ? realTiles.Append(ghostPos.Value)
+            : realTiles.AsEnumerable();
+
+        // draw the new tiles
+        SetCellsTerrainConnect(
+            new Godot.Collections.Array<Vector2I>(displayPos),
+            TerrainSet,
+            Terrain
+        );
+
+        // set the correct atlas coords for each tile
+        foreach (var tile in currentTiles)
         {
             if (!TileSources.TryGetValue(tile.GetType(), out var sourceId))
                 continue;
-            if (!groups.ContainsKey(sourceId))
-                groups[sourceId] = new();
-            groups[sourceId].Add(tile.GridPosition);
+            SetCell(tile.GridPosition, sourceId, GetCellAtlasCoords(tile.GridPosition));
         }
 
-        foreach (var (sourceId, cells) in groups)
-            SetCellsTerrainConnect(
-                new Godot.Collections.Array<Vector2I>(cells),
-                TerrainSet,
-                Terrain
-            );
-
-        UpdateBottomEdges(tiles);
+        UpdateBottomStrips(displayPos);
     }
 
-    /// Add the bottom strip of cells to the tilemap.
-    private void UpdateBottomEdges(IEnumerable<BaseTile> tiles)
+    private void UpdateBottomStrips(IEnumerable<Vector2I> positions)
     {
-        var positions = new HashSet<Vector2I>(tiles.Select(t => t.GridPosition));
+        // don't draw bottom strips if disabled
+        if (!DrawBottomStrips)
+            return;
 
-        // find all bottom-edge columns grouped by row
-        var bottomEdges = positions
-            .Where(p => !positions.Contains(p + Vector2I.Down))
+        // clear previous bottom strips (already nuked by Clear(), but keep list consistent)
+        foreach (var p in lastBottomEdgeCells)
+            EraseCell(p);
+        lastBottomEdgeCells.Clear();
+
+        // find all the bottom edges
+        var posSet = new HashSet<Vector2I>(positions);
+        var bottomEdges = posSet
+            .Where(p => !posSet.Contains(p + Vector2I.Down))
             .OrderBy(p => p.Y)
             .ThenBy(p => p.X)
             .ToList();
 
-        // clear old edge tiles (one row below any existing edge)
-        foreach (var p in bottomEdges)
-            EraseCell(p + Vector2I.Down);
-
-        // group into contiguous horizontal runs per row
+        // group bottom edges into contiguous runs
         var runs = new List<List<Vector2I>>();
         foreach (var p in bottomEdges)
         {
@@ -70,6 +125,7 @@ public partial class Tilemap : TileMapLayer
                 runs.Add(new List<Vector2I> { p });
         }
 
+        // draw the bottom strips
         foreach (var run in runs)
         {
             for (int i = 0; i < run.Count; i++)
@@ -80,6 +136,7 @@ public partial class Tilemap : TileMapLayer
                     : i == run.Count - 1 ? new Vector2I(4, 5)
                     : new Vector2I(3, 5);
                 SetCell(below, 0, atlasCoord);
+                lastBottomEdgeCells.Add(below);
             }
         }
     }

@@ -70,13 +70,20 @@ public partial class SelectContainer : PanelContainer
     {
         if (index == -1)
             index = SelectedResources.Count;
+
         SelectedResources.Add(selectedResource);
         var selectable = SelectableScene.Instantiate<Selectable>();
         selectablesContainer.AddChild(selectable);
-        selectable.Setup(SelectedResources.Count, buttonGroup, selectedResource.ImagePath);
+        selectable.Setup(SelectedResources.Count - 1, buttonGroup, selectedResource.ImagePath);
+
+        // selected signal
         selectable.Selected += (int index) =>
         {
             SelectedIndex = index;
+            SignalBus.Instance.EmitSignal(
+                SignalBus.SignalName.ResourceSelected,
+                GetSelectedResource()
+            );
         };
     }
 
@@ -88,6 +95,7 @@ public partial class SelectContainer : PanelContainer
         {
             selectable.Button.ButtonPressed = false;
         }
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.ResourceUnselected);
     }
 
     /// Return the selected resource.

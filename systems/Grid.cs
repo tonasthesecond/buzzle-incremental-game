@@ -5,8 +5,8 @@ using Godot;
 [GlobalClass]
 public partial class Grid : Node2D
 {
-    private Dictionary<Vector2I, BaseTile> tiles = new();
-    private Dictionary<Vector2I, BaseGridObject> objects = new();
+    public Dictionary<Vector2I, BaseTile> Tiles = new();
+    public Dictionary<Vector2I, BaseGridObject> Objects = new();
 
     public override void _Ready()
     {
@@ -17,7 +17,7 @@ public partial class Grid : Node2D
         else
             BuildDefault();
 
-        Services.Get<Tilemap>().Update(tiles.Values);
+        Services.Get<Tilemap>().Update(Tiles.Values);
     }
 
     // --- Default Layout ---
@@ -34,43 +34,9 @@ public partial class Grid : Node2D
         Vector2I[] flowers = [new(0, 1), new(4, 0), new(1, 4), new(3, 3)];
         foreach (var pos in flowers)
             PlaceObject<BaseFlower>(pos, out _);
-
-        // spawn bees
-        for (int i = 0; i < 5; i++)
-            Services.Get<BeeSystem>().SpawnBee(hive!);
     }
 
     // --- Persistence ---
-
-    public void Snapshot()
-    {
-        GameStore.Save.Tiles = tiles
-            .Values.Select(t => new SavedTile
-            {
-                X = t.GridPosition.X,
-                Y = t.GridPosition.Y,
-                Type = t.GetType().Name,
-            })
-            .ToList();
-
-        GameStore.Save.Objects = objects
-            .Values.Select(o => new SavedObject
-            {
-                X = o.GridPosition.X,
-                Y = o.GridPosition.Y,
-                Type = o.GetType().Name,
-            })
-            .ToList();
-
-        GameStore.Save.Hives = GetObjectsOfType<HiveGridObject>()
-            .Select(h => new SavedHive
-            {
-                X = h.GridPosition.X,
-                Y = h.GridPosition.Y,
-                BeeCount = h.BeeCount,
-            })
-            .ToList();
-    }
 
     private void LoadFrom(SaveData save)
     {
@@ -87,7 +53,7 @@ public partial class Grid : Node2D
             AddChild(tile);
             tile.GlobalPosition = GridToWorld(pos);
             tile.GridPosition = pos;
-            tiles[pos] = tile;
+            Tiles[pos] = tile;
         }
 
         foreach (var saved in save.Objects)
@@ -103,13 +69,13 @@ public partial class Grid : Node2D
             AddChild(obj);
             obj.GlobalPosition = GridToWorld(pos);
             obj.GridPosition = pos;
-            objects[pos] = obj;
+            Objects[pos] = obj;
 
             if (obj is HiveGridObject hive)
             {
                 var savedHive = save.Hives.FirstOrDefault(h => h.X == pos.X && h.Y == pos.Y);
-                if (savedHive != null)
-                    hive.BeeCount = savedHive.BeeCount;
+                // if (savedHive != null)
+                //     hive.BeeCount = savedHive.BeeCount;
             }
         }
 
@@ -118,8 +84,30 @@ public partial class Grid : Node2D
 
     // --- Tile Layer ---
 
-    private void SyncTilemap() => Services.Get<Tilemap>().Update(tiles.Values);
+    private void SyncTilemap() => Services.Get<Tilemap>().Update(Tiles.Values);
 
+    /// Core placement logic, given an already-instantiated tile.
+    private bool PlaceTileInstance(BaseTile tile, Vector2I pos, out string? failMessage)
+    {
+        if (Tiles.Count > 0 && !HasAdjacentTile(pos))
+        {
+            tile.QueueFree();
+            failMessage = $"No adjacent tile at {pos}";
+            return false;
+        }
+        if (Tiles.ContainsKey(pos))
+            RemoveTile(pos);
+
+        AddChild(tile);
+        tile.GlobalPosition = GridToWorld(pos);
+        tile.GridPosition = pos;
+        Tiles[pos] = tile;
+        SyncTilemap();
+        failMessage = null;
+        return true;
+    }
+
+    /// Place a tile by type.
     public bool PlaceTile<T>(Vector2I pos, out T? result, out string? failMessage)
         where T : BaseTile
     {
@@ -130,22 +118,8 @@ public partial class Grid : Node2D
             failMessage = $"No scene for {typeof(T).Name}";
             return false;
         }
-        if (tiles.Count > 0 && !HasAdjacentTile(pos))
-        {
-            failMessage = $"No adjacent tile at {pos}";
-            return false;
-        }
-        if (tiles.ContainsKey(pos))
-            RemoveTile(pos);
-
         result = scene.Instantiate<T>();
-        AddChild(result);
-        result.GlobalPosition = GridToWorld(pos);
-        result.GridPosition = pos;
-        tiles[pos] = result;
-        SyncTilemap();
-        failMessage = null;
-        return true;
+        return PlaceTileInstance(result, pos, out failMessage);
     }
 
     public bool PlaceTile<T>(Vector2I pos, out T? result)
@@ -154,16 +128,31 @@ public partial class Grid : Node2D
     public bool PlaceTile<T>(Vector2I pos)
         where T : BaseTile => PlaceTile<T>(pos, out _, out _);
 
+    /// Place a tile from a packed scene resource.
+    public bool PlaceTile(PackedScene scene, Vector2I pos, out string? failMessage)
+    {
+        var instance = scene.Instantiate();
+        if (instance is not BaseTile tile)
+        {
+            instance.QueueFree();
+            failMessage = "Scene is not a BaseTile";
+            return false;
+        }
+        return PlaceTileInstance(tile, pos, out failMessage);
+    }
+
+    public bool PlaceTile(PackedScene scene, Vector2I pos) => PlaceTile(scene, pos, out _);
+
     public bool RemoveTile(Vector2I pos, out string? failMessage)
     {
-        if (!tiles.TryGetValue(pos, out var tile))
+        if (!Tiles.TryGetValue(pos, out var tile))
         {
             failMessage = $"No tile at {pos}";
             return false;
         }
         RemoveObject(pos);
         tile.QueueFree();
-        tiles.Remove(pos);
+        Tiles.Remove(pos);
         SyncTilemap();
         failMessage = null;
         return true;
@@ -171,9 +160,9 @@ public partial class Grid : Node2D
 
     public bool RemoveTile(Vector2I pos) => RemoveTile(pos, out _);
 
-    public bool HasTile(Vector2I pos) => tiles.ContainsKey(pos);
+    public bool HasTile(Vector2I pos) => Tiles.ContainsKey(pos);
 
-    public BaseTile? GetTileAt(Vector2I pos) => tiles.TryGetValue(pos, out var t) ? t : null;
+    public BaseTile? GetTileAt(Vector2I pos) => Tiles.TryGetValue(pos, out var t) ? t : null;
 
     // --- Object Layer ---
 
@@ -181,12 +170,12 @@ public partial class Grid : Node2D
         where T : BaseGridObject
     {
         result = null;
-        if (!tiles.ContainsKey(pos))
+        if (!Tiles.ContainsKey(pos))
         {
             failMessage = $"No tile at {pos}";
             return false;
         }
-        if (objects.ContainsKey(pos))
+        if (Objects.ContainsKey(pos))
         {
             failMessage = $"Object already at {pos}";
             return false;
@@ -202,7 +191,7 @@ public partial class Grid : Node2D
         AddChild(result);
         result.GlobalPosition = GridToWorld(pos);
         result.GridPosition = pos;
-        objects[pos] = result;
+        Objects[pos] = result;
         failMessage = null;
         return true;
     }
@@ -215,23 +204,23 @@ public partial class Grid : Node2D
 
     public bool RemoveObject(Vector2I pos, out string? failMessage)
     {
-        if (!objects.TryGetValue(pos, out var obj))
+        if (!Objects.TryGetValue(pos, out var obj))
         {
             failMessage = $"No object at {pos}";
             return false;
         }
         obj.QueueFree();
-        objects.Remove(pos);
+        Objects.Remove(pos);
         failMessage = null;
         return true;
     }
 
     public bool RemoveObject(Vector2I pos) => RemoveObject(pos, out _);
 
-    public bool HasObject(Vector2I pos) => objects.ContainsKey(pos);
+    public bool HasObject(Vector2I pos) => Objects.ContainsKey(pos);
 
     public BaseGridObject? GetObjectAt(Vector2I pos) =>
-        objects.TryGetValue(pos, out var o) ? o : null;
+        Objects.TryGetValue(pos, out var o) ? o : null;
 
     public BaseGridObject? GetObjectAt(Vector2 pos) => GetObjectAt(WorldToGrid(pos));
 
@@ -240,13 +229,13 @@ public partial class Grid : Node2D
     public BaseGridObject? GetObjectOfTile(BaseTile tile) => GetObjectAt(tile.GridPosition);
 
     public IEnumerable<BaseTile> GetEmptyTiles() =>
-        tiles.Where(kv => !objects.ContainsKey(kv.Key)).Select(kv => kv.Value);
+        Tiles.Where(kv => !Objects.ContainsKey(kv.Key)).Select(kv => kv.Value);
 
     public T[] GetObjectsOfType<T>()
-        where T : BaseGridObject => objects.Values.OfType<T>().ToArray();
+        where T : BaseGridObject => Objects.Values.OfType<T>().ToArray();
 
     public T[] GetTilesOfType<T>()
-        where T : BaseTile => tiles.Values.OfType<T>().ToArray();
+        where T : BaseTile => Tiles.Values.OfType<T>().ToArray();
 
     public T? GetClosestObjectOfType<T>(Vector2 pos)
         where T : BaseGridObject
@@ -285,10 +274,10 @@ public partial class Grid : Node2D
     // --- Helpers ---
 
     public bool HasAdjacentTile(Vector2I pos) =>
-        tiles.ContainsKey(pos + Vector2I.Left)
-        || tiles.ContainsKey(pos + Vector2I.Right)
-        || tiles.ContainsKey(pos + Vector2I.Up)
-        || tiles.ContainsKey(pos + Vector2I.Down);
+        Tiles.ContainsKey(pos + Vector2I.Left)
+        || Tiles.ContainsKey(pos + Vector2I.Right)
+        || Tiles.ContainsKey(pos + Vector2I.Up)
+        || Tiles.ContainsKey(pos + Vector2I.Down);
 
     public Vector2 GridToWorld(Vector2I pos) =>
         GlobalPosition
@@ -308,7 +297,7 @@ public partial class Grid : Node2D
 
     public Vector2 GetRandomTilePosition()
     {
-        var all = tiles.Keys.ToArray();
+        var all = Tiles.Keys.ToArray();
         return GridToWorld(all[(int)GD.Randi() % all.Length]);
     }
 
