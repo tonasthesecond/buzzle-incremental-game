@@ -1,4 +1,3 @@
-#nullable enable
 using Godot;
 
 [GlobalClass]
@@ -7,8 +6,6 @@ public partial class BeeAmountUO : UpgradeOption
     public override string GetText()
     {
         int amount = GameStore.BeeCount;
-        if (amount == 1)
-            return "1 bee ➞ 2 bees";
         return $"{amount} bees ➜ {amount + 1} bees";
     }
 

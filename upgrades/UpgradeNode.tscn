@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bcyt4rofmmeik"]
+
+[ext_resource type="Script" uid="uid://c1catjx5yrntk" path="res://upgrades/UpgradeNode.cs" id="1_gob2g"]
+[ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="2_6rn66"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_su5rq"]
+atlas = ExtResource("2_6rn66")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uun51"]
+atlas = ExtResource("2_6rn66")
+region = Rect2(32, 0, 32, 32)
+
+[node name="UpgradeNode" type="Node2D" unique_id=905124108]
+script = ExtResource("1_gob2g")
+Dependencies = {}
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=2079804154]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_su5rq")
+texture_pressed = SubResource("AtlasTexture_uun51")
+
+[node name="IconRect" type="TextureRect" parent="TextureButton" unique_id=95246312]
+unique_name_in_owner = true
+modulate = Color(0.5763412, 0.8163064, 0.8837462, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

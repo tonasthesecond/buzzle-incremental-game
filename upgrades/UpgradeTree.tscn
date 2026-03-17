@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bmriyvd8cma8a"]
+
+[ext_resource type="Script" uid="uid://blprwswd4po86" path="res://upgrades/UpgradeTree.cs" id="1_wyc47"]
+[ext_resource type="PackedScene" uid="uid://bcyt4rofmmeik" path="res://upgrades/UpgradeNode.tscn" id="2_5s8lu"]
+[ext_resource type="Resource" uid="uid://cg1og3ogox1mo" path="res://upgrades/resources/BeeSpeed.tres" id="3_m26cu"]
+[ext_resource type="Resource" uid="uid://cq35dfbhioq0m" path="res://upgrades/resources/BeeCapacityHoney.tres" id="4_dq57c"]
+
+[node name="UpgradeTree" type="Control" unique_id=549873726]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_wyc47")
+
+[node name="BeeSpeed" parent="." unique_id=905124108 instance=ExtResource("2_5s8lu")]
+UpgradeResource = ExtResource("3_m26cu")
+Dependencies = {
+NodePath("../BeeCapacityHoney"): 0
+}
+
+[node name="BeeCapacityHoney" parent="." unique_id=893593381 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, -64)
+UpgradeResource = ExtResource("4_dq57c")

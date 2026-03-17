@@ -11,7 +11,7 @@ public class SaveData
 
 public class SavedUpgrade
 {
-    public string Path { get; set; } = "";
+    public string Id { get; set; } = "";
     public int Level { get; set; }
 }
 

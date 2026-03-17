@@ -43,8 +43,8 @@ public partial class Camera : Camera2D
         if (UseSmoothing)
         {
             // Smoothly interpolate position and zoom
-            Position = Position.Lerp(_targetPosition, (float)delta * SmoothSpeed);
-            Zoom = Zoom.Lerp(_targetZoom, (float)delta * SmoothSpeed);
+            Position = Utils.SmoothedLerp(Position, _targetPosition, (float)delta, 5);
+            Zoom = Utils.SmoothedLerp(Zoom, _targetZoom, (float)delta, 5);
         }
         else
         {
@@ -55,6 +55,8 @@ public partial class Camera : Camera2D
 
     public override void _Input(InputEvent @event)
     {
+        if (GetViewport().GetCamera2D() != this)
+            return;
         // Keyboard input
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
@@ -117,4 +119,3 @@ public partial class Camera : Camera2D
         _targetZoom = new Vector2(1, 1); // Reset zoom to default
     }
 }
-

@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://bpag1univam2w"]
 
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
+[ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
-[ext_resource type="Script" uid="uid://b12o31mdwwyla" path="res://TestLabel.cs" id="5_t88pq"]
 [ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
+[ext_resource type="PackedScene" uid="uid://bmriyvd8cma8a" path="res://upgrades/UpgradeTree.tscn" id="7_yx171"]
 [ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GreenTile.tscn" id="8_2vekm"]
 [ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
 [ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
+[ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="11_yhmtn"]
 
 [sub_resource type="Resource" id="Resource_gwjdr"]
 script = ExtResource("8_joorw")
@@ -29,32 +31,49 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 script = ExtResource("8_joorw")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[node name="Game" type="Node" unique_id=1808904952]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwjdr"]
+atlas = ExtResource("11_yhmtn")
+region = Rect2(0, 0, 32, 32)
 
-[node name="BeeSystem" type="Node" parent="." unique_id=474014426]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
+atlas = ExtResource("11_yhmtn")
+region = Rect2(32, 0, 32, 32)
+
+[node name="Game" type="Node" unique_id=1808904952]
+script = ExtResource("1_yx171")
+
+[node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
+script = ExtResource("9_2vekm")
+metadata/_custom_type_script = "uid://s3j2s3crukmu"
+
+[node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
+unique_name_in_owner = true
+
+[node name="BeeSystem" type="Node" parent="GameLayer" unique_id=474014426]
 script = ExtResource("1_wbfu4")
 metadata/_custom_type_script = "uid://b2qhw754acagl"
 
-[node name="Grid" type="Node2D" parent="." unique_id=1617903665]
+[node name="Grid" type="Node2D" parent="GameLayer" unique_id=1617903665]
 position = Vector2(52, 60)
 script = ExtResource("2_xkndl")
 metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
-[node name="Tilemap" parent="Grid" unique_id=905306547 instance=ExtResource("3_r0x5m")]
+[node name="Tilemap" parent="GameLayer/Grid" unique_id=905306547 instance=ExtResource("3_r0x5m")]
 
-[node name="Label" type="Label" parent="." unique_id=2093737051]
-offset_left = 390.0
-offset_top = 15.0
-offset_right = 430.0
-offset_bottom = 38.0
-script = ExtResource("5_t88pq")
+[node name="Camera" parent="GameLayer" unique_id=1085878987 instance=ExtResource("4_sb48q")]
 
-[node name="UIContainer" type="CanvasLayer" parent="." unique_id=1744404542]
+[node name="UpgradeLayer" type="Node2D" parent="." unique_id=320393624]
+unique_name_in_owner = true
+visible = false
 
-[node name="Camera" parent="UIContainer" unique_id=1085878987 instance=ExtResource("4_sb48q")]
-position = Vector2(165, 218)
+[node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
 
-[node name="MarginContainer" type="MarginContainer" parent="UIContainer" unique_id=1434174203]
+[node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1744404542]
+unique_name_in_owner = true
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=1434174203]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -67,17 +86,34 @@ grow_vertical = 0
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UIContainer/MarginContainer" unique_id=1044632810]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer" unique_id=1044632810]
 layout_mode = 2
 
-[node name="SelectContainer" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
+[node name="SelectContainer" parent="UILayer/MarginContainer/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
 SelectedResources = Array[Object]([SubResource("Resource_gwjdr"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
 
-[node name="SelectContainer2" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
+[node name="SelectContainer2" parent="UILayer/MarginContainer/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
 SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
 
-[node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
-script = ExtResource("9_2vekm")
-metadata/_custom_type_script = "uid://s3j2s3crukmu"
+[node name="MarginContainer2" type="MarginContainer" parent="UILayer" unique_id=283586830]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -42.0
+offset_bottom = 42.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer2" unique_id=2051154517]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="ShowUpgradesButton" type="TextureButton" parent="UILayer/MarginContainer2/VBoxContainer" unique_id=1841922307]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_gwjdr")
+texture_pressed = SubResource("AtlasTexture_lvtmh")

@@ -95,6 +95,7 @@ public partial class SelectContainer : PanelContainer
         {
             selectable.Button.ButtonPressed = false;
         }
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.ResourceUnselected);
     }
 
     /// Return the selected resource.
