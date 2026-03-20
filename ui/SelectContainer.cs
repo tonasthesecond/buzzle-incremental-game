@@ -74,7 +74,7 @@ public partial class SelectContainer : PanelContainer
         SelectedResources.Add(selectedResource);
         var selectable = SelectableScene.Instantiate<Selectable>();
         selectablesContainer.AddChild(selectable);
-        selectable.Setup(SelectedResources.Count - 1, buttonGroup, selectedResource.ImagePath);
+        selectable.Setup(SelectedResources.Count - 1, buttonGroup, selectedResource.Icon);
 
         // selected signal
         selectable.Selected += (int index) =>
@@ -99,8 +99,15 @@ public partial class SelectContainer : PanelContainer
     }
 
     /// Return the selected resource.
-    public Resource? GetSelectedResource() =>
-        SelectedIndex == -1 ? null : SelectedResources[SelectedIndex].Resource;
+    public Resource? GetSelectedResource()
+    {
+        if (SelectedIndex == -1)
+            return null;
+        var resource = SelectedResources[SelectedIndex].Resource;
+        if (resource == null)
+            return SelectedResources[SelectedIndex];
+        return resource;
+    }
 
     /// --- Expand/Shrink ---
     public void Expand()

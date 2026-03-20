@@ -10,26 +10,43 @@
 [ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GreenTile.tscn" id="8_2vekm"]
 [ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
 [ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
+[ext_resource type="Resource" uid="uid://be6pjdrb67smq" path="res://resources/RemoveObject.tres" id="9_qjyg3"]
+[ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="10_0yprl"]
+[ext_resource type="PackedScene" uid="uid://bbh6aex2oxcg6" path="res://objects/grid/HiveGridObject.tscn" id="11_cpsxm"]
+[ext_resource type="PackedScene" uid="uid://b466og2ju7b2g" path="res://ui/NumberDisplay.tscn" id="11_lvtmh"]
 [ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="11_yhmtn"]
+[ext_resource type="Script" uid="uid://ca5lej4xayi2l" path="res://ui/HoneyDisplay.cs" id="12_yyih5"]
+[ext_resource type="Resource" uid="uid://c0tw6kouxj131" path="res://resources/RemoveTile.tres" id="13_cpsxm"]
+[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
+[ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
+[ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
 
-[sub_resource type="Resource" id="Resource_gwjdr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvhbk"]
+atlas = ExtResource("10_0yprl")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_elkpi"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("11_cpsxm")
+Icon = SubResource("AtlasTexture_bvhbk")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
+atlas = ExtResource("14_hmewc")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_w2501"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("8_2vekm")
+Icon = SubResource("AtlasTexture_0mevm")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="Resource" id="Resource_lvtmh"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
 
-[sub_resource type="Resource" id="Resource_yx171"]
-script = ExtResource("8_joorw")
-metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
-
-[sub_resource type="Resource" id="Resource_yhmtn"]
-script = ExtResource("8_joorw")
-metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
-
-[sub_resource type="Resource" id="Resource_2vekm"]
-script = ExtResource("8_joorw")
-metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yprl"]
+atlas = SubResource("CompressedTexture2D_elkpi")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gwjdr"]
 atlas = ExtResource("11_yhmtn")
@@ -54,7 +71,6 @@ script = ExtResource("1_wbfu4")
 metadata/_custom_type_script = "uid://b2qhw754acagl"
 
 [node name="Grid" type="Node2D" parent="GameLayer" unique_id=1617903665]
-position = Vector2(52, 60)
 script = ExtResource("2_xkndl")
 metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
@@ -73,7 +89,7 @@ visible = false
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1744404542]
 unique_name_in_owner = true
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=1434174203]
+[node name="BottomRight" type="MarginContainer" parent="UILayer" unique_id=1434174203]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -86,18 +102,18 @@ grow_vertical = 0
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer" unique_id=1044632810]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/BottomRight" unique_id=1044632810]
 layout_mode = 2
 
-[node name="SelectContainer" parent="UILayer/MarginContainer/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
+[node name="ObjectsSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([SubResource("Resource_gwjdr"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
+SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi")])
 
-[node name="SelectContainer2" parent="UILayer/MarginContainer/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
+[node name="TilesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
+SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501")])
 
-[node name="MarginContainer2" type="MarginContainer" parent="UILayer" unique_id=283586830]
+[node name="TopRight" type="MarginContainer" parent="UILayer" unique_id=283586830]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -107,13 +123,27 @@ grow_horizontal = 0
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/MarginContainer2" unique_id=2051154517]
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TopRight" unique_id=2051154517]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 
-[node name="ShowUpgradesButton" type="TextureButton" parent="UILayer/MarginContainer2/VBoxContainer" unique_id=1841922307]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/TopRight/VBoxContainer" unique_id=742771476]
+layout_mode = 2
+
+[node name="HoneyDisplay" parent="UILayer/TopRight/VBoxContainer/HBoxContainer" unique_id=184207357 instance=ExtResource("11_lvtmh")]
+layout_mode = 2
+script = ExtResource("12_yyih5")
+Icon = SubResource("AtlasTexture_0yprl")
+
+[node name="BeeCountDisplay" parent="UILayer/TopRight/VBoxContainer/HBoxContainer" unique_id=674330754 instance=ExtResource("11_lvtmh")]
+layout_mode = 2
+script = ExtResource("14_elkpi")
+Icon = ExtResource("13_yyih5")
+
+[node name="ShowUpgradesButton" type="TextureButton" parent="UILayer/TopRight/VBoxContainer" unique_id=1841922307]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 8
 texture_normal = SubResource("AtlasTexture_gwjdr")
 texture_pressed = SubResource("AtlasTexture_lvtmh")

@@ -5,8 +5,8 @@ using Godot;
 public partial class SelectedResource : Resource
 {
     [Export]
-    public Resource Resource = new Resource();
+    public Resource Resource;
 
     [Export]
-    public string ImagePath = "res://assets/bee.png";
+    public Texture2D Icon;
 }
