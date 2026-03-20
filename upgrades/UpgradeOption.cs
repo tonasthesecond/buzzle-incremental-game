@@ -1,4 +1,3 @@
-#nullable enable
 using Godot;
 
 public abstract partial class UpgradeOption : Resource
@@ -8,6 +7,9 @@ public abstract partial class UpgradeOption : Resource
 
     [Export]
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
+
+    [Export]
+    public int MaxLevel { get; set; } = -1; // -1 = unlimited
 
     public abstract string GetText(); // Text to display
     public abstract int GetCost(); // Cost to buy
@@ -22,7 +24,12 @@ public abstract partial class UpgradeOption : Resource
 
     public bool Buy(out string? fail_message)
     {
-        // check if enough honey
+        // check if enough honey and max level
+        if (MaxLevel != -1 && Level >= MaxLevel)
+        {
+            fail_message = "Already at max level";
+            return false;
+        }
         int cost = GetCost();
         if (GameStore.Honey < cost)
         {

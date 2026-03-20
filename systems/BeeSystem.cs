@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -6,6 +5,9 @@ using Godot;
 [GlobalClass]
 public partial class BeeSystem : GameSystem
 {
+    [Signal]
+    public delegate void OnBeeSpawnedEventHandler(Bee bee);
+
     private PackedScene beeScene = GD.Load<PackedScene>("res://objects/Bee.tscn");
     private HashSet<BaseGridObject> claimedObjects = new();
 
@@ -14,11 +16,6 @@ public partial class BeeSystem : GameSystem
     public bool ClaimObject(BaseGridObject obj) => claimedObjects.Add(obj);
 
     public void ReleaseObject(BaseGridObject obj) => claimedObjects.Remove(obj);
-
-    public override void _Ready()
-    {
-        // Callable.From(SpawnFromSave).CallDeferred();
-    }
 
     public void SpawnFromSave()
     {
@@ -57,6 +54,7 @@ public partial class BeeSystem : GameSystem
         }
     }
 
+    /// Base spawn bee method.
     public Bee? SpawnBee(HiveGridObject home)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee)
@@ -64,6 +62,7 @@ public partial class BeeSystem : GameSystem
         Bee bee = beeScene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home, new IdleJob());
+        EmitSignal(SignalName.OnBeeSpawned, bee);
         return bee;
     }
 
@@ -83,6 +82,8 @@ public partial class BeeSystem : GameSystem
                 bees.Add(bee);
         return bees.ToArray();
     }
+
+    public int GetBeeCount() => GetBees().Length;
 
     public Bee[] GetIdleBees() => GetBees().Where(b => b.job is IdleJob).ToArray();
 

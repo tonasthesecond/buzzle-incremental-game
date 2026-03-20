@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="BeeSpeedUO" format=3 uid="uid://qsplglwcwwoa"]
+
+[ext_resource type="Script" uid="uid://cuyp0jsj48rwu" path="res://upgrades/scripts/BeeSpeedUO.cs" id="1_4f84g"]
+
+[resource]
+script = ExtResource("1_4f84g")
+IncreaseBy = 100
+metadata/_custom_type_script = "uid://cuyp0jsj48rwu"

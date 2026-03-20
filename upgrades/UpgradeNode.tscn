@@ -11,11 +11,12 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("2_6rn66")
 region = Rect2(32, 0, 32, 32)
 
-[node name="UpgradeNode" type="Node2D" unique_id=905124108]
+[node name="UpgradeNode" type="Node2D" unique_id=643946242]
 script = ExtResource("1_gob2g")
-Dependencies = {}
+metadata/_custom_type_script = "uid://c1catjx5yrntk"
 
-[node name="TextureButton" type="TextureButton" parent="." unique_id=2079804154]
+[node name="Button" type="TextureButton" parent="." unique_id=2079804154]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -30,7 +31,7 @@ grow_vertical = 2
 texture_normal = SubResource("AtlasTexture_su5rq")
 texture_pressed = SubResource("AtlasTexture_uun51")
 
-[node name="IconRect" type="TextureRect" parent="TextureButton" unique_id=95246312]
+[node name="IconRect" type="TextureRect" parent="Button" unique_id=95246312]
 unique_name_in_owner = true
 modulate = Color(0.5763412, 0.8163064, 0.8837462, 1)
 layout_mode = 1
