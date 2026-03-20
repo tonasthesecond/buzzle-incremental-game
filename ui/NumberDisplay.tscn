@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://b466og2ju7b2g"]
+
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_hgw20"]
+[ext_resource type="Script" uid="uid://b38u6phc78y27" path="res://ui/NumberDisplay.cs" id="2_bnosq"]
+
+[node name="NumberDisplay" type="PanelContainer" unique_id=184207357]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -16.5
+offset_right = 21.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hgw20")
+script = ExtResource("2_bnosq")
+metadata/_custom_type_script = "uid://b38u6phc78y27"
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=516273612]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=229995767]
+layout_mode = 2
+
+[node name="IconRect" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=1525622264]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 2
+
+[node name="NumberLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer" unique_id=181876251]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+bbcode_enabled = true
+text = "000"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1

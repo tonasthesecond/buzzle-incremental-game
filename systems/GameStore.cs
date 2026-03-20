@@ -11,20 +11,19 @@ public partial class GameStore : Node
     public delegate void OnHoneyChangedEventHandler(int newHoney);
 
     // --- Computed Stats ---
-    public static int HiveCapacityBee { get; set; }
-    public static float BeeSpeed { get; set; }
-    public static int BeeCapacityHoney { get; set; }
-    public static int BeeCount => Save.Hives.Sum(h => h.BeeCount);
+    public static int HiveCapacityBee { get; set; } = 10;
+    public static float BeeSpeed { get; set; } = 50;
+    public static int BeeCapacityHoney { get; set; } = 1;
 
     // --- Honey ---
+    private static int honey { get; set; } = 10;
     public static int Honey
     {
-        get => Save.Honey;
+        get => honey;
         set
         {
-            if (Save.Honey == value)
-                return;
-            Save.Honey = value;
+            honey = value;
+            Save.Honey = honey;
             Instance.EmitSignal(SignalName.OnHoneyChanged, value);
         }
     }
@@ -51,8 +50,8 @@ public partial class GameStore : Node
     // --- Tiles ---
     public static void SaveGrid(Grid grid)
     {
-        GameStore.Save.Tiles = grid
-            .Tiles.Values.Select(t => new SavedTile
+        GameStore.Save.Tiles = grid.GetTiles()
+            .Select(t => new SavedTile
             {
                 X = t.GridPosition.X,
                 Y = t.GridPosition.Y,
@@ -60,8 +59,8 @@ public partial class GameStore : Node
             })
             .ToList();
 
-        GameStore.Save.Objects = grid
-            .Objects.Values.Select(o => new SavedObject
+        GameStore.Save.Objects = grid.GetObjects()
+            .Select(o => new SavedObject
             {
                 X = o.GridPosition.X,
                 Y = o.GridPosition.Y,
@@ -128,7 +127,7 @@ public partial class GameStore : Node
             : new SaveData();
 
         // apply all dynamic contents
-        Honey = Save.Honey;
+        honey = Save.Honey;
         ApplyUpgrades();
         Callable.From(Services.Get<BeeSystem>().SpawnFromSave).CallDeferred();
     }
