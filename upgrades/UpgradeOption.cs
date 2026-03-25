@@ -6,6 +6,9 @@ public abstract partial class UpgradeOption : Resource
     public delegate void AppliedEventHandler();
 
     [Export]
+    public string Name { get; set; } = "Upgrade";
+
+    [Export]
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
 
     [Export]

@@ -15,7 +15,6 @@ script = ExtResource("1_wyc47")
 position = Vector2(-64, 0)
 UpgradeResource = ExtResource("3_m26cu")
 Icon = ExtResource("4_vvd1a")
-Dependencies = {}
 
 [node name="AdvancedBeeSpeed" parent="." unique_id=1542976833 instance=ExtResource("2_5s8lu")]
 position = Vector2(-64, -128)
@@ -28,4 +27,3 @@ NodePath("../BeeSpeed"): 2
 [node name="BeeCapacityHoney" parent="." unique_id=893593381 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, 0)
 UpgradeResource = ExtResource("4_dq57c")
-Dependencies = {}

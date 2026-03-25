@@ -10,6 +10,12 @@ public partial class SignalBus : Node
     [Signal]
     public delegate void ResourceUnselectedEventHandler();
 
+    [Signal]
+    public delegate void HoveredEventHandler(Node target);
+
+    [Signal]
+    public delegate void UnhoveredEventHandler();
+
     public override void _Ready()
     {
         Instance = this;

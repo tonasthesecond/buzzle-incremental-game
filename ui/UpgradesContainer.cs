@@ -1,4 +1,3 @@
-#nullable enable
 using Godot;
 
 public partial class UpgradesContainer : PanelContainer
@@ -6,9 +5,7 @@ public partial class UpgradesContainer : PanelContainer
     [Export]
     public required Godot.Collections.Array<UpgradeOption> UpgradeOptions;
 
-    private PackedScene upgradePanelScene = GD.Load<PackedScene>(
-        "res://ui/UpgradeOptionPanel.tscn"
-    );
+    private PackedScene upgradePanelScene = GD.Load<PackedScene>("uid://ck8u8w51dthbx");
 
     private Container optionsContainer = null!;
 
