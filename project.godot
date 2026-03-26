@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Bee Idle"
+config/name="Buzzle"
 run/main_scene="uid://bpag1univam2w"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
+config/icon="uid://c4virkxoyn6xe"
 
 [autoload]
 
