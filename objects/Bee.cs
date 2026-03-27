@@ -7,11 +7,11 @@ public partial class Bee : Node2D
     public delegate void ArrivedEventHandler(Bee bee);
 
     public IBeeJob job = new IdleJob();
-    public HiveTile Home;
+    public required HiveGridObject Home;
     public int carryingHoney = 0;
     public Vector2 targetPosition;
 
-    private Sprite2D sprite;
+    private Sprite2D sprite = null!;
     private float phase;
     private bool wasMoving = false;
 
@@ -30,7 +30,6 @@ public partial class Bee : Node2D
     public void SetJob(IBeeJob newJob)
     {
         job = newJob;
-        job.Start(this);
     }
 
     public override void _Ready()
@@ -42,17 +41,15 @@ public partial class Bee : Node2D
 
     public override void _Process(double delta)
     {
-        bool moving = IsMoving;
-        if (moving)
+        if (IsMoving)
             Move(delta);
-        else if (wasMoving)
-            EmitSignal(SignalName.Arrived, this);
-        wasMoving = moving;
+        job.Tick(this);
     }
 
-    public void Setup(HiveTile home, IBeeJob job)
+    public void Setup(HiveGridObject home, IBeeJob job)
     {
         Home = home;
+        home.AddBee(this);
         GlobalPosition = Home.GlobalPosition;
         SetJob(job);
         Hide();

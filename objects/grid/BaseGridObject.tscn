@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cudgaf2wotesf"]
+
+[ext_resource type="Script" uid="uid://ger2di4gkl2x" path="res://objects/grid/BaseGridObject.cs" id="1_re3vf"]
+
+[node name="GridObject" type="Node2D" unique_id=1691567109]
+script = ExtResource("1_re3vf")
+metadata/_custom_type_script = "uid://ger2di4gkl2x"
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=566324573]
+unique_name_in_owner = true

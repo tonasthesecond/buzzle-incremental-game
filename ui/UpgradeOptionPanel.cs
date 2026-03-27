@@ -5,9 +5,9 @@ public partial class UpgradeOptionPanel : PanelContainer
 {
     [Signal]
     public delegate void ButtonPressedEventHandler();
-    public RichTextLabel DescriptionLabel;
-    public Label PriceLabel;
-    public Button BuyButton;
+    public RichTextLabel DescriptionLabel = null!;
+    public Label PriceLabel = null!;
+    public Button BuyButton = null!;
 
     public override void _Ready()
     {
