@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://drn1ices8mh1l"
-path="res://.godot/imported/Hive.png-921bdf02e53bb3c7ec3e4f9de1af1f28.ctex"
+path="res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Hive.png"
-dest_files=["res://.godot/imported/Hive.png-921bdf02e53bb3c7ec3e4f9de1af1f28.ctex"]
+source_file="res://assets/hive.png"
+dest_files=["res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"]
 
 [params]
 
