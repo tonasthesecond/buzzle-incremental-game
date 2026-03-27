@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class HoverUI : Control
+public partial class HoverPointer : Control
 {
     [Export]
     private Vector2 offset = new(16, 16);
@@ -42,8 +42,8 @@ public partial class HoverUI : Control
             return null;
         var ui = scene.Instantiate<Control>();
         AddChild(ui);
-        if (ui.HasMethod("Setup"))
-            ui.Call("Setup", target);
+        if (ui is IHoverUI hoverUI)
+            hoverUI.Setup(target);
         return ui;
     }
 

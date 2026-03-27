@@ -5,6 +5,12 @@
 [ext_resource type="Resource" uid="uid://cg1og3ogox1mo" path="res://upgrades/resources/BeeSpeed.tres" id="3_m26cu"]
 [ext_resource type="Resource" uid="uid://cq35dfbhioq0m" path="res://upgrades/resources/BeeCapacityHoney.tres" id="4_dq57c"]
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="4_vvd1a"]
+[ext_resource type="Script" uid="uid://cuyp0jsj48rwu" path="res://upgrades/scripts/BeeSpeedUO.cs" id="5_vvd1a"]
+
+[sub_resource type="Resource" id="Resource_hmr6f"]
+script = ExtResource("5_vvd1a")
+IncreaseBy = 20
+metadata/_custom_type_script = "uid://cuyp0jsj48rwu"
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
@@ -18,7 +24,7 @@ Icon = ExtResource("4_vvd1a")
 
 [node name="AdvancedBeeSpeed" parent="." unique_id=1542976833 instance=ExtResource("2_5s8lu")]
 position = Vector2(-64, -128)
-UpgradeResource = ExtResource("3_m26cu")
+UpgradeResource = SubResource("Resource_hmr6f")
 Icon = ExtResource("4_vvd1a")
 Dependencies = {
 NodePath("../BeeSpeed"): 2

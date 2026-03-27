@@ -9,3 +9,4 @@ script = ExtResource("1_xww1r")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2116123333]
 texture = ExtResource("2_efjr8")
+metadata/_edit_lock_ = true

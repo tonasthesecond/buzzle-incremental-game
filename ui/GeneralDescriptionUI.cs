@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class GeneralDescriptionUI : PanelContainer
+public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
 {
     private RichTextLabel titleLabel = null!;
     private RichTextLabel descriptionLabel = null!;
@@ -21,6 +21,7 @@ public partial class GeneralDescriptionUI : PanelContainer
         descriptionLabel.Text = description;
     }
 
+    // required
     public void Setup(Node target)
     {
         switch (target)
@@ -28,7 +29,13 @@ public partial class GeneralDescriptionUI : PanelContainer
             case UpgradeNode upgradeNode:
                 SetTitle(upgradeNode.Upgrade.Name);
                 SetDescription(upgradeNode.Upgrade.GetText());
-                upgradeNode.Upgrade.Applied += () => Setup(target);
+                // refresh if upgrade is applied while the ui is open
+                upgradeNode.Upgrade.Applied += () =>
+                {
+                    if (!IsInstanceValid(this))
+                        return;
+                    Setup(target);
+                };
                 break;
             case BaseGridObject obj:
                 SetTitle(obj.ObjectName);

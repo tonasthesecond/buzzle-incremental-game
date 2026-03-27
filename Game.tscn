@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
+[ext_resource type="Script" uid="uid://dg46vvctsd64m" path="res://systems/ParticleSystem.cs" id="3_w2501"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 [ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
 [ext_resource type="PackedScene" uid="uid://bmriyvd8cma8a" path="res://upgrades/UpgradeTree.tscn" id="7_yx171"]
@@ -20,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
 [ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
-[ext_resource type="Script" uid="uid://cj7bwugmbkp6c" path="res://HoverUI.cs" id="21_hmewc"]
+[ext_resource type="Script" uid="uid://bomuqqxbk22bi" path="res://ui/HoverPointer.cs" id="21_0mevm"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 
@@ -68,6 +69,10 @@ metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
 unique_name_in_owner = true
+
+[node name="ParticleSystem" type="Node" parent="GameLayer" unique_id=2112819387]
+script = ExtResource("3_w2501")
+metadata/_custom_type_script = "uid://dg46vvctsd64m"
 
 [node name="BeeSystem" type="Node" parent="GameLayer" unique_id=474014426]
 script = ExtResource("1_wbfu4")
@@ -151,10 +156,10 @@ size_flags_horizontal = 8
 texture_normal = SubResource("AtlasTexture_gwjdr")
 texture_pressed = SubResource("AtlasTexture_lvtmh")
 
-[node name="HoverUI" type="Control" parent="UILayer" unique_id=62494922]
+[node name="HoverPointer" type="Control" parent="UILayer" unique_id=62494922]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("21_hmewc")
+script = ExtResource("21_0mevm")
 
 [node name="ErrorLabel" type="Label" parent="UILayer" unique_id=624382264]
 modulate = Color(0.9835215, 0.31671628, 0.247318, 1)
