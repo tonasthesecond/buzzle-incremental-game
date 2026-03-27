@@ -1,8 +1,8 @@
 using Godot;
 using Godot.Collections;
 
-[GlobalClass]
 [Tool]
+[GlobalClass]
 public partial class UpgradeNode : Node2D
 {
     // soft cast for editor, otherwise it bugs out because UpgradeOption is abstract
@@ -12,7 +12,8 @@ public partial class UpgradeNode : Node2D
 
     [Export]
     public Texture2D Icon { get; set; }
-    public bool IsShown { get; set; } = false;
+    public bool IsShown { get; set; } = true; // default true for editor
+    private BaseButton button = null!;
 
     // dependencies: upgrade node, level
     [Export]
@@ -21,9 +22,8 @@ public partial class UpgradeNode : Node2D
     public override void _Ready()
     {
         GetNode<TextureRect>("%IconRect").Texture = Icon;
-        if (Engine.IsEditorHint())
-            return;
-        if (Dependencies == null)
+        button = GetNode<BaseButton>("%Button");
+        if (Dependencies == null || Engine.IsEditorHint())
         {
             IsShown = true;
             return;
@@ -35,37 +35,44 @@ public partial class UpgradeNode : Node2D
             var node = GetNode<UpgradeNode>(path);
             if (!IsInstanceValid(node) || node.Upgrade == null)
                 continue;
-            node.Upgrade.Applied += OnDependencyApplied;
+            node.Upgrade.Applied += onDependencyApplied;
         }
+        button.Pressed += onButtonPressed;
+        onDependencyApplied(); // initial check for visibility
     }
 
-    public override void _Draw()
+    private void onDependencyApplied()
     {
-        // draw dependency lines
-        if (Dependencies == null)
-            return;
-        foreach (NodePath path in Dependencies.Keys)
+        if (isDependencyMet(out string? _))
+            ShowNode();
+        else
+            HideNode();
+    }
+
+    private void onButtonPressed()
+    {
+        if (isDependencyMet(out string? failMessage))
         {
-            var node = GetNode<UpgradeNode>(path);
-            if (!IsInstanceValid(node))
-                continue;
-            DrawLine(ToLocal(node.GlobalPosition), Vector2.Zero, Colors.LightGray, 2);
+            if (Upgrade.Buy(out failMessage)) { }
+            else
+                GD.Print($"[UpgradeNode] {failMessage}");
         }
     }
 
-    public void OnDependencyApplied()
+    /// Check if all dependencies are met.
+    private bool isDependencyMet(out string? failMessage)
     {
-        bool draw = true;
         foreach (NodePath path in Dependencies.Keys)
         {
             var node = GetNode<UpgradeNode>(path);
             if (node.Upgrade.Level < Dependencies[path] || !node.IsShown)
-                draw = false;
+            {
+                failMessage = $"Missing dependency: {path}";
+                return false;
+            }
         }
-        if (draw)
-            ShowNode();
-        else
-            HideNode();
+        failMessage = null;
+        return true;
     }
 
     public void ShowNode()

@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_5yd8s")
+IncreaseBy = 20
 metadata/_custom_type_script = "uid://cuyp0jsj48rwu"

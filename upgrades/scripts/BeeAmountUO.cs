@@ -5,7 +5,7 @@ public partial class BeeAmountUO : UpgradeOption
 {
     public override string GetText()
     {
-        int amount = GameStore.BeeCount;
+        int amount = Services.Get<BeeSystem>().GetBeeCount();
         return $"{amount} bees ➜ {amount + 1} bees";
     }
 

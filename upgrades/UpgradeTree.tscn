@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bcyt4rofmmeik" path="res://upgrades/UpgradeNode.tscn" id="2_5s8lu"]
 [ext_resource type="Resource" uid="uid://cg1og3ogox1mo" path="res://upgrades/resources/BeeSpeed.tres" id="3_m26cu"]
 [ext_resource type="Resource" uid="uid://cq35dfbhioq0m" path="res://upgrades/resources/BeeCapacityHoney.tres" id="4_dq57c"]
+[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="4_vvd1a"]
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
@@ -11,11 +12,20 @@ anchors_preset = 0
 script = ExtResource("1_wyc47")
 
 [node name="BeeSpeed" parent="." unique_id=905124108 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, 0)
 UpgradeResource = ExtResource("3_m26cu")
+Icon = ExtResource("4_vvd1a")
+Dependencies = {}
+
+[node name="AdvancedBeeSpeed" parent="." unique_id=1542976833 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, -128)
+UpgradeResource = ExtResource("3_m26cu")
+Icon = ExtResource("4_vvd1a")
 Dependencies = {
-NodePath("../BeeCapacityHoney"): 0
+NodePath("../BeeSpeed"): 2
 }
 
 [node name="BeeCapacityHoney" parent="." unique_id=893593381 instance=ExtResource("2_5s8lu")]
-position = Vector2(64, -64)
+position = Vector2(64, 0)
 UpgradeResource = ExtResource("4_dq57c")
+Dependencies = {}
