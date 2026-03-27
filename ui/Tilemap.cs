@@ -11,13 +11,14 @@ public partial class Tilemap : TileMapLayer
     private const int TerrainSet = 0;
     private const int Terrain = 0;
     private bool previewMode = false;
+    private bool removeMode = false;
     private Vector2I? ghostPos = null;
     private List<BaseTile> currentTiles = new();
     private HashSet<Vector2I> realTiles = new();
     private HashSet<Vector2I> lastBottomEdgeCells = new();
 
     // maps tile types to tile source ids
-    private static readonly Dictionary<Type, int> TileSources = new() { { typeof(GreenTile), 1 } };
+    private static readonly Dictionary<Type, int> TileSources = new() { { typeof(GreenTile), 0 } };
 
     public override void _EnterTree()
     {
@@ -26,19 +27,16 @@ public partial class Tilemap : TileMapLayer
 
     public override void _Ready()
     {
-        SignalBus.Instance.ResourceSelected += (resource) =>
+        var placement = Services.Get<PlacementSystem>();
+        placement.OnModeChanged += (mode) =>
         {
-            if (resource is PackedScene scene && scene.Instantiate() is BaseTile)
+            previewMode =
+                mode == PlacementSystem.Mode.Tile || mode == PlacementSystem.Mode.RemoveTile;
+            removeMode = mode == PlacementSystem.Mode.RemoveTile;
+            if (!previewMode)
             {
-                previewMode = true;
-                void OnUnselected()
-                {
-                    previewMode = false;
-                    ghostPos = null;
-                    Redraw();
-                    SignalBus.Instance.ResourceUnselected -= OnUnselected;
-                }
-                SignalBus.Instance.ResourceUnselected += OnUnselected;
+                ghostPos = null;
+                Redraw();
             }
         };
     }
@@ -74,7 +72,9 @@ public partial class Tilemap : TileMapLayer
 
         // append ghost pos if it exists
         var displayPos = ghostPos.HasValue
-            ? realTiles.Append(ghostPos.Value)
+            ? removeMode
+                ? realTiles.Where(p => p != ghostPos.Value)
+                : realTiles.Append(ghostPos.Value)
             : realTiles.AsEnumerable();
 
         // draw the new tiles
@@ -94,6 +94,11 @@ public partial class Tilemap : TileMapLayer
 
         UpdateBottomStrips(displayPos);
     }
+
+    private Vector2I[] leftStrips = [new Vector2I(0, 4)];
+    private Vector2I[] middleStrips = [new Vector2I(1, 4)];
+    private Vector2I[] rightStrips = [new Vector2I(2, 4)];
+    private Vector2I[] singleStrips = [new Vector2I(3, 4)];
 
     private void UpdateBottomStrips(IEnumerable<Vector2I> positions)
     {
@@ -131,11 +136,15 @@ public partial class Tilemap : TileMapLayer
             for (int i = 0; i < run.Count; i++)
             {
                 var below = run[i] + Vector2I.Down;
-                var atlasCoord =
-                    i == 0 ? new Vector2I(2, 5)
-                    : i == run.Count - 1 ? new Vector2I(4, 5)
-                    : new Vector2I(3, 5);
-                SetCell(below, 0, atlasCoord);
+                var sourceId = GetCellSourceId(run[i]);
+
+                Vector2I[] pool =
+                    run.Count == 1 ? singleStrips
+                    : i == 0 ? leftStrips
+                    : i == run.Count - 1 ? rightStrips
+                    : middleStrips;
+
+                SetCell(below, sourceId, pool[(int)GD.Randi() % pool.Length]);
                 lastBottomEdgeCells.Add(below);
             }
         }

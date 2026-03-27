@@ -2,7 +2,6 @@
 
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_f72ot"]
 [ext_resource type="Script" uid="uid://diauaougoh3gu" path="res://ui/SelectContainer.cs" id="2_rbqro"]
-[ext_resource type="PackedScene" uid="uid://c2qtlcd6aihjj" path="res://ui/Selectable.tscn" id="2_talgu"]
 
 [node name="SelectContainer" type="PanelContainer" unique_id=1610141216]
 anchors_preset = 8
@@ -20,7 +19,6 @@ size_flags_horizontal = 8
 mouse_filter = 1
 theme = ExtResource("1_f72ot")
 script = ExtResource("2_rbqro")
-SelectedResources = Array[Object]([])
 metadata/_custom_type_script = "uid://diauaougoh3gu"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=588056793]
@@ -47,19 +45,4 @@ size_flags_vertical = 3
 
 [node name="SelectablesContainer" type="HBoxContainer" parent="HBoxContainer/ExpandContainer/ContentsContainer" unique_id=180348723]
 unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Selectable" parent="HBoxContainer/ExpandContainer/ContentsContainer/SelectablesContainer" unique_id=920582071 instance=ExtResource("2_talgu")]
-layout_mode = 2
-
-[node name="Selectable2" parent="HBoxContainer/ExpandContainer/ContentsContainer/SelectablesContainer" unique_id=926265282 instance=ExtResource("2_talgu")]
-layout_mode = 2
-
-[node name="Selectable3" parent="HBoxContainer/ExpandContainer/ContentsContainer/SelectablesContainer" unique_id=1372674818 instance=ExtResource("2_talgu")]
-layout_mode = 2
-
-[node name="Selectable4" parent="HBoxContainer/ExpandContainer/ContentsContainer/SelectablesContainer" unique_id=1860015507 instance=ExtResource("2_talgu")]
-layout_mode = 2
-
-[node name="Selectable5" parent="HBoxContainer/ExpandContainer/ContentsContainer/SelectablesContainer" unique_id=2091310220 instance=ExtResource("2_talgu")]
 layout_mode = 2

@@ -21,11 +21,10 @@ public partial class Selectable : Control
     }
 
     /// Set the button group for the button.
-    public void Setup(int index, ButtonGroup group, string imagePath)
+    public void Setup(int index, ButtonGroup group, Texture2D texture)
     {
         Button.ButtonGroup = group;
         Index = index;
-        Texture2D texture = GD.Load<Texture2D>(imagePath);
         Button.TextureNormal = texture;
         Button.TexturePressed = texture;
         Button.TextureHover = texture;
