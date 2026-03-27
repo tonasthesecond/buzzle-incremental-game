@@ -21,7 +21,8 @@ animations = [{
 
 [node name="FlowerTile" unique_id=1691567109 instance=ExtResource("1_b1m6c")]
 script = ExtResource("2_kxyx6")
-Name = "<Flower>"
+ObjectName = "Flower"
+Description = "Source of honey."
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
 sprite_frames = SubResource("SpriteFrames_jrk61")

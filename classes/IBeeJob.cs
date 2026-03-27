@@ -8,10 +8,7 @@ public interface IBeeJob
 
 public class IdleJob : IBeeJob
 {
-    public void Tick(Bee bee)
-    {
-        bee.Hide();
-    }
+    public void Tick(Bee bee) => bee.FadeTo(0f);
 }
 
 public class HarvesterJob : IBeeJob
@@ -28,13 +25,12 @@ public class HarvesterJob : IBeeJob
 
     public void Tick(Bee bee)
     {
-        var grid = Services.Get<Grid>();
-        var beeSystem = Services.Get<BeeSystem>();
-
         switch (state)
         {
+            // find an unclaimed flower with honey
             case State.SeekingFlower:
-                var eligible = grid.GetObjectsOfType<BaseFlower>()
+                var eligible = bee
+                    .Grid.GetObjectsOfType<BaseFlower>()
                     .Where(f => f.Honey > 0)
                     .ToArray();
 
@@ -45,24 +41,25 @@ public class HarvesterJob : IBeeJob
                 }
 
                 flower = eligible
-                    .Where(f => !beeSystem.IsClaimed(f))
+                    .Where(f => !bee.BeeSystem.IsClaimed(f))
                     .OrderBy(_ => GD.Randf())
                     .FirstOrDefault();
 
                 if (flower == null)
                     return; // all claimed, retry next frame
 
-                beeSystem.ClaimObject(flower);
-                bee.Show();
+                bee.BeeSystem.ClaimObject(flower);
+                bee.FadeTo(1f);
                 bee.MoveTo(flower.GlobalPosition);
                 state = State.TravelingToFlower;
                 break;
 
+            // arrived at flower, take honey
             case State.TravelingToFlower:
                 if (bee.IsMoving)
                     return;
 
-                beeSystem.ReleaseObject(flower!);
+                bee.BeeSystem.ReleaseObject(flower!);
                 if (flower!.Honey <= 0)
                 {
                     state = State.SeekingFlower;
@@ -76,6 +73,7 @@ public class HarvesterJob : IBeeJob
                 state = State.TravelingHome;
                 break;
 
+            // arrived home, deposit
             case State.TravelingHome:
                 if (bee.IsMoving)
                     return;
@@ -94,6 +92,7 @@ public class PollinatorJob : IBeeJob
     {
         SeekingFlower,
         TravelingToFlower,
+        Pollinating,
         TravelingHome,
     }
 
@@ -102,15 +101,15 @@ public class PollinatorJob : IBeeJob
 
     public void Tick(Bee bee)
     {
-        var grid = Services.Get<Grid>();
-        var beeSystem = Services.Get<BeeSystem>();
-
         switch (state)
         {
+            // find an unclaimed empty flower
             case State.SeekingFlower:
                 if (GameStore.Honey <= 0)
                     return;
-                var eligible = grid.GetObjectsOfType<BaseFlower>()
+
+                var eligible = bee
+                    .Grid.GetObjectsOfType<BaseFlower>()
                     .Where(f => f.Honey <= 0)
                     .ToArray();
 
@@ -121,7 +120,7 @@ public class PollinatorJob : IBeeJob
                 }
 
                 flower = eligible
-                    .Where(f => !beeSystem.IsClaimed(f))
+                    .Where(f => !bee.BeeSystem.IsClaimed(f))
                     .OrderBy(_ => GD.Randf())
                     .FirstOrDefault();
 
@@ -132,23 +131,34 @@ public class PollinatorJob : IBeeJob
                 if (bee.carryingHoney == 0)
                     return;
 
-                beeSystem.ClaimObject(flower);
-                bee.Show();
+                bee.BeeSystem.ClaimObject(flower);
+                bee.FadeTo(1f);
                 bee.MoveTo(flower.GlobalPosition);
                 state = State.TravelingToFlower;
                 break;
 
+            // arrived at flower, start pollination animation
             case State.TravelingToFlower:
                 if (bee.IsMoving)
                     return;
 
-                beeSystem.ReleaseObject(flower!);
+                bee.StartPollinatingAnim(flower!.GlobalPosition);
+                state = State.Pollinating;
+                break;
+
+            // animation done, deposit honey into flower
+            case State.Pollinating:
+                if (bee.IsAnimating)
+                    return;
+
                 flower!.Pollinate(bee.carryingHoney);
+                bee.BeeSystem.ReleaseObject(flower!);
                 bee.carryingHoney = 0;
                 bee.MoveTo(bee.Home.GlobalPosition);
                 state = State.TravelingHome;
                 break;
 
+            // arrived home
             case State.TravelingHome:
                 if (bee.IsMoving)
                     return;
