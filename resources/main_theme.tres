@@ -8,8 +8,14 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [resource]
+Label/font_sizes/font_size = 7
 MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_40t7p")
+RichTextLabel/font_sizes/bold_font_size = 11
+RichTextLabel/font_sizes/bold_italics_font_size = 11
+RichTextLabel/font_sizes/italics_font_size = 11
+RichTextLabel/font_sizes/mono_font_size = 11
+RichTextLabel/font_sizes/normal_font_size = 11

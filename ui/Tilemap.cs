@@ -30,6 +30,7 @@ public partial class Tilemap : TileMapLayer
         var placement = Services.Get<PlacementSystem>();
         placement.OnModeChanged += (mode) =>
         {
+            previewMode = false;
             previewMode =
                 mode == PlacementSystem.Mode.Tile || mode == PlacementSystem.Mode.RemoveTile;
             removeMode = mode == PlacementSystem.Mode.RemoveTile;

@@ -8,7 +8,7 @@ public partial class BeeSystem : GameSystem
     [Signal]
     public delegate void OnBeeSpawnedEventHandler(Bee bee);
 
-    private PackedScene beeScene = GD.Load<PackedScene>("res://objects/Bee.tscn");
+    private PackedScene beeScene = GD.Load<PackedScene>("uid://bvxt44oxdw1xf");
     private HashSet<BaseGridObject> claimedObjects = new();
 
     public bool IsClaimed(BaseGridObject obj) => claimedObjects.Contains(obj);

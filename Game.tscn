@@ -20,6 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
 [ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
+[ext_resource type="Script" uid="uid://cj7bwugmbkp6c" path="res://HoverUI.cs" id="21_hmewc"]
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
+[ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvhbk"]
 atlas = ExtResource("10_0yprl")
@@ -147,3 +150,18 @@ layout_mode = 2
 size_flags_horizontal = 8
 texture_normal = SubResource("AtlasTexture_gwjdr")
 texture_pressed = SubResource("AtlasTexture_lvtmh")
+
+[node name="HoverUI" type="Control" parent="UILayer" unique_id=62494922]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("21_hmewc")
+
+[node name="ErrorLabel" type="Label" parent="UILayer" unique_id=624382264]
+modulate = Color(0.9835215, 0.31671628, 0.247318, 1)
+offset_right = 83.0
+offset_bottom = 11.0
+pivot_offset_ratio = Vector2(0.5, 1)
+theme = ExtResource("22_0mevm")
+text = "error message right now"
+horizontal_alignment = 1
+script = ExtResource("23_w2501")

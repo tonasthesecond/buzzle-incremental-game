@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://caeokvlcu74wj"]
+
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_oq0la"]
+[ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="2_4m8ay"]
+[ext_resource type="Script" uid="uid://dssiiwl3tqxtk" path="res://ui/GeneralDescriptionUI.cs" id="2_iux3v"]
+[ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_iux3v"]
+
+[node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1088790514]
+custom_minimum_size = Vector2(150, 0)
+offset_right = 54.0
+offset_bottom = 23.0
+theme = ExtResource("1_oq0la")
+script = ExtResource("2_iux3v")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=339625254]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=141479681]
+layout_mode = 2
+
+[node name="TitleLabel" parent="MarginContainer/VBoxContainer" unique_id=470433628 instance=ExtResource("2_4m8ay")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="DescriptionLabel" parent="MarginContainer/VBoxContainer" unique_id=1558216477 instance=ExtResource("3_iux3v")]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "This is just a general description."
+fit_content = true
+autowrap_mode = 2

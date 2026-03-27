@@ -1,8 +1,6 @@
 using Godot;
 
-/// <summary>
 /// Base class for all systems.
-/// </summary>
 public abstract partial class GameSystem : Node
 {
     // allow the system to be disabled

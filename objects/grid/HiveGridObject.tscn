@@ -45,6 +45,8 @@ animations = [{
 
 [node name="HiveTile" unique_id=1691567109 instance=ExtResource("1_11w1l")]
 script = ExtResource("2_u4imk")
+ObjectName = "Hive"
+Description = "A home for your bees!"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
 sprite_frames = SubResource("SpriteFrames_p4mtr")

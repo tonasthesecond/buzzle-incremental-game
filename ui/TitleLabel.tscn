@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bnxcd5eupioyr"]
+
+[node name="TitleLabel" type="RichTextLabel" unique_id=470433628]
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[b]<Title>[/b]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1

@@ -16,11 +16,9 @@ public partial class SelectContainer : PanelContainer
     [Export]
     public float TweenDuration { get; set; } = 0.2f;
 
-    private ButtonGroup buttonGroup = GD.Load<ButtonGroup>(
-        "res://resources/global_button_group.tres"
-    );
+    private ButtonGroup buttonGroup = GD.Load<ButtonGroup>("uid://cdmdk5620smp0");
 
-    private PackedScene SelectableScene = GD.Load<PackedScene>("res://ui/Selectable.tscn");
+    private PackedScene SelectableScene = GD.Load<PackedScene>("uid://c2qtlcd6aihjj");
 
     private MarginContainer contentsContainer = null!;
     private Container selectablesContainer = null!;
