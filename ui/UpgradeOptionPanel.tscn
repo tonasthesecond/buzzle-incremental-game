@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ck8u8w51dthbx"]
 
-[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main.tres" id="1_o5uga"]
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_o5uga"]
 [ext_resource type="Script" uid="uid://xk46j6sfluqn" path="res://ui/UpgradeOptionPanel.cs" id="2_ke062"]
 
 [node name="UpgradeOptionPanel" type="PanelContainer" unique_id=520876519]

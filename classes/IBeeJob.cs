@@ -8,7 +8,10 @@ public interface IBeeJob
 
 public class IdleJob : IBeeJob
 {
-    public void Tick(Bee bee) { }
+    public void Tick(Bee bee)
+    {
+        bee.Hide();
+    }
 }
 
 public class HarvesterJob : IBeeJob
@@ -79,7 +82,6 @@ public class HarvesterJob : IBeeJob
 
                 bee.Home.Deposit(bee.carryingHoney);
                 bee.carryingHoney = 0;
-                bee.Hide();
                 bee.SetJob(new IdleJob());
                 break;
         }
@@ -151,7 +153,6 @@ public class PollinatorJob : IBeeJob
                 if (bee.IsMoving)
                     return;
 
-                bee.Hide();
                 bee.SetJob(new IdleJob());
                 break;
         }

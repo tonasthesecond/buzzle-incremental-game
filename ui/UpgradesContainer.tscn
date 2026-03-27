@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://nlrkgudwjhur"]
 
-[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main.tres" id="1_hxywa"]
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_hxywa"]
 [ext_resource type="Script" uid="uid://d0pf7rkei7v27" path="res://ui/UpgradesContainer.cs" id="2_ricil"]
-[ext_resource type="Script" uid="uid://dhig1korxkm6t" path="res://resources/upgrade_options/BeeAmountUO.cs" id="3_yx50a"]
-[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://resources/upgrade_options/BeeCapacityUO.cs" id="4_r0chq"]
+[ext_resource type="Script" uid="uid://dhig1korxkm6t" path="res://resources/upgrades/BeeAmountUO.cs" id="3_yx50a"]
+[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://resources/upgrades/BeeCapacityUO.cs" id="4_r0chq"]
 [ext_resource type="PackedScene" uid="uid://ck8u8w51dthbx" path="res://ui/UpgradeOptionPanel.tscn" id="5_r0chq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ricil"]
