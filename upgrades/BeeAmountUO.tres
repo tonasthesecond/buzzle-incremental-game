@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BeeAmountUO" format=3 uid="uid://ckb7voeblqr7y"]
+
+[ext_resource type="Script" uid="uid://dhig1korxkm6t" path="res://upgrades/scripts/BeeAmountUO.cs" id="1_57jh6"]
+
+[resource]
+script = ExtResource("1_57jh6")
+metadata/_custom_type_script = "uid://dhig1korxkm6t"

@@ -11,9 +11,9 @@ public partial class GameStore : Node
     public delegate void OnHoneyChangedEventHandler(int newHoney);
 
     // --- Computed Stats ---
-    public static int HiveCapacityBee { get; set; } = 10;
-    public static float BeeSpeed { get; set; } = 50;
-    public static int BeeCapacityHoney { get; set; } = 1;
+    public static int HiveCapacityBee { get; set; }
+    public static float BeeSpeed { get; set; }
+    public static int BeeCapacityHoney { get; set; }
     public static int BeeCount => Save.Hives.Sum(h => h.BeeCount);
 
     // --- Honey ---
@@ -32,7 +32,7 @@ public partial class GameStore : Node
     // --- Save Data ---
     public static SaveData Save { get; private set; } = new();
 
-    private const string SavePath = "user://save.json";
+    private const string SavePath = "res://user/save.json";
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -41,23 +41,71 @@ public partial class GameStore : Node
 
     public static void SaveGame()
     {
+        Save.Honey = Honey;
+        SaveGrid(Services.Get<Grid>());
+        SaveUpgrades(Services.Get<UpgradeTree>());
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
     }
 
+    // --- Tiles ---
+    public static void SaveGrid(Grid grid)
+    {
+        GameStore.Save.Tiles = grid
+            .Tiles.Values.Select(t => new SavedTile
+            {
+                X = t.GridPosition.X,
+                Y = t.GridPosition.Y,
+                Type = t.GetType().Name,
+            })
+            .ToList();
+
+        GameStore.Save.Objects = grid
+            .Objects.Values.Select(o => new SavedObject
+            {
+                X = o.GridPosition.X,
+                Y = o.GridPosition.Y,
+                Type = o.GetType().Name,
+            })
+            .ToList();
+
+        GameStore.Save.Hives = grid.GetObjectsOfType<HiveGridObject>()
+            .Select(h => new SavedHive
+            {
+                X = h.GridPosition.X,
+                Y = h.GridPosition.Y,
+                BeeCount = h.BeeCount,
+            })
+            .ToList();
+    }
+
     // --- Upgrades ---
+    public static void SaveUpgrades(UpgradeTree tree)
+    {
+        GameStore.Save.Upgrades.Clear();
+        foreach (var upgrade in tree.GetUpgrades())
+        {
+            var saved = new SavedUpgrade
+            {
+                Id = upgrade.ResourcePath.GetFile().GetBaseName(),
+                Level = upgrade.Level,
+            };
+            GameStore.Save.Upgrades.Add(saved);
+        }
+    }
+
     public static void ApplyUpgrades()
     {
-        foreach (var saved in Save.Upgrades)
+        foreach (SavedUpgrade saved in Save.Upgrades)
         {
-            var upgrade = GD.Load<UpgradeOption>(saved.Path);
+            var upgrade = GD.Load<UpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
             if (upgrade == null)
             {
-                GD.PushError($"[GameStore] Missing upgrade: {saved.Path}");
+                GD.PushError($"[GameStore] Missing upgrade: {saved.Id}");
                 continue;
             }
             upgrade.Level = saved.Level;
-            for (int i = 0; i < saved.Level; i++)
+            for (int i = 0; i <= saved.Level; i++)
                 upgrade.Apply();
         }
     }
@@ -80,7 +128,8 @@ public partial class GameStore : Node
             : new SaveData();
 
         // apply all dynamic contents
+        Honey = Save.Honey;
         ApplyUpgrades();
-        Services.Get<BeeSystem>().SpawnFromSave();
+        Callable.From(Services.Get<BeeSystem>().SpawnFromSave).CallDeferred();
     }
 }
