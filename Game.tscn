@@ -1,19 +1,21 @@
 [gd_scene format=3 uid="uid://bpag1univam2w"]
 
-[ext_resource type="Script" uid="uid://bgws27p3v0aaf" path="res://Test.cs" id="1_u44n3"]
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 [ext_resource type="Script" uid="uid://b12o31mdwwyla" path="res://TestLabel.cs" id="5_t88pq"]
 [ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
+[ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GreenTile.tscn" id="8_2vekm"]
 [ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
+[ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
 
-[sub_resource type="Resource" id="Resource_joorw"]
-
-[sub_resource type="Resource" id="Resource_2vekm"]
+[sub_resource type="Resource" id="Resource_gwjdr"]
 script = ExtResource("8_joorw")
+Resource = ExtResource("8_2vekm")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="Resource" id="Resource_lvtmh"]
 
 [sub_resource type="Resource" id="Resource_yx171"]
 script = ExtResource("8_joorw")
@@ -23,8 +25,11 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 script = ExtResource("8_joorw")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
+[sub_resource type="Resource" id="Resource_2vekm"]
+script = ExtResource("8_joorw")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
 [node name="Game" type="Node" unique_id=1808904952]
-script = ExtResource("1_u44n3")
 
 [node name="BeeSystem" type="Node" parent="." unique_id=474014426]
 script = ExtResource("1_wbfu4")
@@ -67,8 +72,12 @@ layout_mode = 2
 
 [node name="SelectContainer" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
+SelectedResources = Array[Object]([SubResource("Resource_gwjdr"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
 
 [node name="SelectContainer2" parent="UIContainer/MarginContainer/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
 SelectedResources = Array[Object]([SubResource("Resource_2vekm"), SubResource("Resource_yx171"), SubResource("Resource_yhmtn")])
+
+[node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
+script = ExtResource("9_2vekm")
+metadata/_custom_type_script = "uid://s3j2s3crukmu"
