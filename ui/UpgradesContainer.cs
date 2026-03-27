@@ -48,6 +48,7 @@ public partial class UpgradesContainer : PanelContainer
 
     private void UpdatePanel(UpgradeOptionPanel panel, UpgradeOption uo)
     {
+        // update colors
         string priceTextColor;
         if (GameStore.Honey < uo.GetCost())
         {
