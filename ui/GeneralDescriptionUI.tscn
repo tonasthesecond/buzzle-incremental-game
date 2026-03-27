@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_iux3v"]
 
 [node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1088790514]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(150, 0)
 offset_right = 54.0
 offset_bottom = 23.0
 theme = ExtResource("1_oq0la")

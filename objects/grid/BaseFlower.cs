@@ -37,6 +37,7 @@ public partial class BaseFlower : BaseGridObject
 
     public override void _Ready()
     {
+        base._Ready();
         IsPollinated = false;
         Modulate = Colors.DarkGray;
     }

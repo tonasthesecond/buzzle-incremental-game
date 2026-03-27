@@ -60,7 +60,11 @@ public partial class PlacementSystem : GameSystem
             selectedScene = scene;
         };
 
-        SignalBus.Instance.ResourceUnselected += () => selectedScene = null;
+        SignalBus.Instance.ResourceUnselected += () =>
+        {
+            selectedScene = null;
+            mode = Mode.None;
+        };
     }
 
     /// Handle tile placement on click.
@@ -80,25 +84,33 @@ public partial class PlacementSystem : GameSystem
             case Mode.Tile:
                 if (selectedScene == null)
                     return;
-                if (!grid.PlaceTile(selectedScene, pos, out var tileFail))
-                    GD.Print($"[PlacementSystem] {tileFail}");
+                if (!grid.PlaceTile(selectedScene, pos, out FailMessage? tileFail))
+                    Services.Get<ErrorLabel>().ShowError(tileFail);
+                if (tileFail != null)
+                    GD.Print($"[PlacementSystem] {tileFail.Log}");
                 break;
 
             case Mode.Object:
                 if (selectedScene == null)
                     return;
-                if (!grid.PlaceObject(selectedScene, pos, out var objFail))
-                    GD.Print($"[PlacementSystem] {objFail}");
+                if (!grid.PlaceObject(selectedScene, pos, out FailMessage? objFail))
+                    Services.Get<ErrorLabel>().ShowError(objFail);
+                if (objFail != null)
+                    GD.Print($"[PlacementSystem] {objFail.Log}");
                 break;
 
             case Mode.RemoveTile:
-                if (!grid.RemoveTile(pos, out var removeTileFail))
-                    GD.Print($"[PlacementSystem] {removeTileFail}");
+                if (!grid.RemoveTile(pos, out FailMessage? removeTileFail))
+                    Services.Get<ErrorLabel>().ShowError(removeTileFail);
+                if (removeTileFail != null)
+                    GD.Print($"[PlacementSystem] {removeTileFail.Log}");
                 break;
 
             case Mode.RemoveObject:
-                if (!grid.RemoveObject(pos, out var removeObjFail))
-                    GD.Print($"[PlacementSystem] {removeObjFail}");
+                if (!grid.RemoveObject(pos, out FailMessage? removeObjFail))
+                    Services.Get<ErrorLabel>().ShowError(removeObjFail);
+                if (removeObjFail != null)
+                    GD.Print($"[PlacementSystem] {removeObjFail.Log}");
                 break;
         }
     }

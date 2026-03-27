@@ -21,10 +21,19 @@ public partial class GeneralDescriptionUI : PanelContainer
         descriptionLabel.Text = description;
     }
 
-    public void Setup(UpgradeNode target)
+    public void Setup(Node target)
     {
-        SetTitle(target.Upgrade.Name);
-        SetDescription(target.Upgrade.GetText());
-        target.Upgrade.Applied += () => Setup(target);
+        switch (target)
+        {
+            case UpgradeNode upgradeNode:
+                SetTitle(upgradeNode.Upgrade.Name);
+                SetDescription(upgradeNode.Upgrade.GetText());
+                upgradeNode.Upgrade.Applied += () => Setup(target);
+                break;
+            case BaseGridObject obj:
+                SetTitle(obj.ObjectName);
+                SetDescription(obj.Description);
+                break;
+        }
     }
 }

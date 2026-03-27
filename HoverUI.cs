@@ -14,6 +14,7 @@ public partial class HoverUI : Control
         Clear();
         Control? ui = target switch
         {
+            BaseGridObject obj => Spawn(generalDescriptionScene, obj),
             _ => Spawn(generalDescriptionScene, target),
         };
     }

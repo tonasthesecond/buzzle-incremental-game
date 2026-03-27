@@ -121,12 +121,12 @@ public partial class Grid : Node2D
     private void SyncTilemap() => Services.Get<Tilemap>().Update(tiles.Values);
 
     /// Core placement logic, given an already-instantiated tile.
-    private bool PlaceTile(BaseTile tile, Vector2I pos, out string? failMessage)
+    private bool PlaceTile(BaseTile tile, Vector2I pos, out FailMessage? failMessage)
     {
         if (tiles.Count > 0 && !HasAdjacentTile(pos))
         {
             tile.QueueFree();
-            failMessage = $"No adjacent tile at {pos}";
+            failMessage = new FailMessage($"No adjacent tile at {pos}.", "No adjacent tile there!");
             return false;
         }
         if (tiles.ContainsKey(pos))
@@ -142,14 +142,14 @@ public partial class Grid : Node2D
     }
 
     /// Place a tile by type.
-    public bool PlaceTile<T>(Vector2I pos, out T? result, out string? failMessage)
+    public bool PlaceTile<T>(Vector2I pos, out T? result, out FailMessage? failMessage)
         where T : BaseTile
     {
         result = null;
         var scene = GD.Load<PackedScene>($"res://objects/tiles/{typeof(T).Name}.tscn");
         if (scene == null)
         {
-            failMessage = $"No scene for {typeof(T).Name}";
+            failMessage = new FailMessage($"No scene for {typeof(T).Name}.", "");
             return false;
         }
         result = scene.Instantiate<T>();
@@ -163,13 +163,13 @@ public partial class Grid : Node2D
         where T : BaseTile => PlaceTile<T>(pos, out _, out _);
 
     /// Place a tile from a packed scene resource.
-    public bool PlaceTile(PackedScene scene, Vector2I pos, out string? failMessage)
+    public bool PlaceTile(PackedScene scene, Vector2I pos, out FailMessage? failMessage)
     {
         var instance = scene.Instantiate();
         if (instance is not BaseTile tile)
         {
             instance.QueueFree();
-            failMessage = "Scene is not a BaseTile";
+            failMessage = new FailMessage("Scene is not a BaseTile.", "");
             return false;
         }
         return PlaceTile(tile, pos, out failMessage);
@@ -177,16 +177,16 @@ public partial class Grid : Node2D
 
     public bool PlaceTile(PackedScene scene, Vector2I pos) => PlaceTile(scene, pos, out _);
 
-    public bool RemoveTile(Vector2I pos, out string? failMessage)
+    public bool RemoveTile(Vector2I pos, out FailMessage? failMessage)
     {
         if (!tiles.TryGetValue(pos, out var tile))
         {
-            failMessage = $"No tile at {pos}";
+            failMessage = new FailMessage($"No tile at {pos}.", "No tile there!");
             return false;
         }
         if (objects.ContainsKey(pos))
         {
-            failMessage = $"Tile at {pos} is occupied";
+            failMessage = new FailMessage($"Tile at {pos} is occupied.", "Tile is occupied!");
             return false;
         }
         RemoveObject(pos);
@@ -206,18 +206,18 @@ public partial class Grid : Node2D
     // --- Object Layer ---
 
     /// Core placement logic, given an already-instantiated object.
-    private bool PlaceObject(BaseGridObject obj, Vector2I pos, out string? failMessage)
+    private bool PlaceObject(BaseGridObject obj, Vector2I pos, out FailMessage? failMessage)
     {
         if (!tiles.ContainsKey(pos))
         {
             obj.QueueFree();
-            failMessage = $"No tile at {pos}";
+            failMessage = new FailMessage($"No tile at {pos}.", "No tile there!");
             return false;
         }
         if (objects.ContainsKey(pos))
         {
             obj.QueueFree();
-            failMessage = $"Object already at {pos}";
+            failMessage = new FailMessage($"Object already at {pos}.", "Tile has an object!");
             return false;
         }
 
@@ -230,14 +230,14 @@ public partial class Grid : Node2D
     }
 
     /// Place an object by type.
-    public bool PlaceObject<T>(Vector2I pos, out T? result, out string? failMessage)
+    public bool PlaceObject<T>(Vector2I pos, out T? result, out FailMessage? failMessage)
         where T : BaseGridObject
     {
         result = null;
         var scene = GD.Load<PackedScene>($"res://objects/grid/{typeof(T).Name}.tscn");
         if (scene == null)
         {
-            failMessage = $"No scene for {typeof(T).Name}";
+            failMessage = new FailMessage($"No scene for {typeof(T).Name}.", "");
             return false;
         }
         result = scene.Instantiate<T>();
@@ -251,13 +251,13 @@ public partial class Grid : Node2D
         where T : BaseGridObject => PlaceObject<T>(pos, out _, out _);
 
     /// Place an object from a packed scene resource.
-    public bool PlaceObject(PackedScene scene, Vector2I pos, out string? failMessage)
+    public bool PlaceObject(PackedScene scene, Vector2I pos, out FailMessage? failMessage)
     {
         var instance = scene.Instantiate();
         if (instance is not BaseGridObject obj)
         {
             instance.QueueFree();
-            failMessage = "Scene is not a BaseGridObject";
+            failMessage = new FailMessage("Scene is not a BaseGridObject.", "");
             return false;
         }
         return PlaceObject(obj, pos, out failMessage);
@@ -265,11 +265,11 @@ public partial class Grid : Node2D
 
     public bool PlaceObject(PackedScene scene, Vector2I pos) => PlaceObject(scene, pos, out _);
 
-    public bool RemoveObject(Vector2I pos, out string? failMessage)
+    public bool RemoveObject(Vector2I pos, out FailMessage? failMessage)
     {
         if (!objects.TryGetValue(pos, out var obj))
         {
-            failMessage = $"No object at {pos}";
+            failMessage = new FailMessage($"No object at {pos}.", "No object there!");
             return false;
         }
         obj.QueueFree();
