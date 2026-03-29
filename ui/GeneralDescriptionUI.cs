@@ -1,9 +1,10 @@
 using Godot;
 
+[GlobalClass]
 public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
 {
-    private RichTextLabel titleLabel = null!;
-    private RichTextLabel descriptionLabel = null!;
+    protected RichTextLabel titleLabel = null!;
+    protected RichTextLabel descriptionLabel = null!;
 
     public override void _Ready()
     {
@@ -13,7 +14,7 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
 
     public void SetTitle(string title)
     {
-        titleLabel.Text = $"[b]{title}[/b]";
+        titleLabel.Text = Style.Title(title);
     }
 
     public void SetDescription(string description)
@@ -21,16 +22,19 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
         descriptionLabel.Text = description;
     }
 
-    // required
-    public void Setup(Node target)
+    public virtual void Setup(Node target)
     {
         switch (target)
         {
             case UpgradeNode upgradeNode:
-                SetTitle(upgradeNode.Upgrade.Name);
-                SetDescription(upgradeNode.Upgrade.GetText());
+                IUpgradeOption? upgrade = upgradeNode.Upgrade;
+                if (upgrade == null)
+                    return;
+
+                SetTitle(upgrade.Name);
+                SetDescription(upgrade.GetText());
                 // refresh if upgrade is applied while the ui is open
-                upgradeNode.Upgrade.Applied += () =>
+                upgrade.Applied += () =>
                 {
                     if (!IsInstanceValid(this))
                         return;

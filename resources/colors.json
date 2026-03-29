@@ -1,4 +1,12 @@
 {
+  "primary_color": "yellow",
+  "title": "yellow",
+  "subtitle": "gray",
   "price_not_enough": "red",
-  "price_enough": "green"
+  "price_enough": "green",
+  "number_original": "gray",
+  "number_new": "green",
+  "noun_bee": "yellow",
+  "noun_beekeeper": "orange"
 }
+

@@ -105,12 +105,12 @@ public partial class Grid : Node2D
             obj.GridPosition = pos;
             objects[pos] = obj;
 
-            if (obj is HiveGridObject hive)
-            {
-                var savedHive = save.Hives.FirstOrDefault(h => h.X == pos.X && h.Y == pos.Y);
-                if (savedHive != null)
-                    hive.BeeCount = savedHive.BeeCount;
-            }
+            // if (obj is HiveGridObject hive)
+            // {
+            //     var savedHive = save.Hives.FirstOrDefault(h => h.X == pos.X && h.Y == pos.Y);
+            //     if (savedHive != null)
+            //         hive.BeeCount = savedHive.BeeCount;
+            // }
         }
 
         SyncTilemap();

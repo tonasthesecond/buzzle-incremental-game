@@ -1,12 +1,15 @@
 using Godot;
 
 [GlobalClass]
-public partial class BeeSpeedUO : UpgradeOption
+public partial class BeeSpeedUO : IUpgradeOption
 {
     [Export]
     public int IncreaseBy { get; set; } = 10;
 
-    public override string GetText() => $"bee speed lvl{Level}";
+    private float value => GameStore.BeeSpeed.Value;
+
+    public override string GetText() =>
+        $"{Style.CK("Bees", "noun_bee")} moves {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles per second.";
 
     public override int GetCost() => (Level + 1) * 10;
 

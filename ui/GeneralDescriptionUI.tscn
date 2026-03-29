@@ -5,11 +5,13 @@
 [ext_resource type="Script" uid="uid://dssiiwl3tqxtk" path="res://ui/GeneralDescriptionUI.cs" id="2_iux3v"]
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_iux3v"]
 
-[node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1088790514]
-offset_right = 54.0
-offset_bottom = 23.0
+[node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1935115770]
+custom_minimum_size = Vector2(150, 0)
+offset_right = 48.0
+offset_bottom = 62.0
 theme = ExtResource("1_oq0la")
 script = ExtResource("2_iux3v")
+metadata/_custom_type_script = "uid://dssiiwl3tqxtk"
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=339625254]
 layout_mode = 2
@@ -19,7 +21,6 @@ layout_mode = 2
 
 [node name="TitleLabel" parent="MarginContainer/VBoxContainer" unique_id=470433628 instance=ExtResource("2_4m8ay")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
 [node name="DescriptionLabel" parent="MarginContainer/VBoxContainer" unique_id=1558216477 instance=ExtResource("3_iux3v")]

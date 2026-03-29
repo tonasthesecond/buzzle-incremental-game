@@ -1,6 +1,7 @@
 using Godot;
 
-public abstract partial class UpgradeOption : Resource
+[GlobalClass]
+public abstract partial class IUpgradeOption : Resource
 {
     [Signal]
     public delegate void AppliedEventHandler();
@@ -11,11 +12,17 @@ public abstract partial class UpgradeOption : Resource
     [Export]
     public int MaxLevel { get; set; } = -1; // -1 = unlimited
 
+    [Export]
+    public IScaleModel CostScaler { get; set; }
+
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
 
     public abstract string GetText(); // Text to display
-    public abstract int GetCost(); // Cost to buy
     public abstract void Apply(); // Apply upgrade
+
+    public virtual int GetCost() => (int)CostScaler.Get(Level);
+
+    public bool IsEnough() => GetCost() <= GameStore.Honey;
 
     // Check if this upgrade can be bought, and if not, return a message
     public virtual bool FailCondition(out FailMessage? fail_message)
@@ -46,8 +53,8 @@ public abstract partial class UpgradeOption : Resource
         // buy upgrade
         GameStore.Honey -= cost;
         Level++;
-        EmitSignal(SignalName.Applied);
         Apply();
+        EmitSignal(SignalName.Applied);
 
         failMessage = null;
         return true;

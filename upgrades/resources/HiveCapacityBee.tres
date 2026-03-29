@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="HiveCapacityBeeUO" format=3 uid="uid://131yv7667hpd"]
-
-[ext_resource type="Script" uid="uid://h3271vl0m3x8" path="res://upgrades/scripts/HiveCapacityBeeUO.cs" id="1_c4huf"]
-
-[resource]
-script = ExtResource("1_c4huf")
-metadata/_custom_type_script = "uid://h3271vl0m3x8"

@@ -2,13 +2,13 @@ using Godot;
 
 public abstract partial class EffectZoneComponent : Area2D
 {
-    public Stat Radius { get; set; } = new(() => GameStore.BeekeeperRadius.Value);
+    public Stat Radius { get; set; } = new(GameStore.TILE_SIZE / 2);
 
     [Export]
     public float FadeoutTime = 1f;
+    protected Timer fadeTimer;
 
     protected CollisionShape2D collisionShape;
-
     protected bool active = false;
 
     public override void _Ready()
@@ -16,12 +16,26 @@ public abstract partial class EffectZoneComponent : Area2D
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
 
-        Deactivate();
-        Hide();
-
+        // collision shape
         collisionShape = GetNode<CollisionShape2D>("%CollisionShape");
         collisionShape.Shape = new CircleShape2D();
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+
+        // fade timer
+        fadeTimer = new Timer { OneShot = true, WaitTime = FadeoutTime };
+        AddChild(fadeTimer);
+        fadeTimer.Timeout += () =>
+        {
+            Hide();
+            active = false;
+            // call exited event for all bees in the zone
+            foreach (var body in GetOverlappingBodies())
+                if (body is Bee bee)
+                    OnBeeExited(bee);
+        };
+
+        // immediately hide
+        Hide();
     }
 
     private void OnBodyEntered(Node2D body)
@@ -38,30 +52,17 @@ public abstract partial class EffectZoneComponent : Area2D
 
     public void Activate()
     {
+        fadeTimer.Stop();
         active = true;
         Show();
-        // apply to bees already inside
         foreach (var body in GetOverlappingBodies())
             if (body is Bee bee)
                 OnBeeEntered(bee);
     }
 
-    public async void Deactivate()
+    public void Deactivate()
     {
-        active = false;
-        foreach (var body in GetOverlappingBodies())
-            if (body is Bee bee)
-                scheduleRemove(bee);
-
-        await ToSignal(GetTree().CreateTimer(FadeoutTime), SceneTreeTimer.SignalName.Timeout);
-        Hide();
-    }
-
-    private async void scheduleRemove(Bee bee)
-    {
-        await ToSignal(GetTree().CreateTimer(FadeoutTime), SceneTreeTimer.SignalName.Timeout);
-        if (IsInstanceValid(bee))
-            OnBeeExited(bee);
+        fadeTimer.Start();
     }
 
     protected abstract void OnBeeEntered(Bee bee);

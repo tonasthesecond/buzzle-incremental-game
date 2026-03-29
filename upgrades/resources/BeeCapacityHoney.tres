@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="BeeCapacityHoneyUO" format=3 uid="uid://cq35dfbhioq0m"]
-
-[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="1_ty72q"]
-
-[resource]
-script = ExtResource("1_ty72q")
-metadata/_custom_type_script = "uid://hno7niifmwh"

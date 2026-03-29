@@ -58,11 +58,15 @@ public partial class BeeSystem : GameSystem
     public Bee? SpawnBee(HiveGridObject home)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
+        {
+            GD.Print($"[BeeSystem] Hive at {home.GridPosition} is full ({home.BeeCount} bees)");
             return null;
+        }
         Bee bee = beeScene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home, new IdleJob());
         EmitSignal(SignalName.OnBeeSpawned, bee);
+
         return bee;
     }
 

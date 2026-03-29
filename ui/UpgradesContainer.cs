@@ -3,7 +3,7 @@ using Godot;
 public partial class UpgradesContainer : PanelContainer
 {
     [Export]
-    public required Godot.Collections.Array<UpgradeOption> UpgradeOptions;
+    public required Godot.Collections.Array<IUpgradeOption> UpgradeOptions;
 
     private PackedScene upgradePanelScene = GD.Load<PackedScene>("uid://ck8u8w51dthbx");
 
@@ -14,14 +14,14 @@ public partial class UpgradesContainer : PanelContainer
         optionsContainer = GetNode<Container>("%OptionsContainer");
 
         // connect signals
-        GameStore.Instance.OnHoneyChanged += (_) => UpdatePanels();
+        GameStore.Instance.HoneyChanged += (_) => UpdatePanels();
 
         // free template children
         foreach (var child in optionsContainer.GetChildren())
             child.QueueFree();
 
         // add upgrade options
-        foreach (UpgradeOption uo in UpgradeOptions)
+        foreach (IUpgradeOption uo in UpgradeOptions)
         {
             UpgradeOptionPanel upgradePanel = upgradePanelScene.Instantiate<UpgradeOptionPanel>();
             optionsContainer.AddChild(upgradePanel);
@@ -32,7 +32,7 @@ public partial class UpgradesContainer : PanelContainer
         }
     }
 
-    private void OnButtonPressed(UpgradeOption uo)
+    private void OnButtonPressed(IUpgradeOption uo)
     {
         // try to buy upgrade
         if (!uo.Buy(out FailMessage? failMessage))
@@ -43,7 +43,7 @@ public partial class UpgradesContainer : PanelContainer
             UpdatePanels();
     }
 
-    private void UpdatePanel(UpgradeOptionPanel panel, UpgradeOption uo)
+    private void UpdatePanel(UpgradeOptionPanel panel, IUpgradeOption uo)
     {
         // update colors
         string priceTextColor;

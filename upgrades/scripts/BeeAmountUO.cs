@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class BeeAmountUO : UpgradeOption
+public partial class BeeAmountUO : IUpgradeOption
 {
     public override string GetText()
     {

@@ -4,27 +4,44 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
 {
     private string Key => $"Beekeeper";
 
+    // bees entering the zone get a speed buff
     protected override void OnBeeEntered(Bee bee) =>
         bee.Speed.AddPercent(Key, GameStore.BeekeeperSpeedBuff.Value);
 
+    // bees leaving the zone lose the speed buff
     protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        // collision shape updates using the radius stat
+        Radius = new(() => GameStore.BeekeeperRadius.Value);
+        (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+        GameStore.BeekeeperRadius.Changed += () =>
+            (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+    }
 
     public override void _Process(double delta)
     {
-        if (active)
+        // follow mouse when holding
+        if (active && fadeTimer.IsStopped())
             GlobalPosition = GetGlobalMousePosition();
     }
 
     public override void _UnhandledInput(InputEvent @event)
     {
+        // don't activate when placing tiles or objects
         if (Services.Get<PlacementSystem>().CurMode != PlacementSystem.Mode.None)
             return;
 
+        // activate on left click
         if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
         {
             Activate();
             GetViewport().SetInputAsHandled();
         }
+        // deactivate on release left click
         else if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
         {
             Deactivate();
