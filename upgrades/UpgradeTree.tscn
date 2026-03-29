@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bcyt4rofmmeik" path="res://upgrades/UpgradeNode.tscn" id="2_5s8lu"]
 [ext_resource type="Resource" uid="uid://dw881vtugr54q" path="res://upgrades/resources/BeekeepersWarmth.tres" id="3_ea44d"]
 [ext_resource type="Resource" uid="uid://b5wwqnpr1wnyr" path="res://upgrades/resources/MoreSmoke.tres" id="4_dq57c"]
+[ext_resource type="Resource" uid="uid://dnsqss4kdxdii" path="res://upgrades/resources/FasterBees.tres" id="4_m26cu"]
+[ext_resource type="Resource" uid="uid://cwudm6t0aihqo" path="res://upgrades/resources/LingeringHeat.tres" id="6_vvd1a"]
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
@@ -15,7 +17,7 @@ position = Vector2(-64, -64)
 UpgradeResource = ExtResource("3_ea44d")
 
 [node name="MoreSmoke" parent="." unique_id=566355151 instance=ExtResource("2_5s8lu")]
-position = Vector2(-128, -64)
+position = Vector2(-128, -32)
 UpgradeResource = ExtResource("4_dq57c")
 Dependencies = {
 NodePath("../BeekeepersWarmth"): 1
@@ -23,3 +25,11 @@ NodePath("../BeekeepersWarmth"): 1
 
 [node name="FasterBees" parent="." unique_id=186426185 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, 64)
+UpgradeResource = ExtResource("4_m26cu")
+
+[node name="LingeringHeat" parent="." unique_id=1741055249 instance=ExtResource("2_5s8lu")]
+position = Vector2(-128, -96)
+UpgradeResource = ExtResource("6_vvd1a")
+Dependencies = {
+NodePath("../BeekeepersWarmth"): 1
+}

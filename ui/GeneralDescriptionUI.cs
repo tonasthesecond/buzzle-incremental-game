@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -30,17 +31,43 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
                 IUpgradeOption? upgrade = upgradeNode.Upgrade;
                 if (upgrade == null)
                     return;
-
                 SetTitle(upgrade.Name);
                 SetDescription(upgrade.GetText());
-                // refresh if upgrade is applied while the ui is open
-                upgrade.Applied += () =>
+
+                // refresh if upgrade is applied while the ui is open.
+                IUpgradeOption.AppliedEventHandler onApplied = null!;
+                onApplied = () =>
                 {
                     if (!IsInstanceValid(this))
+                    {
+                        upgrade.Applied -= onApplied; // remove event handler
                         return;
+                    }
                     Setup(target);
                 };
+                upgrade.Applied += onApplied;
+                return;
+
+            case HiveGridObject hive:
+                HiveGridObject.BeeAddedEventHandler onBeeAdded = null!;
+                Action setTitle = null!;
+                setTitle = () =>
+                {
+                    if (!IsInstanceValid(this))
+                    {
+                        hive.BeeAdded -= onBeeAdded; // remove event handler
+                        return;
+                    }
+                    SetTitle(
+                        hive.ObjectName + $" ({hive.BeeCount}/{GameStore.HiveCapacityBee.Value})"
+                    );
+                };
+                onBeeAdded = (Bee bee) => setTitle();
+                hive.BeeAdded += onBeeAdded;
+                setTitle();
+                SetDescription(hive.Description);
                 break;
+
             case BaseGridObject obj:
                 SetTitle(obj.ObjectName);
                 SetDescription(obj.Description);

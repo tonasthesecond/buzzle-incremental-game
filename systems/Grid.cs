@@ -36,8 +36,10 @@ public partial class Grid : Node2D
             PlaceObject<BaseFlower>(pos, out _);
 
         // spawn bees
-        for (int i = 0; i < 5; i++)
-            Services.Get<BeeSystem>().SpawnBee(hive!);
+        // FIXME: something
+
+        // for (int i = 0; i < 5; i++)
+        //     Services.Get<BeeSystem>().SpawnBee(hive!);
     }
 
     // --- Persistence ---
@@ -67,7 +69,7 @@ public partial class Grid : Node2D
             {
                 X = h.GridPosition.X,
                 Y = h.GridPosition.Y,
-                BeeCount = h.BeeCount,
+                BeeCounts = h.GetBeeCounts(),
             })
             .ToList();
     }
@@ -366,7 +368,9 @@ public partial class Grid : Node2D
     public Vector2 GetRandomTilePosition()
     {
         var all = tiles.Keys.ToArray();
-        return GridToWorld(all[(int)GD.Randi() % all.Length]);
+        if (all.Length == 0)
+            return GlobalPosition;
+        return GridToWorld(all[GD.Randi() % (uint)all.Length]);
     }
 
     public BaseTile? GetRandomEmptyTile()

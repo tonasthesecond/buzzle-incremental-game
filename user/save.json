@@ -1,8 +1,20 @@
 {
-  "Honey": 2000,
+  "Honey": 1998,
   "Upgrades": [
     {
       "Id": "BeekeepersWarmth",
+      "Level": 0
+    },
+    {
+      "Id": "FasterBees",
+      "Level": 0
+    },
+    {
+      "Id": "LingeringHeat",
+      "Level": 0
+    },
+    {
+      "Id": "MoreSmoke",
       "Level": 0
     }
   ],
@@ -10,7 +22,10 @@
     {
       "X": 2,
       "Y": 2,
-      "BeeCount": 10
+      "BeeCounts": {
+        "Bee": 1,
+        "QueenBee": 1
+      }
     }
   ],
   "Tiles": [

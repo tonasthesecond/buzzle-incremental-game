@@ -11,6 +11,7 @@ public partial class Bee : Node2D
     public int carryingHoney = 0;
     public Vector2 targetPosition;
     public Stat Speed = new(() => GameStore.BeeSpeed.Value);
+    public Stat HoneyCapacity = new(() => GameStore.BeeCapacityHoney.Value);
 
     // cached services
     public Grid? Grid { get; private set; } = null!;
@@ -106,7 +107,9 @@ public partial class Bee : Node2D
             sprite.FlipH = latchedFlipH;
             if (IsMoving)
                 Move(delta);
+            sprite.Position = new Vector2(sprite.Position.X, Mathf.Sin(phase) * 1.5f); // always bob
         }
+        phase += (float)delta * 3f;
     }
 
     /// Initialize bee at home hive with a starting job.

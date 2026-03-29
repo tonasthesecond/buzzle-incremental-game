@@ -1,18 +1,18 @@
 using Godot;
 
 [GlobalClass]
-public partial class BeekeeperSpeedBuffUO : IUpgradeOption
+public partial class BeekeeperEffectZoneSpeedBuffUO : IUpgradeOption
 {
     [Export]
     public float IncreaseBy { get; set; } = 0.1f;
 
-    private float value => GameStore.BeekeeperSpeedBuff.Value;
+    private float value => GameStore.BeekeeperEffectZoneSpeedBuff.Value;
 
     public override string GetText() =>
         $"{Style.CK("Beekeeper Effect Zone", "noun_beekeeper")} increases all {Style.CK("Bees", "noun_bee")}' speed by {Style.NumberChangePercent(value, value + IncreaseBy)}";
 
     public override void Apply()
     {
-        GameStore.BeekeeperSpeedBuff.AddFlat(Name, IncreaseBy * Level);
+        GameStore.BeekeeperEffectZoneSpeedBuff.AddFlat(Name, IncreaseBy * Level);
     }
 }

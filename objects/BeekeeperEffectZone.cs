@@ -6,7 +6,7 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
 
     // bees entering the zone get a speed buff
     protected override void OnBeeEntered(Bee bee) =>
-        bee.Speed.AddPercent(Key, GameStore.BeekeeperSpeedBuff.Value);
+        bee.Speed.AddPercent(Key, GameStore.BeekeeperEffectZoneSpeedBuff.Value);
 
     // bees leaving the zone lose the speed buff
     protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
@@ -16,10 +16,13 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
         base._Ready();
 
         // collision shape updates using the radius stat
-        Radius = new(() => GameStore.BeekeeperRadius.Value);
+        Radius = new(() => GameStore.BeekeeperEffectZoneRadius.Value);
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
-        GameStore.BeekeeperRadius.Changed += () =>
+        GameStore.BeekeeperEffectZoneRadius.Changed += () =>
             (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+
+        // fadeout time updates using the fadeout time stat
+        FadeoutTime = new(() => GameStore.BeekeeperEffectZoneFadeoutTime.Value);
     }
 
     public override void _Process(double delta)

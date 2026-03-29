@@ -1,27 +1,47 @@
+using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
 public partial class HiveGridObject : BaseGridObject
 {
-    public int BeeCount { get; set; } = 0;
+    [Signal]
+    public delegate void BeeAddedEventHandler(Bee bee);
+
+    private List<Bee> bees = new();
+
+    public int BeeCount => bees.Count;
 
     public void AddBee(Bee bee)
     {
-        BeeCount++;
+        bees.Add(bee);
         bee.Home = this;
+        EmitSignal(SignalName.BeeAdded, bee);
     }
 
-    /// Deposits the given amount of honey into the hive, returning the leftover amount that couldn't be deposited.
+    /// Type name -> count for save data.
+    public Dictionary<string, int> GetBeeCounts()
+    {
+        var counts = new Dictionary<string, int>();
+        foreach (var bee in bees)
+        {
+            var type = bee.GetType().Name;
+            counts.TryGetValue(type, out int cur);
+            counts[type] = cur + 1;
+        }
+        return counts;
+    }
+
+    /// Deposits the given amount of honey into the hive.
     public void Deposit(int amount)
     {
         GameStore.Honey += amount;
     }
 
-    /// Takes the given amount of honey from the hive, clamping it to the hive's reserve.
+    /// Takes up to amount honey from the hive's reserve.
     public int TakePossible(int amount)
     {
-        int possibleAmount = int.Min(amount, GameStore.Honey);
-        GameStore.Honey -= possibleAmount;
-        return possibleAmount;
+        int possible = int.Min(amount, GameStore.Honey);
+        GameStore.Honey -= possible;
+        return possible;
     }
 }
