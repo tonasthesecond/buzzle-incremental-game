@@ -28,7 +28,7 @@ public partial class Tilemap : TileMapLayer
     public override void _Ready()
     {
         var placement = Services.Get<PlacementSystem>();
-        placement.OnModeChanged += (mode) =>
+        placement.ModeChanged += (mode) =>
         {
             previewMode = false;
             previewMode =

@@ -8,6 +8,9 @@ public partial class SignalBus : Node
     public delegate void ResourceSelectedEventHandler(Resource resource);
 
     [Signal]
+    public delegate void SelectedResourceSelectedEventHandler(SelectedResource selected);
+
+    [Signal]
     public delegate void ResourceUnselectedEventHandler();
 
     [Signal]

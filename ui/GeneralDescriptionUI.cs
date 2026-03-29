@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -41,6 +42,25 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
                     Setup(target);
                 };
                 break;
+
+            case HiveGridObject hive:
+                Action setTitle = null!;
+                setTitle = () =>
+                {
+                    if (!IsInstanceValid(this))
+                    {
+                        hive.BeeAdded -= (Bee bee) => setTitle();
+                        return;
+                    }
+                    SetTitle(
+                        hive.ObjectName + $" ({hive.BeeCount}/{GameStore.HiveCapacityBee.Value})"
+                    );
+                };
+                hive.BeeAdded += (Bee bee) => setTitle();
+                setTitle();
+                SetDescription(hive.Description);
+                break;
+
             case BaseGridObject obj:
                 SetTitle(obj.ObjectName);
                 SetDescription(obj.Description);

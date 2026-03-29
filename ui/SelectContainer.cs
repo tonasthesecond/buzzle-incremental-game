@@ -75,12 +75,17 @@ public partial class SelectContainer : PanelContainer
         selectable.Setup(SelectedResources.Count - 1, buttonGroup, selectedResource.Icon);
 
         // selected signal
+        // in selectable.Selected +=
         selectable.Selected += (int index) =>
         {
             SelectedIndex = index;
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.ResourceSelected,
                 GetSelectedResource()
+            );
+            SignalBus.Instance.EmitSignal(
+                SignalBus.SignalName.SelectedResourceSelected,
+                SelectedResources[index]
             );
         };
     }

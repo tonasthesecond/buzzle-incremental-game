@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ta1elcl0w7u5"]
+
+[ext_resource type="Script" uid="uid://b65a43jnssnun" path="res://ui/ObjectPreview.cs" id="1_hjy70"]
+
+[node name="ObjectPreview" type="TextureRect" unique_id=705468323]
+stretch_mode = 3
+script = ExtResource("1_hjy70")

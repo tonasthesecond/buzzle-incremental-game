@@ -25,6 +25,23 @@
 [ext_resource type="Script" uid="uid://bomuqqxbk22bi" path="res://ui/HoverPointer.cs" id="21_0mevm"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
+[ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/Bee.tscn" id="23_y5ctq"]
+[ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yprl"]
+atlas = SubResource("CompressedTexture2D_elkpi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwjdr"]
+atlas = ExtResource("11_yhmtn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
+atlas = ExtResource("11_yhmtn")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvhbk"]
 atlas = ExtResource("10_0yprl")
@@ -46,20 +63,11 @@ Resource = ExtResource("8_2vekm")
 Icon = SubResource("AtlasTexture_0mevm")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0yprl"]
-atlas = SubResource("CompressedTexture2D_elkpi")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gwjdr"]
-atlas = ExtResource("11_yhmtn")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
-atlas = ExtResource("11_yhmtn")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="Resource" id="Resource_w7ht3"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("23_y5ctq")
+Icon = ExtResource("13_yyih5")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
@@ -100,36 +108,12 @@ visible = false
 [node name="UILayer" type="CanvasLayer" parent="." unique_id=1744404542]
 unique_name_in_owner = true
 
-[node name="BottomRight" type="MarginContainer" parent="UILayer" unique_id=1434174203]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -18.0
-offset_top = -42.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/BottomRight" unique_id=1044632810]
-layout_mode = 2
-
-[node name="ObjectsSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
-layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi")])
-
-[node name="TilesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
-layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501")])
-
 [node name="TopRight" type="MarginContainer" parent="UILayer" unique_id=283586830]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -42.0
-offset_bottom = 42.0
+offset_left = -80.0
+offset_bottom = 72.0
 grow_horizontal = 0
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
@@ -159,10 +143,40 @@ size_flags_horizontal = 8
 texture_normal = SubResource("AtlasTexture_gwjdr")
 texture_pressed = SubResource("AtlasTexture_lvtmh")
 
+[node name="BottomRight" type="MarginContainer" parent="UILayer" unique_id=1434174203]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -42.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/BottomRight" unique_id=1044632810]
+layout_mode = 2
+
+[node name="ObjectsSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
+layout_mode = 2
+SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi")])
+
+[node name="TilesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
+layout_mode = 2
+SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501")])
+
+[node name="BeesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
+layout_mode = 2
+SelectedResources = Array[Object]([SubResource("Resource_w7ht3")])
+
 [node name="HoverPointer" type="Control" parent="UILayer" unique_id=62494922]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("21_0mevm")
+
+[node name="ObjectPreview" parent="UILayer" unique_id=705468323 instance=ExtResource("24_bisgb")]
 
 [node name="ErrorLabel" type="Label" parent="UILayer" unique_id=624382264]
 modulate = Color(0.9835215, 0.31671628, 0.247318, 1)
