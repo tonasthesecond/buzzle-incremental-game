@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/Bee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
+[ext_resource type="PackedScene" uid="uid://cbfj4mro5unew" path="res://objects/bees/QueenBee.tscn" id="24_w7ht3"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
 load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
@@ -66,6 +67,12 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 [sub_resource type="Resource" id="Resource_w7ht3"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("23_y5ctq")
+Icon = ExtResource("13_yyih5")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="Resource" id="Resource_8ktx7"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("24_w7ht3")
 Icon = ExtResource("13_yyih5")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
@@ -169,7 +176,7 @@ SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resourc
 
 [node name="BeesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([SubResource("Resource_w7ht3")])
+SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_8ktx7")])
 
 [node name="HoverPointer" type="Control" parent="UILayer" unique_id=62494922]
 layout_mode = 3

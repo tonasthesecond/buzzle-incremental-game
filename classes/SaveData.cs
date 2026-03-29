@@ -19,7 +19,8 @@ public class SavedHive
 {
     public int X { get; set; }
     public int Y { get; set; }
-    public int BeeCount { get; set; }
+
+    public Dictionary<string, int> BeeCounts { get; set; } = new();
 }
 
 public class SavedTile

@@ -8,7 +8,6 @@ public partial class BeeSystem : GameSystem
     [Signal]
     public delegate void OnBeeSpawnedEventHandler(Bee bee);
 
-    private PackedScene beeScene = GD.Load<PackedScene>("uid://bvxt44oxdw1xf");
     private HashSet<BaseGridObject> claimedObjects = new();
 
     public bool IsClaimed(BaseGridObject obj) => claimedObjects.Contains(obj);
@@ -19,32 +18,34 @@ public partial class BeeSystem : GameSystem
 
     public void SpawnFromSave()
     {
-        Grid? grid = Services.Get<Grid>();
-        foreach (SavedHive saved in GameStore.Save.Hives)
+        var grid = Services.Get<Grid>();
+        foreach (var saved in GameStore.Save.Hives)
         {
-            HiveGridObject? hive =
-                grid.GetObjectAt(new Vector2I(saved.X, saved.Y)) as HiveGridObject;
+            var hive = grid.GetObjectAt(new Vector2I(saved.X, saved.Y)) as HiveGridObject;
             if (hive == null)
                 continue;
-            for (int i = 0; i < saved.BeeCount; i++)
-            {
-                SpawnBee(hive);
-            }
+            foreach (var kv in saved.BeeCounts)
+                for (int i = 0; i < kv.Value; i++)
+                    SpawnBee(kv.Key, hive);
         }
     }
 
     public override void _Process(double delta)
     {
-        Grid? grid = Services.Get<Grid>();
-        BaseFlower[] flowersWithHoney = grid.GetObjectsOfType<BaseFlower>()
+        var grid = Services.Get<Grid>();
+        var flowersWithHoney = grid.GetObjectsOfType<BaseFlower>()
             .Where(f => f.Honey > 0)
             .ToArray();
-        BaseFlower[] flowersWithoutHoney = grid.GetObjectsOfType<BaseFlower>()
+        var flowersWithoutHoney = grid.GetObjectsOfType<BaseFlower>()
             .Where(f => f.Honey <= 0)
             .ToArray();
 
-        foreach (Bee bee in GetIdleBees())
+        foreach (var bee in GetIdleBees())
         {
+            // queens manage their own behavior
+            if (bee is QueenBee)
+                continue;
+
             int harvesters = GetBeesWithJob<HarvesterJob>().Length;
             int pollinators = GetBeesWithJob<PollinatorJob>().Length;
             if (harvesters < flowersWithHoney.Length)
@@ -54,33 +55,48 @@ public partial class BeeSystem : GameSystem
         }
     }
 
-    /// Base spawn bee method.
-    public Bee? SpawnBee(HiveGridObject home)
+    /// Spawn a bee by type name string (used by save load).
+    public Bee? SpawnBee(string typeName, HiveGridObject home)
+    {
+        var scene = GD.Load<PackedScene>($"res://objects/bees/{typeName}.tscn");
+        if (scene == null)
+        {
+            GD.PushError($"[BeeSystem] Missing bee scene: {typeName}");
+            return null;
+        }
+        return SpawnBee(scene, home);
+    }
+
+    /// Spawn a bee by scene (used by placement system).
+    public Bee? SpawnBee(PackedScene scene, HiveGridObject home)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
         {
             GD.Print($"[BeeSystem] Hive at {home.GridPosition} is full ({home.BeeCount} bees)");
             return null;
         }
-        Bee bee = beeScene.Instantiate<Bee>();
+        var bee = scene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home, new IdleJob());
         EmitSignal(SignalName.OnBeeSpawned, bee);
-
         return bee;
     }
 
+    /// Spawn a bee by type (used in code, e.g. BuildDefault).
+    public Bee? SpawnBee<T>(HiveGridObject home)
+        where T : Bee => SpawnBee(typeof(T).Name, home);
+
     public Bee? SpawnBeeAnywhere()
     {
-        HiveGridObject[] hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
+        var hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
         if (hives.Length == 0)
             return null;
-        return SpawnBee(Utils.GetRandom(hives));
+        return SpawnBee<Bee>(Utils.GetRandom(hives));
     }
 
     public Bee[] GetBees()
     {
-        List<Bee> bees = new List<Bee>();
+        var bees = new List<Bee>();
         foreach (Node node in GetTree().GetNodesInGroup("bees"))
             if (node is Bee bee)
                 bees.Add(bee);

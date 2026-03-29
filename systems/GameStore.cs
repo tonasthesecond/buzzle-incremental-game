@@ -19,6 +19,9 @@ public partial class GameStore : Node
     public static Stat BeekeeperEffectZoneSpeedBuff { get; } = new(0.5f);
     public static Stat BeekeeperEffectZoneFadeoutTime { get; } = new(1f);
 
+    public static Stat QueenBeeEffectZoneRadius { get; } = new(32f);
+    public static Stat QueenBeeEffectZoneSpeedBuff { get; } = new(0.5f);
+
     // --- Honey ---
     private static int honey { get; set; } = 10;
     public static int Honey
@@ -77,7 +80,7 @@ public partial class GameStore : Node
             {
                 X = h.GridPosition.X,
                 Y = h.GridPosition.Y,
-                BeeCount = h.BeeCount,
+                BeeCounts = h.GetBeeCounts(),
             })
             .ToList();
     }

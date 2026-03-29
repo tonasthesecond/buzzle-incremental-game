@@ -63,6 +63,7 @@ public partial class PlacementSystem : GameSystem
                 return;
             }
 
+            instance.QueueFree();
             selectedScene = scene;
         };
 
@@ -122,7 +123,7 @@ public partial class PlacementSystem : GameSystem
         highlighted = null;
     }
 
-    /// Handle tile placement on click.
+    /// Handle placement on click.
     public override void _UnhandledInput(InputEvent e)
     {
         if (CurMode == Mode.None)
@@ -130,9 +131,9 @@ public partial class PlacementSystem : GameSystem
         if (e is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
             return;
 
-        Grid grid = Services.Get<Grid>()!;
-        Tilemap tilemap = Services.Get<Tilemap>()!;
-        Vector2I pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
+        var grid = Services.Get<Grid>();
+        var tilemap = Services.Get<Tilemap>();
+        var pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
         FailMessage? fail = null;
 
         switch (CurMode)
@@ -148,8 +149,9 @@ public partial class PlacementSystem : GameSystem
                 break;
 
             case Mode.Bee:
-                if (highlighted is HiveGridObject hive)
-                    Services.Get<BeeSystem>().SpawnBee(hive);
+                // pass selectedScene so the right bee type gets spawned
+                if (selectedScene != null && highlighted is HiveGridObject hive)
+                    Services.Get<BeeSystem>().SpawnBee(selectedScene, hive);
                 break;
 
             case Mode.RemoveTile:

@@ -7,8 +7,8 @@
 
 [node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1935115770]
 custom_minimum_size = Vector2(150, 0)
-offset_right = 48.0
-offset_bottom = 62.0
+offset_right = 150.0
+offset_bottom = 46.0
 theme = ExtResource("1_oq0la")
 script = ExtResource("2_iux3v")
 metadata/_custom_type_script = "uid://dssiiwl3tqxtk"
