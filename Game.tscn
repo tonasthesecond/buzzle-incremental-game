@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bmriyvd8cma8a" path="res://upgrades/UpgradeTree.tscn" id="7_yx171"]
 [ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GreenTile.tscn" id="8_2vekm"]
 [ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
+[ext_resource type="PackedScene" uid="uid://ky0eb4q7ufyw" path="res://objects/BeekeeperEffectZone.tscn" id="8_jsoai"]
 [ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
 [ext_resource type="Resource" uid="uid://be6pjdrb67smq" path="res://resources/RemoveObject.tres" id="9_qjyg3"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="10_0yprl"]
@@ -85,6 +86,8 @@ metadata/_custom_type_script = "uid://bw2wen42y1dki"
 [node name="Tilemap" parent="GameLayer/Grid" unique_id=905306547 instance=ExtResource("3_r0x5m")]
 
 [node name="Camera" parent="GameLayer" unique_id=1085878987 instance=ExtResource("4_sb48q")]
+
+[node name="EffectZoneComponent" parent="GameLayer" unique_id=513508709 instance=ExtResource("8_jsoai")]
 
 [node name="UpgradeLayer" type="Node2D" parent="." unique_id=320393624]
 unique_name_in_owner = true

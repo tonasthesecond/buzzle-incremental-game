@@ -35,7 +35,7 @@ public partial class UpgradesContainer : PanelContainer
     private void OnButtonPressed(UpgradeOption uo)
     {
         // try to buy upgrade
-        if (!uo.Buy(out string? failMessage))
+        if (!uo.Buy(out FailMessage? failMessage))
         {
             // TODO: implement fail message
         }

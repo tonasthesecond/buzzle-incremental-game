@@ -43,7 +43,7 @@ public partial class UpgradeNode : Node2D
 
     private void onDependencyApplied()
     {
-        if (isDependencyMet(out string? _))
+        if (isDependencyMet(out FailMessage? failMessage))
             ShowNode();
         else
             HideNode();
@@ -51,23 +51,26 @@ public partial class UpgradeNode : Node2D
 
     private void onButtonPressed()
     {
-        if (isDependencyMet(out string? failMessage))
+        if (isDependencyMet(out FailMessage? failMessage))
         {
             if (Upgrade.Buy(out failMessage)) { }
             else
+            {
+                Services.Get<ErrorLabel>().ShowError(failMessage);
                 GD.Print($"[UpgradeNode] {failMessage}");
+            }
         }
     }
 
     /// Check if all dependencies are met.
-    private bool isDependencyMet(out string? failMessage)
+    private bool isDependencyMet(out FailMessage? failMessage)
     {
         foreach (NodePath path in Dependencies.Keys)
         {
             var node = GetNode<UpgradeNode>(path);
             if (node.Upgrade.Level < Dependencies[path] || !node.IsShown)
             {
-                failMessage = $"Missing dependency: {path}";
+                failMessage = new FailMessage($"Upgrade not unlocked!");
                 return false;
             }
         }

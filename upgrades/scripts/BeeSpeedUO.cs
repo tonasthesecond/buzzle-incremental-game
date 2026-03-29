@@ -10,11 +10,8 @@ public partial class BeeSpeedUO : UpgradeOption
 
     public override int GetCost() => (Level + 1) * 10;
 
-    // pixels per tick
-    private int x0 = 50;
-
     public override void Apply()
     {
-        GameStore.BeeSpeed = (x0 + Level * IncreaseBy);
+        GameStore.BeeSpeed.AddFlat(Name, IncreaseBy * Level);
     }
 }

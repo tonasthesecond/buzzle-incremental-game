@@ -57,7 +57,7 @@ public partial class BeeSystem : GameSystem
     /// Base spawn bee method.
     public Bee? SpawnBee(HiveGridObject home)
     {
-        if (home.BeeCount >= GameStore.HiveCapacityBee)
+        if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
             return null;
         Bee bee = beeScene.Instantiate<Bee>();
         GetParent().AddChild(bee);

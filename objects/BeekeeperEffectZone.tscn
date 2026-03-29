@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://ky0eb4q7ufyw"]
+
+[ext_resource type="PackedScene" uid="uid://bfmgg3fmm16x0" path="res://components/EffectZoneComponent.tscn" id="1_lpmde"]
+[ext_resource type="Script" uid="uid://d3gq0i7rb3ogn" path="res://objects/BeekeeperEffectZone.cs" id="2_j5o3a"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lpmde"]
+radius = 17.0
+
+[node name="BeekeeperEffectZone" unique_id=513508709 instance=ExtResource("1_lpmde")]
+script = ExtResource("2_j5o3a")
+
+[node name="CollisionShape" parent="." index="0" unique_id=995929508]
+shape = SubResource("CircleShape2D_lpmde")
+debug_color = Color(0.63020587, 0.52664524, 0.16780162, 0.41960785)

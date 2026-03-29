@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bvxt44oxdw1xf"]
+
+[ext_resource type="Script" uid="uid://bc5lu4256k033" path="res://objects/bees/Bee.cs" id="1_rc0pi"]
+[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="2_73f6p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_efjr8"]
+radius = 6.0827627
+
+[node name="Bee" type="CharacterBody2D" unique_id=384287205 groups=["bees"]]
+z_index = 1
+script = ExtResource("1_rc0pi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2116123333]
+texture = ExtResource("2_73f6p")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2058400934]
+shape = SubResource("CircleShape2D_efjr8")

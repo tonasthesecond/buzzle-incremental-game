@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bfmgg3fmm16x0"]
+
+[node name="EffectZoneComponent" type="Area2D" unique_id=513508709]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=995929508]
+unique_name_in_owner = true

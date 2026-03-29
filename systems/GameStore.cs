@@ -11,9 +11,12 @@ public partial class GameStore : Node
     public delegate void OnHoneyChangedEventHandler(int newHoney);
 
     // --- Computed Stats ---
-    public static int HiveCapacityBee { get; set; } = 10;
-    public static float BeeSpeed { get; set; } = 50;
-    public static int BeeCapacityHoney { get; set; } = 1;
+    public static Stat HiveCapacityBee { get; } = new(10f);
+    public static Stat BeeSpeed { get; } = new(50f);
+    public static Stat BeeCapacityHoney { get; } = new(1f);
+
+    public static Stat BeekeeperRadius { get; } = new(32f);
+    public static Stat BeekeeperSpeedBuff { get; } = new(0.5f);
 
     // --- Honey ---
     private static int honey { get; set; } = 10;
