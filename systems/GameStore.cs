@@ -8,12 +8,15 @@ public partial class GameStore : Node
     public static GameStore Instance { get; private set; } = null!;
 
     [Signal]
-    public delegate void OnHoneyChangedEventHandler(int newHoney);
+    public delegate void HoneyChangedEventHandler(int newHoney);
 
     // --- Computed Stats ---
-    public static int HiveCapacityBee { get; set; } = 10;
-    public static float BeeSpeed { get; set; } = 50;
-    public static int BeeCapacityHoney { get; set; } = 1;
+    public static Stat HiveCapacityBee { get; } = new(10f);
+    public static Stat BeeSpeed { get; } = new(50f);
+    public static Stat BeeCapacityHoney { get; } = new(1f);
+
+    public static Stat BeekeeperRadius { get; } = new(32f);
+    public static Stat BeekeeperSpeedBuff { get; } = new(0.5f);
 
     // --- Honey ---
     private static int honey { get; set; } = 10;
@@ -24,7 +27,7 @@ public partial class GameStore : Node
         {
             honey = value;
             Save.Honey = honey;
-            Instance.EmitSignal(SignalName.OnHoneyChanged, value);
+            Instance.EmitSignal(SignalName.HoneyChanged, value);
         }
     }
 
@@ -97,7 +100,7 @@ public partial class GameStore : Node
     {
         foreach (SavedUpgrade saved in Save.Upgrades)
         {
-            var upgrade = GD.Load<UpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
+            var upgrade = GD.Load<IUpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
             if (upgrade == null)
             {
                 GD.PushError($"[GameStore] Missing upgrade: {saved.Id}");

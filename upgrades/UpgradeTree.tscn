@@ -2,34 +2,24 @@
 
 [ext_resource type="Script" uid="uid://blprwswd4po86" path="res://upgrades/UpgradeTree.cs" id="1_wyc47"]
 [ext_resource type="PackedScene" uid="uid://bcyt4rofmmeik" path="res://upgrades/UpgradeNode.tscn" id="2_5s8lu"]
-[ext_resource type="Resource" uid="uid://cg1og3ogox1mo" path="res://upgrades/resources/BeeSpeed.tres" id="3_m26cu"]
-[ext_resource type="Resource" uid="uid://cq35dfbhioq0m" path="res://upgrades/resources/BeeCapacityHoney.tres" id="4_dq57c"]
-[ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="4_vvd1a"]
-[ext_resource type="Script" uid="uid://cuyp0jsj48rwu" path="res://upgrades/scripts/BeeSpeedUO.cs" id="5_vvd1a"]
-
-[sub_resource type="Resource" id="Resource_hmr6f"]
-script = ExtResource("5_vvd1a")
-IncreaseBy = 20
-metadata/_custom_type_script = "uid://cuyp0jsj48rwu"
+[ext_resource type="Resource" uid="uid://dw881vtugr54q" path="res://upgrades/resources/BeekeepersWarmth.tres" id="3_ea44d"]
+[ext_resource type="Resource" uid="uid://b5wwqnpr1wnyr" path="res://upgrades/resources/MoreSmoke.tres" id="4_dq57c"]
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_wyc47")
 
-[node name="BeeSpeed" parent="." unique_id=905124108 instance=ExtResource("2_5s8lu")]
-position = Vector2(-64, 0)
-UpgradeResource = ExtResource("3_m26cu")
-Icon = ExtResource("4_vvd1a")
+[node name="BeekeepersWarmth" parent="." unique_id=643946242 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, -64)
+UpgradeResource = ExtResource("3_ea44d")
 
-[node name="AdvancedBeeSpeed" parent="." unique_id=1542976833 instance=ExtResource("2_5s8lu")]
-position = Vector2(-64, -128)
-UpgradeResource = SubResource("Resource_hmr6f")
-Icon = ExtResource("4_vvd1a")
+[node name="MoreSmoke" parent="." unique_id=566355151 instance=ExtResource("2_5s8lu")]
+position = Vector2(-128, -64)
+UpgradeResource = ExtResource("4_dq57c")
 Dependencies = {
-NodePath("../BeeSpeed"): 2
+NodePath("../BeekeepersWarmth"): 1
 }
 
-[node name="BeeCapacityHoney" parent="." unique_id=893593381 instance=ExtResource("2_5s8lu")]
-position = Vector2(64, 0)
-UpgradeResource = ExtResource("4_dq57c")
+[node name="FasterBees" parent="." unique_id=186426185 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, 64)

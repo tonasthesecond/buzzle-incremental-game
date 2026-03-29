@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BeekeeperEffectZoneRadiusUO" format=3 uid="uid://b5wwqnpr1wnyr"]
+
+[ext_resource type="Script" uid="uid://b5gptt5qf7qnq" path="res://upgrades/scripts/BeekeeperEffectZoneRadiusUO.cs" id="1_jnijr"]
+[ext_resource type="Script" uid="uid://bkk0od77fveep" path="res://resources/scale_models/PolynomialModel.cs" id="1_phm7d"]
+
+[sub_resource type="Resource" id="Resource_s5sup"]
+script = ExtResource("1_phm7d")
+Exponent = 1.2
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[resource]
+script = ExtResource("1_jnijr")
+Name = "More Smoke"
+MaxLevel = 3
+CostScaler = SubResource("Resource_s5sup")
+metadata/_custom_type_script = "uid://b5gptt5qf7qnq"

@@ -1,262 +1,250 @@
 {
-  "Honey": 16,
+  "Honey": 2000,
   "Upgrades": [
-	{
-	  "Id": "AdvancedBeeSpeed",
-	  "Level": 0
-	},
-	{
-	  "Id": "BeeCapacityHoney",
-	  "Level": 0
-	},
-	{
-	  "Id": "BeeSpeed",
-	  "Level": 0
-	},
-	{
-	  "Id": "HiveCapacityBee",
-	  "Level": 0
-	}
+    {
+      "Id": "BeekeepersWarmth",
+      "Level": 0
+    }
   ],
   "Hives": [
-	{
-	  "X": 2,
-	  "Y": 2,
-	  "BeeCount": 5
-	}
+    {
+      "X": 2,
+      "Y": 2,
+      "BeeCount": 10
+    }
   ],
   "Tiles": [
-	{
-	  "X": 0,
-	  "Y": 0,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 0,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 0,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 0,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 0,
-	  "Y": 4,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 0,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 4,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 0,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 4,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 0,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 4,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 4,
-	  "Y": 0,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 4,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 4,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 4,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 4,
-	  "Y": 4,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 5,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 6,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 5,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 5,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": -1,
-	  "Y": 1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": -1,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": -1,
-	  "Y": 3,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": -2,
-	  "Y": 2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": -1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": -1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": -1,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": -2,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 1,
-	  "Y": 5,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 3,
-	  "Y": 5,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 5,
-	  "Type": "GreenTile"
-	},
-	{
-	  "X": 2,
-	  "Y": 6,
-	  "Type": "GreenTile"
-	}
+    {
+      "X": 0,
+      "Y": 0,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 0,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 0,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 0,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 0,
+      "Y": 4,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 0,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 4,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 0,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 4,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 0,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 4,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 4,
+      "Y": 0,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 4,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 4,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 4,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 4,
+      "Y": 4,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 5,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 6,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 5,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 5,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": -1,
+      "Y": 1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": -1,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": -1,
+      "Y": 3,
+      "Type": "GreenTile"
+    },
+    {
+      "X": -2,
+      "Y": 2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": -1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": -1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": -1,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": -2,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 1,
+      "Y": 5,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 3,
+      "Y": 5,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 5,
+      "Type": "GreenTile"
+    },
+    {
+      "X": 2,
+      "Y": 6,
+      "Type": "GreenTile"
+    }
   ],
   "Objects": [
-	{
-	  "X": 2,
-	  "Y": 2,
-	  "Type": "HiveGridObject"
-	},
-	{
-	  "X": 0,
-	  "Y": 1,
-	  "Type": "BaseFlower"
-	},
-	{
-	  "X": 4,
-	  "Y": 0,
-	  "Type": "BaseFlower"
-	},
-	{
-	  "X": 1,
-	  "Y": 4,
-	  "Type": "BaseFlower"
-	},
-	{
-	  "X": 3,
-	  "Y": 3,
-	  "Type": "BaseFlower"
-	}
+    {
+      "X": 2,
+      "Y": 2,
+      "Type": "HiveGridObject"
+    },
+    {
+      "X": 0,
+      "Y": 1,
+      "Type": "BaseFlower"
+    },
+    {
+      "X": 4,
+      "Y": 0,
+      "Type": "BaseFlower"
+    },
+    {
+      "X": 1,
+      "Y": 4,
+      "Type": "BaseFlower"
+    },
+    {
+      "X": 3,
+      "Y": 3,
+      "Type": "BaseFlower"
+    }
   ]
 }

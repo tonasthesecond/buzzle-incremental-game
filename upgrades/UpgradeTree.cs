@@ -18,7 +18,11 @@ public partial class UpgradeTree : Control
     public override void _Ready()
     {
         foreach (UpgradeNode node in nodes)
+        {
+            if (node.Upgrade == null)
+                continue;
             node.Upgrade.Applied += () => QueueRedraw();
+        }
     }
 
     public override void _Draw()
@@ -45,17 +49,17 @@ public partial class UpgradeTree : Control
         }
     }
 
-    public UpgradeOption[] GetUpgrades()
+    public IUpgradeOption[] GetUpgrades()
     {
         using var dir = DirAccess.Open(UpgradePath);
         if (dir == null)
         {
             GD.PrintErr($"Could not open path: {UpgradePath}");
-            return Array.Empty<UpgradeOption>();
+            return Array.Empty<IUpgradeOption>();
         }
         return dir.GetFiles()
             .Where(file => file.EndsWith(".tres"))
-            .Select(file => GD.Load<UpgradeOption>(UpgradePath + file))
+            .Select(file => GD.Load<IUpgradeOption>(UpgradePath + file))
             .Where(upgrade => upgrade != null)
             .ToArray();
     }

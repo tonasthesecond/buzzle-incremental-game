@@ -17,4 +17,6 @@ public partial class Utils : RefCounted
     }
 
     public static T GetRandom<T>(T[] array) => array[GD.Randi() % array.Length];
+
+    public static float PixelsToTiles(float pixels) => pixels / GameStore.TILE_SIZE;
 }

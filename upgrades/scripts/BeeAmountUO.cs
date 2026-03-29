@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class BeeAmountUO : UpgradeOption
+public partial class BeeAmountUO : IUpgradeOption
 {
     public override string GetText()
     {
@@ -13,7 +13,7 @@ public partial class BeeAmountUO : UpgradeOption
 
     public override void Apply() => Services.Get<BeeSystem>().SpawnBeeAnywhere();
 
-    public override bool FailCondition(out string? fail_message)
+    public override bool FailCondition(out FailMessage? fail_message)
     {
         // TODO: check if there's enough space
         fail_message = null;

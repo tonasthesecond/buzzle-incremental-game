@@ -7,9 +7,10 @@ public partial class Bee : Node2D
 
     public IBeeJob job = new IdleJob();
     public required HiveGridObject Home;
+    public bool IsAnimating { get; private set; }
     public int carryingHoney = 0;
     public Vector2 targetPosition;
-    public bool IsAnimating { get; private set; }
+    public Stat Speed = new(() => GameStore.BeeSpeed.Value);
 
     // cached services
     public Grid? Grid { get; private set; } = null!;
@@ -52,9 +53,7 @@ public partial class Bee : Node2D
                 {
                     orbitAngle =
                         (GlobalPosition - orbitCenter).Angle()
-                        + orbitDir
-                            * (GameStore.BeeSpeed / orbitRadius)
-                            * (float)GetProcessDeltaTime();
+                        + orbitDir * (Speed.Value / orbitRadius) * (float)GetProcessDeltaTime();
                 }
             ),
             0f,
@@ -90,14 +89,13 @@ public partial class Bee : Node2D
 
         if (IsAnimating)
         {
-            orbitAngle +=
-                orbitDir * (GameStore.BeeSpeed / orbitRadius) * orbitSpeedMult * (float)delta;
+            orbitAngle += orbitDir * (Speed.Value / orbitRadius) * orbitSpeedMult * (float)delta;
             var orbitTarget =
                 orbitCenter
                 + new Vector2(Mathf.Cos(orbitAngle), Mathf.Sin(orbitAngle)) * orbitRadius;
             GlobalPosition = GlobalPosition.MoveToward(
                 orbitTarget,
-                GameStore.BeeSpeed * orbitSpeedMult * (float)delta
+                Speed.Value * orbitSpeedMult * (float)delta
             );
             sprite.FlipH = orbitDir < 0 ? Mathf.Sin(orbitAngle) < 0 : Mathf.Sin(orbitAngle) > 0;
             latchedFlipH = sprite.FlipH;
@@ -126,12 +124,13 @@ public partial class Bee : Node2D
     /// Move toward target position.
     void Move(double delta)
     {
-        Position = Position.MoveToward(targetPosition, GameStore.BeeSpeed * (float)delta);
+        Position = Position.MoveToward(targetPosition, Speed.Value * (float)delta);
         latchedFlipH = targetPosition.X < Position.X;
         sprite.FlipH = latchedFlipH;
     }
 
     private float _fadeTarget = 0f;
+    private Tween? fadeTween;
 
     /// Tween the bee's opacity.
     public void FadeTo(float alpha, float duration = 0.3f)
@@ -140,9 +139,11 @@ public partial class Bee : Node2D
             return;
         _fadeTarget = alpha;
         Visible = true;
-        var tween = CreateTween();
-        tween.TweenProperty(this, "modulate:a", alpha, duration);
+        if (fadeTween != null)
+            fadeTween.Kill();
+        fadeTween = CreateTween();
+        fadeTween.TweenProperty(this, "modulate:a", alpha, duration);
         if (alpha == 0f)
-            tween.TweenCallback(Callable.From(() => Visible = false));
+            fadeTween.TweenCallback(Callable.From(() => Visible = false));
     }
 }

@@ -66,7 +66,7 @@ public class HarvesterJob : IBeeJob
                     return;
                 } // picked clean mid-flight
 
-                int amount = Mathf.Min(GameStore.BeeCapacityHoney, flower.Honey);
+                int amount = Mathf.Min((int)GameStore.BeeCapacityHoney.Value, flower.Honey);
                 bee.carryingHoney += amount;
                 flower.Honey -= amount;
                 bee.MoveTo(bee.Home.GlobalPosition);
@@ -127,7 +127,7 @@ public class PollinatorJob : IBeeJob
                 if (flower == null)
                     return;
 
-                bee.carryingHoney = bee.Home.TakePossible(GameStore.BeeCapacityHoney);
+                bee.carryingHoney = bee.Home.TakePossible((int)GameStore.BeeCapacityHoney.Value);
                 if (bee.carryingHoney == 0)
                     return;
 

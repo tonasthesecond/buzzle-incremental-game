@@ -1,6 +1,7 @@
 using Godot;
 
-public abstract partial class UpgradeOption : Resource
+[GlobalClass]
+public abstract partial class IUpgradeOption : Resource
 {
     [Signal]
     public delegate void AppliedEventHandler();
@@ -9,48 +10,53 @@ public abstract partial class UpgradeOption : Resource
     public string Name { get; set; } = "Upgrade";
 
     [Export]
-    public int Level { get; set; } = 0; // How many times this upgrade has been bought
-
-    [Export]
     public int MaxLevel { get; set; } = -1; // -1 = unlimited
 
+    [Export]
+    public IScaleModel CostScaler { get; set; }
+
+    public int Level { get; set; } = 0; // How many times this upgrade has been bought
+
     public abstract string GetText(); // Text to display
-    public abstract int GetCost(); // Cost to buy
     public abstract void Apply(); // Apply upgrade
 
+    public virtual int GetCost() => (int)CostScaler.Get(Level);
+
+    public bool IsEnough() => GetCost() <= GameStore.Honey;
+
     // Check if this upgrade can be bought, and if not, return a message
-    public virtual bool FailCondition(out string? fail_message)
+    public virtual bool FailCondition(out FailMessage? fail_message)
     {
         fail_message = null;
         return false;
     }
 
-    public bool Buy(out string? fail_message)
+    public bool Buy(out FailMessage? failMessage)
     {
         // check if enough honey and max level
         if (MaxLevel != -1 && Level >= MaxLevel)
         {
-            fail_message = "Already at max level";
+            failMessage = new FailMessage("Already at max level!");
             return false;
         }
         int cost = GetCost();
         if (GameStore.Honey < cost)
         {
-            fail_message = "Not enough honey";
+            failMessage = new FailMessage("Not enough honey!");
             return false;
         }
 
         // check any other conditions
-        if (FailCondition(out fail_message))
+        if (FailCondition(out failMessage))
             return false;
 
         // buy upgrade
         GameStore.Honey -= cost;
         Level++;
-        EmitSignal(SignalName.Applied);
         Apply();
+        EmitSignal(SignalName.Applied);
 
-        fail_message = null;
+        failMessage = null;
         return true;
     }
 }

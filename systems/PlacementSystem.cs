@@ -17,13 +17,13 @@ public partial class PlacementSystem : GameSystem
         RemoveObject,
     }
 
-    private Mode _mode = Mode.None;
-    private Mode mode
+    private Mode curMode = Mode.None;
+    public Mode CurMode
     {
-        get => _mode;
+        get => curMode;
         set
         {
-            _mode = value;
+            curMode = value;
             EmitSignal(SignalName.OnModeChanged, (int)value);
         }
     }
@@ -35,12 +35,12 @@ public partial class PlacementSystem : GameSystem
         {
             if (resource.ResourceName == "RemoveTile")
             {
-                mode = Mode.RemoveTile;
+                CurMode = Mode.RemoveTile;
                 return;
             }
             if (resource.ResourceName == "RemoveObject")
             {
-                mode = Mode.RemoveObject;
+                CurMode = Mode.RemoveObject;
                 return;
             }
             if (resource is not PackedScene scene)
@@ -48,12 +48,12 @@ public partial class PlacementSystem : GameSystem
 
             var instance = scene.Instantiate();
             if (instance is BaseTile)
-                mode = Mode.Tile;
+                CurMode = Mode.Tile;
             else if (instance is BaseGridObject)
-                mode = Mode.Object;
+                CurMode = Mode.Object;
             else
             {
-                mode = Mode.None;
+                CurMode = Mode.None;
                 return;
             }
 
@@ -63,55 +63,53 @@ public partial class PlacementSystem : GameSystem
         SignalBus.Instance.ResourceUnselected += () =>
         {
             selectedScene = null;
-            mode = Mode.None;
+            CurMode = Mode.None;
         };
     }
 
     /// Handle tile placement on click.
-    public override void _UnhandledInput(InputEvent e)
+    public override void _UnhandledInput(InputEvent @event)
     {
-        if (mode == Mode.None)
+        if (CurMode == Mode.None)
             return;
-        if (e is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
+        if (@event is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
             return;
 
         // operate based on mode
-        var grid = Services.Get<Grid>();
-        var tilemap = Services.Get<Tilemap>();
-        var pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
-        switch (mode)
+        Grid grid = Services.Get<Grid>()!;
+        Tilemap tilemap = Services.Get<Tilemap>()!;
+        Vector2I pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
+        FailMessage? failMessage = null;
+
+        switch (CurMode)
         {
             case Mode.Tile:
                 if (selectedScene == null)
                     return;
-                if (!grid.PlaceTile(selectedScene, pos, out FailMessage? tileFail))
-                    Services.Get<ErrorLabel>().ShowError(tileFail);
-                if (tileFail != null)
-                    GD.Print($"[PlacementSystem] {tileFail.Log}");
+                grid.PlaceTile(selectedScene, pos, out failMessage);
                 break;
 
             case Mode.Object:
                 if (selectedScene == null)
                     return;
-                if (!grid.PlaceObject(selectedScene, pos, out FailMessage? objFail))
-                    Services.Get<ErrorLabel>().ShowError(objFail);
-                if (objFail != null)
-                    GD.Print($"[PlacementSystem] {objFail.Log}");
+                grid.PlaceObject(selectedScene, pos, out failMessage);
                 break;
 
             case Mode.RemoveTile:
-                if (!grid.RemoveTile(pos, out FailMessage? removeTileFail))
-                    Services.Get<ErrorLabel>().ShowError(removeTileFail);
-                if (removeTileFail != null)
-                    GD.Print($"[PlacementSystem] {removeTileFail.Log}");
+                grid.RemoveTile(pos, out failMessage);
                 break;
 
             case Mode.RemoveObject:
-                if (!grid.RemoveObject(pos, out FailMessage? removeObjFail))
-                    Services.Get<ErrorLabel>().ShowError(removeObjFail);
-                if (removeObjFail != null)
-                    GD.Print($"[PlacementSystem] {removeObjFail.Log}");
+                grid.RemoveObject(pos, out failMessage);
                 break;
         }
+
+        if (failMessage != null)
+        {
+            Services.Get<ErrorLabel>().ShowError(failMessage);
+            GD.Print($"[PlacementSystem] {failMessage.Log}");
+        }
+
+        GetViewport().SetInputAsHandled();
     }
 }
