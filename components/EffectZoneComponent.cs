@@ -3,9 +3,8 @@ using Godot;
 public abstract partial class EffectZoneComponent : Area2D
 {
     public Stat Radius { get; set; } = new(GameStore.TILE_SIZE / 2);
+    public Stat FadeoutTime { get; set; } = new(1f);
 
-    [Export]
-    public float FadeoutTime = 1f;
     protected Timer fadeTimer;
 
     protected CollisionShape2D collisionShape;
@@ -22,7 +21,7 @@ public abstract partial class EffectZoneComponent : Area2D
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
 
         // fade timer
-        fadeTimer = new Timer { OneShot = true, WaitTime = FadeoutTime };
+        fadeTimer = new Timer { OneShot = true, WaitTime = FadeoutTime.Value };
         AddChild(fadeTimer);
         fadeTimer.Timeout += () =>
         {

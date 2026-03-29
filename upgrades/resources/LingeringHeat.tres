@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BeekeeperEffectZoneFadeoutTimeUO" format=3 uid="uid://cwudm6t0aihqo"]
+
+[ext_resource type="Script" uid="uid://b5iugn0740237" path="res://upgrades/scripts/BeekeeperEffectZoneFadeoutTimeUO.cs" id="1_h2ffp"]
+[ext_resource type="Script" uid="uid://bkk0od77fveep" path="res://resources/scale_models/PolynomialModel.cs" id="1_yuwvn"]
+
+[sub_resource type="Resource" id="Resource_yk1kh"]
+script = ExtResource("1_yuwvn")
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[resource]
+script = ExtResource("1_h2ffp")
+Name = "Lingering Heat"
+MaxLevel = 5
+CostScaler = SubResource("Resource_yk1kh")
+metadata/_custom_type_script = "uid://b5iugn0740237"
