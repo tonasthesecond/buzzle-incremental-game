@@ -62,7 +62,7 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
                         hive.ObjectName + $" ({hive.BeeCount}/{GameStore.HiveCapacityBee.Value})"
                     );
                 };
-                onBeeAdded = (Bee bee) => setTitle();
+                onBeeAdded = (BeeEntity bee) => setTitle();
                 hive.BeeAdded += onBeeAdded;
                 setTitle();
                 SetDescription(hive.Description);

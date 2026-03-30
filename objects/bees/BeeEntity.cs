@@ -1,9 +1,12 @@
 using Godot;
 
-public partial class Bee : Node2D
+public partial class BeeEntity : Node2D
 {
     [Signal]
-    public delegate void ArrivedEventHandler(Bee bee);
+    public delegate void ArrivedEventHandler(BeeEntity bee);
+
+    [Export]
+    public BeeResource Definition { get; private set; } = new BaseBeeResource();
 
     public IBeeJob job = new IdleJob();
     public required HiveGridObject Home;
@@ -12,17 +15,18 @@ public partial class Bee : Node2D
     public Vector2 targetPosition;
     public Stat Speed = new(() => GameStore.BeeSpeed.Value);
     public Stat HoneyCapacity = new(() => GameStore.BeeCapacityHoney.Value);
-
-    // cached services
-    public Grid? Grid { get; private set; } = null!;
-    public BeeSystem? BeeSystem { get; private set; } = null!;
-
-    private Sprite2D sprite = null!;
-    private CpuParticles2D drip = null!;
-    private float phase;
-
     public bool IsMoving =>
         Position.DistanceSquaredTo(targetPosition) >= Mathf.Pow(GameStore.TILE_SIZE / 20f, 2);
+    private float phase;
+    public float BopAmplitude = 1.5f;
+    public float BopSpeed = 3f;
+    public bool? FlipOverride = null;
+
+    // cached services
+    private Grid grid = null!;
+    private BeeSystem beeSystem = null!;
+    public Sprite2D Sprite = null!;
+    private CpuParticles2D drip = null!;
 
     public void MoveTo(Vector2 position) => targetPosition = position;
 
@@ -64,16 +68,16 @@ public partial class Bee : Node2D
         tween.Finished += () =>
         {
             IsAnimating = false;
-            sprite.FlipH = latchedFlipH;
+            Sprite.FlipH = latchedFlipH;
         };
     }
 
     public override void _Ready()
     {
         phase = GD.Randf() * Mathf.Tau;
-        sprite = GetNode<Sprite2D>("Sprite2D");
-        Grid = Services.Get<Grid>();
-        BeeSystem = Services.Get<BeeSystem>();
+        Sprite = GetNode<Sprite2D>("Sprite2D")!;
+        grid = Services.Get<Grid>()!;
+        beeSystem = Services.Get<BeeSystem>()!;
         drip = Services.Get<ParticleSystem>().AttachHoneyDrip(this);
         Callable.From(() => targetPosition = Position).CallDeferred();
     }
@@ -98,27 +102,29 @@ public partial class Bee : Node2D
                 orbitTarget,
                 Speed.Value * orbitSpeedMult * (float)delta
             );
-            sprite.FlipH = orbitDir < 0 ? Mathf.Sin(orbitAngle) < 0 : Mathf.Sin(orbitAngle) > 0;
-            latchedFlipH = sprite.FlipH;
-            sprite.Position = new Vector2(0, 1.5f * Mathf.Sin(orbitAngle * 2f));
+            Sprite.FlipH = orbitDir < 0 ? Mathf.Sin(orbitAngle) < 0 : Mathf.Sin(orbitAngle) > 0;
+            latchedFlipH = Sprite.FlipH;
+            Sprite.Position = new Vector2(0, 1.5f * Mathf.Sin(orbitAngle * 2f));
         }
         else
         {
-            sprite.FlipH = latchedFlipH;
+            Sprite.FlipH = latchedFlipH;
             if (IsMoving)
                 Move(delta);
-            sprite.Position = new Vector2(sprite.Position.X, Mathf.Sin(phase) * 1.5f); // always bob
+            // always bob so there's no snap on landing
+            Sprite.Position = new Vector2(Sprite.Position.X, Mathf.Sin(phase) * BopAmplitude);
         }
-        phase += (float)delta * 3f;
+        phase += (float)delta * BopSpeed;
     }
 
-    /// Initialize bee at home hive with a starting job.
-    public void Setup(HiveGridObject home, IBeeJob job)
+    /// Initialize bee at home hive.
+    public void Setup(HiveGridObject home)
     {
         Home = home;
         home.AddBee(this);
+        Definition.ApplyStats(this);
         GlobalPosition = Home.GlobalPosition;
-        SetJob(job);
+        SetJob(Definition.SpawnJob());
         Modulate = Colors.Transparent;
         Visible = false;
         _fadeTarget = 0f;
@@ -128,8 +134,8 @@ public partial class Bee : Node2D
     void Move(double delta)
     {
         Position = Position.MoveToward(targetPosition, Speed.Value * (float)delta);
-        latchedFlipH = targetPosition.X < Position.X;
-        sprite.FlipH = latchedFlipH;
+        latchedFlipH = FlipOverride ?? (targetPosition.X < Position.X);
+        Sprite.FlipH = latchedFlipH;
     }
 
     private float _fadeTarget = 0f;

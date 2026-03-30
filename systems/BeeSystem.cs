@@ -6,7 +6,7 @@ using Godot;
 public partial class BeeSystem : GameSystem
 {
     [Signal]
-    public delegate void OnBeeSpawnedEventHandler(Bee bee);
+    public delegate void OnBeeSpawnedEventHandler(BeeEntity bee);
 
     private HashSet<BaseGridObject> claimedObjects = new();
 
@@ -33,80 +33,67 @@ public partial class BeeSystem : GameSystem
     public override void _Process(double delta)
     {
         var grid = Services.Get<Grid>();
-        var flowersWithHoney = grid.GetObjectsOfType<BaseFlower>()
-            .Where(f => f.Honey > 0)
-            .ToArray();
-        var flowersWithoutHoney = grid.GetObjectsOfType<BaseFlower>()
-            .Where(f => f.Honey <= 0)
-            .ToArray();
+        var withHoney = grid.GetObjectsOfType<BaseFlower>().Where(f => f.Honey > 0).ToArray();
+        var withoutHoney = grid.GetObjectsOfType<BaseFlower>().Where(f => f.Honey <= 0).ToArray();
 
         foreach (var bee in GetIdleBees())
         {
-            // queens manage their own behavior
-            if (bee is QueenBee)
+            if (!bee.Definition.ReceivesWorkJobs)
                 continue;
-
-            int harvesters = GetBeesWithJob<HarvesterJob>().Length;
-            int pollinators = GetBeesWithJob<PollinatorJob>().Length;
-            if (harvesters < flowersWithHoney.Length)
-                bee.SetJob(new HarvesterJob());
-            else if (pollinators < flowersWithoutHoney.Length)
-                bee.SetJob(new PollinatorJob());
+            var job = bee.Definition.SelectJob(bee, withHoney, withoutHoney);
+            if (job != null)
+                bee.SetJob(job);
         }
     }
 
-    /// Spawn a bee by type name string (used by save load).
-    public Bee? SpawnBee(string typeName, HiveGridObject home)
+    /// Spawn a bee by scene name (used by save load).
+    public BeeEntity? SpawnBee(string sceneName, HiveGridObject home)
     {
-        var scene = GD.Load<PackedScene>($"res://objects/bees/{typeName}.tscn");
+        var scene = GD.Load<PackedScene>($"res://objects/bees/{sceneName}.tscn");
         if (scene == null)
         {
-            GD.PushError($"[BeeSystem] Missing bee scene: {typeName}");
+            GD.PushError($"[BeeSystem] Missing bee scene: {sceneName}");
             return null;
         }
         return SpawnBee(scene, home);
     }
 
     /// Spawn a bee by scene (used by placement system).
-    public Bee? SpawnBee(PackedScene scene, HiveGridObject home)
+    public BeeEntity? SpawnBee(PackedScene scene, HiveGridObject home)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
         {
             GD.Print($"[BeeSystem] Hive at {home.GridPosition} is full ({home.BeeCount} bees)");
             return null;
         }
-        var bee = scene.Instantiate<Bee>();
+        var bee = scene.Instantiate<BeeEntity>();
         GetParent().AddChild(bee);
-        bee.Setup(home, new IdleJob());
+        bee.Setup(home);
         EmitSignal(SignalName.OnBeeSpawned, bee);
         return bee;
     }
 
-    /// Spawn a bee by type (used in code, e.g. BuildDefault).
-    public Bee? SpawnBee<T>(HiveGridObject home)
-        where T : Bee => SpawnBee(typeof(T).Name, home);
-
-    public Bee? SpawnBeeAnywhere()
+    public BeeEntity? SpawnBeeAnywhere(PackedScene scene)
     {
         var hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
         if (hives.Length == 0)
             return null;
-        return SpawnBee<Bee>(Utils.GetRandom(hives));
+        return SpawnBee(scene, Utils.GetRandom(hives));
     }
 
-    public Bee[] GetBees()
+    public BeeEntity[] GetBees()
     {
-        var bees = new List<Bee>();
+        var bees = new List<BeeEntity>();
         foreach (Node node in GetTree().GetNodesInGroup("bees"))
-            if (node is Bee bee)
+            if (node is BeeEntity bee)
                 bees.Add(bee);
         return bees.ToArray();
     }
 
     public int GetBeeCount() => GetBees().Length;
 
-    public Bee[] GetIdleBees() => GetBees().Where(b => b.job is IdleJob).ToArray();
+    public BeeEntity[] GetIdleBees() => GetBees().Where(b => b.job is IdleJob).ToArray();
 
-    public Bee[] GetBeesWithJob<T>()
+    public BeeEntity[] GetBeesWithJob<T>()
         where T : IBeeJob => GetBees().Where(b => b.job is T).ToArray();
 }

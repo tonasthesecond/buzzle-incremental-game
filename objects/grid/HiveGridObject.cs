@@ -5,13 +5,13 @@ using Godot;
 public partial class HiveGridObject : BaseGridObject
 {
     [Signal]
-    public delegate void BeeAddedEventHandler(Bee bee);
+    public delegate void BeeAddedEventHandler(BeeEntity bee);
 
-    private List<Bee> bees = new();
+    private List<BeeEntity> bees = new();
 
     public int BeeCount => bees.Count;
 
-    public void AddBee(Bee bee)
+    public void AddBee(BeeEntity bee)
     {
         bees.Add(bee);
         bee.Home = this;

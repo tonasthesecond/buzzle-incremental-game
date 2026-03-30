@@ -7,7 +7,7 @@ public partial class BaseFlower : BaseGridObject
     public int HoneyCost { get; set; } = 1;
     public int HoneyAmount { get; set; } = 2;
 
-    private int honey = 0;
+    private int honey = 0; // honey in the flower, tracks pollination progress and output as well
     public int Honey
     {
         get => honey;
@@ -24,6 +24,7 @@ public partial class BaseFlower : BaseGridObject
         }
     }
 
+    /// Pollinate the flower, adding honey.
     public void Pollinate(int honeyAddition)
     {
         Honey += honeyAddition;
@@ -33,6 +34,14 @@ public partial class BaseFlower : BaseGridObject
             IsPollinated = true;
             Honey = HoneyAmount;
         }
+    }
+
+    /// How many honey is required to pollinate this flower.
+    public int HoneyRequired()
+    {
+        if (!IsPollinated)
+            return HoneyCost - Honey;
+        return 0;
     }
 
     public override void _Ready()
