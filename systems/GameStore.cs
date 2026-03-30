@@ -22,6 +22,13 @@ public partial class GameStore : Node
     public static Stat QueenBeeEffectZoneRadius { get; } = new(32f);
     public static Stat QueenBeeEffectZoneSpeedBuff { get; } = new(0.5f);
 
+    public static Stat FatBeeSpeedDebuff { get; } = new(0.4f);
+    public static Stat FatBeeCapacityHoneyBonus { get; } = new(5f);
+
+    public static Stat RocketBeeSpeedBuff { get; } = new(2f);
+    public static Stat RocketBeeChargeSpeedDebuff { get; } = new(0.2f);
+    public static Stat RocketBeeChargeTime { get; } = new(2000f);
+
     // --- Honey ---
     private static int honey { get; set; } = 10;
     public static int Honey

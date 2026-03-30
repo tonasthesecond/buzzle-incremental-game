@@ -29,7 +29,7 @@ public abstract partial class EffectZoneComponent : Area2D
             active = false;
             // call exited event for all bees in the zone
             foreach (var body in GetOverlappingBodies())
-                if (body is Bee bee)
+                if (body is BeeEntity bee)
                     OnBeeExited(bee);
         };
 
@@ -39,13 +39,13 @@ public abstract partial class EffectZoneComponent : Area2D
 
     private void OnBodyEntered(Node2D body)
     {
-        if (body is Bee bee && active)
+        if (body is BeeEntity bee && active)
             OnBeeEntered(bee);
     }
 
     private void OnBodyExited(Node2D body)
     {
-        if (body is Bee bee)
+        if (body is BeeEntity bee)
             OnBeeExited(bee);
     }
 
@@ -55,7 +55,7 @@ public abstract partial class EffectZoneComponent : Area2D
         active = true;
         Show();
         foreach (var body in GetOverlappingBodies())
-            if (body is Bee bee)
+            if (body is BeeEntity bee)
                 OnBeeEntered(bee);
     }
 
@@ -64,6 +64,6 @@ public abstract partial class EffectZoneComponent : Area2D
         fadeTimer.Start();
     }
 
-    protected abstract void OnBeeEntered(Bee bee);
-    protected abstract void OnBeeExited(Bee bee);
+    protected abstract void OnBeeEntered(BeeEntity bee);
+    protected abstract void OnBeeExited(BeeEntity bee);
 }

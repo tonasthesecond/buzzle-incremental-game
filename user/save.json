@@ -1,5 +1,5 @@
 {
-  "Honey": 1998,
+  "Honey": 1992,
   "Upgrades": [
     {
       "Id": "BeekeepersWarmth",
@@ -23,8 +23,10 @@
       "X": 2,
       "Y": 2,
       "BeeCounts": {
-        "Bee": 1,
-        "QueenBee": 1
+        "BaseBee": 1,
+        "QueenBee": 1,
+        "FatBee": 1,
+        "RocketBee": 1
       }
     }
   ],
@@ -263,3 +265,4 @@
     }
   ]
 }
+

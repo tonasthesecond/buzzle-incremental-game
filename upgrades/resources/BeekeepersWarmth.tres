@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BeekeeperSpeedBuffUO" format=3 uid="uid://dw881vtugr54q"]
+[gd_resource type="Resource" script_class="BeekeeperEffectZoneSpeedBuffUO" format=3 uid="uid://dw881vtugr54q"]
 
 [ext_resource type="Script" uid="uid://chybk5t5vu0yc" path="res://resources/scale_models/LinearModel.cs" id="1_0fuoy"]
 [ext_resource type="Script" uid="uid://db5tsqjg333o0" path="res://upgrades/scripts/BeekeeperEffectZoneSpeedBuffUO.cs" id="2_kj4qs"]
