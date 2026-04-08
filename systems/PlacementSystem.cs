@@ -55,7 +55,7 @@ public partial class PlacementSystem : GameSystem
                 CurMode = Mode.Tile;
             else if (instance is BaseGridObject)
                 CurMode = Mode.Object;
-            else if (instance is BeeEntity)
+            else if (instance is Bee)
                 CurMode = Mode.Bee;
             else
             {

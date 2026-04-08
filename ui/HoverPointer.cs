@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 [GlobalClass]
@@ -7,17 +10,35 @@ public partial class HoverPointer : Control
     private Vector2 offset = new(16, 16);
 
     private PackedScene generalDescriptionScene = GD.Load<PackedScene>("uid://caeokvlcu74wj");
+    private PackedScene generalDescriptionSceneWithSubtitle = GD.Load<PackedScene>(
+        "uid://0n7bdgefraxr"
+    );
     private PackedScene upgradeDescriptionScene = GD.Load<PackedScene>("uid://b7j8yd82762kx");
+
+    private Dictionary<PackedScene, Type[]> scenesUI;
+
+    public HoverPointer()
+    {
+        scenesUI = new()
+        {
+            { generalDescriptionScene, new Type[] { typeof(HiveGridObject) } },
+            {
+                generalDescriptionSceneWithSubtitle,
+                new Type[] { typeof(HiveGridObject), typeof(Flower) }
+            },
+            { upgradeDescriptionScene, new Type[] { typeof(UpgradeNode) } },
+        };
+    }
 
     /// Spawn the appropriate UI for the hovered node.
     private void OnHovered(Node target)
     {
         Clear();
-        Control? ui = target switch
+        foreach ((PackedScene scene, Type[] types) in scenesUI)
         {
-            UpgradeNode upgradeNode => Spawn(upgradeDescriptionScene, target),
-            _ => Spawn(generalDescriptionScene, target),
-        };
+            if (types.Any(type => type.IsInstanceOfType(target)))
+                Spawn(scene, target);
+        }
     }
 
     public override void _EnterTree()

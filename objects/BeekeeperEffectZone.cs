@@ -5,11 +5,11 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
     private string Key => $"Beekeeper";
 
     // bees entering the zone get a speed buff
-    protected override void OnBeeEntered(BeeEntity bee) =>
+    protected override void OnBeeEntered(Bee bee) =>
         bee.Speed.AddPercent(Key, GameStore.BeekeeperEffectZoneSpeedBuff.Value);
 
     // bees leaving the zone lose the speed buff
-    protected override void OnBeeExited(BeeEntity bee) => bee.Speed.Remove(Key);
+    protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
 
     public override void _Ready()
     {

@@ -3,12 +3,12 @@ using Godot;
 
 public interface IBeeJob
 {
-    void Tick(BeeEntity bee);
+    void Tick(Bee bee);
 }
 
 public class IdleJob : IBeeJob
 {
-    public void Tick(BeeEntity bee) => bee.FadeTo(0f);
+    public void Tick(Bee bee) => bee.FadeTo(0f);
 }
 
 /// Shared skeleton: seek flower -> [pre-move hook] -> travel -> arrive -> [animation] -> home.
@@ -24,32 +24,32 @@ public abstract class FlowerJob : IBeeJob
     }
 
     protected State state = State.SeekingFlower;
-    protected BaseFlower? flower;
+    protected Flower? flower;
 
     /// Filter for eligible flowers.
-    protected abstract bool IsEligible(BaseFlower f);
+    protected abstract bool IsEligible(Flower f);
 
     /// Called once on arrival at flower. Return false to abort and re-seek.
-    protected abstract bool OnArrived(BeeEntity bee);
-
-    /// Whether to wait for IsAnimating before going home.
-    protected virtual bool WaitForAnimation => false;
+    protected abstract bool OnArrived(Bee bee);
 
     /// Called after animation finishes (only used if WaitForAnimation = true).
-    protected virtual void OnAnimationFinished(BeeEntity bee) { }
+    protected virtual void OnAnimationFinished(Bee bee) { }
 
     /// Called once per tick while in PreMove - move to flower when ready, return true to proceed.
-    protected virtual bool PreMoveTick(BeeEntity bee)
+    protected virtual bool PreMoveTick(Bee bee)
     {
         bee.MoveTo(flower!.GlobalPosition);
         return true;
     }
 
     /// Override to block seeking until conditions are met.
-    protected virtual bool CanSeek(BeeEntity bee) => true;
+    protected virtual bool CanSeek(Bee bee) => true;
+
+    /// Called when the bee is at the flower, return true to proceed.
+    protected virtual void ProcessAtFlower(Bee bee, out bool isDone) => isDone = true;
 
     /// Called after deposit / job end.
-    protected virtual void OnHome(BeeEntity bee)
+    protected virtual void OnHome(Bee bee)
     {
         bee.Home.Deposit(bee.carryingHoney);
         bee.carryingHoney = 0;
@@ -57,7 +57,7 @@ public abstract class FlowerJob : IBeeJob
         bee.SetJob(new IdleJob());
     }
 
-    public void Tick(BeeEntity bee)
+    public void Tick(Bee bee)
     {
         Grid grid = Services.Get<Grid>()!;
         BeeSystem beeSystem = Services.Get<BeeSystem>()!;
@@ -68,15 +68,14 @@ public abstract class FlowerJob : IBeeJob
                 if (!CanSeek(bee))
                     return;
 
-                flower = grid.GetObjectsOfType<BaseFlower>()
+                flower = grid.GetObjectsOfType<Flower>()
                     .Where(f => IsEligible(f) && !beeSystem.IsClaimed(f))
                     .OrderBy(_ => GD.Randf())
                     .FirstOrDefault();
 
                 if (flower == null)
                 {
-                    if (!grid.GetObjectsOfType<BaseFlower>().Any(IsEligible))
-                        bee.SetJob(new IdleJob());
+                    bee.SetJob(new IdleJob());
                     return;
                 }
 
@@ -94,28 +93,19 @@ public abstract class FlowerJob : IBeeJob
                 if (bee.IsMoving)
                     return;
 
-                beeSystem.ReleaseObject(flower!);
                 if (!OnArrived(bee))
                 {
-                    state = State.SeekingFlower;
+                    bee.SetJob(new IdleJob());
                     return;
                 }
-                if (WaitForAnimation)
-                {
-                    state = State.AtFlower;
-                }
-                else
-                {
-                    bee.MoveTo(bee.Home.GlobalPosition);
-                    state = State.TravelingHome;
-                }
+                state = State.AtFlower;
                 break;
 
             case State.AtFlower:
-                if (bee.IsAnimating)
+                ProcessAtFlower(bee, out bool isDone);
+                if (!isDone)
                     return;
-
-                OnAnimationFinished(bee);
+                beeSystem.ReleaseObject(flower!);
                 bee.MoveTo(bee.Home.GlobalPosition);
                 state = State.TravelingHome;
                 break;
@@ -132,12 +122,12 @@ public abstract class FlowerJob : IBeeJob
 
 public class HarvesterJob : FlowerJob
 {
-    protected override bool IsEligible(BaseFlower f) => f.Honey > 0;
+    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinated;
 
-    protected override bool OnArrived(BeeEntity bee)
+    protected override bool OnArrived(Bee bee)
     {
-        if (flower!.Honey <= 0)
-            return false; // picked clean mid-flight
+        if (flower == null || flower!.Honey <= 0)
+            return false;
 
         int amount = Mathf.Min((int)bee.HoneyCapacity.Value, flower.Honey);
         bee.carryingHoney += amount;
@@ -148,13 +138,11 @@ public class HarvesterJob : FlowerJob
 
 public class PollinatorJob : FlowerJob
 {
-    protected override bool IsEligible(BaseFlower f) => f.Honey <= 0;
+    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinating;
 
-    protected override bool WaitForAnimation => true;
+    protected override bool CanSeek(Bee bee) => GameStore.Honey > 0;
 
-    protected override bool CanSeek(BeeEntity bee) => GameStore.Honey > 0;
-
-    protected override bool PreMoveTick(BeeEntity bee)
+    protected override bool PreMoveTick(Bee bee)
     {
         int needed = Mathf.Min(flower!.HoneyRequired(), (int)bee.HoneyCapacity.Value);
         bee.carryingHoney = bee.Home.TakePossible(needed);
@@ -167,34 +155,39 @@ public class PollinatorJob : FlowerJob
         return true;
     }
 
-    protected override bool OnArrived(BeeEntity bee)
+    protected override bool OnArrived(Bee bee)
     {
-        bee.StartPollinatingAnim(flower!.GlobalPosition);
+        flower!.AddHoney(bee.carryingHoney);
+        if (flower!.HoneyRequired() == 0)
+            bee.StartPollinatingAnim(flower!.GlobalPosition, flower!.PollinationTime.Value);
         return true;
     }
 
-    protected override void OnAnimationFinished(BeeEntity bee)
+    protected override void ProcessAtFlower(Bee bee, out bool isDone)
     {
-        flower!.Pollinate(bee.carryingHoney);
-        Services.Get<BeeSystem>().ReleaseObject(flower!);
+        if (bee.IsAnimating)
+        {
+            isDone = false;
+            return;
+        }
         bee.carryingHoney = 0;
+        if (flower.CurState == Flower.State.Pollinated)
+            flower.Pollinate();
+        isDone = true;
     }
 
     // pollinator doesn't deposit on home — honey was already spent
-    protected override void OnHome(BeeEntity bee) => bee.SetJob(new IdleJob());
+    protected override void OnHome(Bee bee) => bee.SetJob(new IdleJob());
 }
 
 /// Shared rocket charge behavior
 public abstract class RocketFlowerJob : FlowerJob
 {
     private ulong chargeStartMs;
-    private const float PullbackDistance = 20f;
-    private bool chargeDebuffActive;
-    private bool speedBuffActive;
 
-    protected virtual bool PreCharge(BeeEntity bee) => true;
+    protected virtual bool PreCharge(Bee bee) => true;
 
-    protected override bool PreMoveTick(BeeEntity bee)
+    protected override bool PreMoveTick(Bee bee)
     {
         if (chargeStartMs == 0)
         {
@@ -204,11 +197,11 @@ public abstract class RocketFlowerJob : FlowerJob
                 return false;
             }
 
+            Services.Get<BeeSystem>().ClaimObject(flower!);
             chargeStartMs = Time.GetTicksMsec();
             bee.Speed.AddPercent("rocket_charge", -GameStore.RocketBeeChargeSpeedDebuff.Value);
-            chargeDebuffActive = true;
             var pullDir = (bee.GlobalPosition - flower!.GlobalPosition).Normalized();
-            bee.MoveTo(bee.GlobalPosition + pullDir * PullbackDistance);
+            bee.MoveTo(bee.GlobalPosition + pullDir * GameStore.RocketBeeChargeDistance.Value);
             bee.Sprite.FlipH = flower!.GlobalPosition.X < bee.GlobalPosition.X;
         }
         bee.FlipOverride = flower!.GlobalPosition.X < bee.GlobalPosition.X;
@@ -216,38 +209,28 @@ public abstract class RocketFlowerJob : FlowerJob
         if (Time.GetTicksMsec() - chargeStartMs < (ulong)GameStore.RocketBeeChargeTime.Value)
             return false;
 
-        if (chargeDebuffActive)
-        {
-            bee.Speed.Remove("rocket_charge");
-            chargeDebuffActive = false;
-        }
-
         bee.FlipOverride = null;
+        bee.Speed.Remove("rocket_charge");
         bee.Speed.AddPercent("rocket_boost", GameStore.RocketBeeSpeedBuff.Value);
-        speedBuffActive = true;
         bee.MoveTo(flower!.GlobalPosition);
         return true;
     }
 
     // intercept arrival to strip speed buff, then delegate
-    protected sealed override bool OnArrived(BeeEntity bee)
+    protected sealed override bool OnArrived(Bee bee)
     {
-        if (speedBuffActive)
-        {
-            bee.Speed.Remove("rocket_boost");
-            speedBuffActive = false;
-        }
+        bee.Speed.Remove("rocket_boost");
         return OnRocketArrived(bee);
     }
 
-    protected abstract bool OnRocketArrived(BeeEntity bee);
+    protected abstract bool OnRocketArrived(Bee bee);
 }
 
 public class RocketHarvesterJob : RocketFlowerJob
 {
-    protected override bool IsEligible(BaseFlower f) => f.Honey > 0;
+    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinated;
 
-    protected override bool OnRocketArrived(BeeEntity bee)
+    protected override bool OnRocketArrived(Bee bee)
     {
         if (flower!.Honey <= 0)
             return false;
@@ -261,34 +244,39 @@ public class RocketHarvesterJob : RocketFlowerJob
 
 public class RocketPollinatorJob : RocketFlowerJob
 {
-    protected override bool IsEligible(BaseFlower f) => f.Honey <= 0;
+    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinating;
 
-    protected override bool WaitForAnimation => true;
+    protected override bool CanSeek(Bee bee) => GameStore.Honey > 0;
 
-    protected override bool CanSeek(BeeEntity bee) => GameStore.Honey > 0;
-
-    // in RocketPollinatorJob
-    protected override bool PreCharge(BeeEntity bee)
+    protected override bool PreCharge(Bee bee)
     {
         int needed = Mathf.Min(flower!.HoneyRequired(), (int)bee.HoneyCapacity.Value);
         bee.carryingHoney = bee.Home.TakePossible(needed);
         return bee.carryingHoney > 0;
     }
 
-    protected override bool OnRocketArrived(BeeEntity bee)
+    protected override bool OnRocketArrived(Bee bee)
     {
-        bee.StartPollinatingAnim(flower!.GlobalPosition);
+        flower!.AddHoney(bee.carryingHoney);
+        if (flower!.CurState == Flower.State.Pollinated)
+            bee.StartPollinatingAnim(flower!.GlobalPosition, flower!.PollinationTime.Value);
         return true;
     }
 
-    protected override void OnAnimationFinished(BeeEntity bee)
+    protected override void ProcessAtFlower(Bee bee, out bool isDone)
     {
-        flower!.Pollinate(bee.carryingHoney);
-        Services.Get<BeeSystem>().ReleaseObject(flower!);
+        if (bee.IsAnimating)
+        {
+            isDone = false;
+            return;
+        }
         bee.carryingHoney = 0;
+        if (flower.CurState == Flower.State.Pollinated)
+            flower.Pollinate();
+        isDone = true;
     }
 
-    protected override void OnHome(BeeEntity bee) => bee.SetJob(new IdleJob());
+    protected override void OnHome(Bee bee) => bee.SetJob(new IdleJob());
 }
 
 public class QueenJob : IBeeJob
@@ -316,7 +304,7 @@ public class QueenJob : IBeeJob
     private float turnBias = 0f;
     private bool initialized = false;
 
-    public void Tick(BeeEntity bee)
+    public void Tick(Bee bee)
     {
         if (!initialized)
         {
@@ -353,7 +341,7 @@ public class QueenJob : IBeeJob
                     angle = Mathf.LerpAngle(angle, toHive.Angle(), LeashPull * dt);
 
                 // bias toward visible hive-mates
-                BeeEntity[] hivemates = Services
+                Bee[] hivemates = Services
                     .Get<BeeSystem>()
                     .GetBees()
                     .Where(b => b != bee && b.Home == bee.Home && b.Visible)
@@ -361,7 +349,7 @@ public class QueenJob : IBeeJob
                 if (hivemates.Length > 0)
                 {
                     Vector2 center = Vector2.Zero;
-                    foreach (BeeEntity b in hivemates)
+                    foreach (Bee b in hivemates)
                         center += b.GlobalPosition;
                     center /= hivemates.Length;
                     Vector2 toFlock = center - bee.GlobalPosition;

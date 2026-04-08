@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dc6ql2kly3txf"]
+
+[ext_resource type="PackedScene" uid="uid://bl1b65io17tnk" path="res://objects/tiles/BaseTile.tscn" id="1_dgjxu"]
+[ext_resource type="Script" uid="uid://c6iqyl7pvnv3t" path="res://objects/tiles/PurpleTile.cs" id="2_5kr8i"]
+
+[node name="PurpleTile" unique_id=1083697076 instance=ExtResource("1_dgjxu")]
+script = ExtResource("2_5kr8i")

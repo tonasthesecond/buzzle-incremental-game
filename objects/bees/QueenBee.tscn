@@ -1,16 +1,12 @@
 [gd_scene format=3 uid="uid://cbfj4mro5unew"]
 
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="1_fbet4"]
-[ext_resource type="Script" uid="uid://b4fs1buhffdrm" path="res://resources/bees/QueenBeeResource.cs" id="2_6ms37"]
+[ext_resource type="Script" uid="uid://b4fs1buhffdrm" path="res://objects/bees/QueenBee.cs" id="2_6ms37"]
 [ext_resource type="PackedScene" uid="uid://bfmgg3fmm16x0" path="res://components/EffectZoneComponent.tscn" id="3_ja3py"]
 [ext_resource type="Script" uid="uid://bh5m0xghyn8d2" path="res://components/QueenBeeEffectZoneComponent.cs" id="4_gxdci"]
 
-[sub_resource type="Resource" id="Resource_ja3py"]
-script = ExtResource("2_6ms37")
-metadata/_custom_type_script = "uid://b4fs1buhffdrm"
-
 [node name="QueenBee" unique_id=384287205 instance=ExtResource("1_fbet4")]
-Definition = SubResource("Resource_ja3py")
+script = ExtResource("2_6ms37")
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
 modulate = Color(1, 0.30980393, 1, 1)

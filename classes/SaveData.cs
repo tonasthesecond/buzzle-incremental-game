@@ -5,7 +5,7 @@ public class SaveData
     public int Honey { get; set; } = 10;
     public List<SavedUpgrade> Upgrades { get; set; } = new();
     public List<SavedHive> Hives { get; set; } = new();
-    public List<SavedTile> Tiles { get; set; } = new();
+    public List<SavedTileGroup> Tiles { get; set; } = new();
     public List<SavedObject> Objects { get; set; } = new();
 }
 
@@ -23,11 +23,10 @@ public class SavedHive
     public Dictionary<string, int> BeeCounts { get; set; } = new();
 }
 
-public class SavedTile
+public class SavedTileGroup
 {
-    public int X { get; set; }
-    public int Y { get; set; }
     public string Type { get; set; } = "";
+    public List<int[]> Spans { get; set; } = new();
 }
 
 public class SavedObject

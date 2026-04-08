@@ -22,10 +22,14 @@
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
 [ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
+[ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/BaseFlower.tscn" id="20_4my3f"]
 [ext_resource type="Script" uid="uid://bomuqqxbk22bi" path="res://ui/HoverPointer.cs" id="21_0mevm"]
+[ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
+[ext_resource type="Texture2D" uid="uid://bevo06gsimv4" path="res://assets/tilemap_purple.png" id="23_gebyw"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
+[ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/PurpleTile.tscn" id="24_4my3f"]
 [ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
 [ext_resource type="PackedScene" uid="uid://cbfj4mro5unew" path="res://objects/bees/QueenBee.tscn" id="24_w7ht3"]
 [ext_resource type="PackedScene" uid="uid://c8x1d3wmlgxlb" path="res://objects/bees/FatBee.tscn" id="25_8ktx7"]
@@ -55,6 +59,32 @@ Resource = ExtResource("11_cpsxm")
 Icon = SubResource("AtlasTexture_bvhbk")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aeq37"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suycs"]
+atlas = SubResource("CompressedTexture2D_aeq37")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_202ut"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("20_4my3f")
+Icon = SubResource("AtlasTexture_suycs")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_suycs"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_202ut"]
+atlas = SubResource("CompressedTexture2D_suycs")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_5he1h"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("21_aeq37")
+Icon = SubResource("AtlasTexture_202ut")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
 atlas = ExtResource("14_hmewc")
 region = Rect2(96, 96, 32, 32)
@@ -63,6 +93,16 @@ region = Rect2(96, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("8_2vekm")
 Icon = SubResource("AtlasTexture_0mevm")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeq37"]
+atlas = ExtResource("23_gebyw")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_suycs"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("24_4my3f")
+Icon = SubResource("AtlasTexture_aeq37")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_w7ht3"]
@@ -175,11 +215,11 @@ layout_mode = 2
 
 [node name="ObjectsSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi")])
+SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_5he1h")])
 
 [node name="TilesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501")])
+SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501"), SubResource("Resource_suycs")])
 
 [node name="BeesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 layout_mode = 2

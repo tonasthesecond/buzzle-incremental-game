@@ -33,7 +33,7 @@ public partial class Grid : Node2D
 
         Vector2I[] flowers = [new(0, 1), new(4, 0), new(1, 4), new(3, 3)];
         foreach (var pos in flowers)
-            PlaceObject<BaseFlower>(pos, out _);
+            PlaceObject<Flower>(pos, out _);
 
         // spawn bees
         // FIXME: something
@@ -47,11 +47,28 @@ public partial class Grid : Node2D
     public void Snapshot()
     {
         GameStore.Save.Tiles = tiles
-            .Values.Select(t => new SavedTile
+            .Values.GroupBy(t => t.GetType().Name)
+            .Select(g =>
             {
-                X = t.GridPosition.X,
-                Y = t.GridPosition.Y,
-                Type = t.GetType().Name,
+                var byRow = g.GroupBy(t => t.GridPosition.Y).OrderBy(row => row.Key);
+                var spans = new List<int[]>();
+                foreach (var row in byRow)
+                {
+                    var xs = row.Select(t => t.GridPosition.X).OrderBy(x => x).ToList();
+                    int start = xs[0],
+                        prev = xs[0];
+                    for (int i = 1; i < xs.Count; i++)
+                    {
+                        if (xs[i] != prev + 1)
+                        {
+                            spans.Add([start, prev, row.Key]);
+                            start = xs[i];
+                        }
+                        prev = xs[i];
+                    }
+                    spans.Add([start, prev, row.Key]);
+                }
+                return new SavedTileGroup { Type = g.Key, Spans = spans };
             })
             .ToList();
 
@@ -76,20 +93,24 @@ public partial class Grid : Node2D
 
     private void LoadFrom(SaveData save)
     {
-        foreach (var saved in save.Tiles)
+        foreach (var group in save.Tiles)
         {
-            var scene = GD.Load<PackedScene>($"res://objects/tiles/{saved.Type}.tscn");
+            var scene = GD.Load<PackedScene>($"res://objects/tiles/{group.Type}.tscn");
             if (scene == null)
             {
-                GD.PushError($"[Grid] Missing tile scene: {saved.Type}");
+                GD.PushError($"[Grid] Missing tile scene: {group.Type}");
                 continue;
             }
-            var pos = new Vector2I(saved.X, saved.Y);
-            var tile = scene.Instantiate<BaseTile>();
-            AddChild(tile);
-            tile.GlobalPosition = GridToWorld(pos);
-            tile.GridPosition = pos;
-            tiles[pos] = tile;
+            foreach (var span in group.Spans)
+                for (int x = span[0]; x <= span[1]; x++)
+                {
+                    var pos = new Vector2I(x, span[2]);
+                    var tile = scene.Instantiate<BaseTile>();
+                    AddChild(tile);
+                    tile.GlobalPosition = GridToWorld(pos);
+                    tile.GridPosition = pos;
+                    tiles[pos] = tile;
+                }
         }
 
         foreach (var saved in save.Objects)
@@ -125,20 +146,15 @@ public partial class Grid : Node2D
     /// Core placement logic, given an already-instantiated tile.
     private bool PlaceTile(BaseTile tile, Vector2I pos, out FailMessage? failMessage)
     {
-        if (tiles.Count > 0 && !HasAdjacentTile(pos))
-        {
-            tile.QueueFree();
-            failMessage = new FailMessage($"No adjacent tile at {pos}.", "No adjacent tile there!");
+        if (!PlacementValid(pos, out failMessage))
             return false;
-        }
-        if (tiles.ContainsKey(pos))
-            RemoveTile(pos);
 
         AddChild(tile);
         tile.GlobalPosition = GridToWorld(pos);
         tile.GridPosition = pos;
         tiles[pos] = tile;
         SyncTilemap();
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.TilePlaced, tile);
         failMessage = null;
         return true;
     }
@@ -147,13 +163,7 @@ public partial class Grid : Node2D
     public bool PlaceTile<T>(Vector2I pos, out T? result, out FailMessage? failMessage)
         where T : BaseTile
     {
-        result = null;
-        var scene = GD.Load<PackedScene>($"res://objects/tiles/{typeof(T).Name}.tscn");
-        if (scene == null)
-        {
-            failMessage = new FailMessage($"No scene for {typeof(T).Name}.", "");
-            return false;
-        }
+        PackedScene? scene = GD.Load<PackedScene>($"res://objects/tiles/{typeof(T).Name}.tscn");
         result = scene.Instantiate<T>();
         return PlaceTile(result, pos, out failMessage);
     }
@@ -195,6 +205,7 @@ public partial class Grid : Node2D
         tile.QueueFree();
         tiles.Remove(pos);
         SyncTilemap();
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.TileRemoved, tile);
         failMessage = null;
         return true;
     }
@@ -227,6 +238,7 @@ public partial class Grid : Node2D
         obj.GlobalPosition = GridToWorld(pos);
         obj.GridPosition = pos;
         objects[pos] = obj;
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridObjectPlaced, obj);
         failMessage = null;
         return true;
     }
@@ -276,6 +288,7 @@ public partial class Grid : Node2D
         }
         obj.QueueFree();
         objects.Remove(pos);
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridObjectRemoved, obj);
         failMessage = null;
         return true;
     }
@@ -339,6 +352,84 @@ public partial class Grid : Node2D
             }
         }
         return closest;
+    }
+
+    // True if any tile (excluding `exclude`) is within `distance` of `pos`.
+    private bool HasTileWithin(Vector2I pos, int distance, HashSet<Vector2I>? exclude = null)
+    {
+        foreach (Vector2I tile in tiles.Keys)
+        {
+            if (exclude != null && exclude.Contains(tile))
+                continue;
+            if (Mathf.Abs(tile.X - pos.X) <= distance && Mathf.Abs(tile.Y - pos.Y) <= distance)
+                return true;
+        }
+        return false;
+    }
+
+    /// Check if placement of a tile would leave the grid in a valid state.
+    private bool PlacementValid(Vector2I pos, out FailMessage? failMessage)
+    {
+        if (tiles.Count < 1)
+        {
+            failMessage = null;
+            return true;
+        }
+        if (tiles.ContainsKey(pos))
+        {
+            failMessage = new FailMessage(
+                $"Tile at {pos} already exists.",
+                "Another tile is there!"
+            );
+            return false;
+        }
+        if (!HasTileWithin(pos, GameStore.ValidTileDistance))
+        {
+            failMessage = new FailMessage(
+                $"No nearby tiles within {GameStore.ValidTileDistance} of {pos}.",
+                "No nearby tiles!"
+            );
+            return false;
+        }
+        failMessage = null;
+        return true;
+    }
+
+    /// Check if removal of a tile would leave the grid in a valid state.
+    private bool RemovalValid(Vector2I pos, out FailMessage? failMessage)
+    {
+        if (!tiles.ContainsKey(pos))
+        {
+            failMessage = new FailMessage($"No tile at {pos}.", "No tile there!");
+            return false;
+        }
+        if (tiles.Count <= 2)
+        {
+            failMessage = null;
+            return true;
+        }
+
+        HashSet<Vector2I> exclude = [pos];
+        int vtd = GameStore.ValidTileDistance;
+        foreach (Vector2I tile in tiles.Keys)
+        {
+            if (tile == pos)
+                continue;
+            if (Mathf.Abs(tile.X - pos.X) > vtd || Mathf.Abs(tile.Y - pos.Y) > vtd)
+                continue;
+
+            if (!HasTileWithin(tile, vtd, exclude))
+            {
+                failMessage = new FailMessage(
+                    $"Removing tile at {pos} would isolate {tile}.",
+                    "Removing this tile isolates other tiles!"
+                );
+                return false;
+            }
+        }
+
+        failMessage = null;
+        return true;
     }
 
     // --- Helpers ---

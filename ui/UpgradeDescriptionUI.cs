@@ -24,24 +24,44 @@ public partial class UpgradeDescriptionUI : GeneralDescriptionUI
 
     public override void Setup(Node target)
     {
-        base.Setup(target);
-        if (target is UpgradeNode upgradeNode)
-        {
-            IUpgradeOption? upgrade = upgradeNode.Upgrade;
-            if (upgrade == null)
-                return;
+        if (target is not UpgradeNode upgradeNode)
+            return;
 
-            SetLevel(
-                upgrade.Level.ToString(),
-                upgrade.MaxLevel != -1 ? upgrade.MaxLevel.ToString() : "inf"
-            );
-            SetPrice(upgrade.GetCost(), upgrade.IsEnough());
-            GameStore.Instance.HoneyChanged += (_) =>
+        IUpgradeOption? upgrade = upgradeNode.Upgrade;
+        if (upgrade == null)
+            return;
+        SetTitle(upgrade.Name);
+        SetDescription(upgrade.GetText());
+
+        // refresh if upgrade is applied while the ui is open.
+        IUpgradeOption.AppliedEventHandler onApplied = null!;
+        onApplied = () =>
+        {
+            if (!IsInstanceValid(this))
             {
-                if (!IsInstanceValid(this))
-                    return;
-                SetPrice(upgrade.GetCost(), upgrade.IsEnough());
-            };
-        }
+                upgrade.Applied -= onApplied; // remove event handler
+                return;
+            }
+            Setup(target);
+        };
+        upgrade.Applied += onApplied;
+
+        SetLevel(
+            upgrade.Level.ToString(),
+            upgrade.MaxLevel != -1 ? upgrade.MaxLevel.ToString() : "inf"
+        );
+
+        // hide price if upgrade is max level
+        if (upgrade.Level == upgrade.MaxLevel)
+            priceLabel.Hide();
+        else
+            SetPrice(upgrade.GetCost(), upgrade.IsEnough());
+
+        GameStore.Instance.HoneyChanged += (_) =>
+        {
+            if (!IsInstanceValid(this))
+                return;
+            SetPrice(upgrade.GetCost(), upgrade.IsEnough());
+        };
     }
 }

@@ -13,12 +13,17 @@ public partial class Tilemap : TileMapLayer
     private bool previewMode = false;
     private bool removeMode = false;
     private Vector2I? ghostPos = null;
+    private int ghostSourceId = 0;
     private List<BaseTile> currentTiles = new();
     private HashSet<Vector2I> realTiles = new();
     private HashSet<Vector2I> lastBottomEdgeCells = new();
 
     // maps tile types to tile source ids
-    private static readonly Dictionary<Type, int> TileSources = new() { { typeof(GreenTile), 0 } };
+    private static readonly Dictionary<Type, int> TileSources = new()
+    {
+        { typeof(GreenTile), 0 },
+        { typeof(PurpleTile), 1 },
+    };
 
     public override void _EnterTree()
     {
@@ -38,6 +43,16 @@ public partial class Tilemap : TileMapLayer
             {
                 ghostPos = null;
                 Redraw();
+            }
+        };
+        SignalBus.Instance.ResourceSelected += (Resource resource) =>
+        {
+            if (resource is PackedScene scene)
+            {
+                var instance = scene.Instantiate();
+                if (instance is BaseTile tile)
+                    ghostSourceId = TileSources.GetValueOrDefault(tile.GetType(), 0);
+                instance.QueueFree();
             }
         };
     }
@@ -92,6 +107,10 @@ public partial class Tilemap : TileMapLayer
                 continue;
             SetCell(tile.GridPosition, sourceId, GetCellAtlasCoords(tile.GridPosition));
         }
+
+        // set the correct atlas coords for the ghost
+        if (ghostPos.HasValue && !removeMode)
+            SetCell(ghostPos.Value, ghostSourceId, GetCellAtlasCoords(ghostPos.Value));
 
         UpdateBottomStrips(displayPos);
     }
