@@ -1,9 +1,9 @@
 using Godot;
 
 [GlobalClass]
-public partial class FatBeeResource : BeeResource
+public partial class FatBee : Bee
 {
-    public override void ApplyStats(BeeEntity bee)
+    public override void ApplyStats(Bee bee)
     {
         bee.Speed = new Stat(() =>
             (GameStore.BeeSpeed.Value * (1f - GameStore.FatBeeSpeedDebuff.Value))

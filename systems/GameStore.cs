@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Godot;
 
@@ -12,6 +12,7 @@ public partial class GameStore : Node
 
     // --- Computed Stats ---
     public static Stat HiveCapacityBee { get; } = new(10f);
+
     public static Stat BeeSpeed { get; } = new(50f);
     public static Stat BeeCapacityHoney { get; } = new(1f);
 
@@ -28,6 +29,46 @@ public partial class GameStore : Node
     public static Stat RocketBeeSpeedBuff { get; } = new(2f);
     public static Stat RocketBeeChargeSpeedDebuff { get; } = new(0.2f);
     public static Stat RocketBeeChargeTime { get; } = new(2000f);
+    public static Stat RocketBeeChargeDistance { get; } = new(20f);
+
+    public static Stat BaseFlowerHoneyCost { get; } = new(1f);
+    public static Stat BaseFlowerHoneyGain { get; } = new(2f);
+    public static Stat BaseFlowerPollinationTime { get; } = new(3f);
+
+    public static Stat CloverHoneyCost { get; } = new(2f);
+    public static Stat CloverRegularHoneyGain { get; } = new(2f);
+    public static Stat CloverJackpotHoneyGain { get; } = new(7f);
+    public static Stat CloverJackpotChance { get; } = new(0.1f);
+    public static Stat CloverPollinationTime { get; } = new(3f);
+
+    public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
+
+    // --- Placement Price Models ---
+    public static Dictionary<Type, IScaleModel> PriceModels { get; } =
+        new()
+        {
+            { typeof(HiveGridObject), new PolynomialModel(100f, 2f) },
+            { typeof(BaseFlower), new LinearModel(5f, 5f) },
+            { typeof(Clover), new LinearModel(10f, 5f) },
+            { typeof(GreenTile), new LinearModel(50f, 5f) },
+            { typeof(LoamTile), new LinearModel(50f, 5f) },
+            { typeof(Bee), new LinearModel(10f, 5f) },
+            { typeof(RocketBee), new LinearModel(50f, 10f) },
+            { typeof(FatBee), new LinearModel(50f, 10f) },
+            { typeof(QueenBee), new LinearModel(50f, 10f) },
+        };
+
+    public static int GetPlacementCost(Type t)
+    {
+        if (!PriceModels.TryGetValue(t, out var model))
+            return 0;
+        var grid = Services.Get<Grid>();
+        int count =
+            t.IsSubclassOf(typeof(BaseTile)) ? grid.GetTileCountOfType(t)
+            : t.IsSubclassOf(typeof(BaseGridObject)) ? grid.GetObjectCountOfType(t)
+            : Services.Get<BeeSystem>().GetBeeCountOfType(t);
+        return (int)model.Get(count);
+    }
 
     // --- Honey ---
     private static int honey { get; set; } = 10;
@@ -55,41 +96,10 @@ public partial class GameStore : Node
     public static void SaveGame()
     {
         Save.Honey = Honey;
-        SaveGrid(Services.Get<Grid>());
+        Services.Get<Grid>().Snapshot();
         SaveUpgrades(Services.Get<UpgradeTree>());
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
-    }
-
-    // --- Tiles ---
-    public static void SaveGrid(Grid grid)
-    {
-        GameStore.Save.Tiles = grid.GetTiles()
-            .Select(t => new SavedTile
-            {
-                X = t.GridPosition.X,
-                Y = t.GridPosition.Y,
-                Type = t.GetType().Name,
-            })
-            .ToList();
-
-        GameStore.Save.Objects = grid.GetObjects()
-            .Select(o => new SavedObject
-            {
-                X = o.GridPosition.X,
-                Y = o.GridPosition.Y,
-                Type = o.GetType().Name,
-            })
-            .ToList();
-
-        GameStore.Save.Hives = grid.GetObjectsOfType<HiveGridObject>()
-            .Select(h => new SavedHive
-            {
-                X = h.GridPosition.X,
-                Y = h.GridPosition.Y,
-                BeeCounts = h.GetBeeCounts(),
-            })
-            .ToList();
     }
 
     // --- Upgrades ---
@@ -125,6 +135,7 @@ public partial class GameStore : Node
 
     // --- Constants ---
     public const int TILE_SIZE = 32;
+    public const int ValidTileDistance = 3;
 
     public static readonly Dictionary<string, string> Colors = JsonSerializer.Deserialize<
         Dictionary<string, string>
@@ -143,6 +154,12 @@ public partial class GameStore : Node
         // apply all dynamic contents
         honey = Save.Honey;
         ApplyUpgrades();
-        Callable.From(Services.Get<BeeSystem>().SpawnFromSave).CallDeferred();
+
+        Callable
+            .From(() =>
+            {
+                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameLoaded);
+            })
+            .CallDeferred();
     }
 }

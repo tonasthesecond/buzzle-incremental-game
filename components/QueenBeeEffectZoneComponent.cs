@@ -4,15 +4,15 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
 {
     private string Key => "QueenBee";
 
-    protected override void OnBeeEntered(BeeEntity bee)
+    protected override void OnBeeEntered(Bee bee)
     {
-        if (bee.Definition is QueenBeeResource)
+        if (bee is QueenBee)
             return;
 
         bee.Speed.AddPercent(Key, GameStore.QueenBeeEffectZoneSpeedBuff.Value);
     }
 
-    protected override void OnBeeExited(BeeEntity bee) => bee.Speed.Remove(Key);
+    protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
 
     public override void _Ready()
     {
@@ -27,7 +27,7 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
     public override void _Process(double delta)
     {
         // follow the queen's parent bee
-        if (GetParent() is BeeEntity queen)
+        if (GetParent() is Bee queen)
             GlobalPosition = queen.GlobalPosition;
     }
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
@@ -6,7 +8,11 @@ public partial class PlacementSystem : GameSystem
     [Signal]
     public delegate void ModeChangedEventHandler(Mode mode);
 
+    [Export]
+    public bool FreePlace = false;
+
     private PackedScene? selectedScene;
+    private Type? selectedType;
     private BaseGridObject? highlighted;
     private const float HighlightAlpha = 0.7f;
 
@@ -34,7 +40,6 @@ public partial class PlacementSystem : GameSystem
 
     public override void _Ready()
     {
-        // switch mode on resource selection
         SignalBus.Instance.ResourceSelected += (Resource resource) =>
         {
             if (resource.ResourceName == "RemoveTile")
@@ -55,14 +60,16 @@ public partial class PlacementSystem : GameSystem
                 CurMode = Mode.Tile;
             else if (instance is BaseGridObject)
                 CurMode = Mode.Object;
-            else if (instance is BeeEntity)
+            else if (instance is Bee)
                 CurMode = Mode.Bee;
             else
             {
+                instance.QueueFree();
                 CurMode = Mode.None;
                 return;
             }
 
+            selectedType = instance.GetType();
             instance.QueueFree();
             selectedScene = scene;
         };
@@ -70,9 +77,35 @@ public partial class PlacementSystem : GameSystem
         SignalBus.Instance.ResourceUnselected += () =>
         {
             selectedScene = null;
+            selectedType = null;
             CurMode = Mode.None;
         };
     }
+
+    // --- Cost ---
+
+    /// Deduct cost if affordable. Returns false + fail on rejection.
+    private bool TryCharge(Type? t, out FailMessage? fail)
+    {
+        fail = null;
+        if (FreePlace || t == null)
+            return true;
+        int cost = GameStore.GetPlacementCost(t);
+        if (cost == 0)
+            return true;
+        if (GameStore.Honey < cost)
+        {
+            fail = new FailMessage(
+                $"Need {cost} honey",
+                $"Insufficient honey for {t.Name}: need {cost}"
+            );
+            return false;
+        }
+        GameStore.Honey -= cost;
+        return true;
+    }
+
+    // --- Process / highlight (unchanged) ---
 
     public override void _Process(double delta)
     {
@@ -88,12 +121,10 @@ public partial class PlacementSystem : GameSystem
                     "highlight_target"
                 );
                 break;
-
             case Mode.RemoveObject:
             case Mode.RemoveTile:
                 SetHighlight(grid.GetObjectAt(cell), "highlight_delete");
                 break;
-
             default:
                 ClearHighlight();
                 break;
@@ -123,7 +154,8 @@ public partial class PlacementSystem : GameSystem
         highlighted = null;
     }
 
-    /// Handle placement on click.
+    // --- Input ---
+
     public override void _UnhandledInput(InputEvent e)
     {
         if (CurMode == Mode.None)
@@ -139,18 +171,21 @@ public partial class PlacementSystem : GameSystem
         switch (CurMode)
         {
             case Mode.Tile:
-                if (selectedScene != null)
+                if (selectedScene != null && TryCharge(selectedType, out fail))
                     grid.PlaceTile(selectedScene, pos, out fail);
                 break;
 
             case Mode.Object:
-                if (selectedScene != null)
+                if (selectedScene != null && TryCharge(selectedType, out fail))
                     grid.PlaceObject(selectedScene, pos, out fail);
                 break;
 
             case Mode.Bee:
-                // pass selectedScene so the right bee type gets spawned
-                if (selectedScene != null && highlighted is HiveGridObject hive)
+                if (
+                    selectedScene != null
+                    && highlighted is HiveGridObject hive
+                    && TryCharge(selectedType, out fail)
+                )
                     Services.Get<BeeSystem>().SpawnBee(selectedScene, hive);
                 break;
 

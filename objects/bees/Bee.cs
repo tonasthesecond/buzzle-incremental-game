@@ -1,12 +1,13 @@
 using Godot;
 
-public partial class BeeEntity : Node2D
+[GlobalClass]
+public abstract partial class Bee : CharacterBody2D
 {
     [Signal]
-    public delegate void ArrivedEventHandler(BeeEntity bee);
+    public delegate void ArrivedEventHandler(Bee bee);
 
     [Export]
-    public BeeResource Definition { get; private set; } = new BaseBeeResource();
+    public string BeeTypeName { get; set; } = "regular";
 
     public IBeeJob job = new IdleJob();
     public required HiveGridObject Home;
@@ -21,12 +22,41 @@ public partial class BeeEntity : Node2D
     public float BopAmplitude = 1.5f;
     public float BopSpeed = 3f;
     public bool? FlipOverride = null;
+    private float spriteY = 0f;
 
     // cached services
     private Grid grid = null!;
     private BeeSystem beeSystem = null!;
     public Sprite2D Sprite = null!;
     private CpuParticles2D drip = null!;
+
+    /// Apply stat modifiers to the bee on spawn.
+    public virtual void ApplyStats(Bee bee) { }
+
+    /// Job to assign when the bee should harvest.
+    public virtual IBeeJob HarvestJob() => new HarvesterJob();
+
+    /// Job to assign when the bee should pollinate.
+    public virtual IBeeJob PollinateJob() => new PollinatorJob();
+
+    /// Initial job on spawn - override to start with something other than IdleJob.
+    public virtual IBeeJob SpawnJob() => new IdleJob();
+
+    public virtual IBeeJob? SelectJob(
+        Bee bee,
+        Flower[] pollinatedFlowers,
+        Flower[] unpollinatedFlowers
+    )
+    {
+        BeeSystem beeSystem = Services.Get<BeeSystem>()!;
+        int harvesters = beeSystem.GetBeesWithJob<HarvesterJob>().Length;
+        int pollinators = beeSystem.GetBeesWithJob<PollinatorJob>().Length;
+        if (harvesters < pollinatedFlowers.Length)
+            return HarvestJob();
+        if (pollinators < unpollinatedFlowers.Length)
+            return PollinateJob();
+        return null;
+    }
 
     public void MoveTo(Vector2 position) => targetPosition = position;
 
@@ -42,7 +72,7 @@ public partial class BeeEntity : Node2D
     private bool latchedFlipH;
 
     /// Orbit the sprite around a center point for the pollination animation.
-    public void StartPollinatingAnim(Vector2 center, float duration = 3f, float radius = 15f)
+    public void StartPollinatingAnim(Vector2 center, float duration, float radius = 15f)
     {
         IsAnimating = true;
         orbitCenter = center + centerOffset;
@@ -88,7 +118,7 @@ public partial class BeeEntity : Node2D
 
         // drip whenever carrying honey
         drip.Emitting = carryingHoney > 0;
-        int targetAmount = carryingHoney + 2;
+        int targetAmount = carryingHoney + 1;
         if (drip.Amount != targetAmount)
             drip.Amount = targetAmount;
 
@@ -104,15 +134,19 @@ public partial class BeeEntity : Node2D
             );
             Sprite.FlipH = orbitDir < 0 ? Mathf.Sin(orbitAngle) < 0 : Mathf.Sin(orbitAngle) > 0;
             latchedFlipH = Sprite.FlipH;
-            Sprite.Position = new Vector2(0, 1.5f * Mathf.Sin(orbitAngle * 2f));
+            float orbitTargetY = 1.5f * Mathf.Sin(orbitAngle * 2f);
+            spriteY = Mathf.Lerp(spriteY, orbitTargetY, (float)delta * 10f);
+            Sprite.Position = new Vector2(0, spriteY);
         }
         else
         {
+            // always bob so there's no snap on landing
             Sprite.FlipH = latchedFlipH;
             if (IsMoving)
                 Move(delta);
-            // always bob so there's no snap on landing
-            Sprite.Position = new Vector2(Sprite.Position.X, Mathf.Sin(phase) * BopAmplitude);
+            float bobTargetY = Mathf.Sin(phase) * BopAmplitude;
+            spriteY = Mathf.Lerp(spriteY, bobTargetY, (float)delta * 10f);
+            Sprite.Position = new Vector2(Sprite.Position.X, spriteY);
         }
         phase += (float)delta * BopSpeed;
     }
@@ -122,9 +156,9 @@ public partial class BeeEntity : Node2D
     {
         Home = home;
         home.AddBee(this);
-        Definition.ApplyStats(this);
+        ApplyStats(this);
         GlobalPosition = Home.GlobalPosition;
-        SetJob(Definition.SpawnJob());
+        SetJob(SpawnJob());
         Modulate = Colors.Transparent;
         Visible = false;
         _fadeTarget = 0f;

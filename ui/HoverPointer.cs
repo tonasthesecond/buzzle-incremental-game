@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 [GlobalClass]
@@ -6,18 +9,31 @@ public partial class HoverPointer : Control
     [Export]
     private Vector2 offset = new(16, 16);
 
-    private PackedScene generalDescriptionScene = GD.Load<PackedScene>("uid://caeokvlcu74wj");
-    private PackedScene upgradeDescriptionScene = GD.Load<PackedScene>("uid://b7j8yd82762kx");
+    private PackedScene TDScene = GD.Load<PackedScene>("uid://caeokvlcu74wj"); // title-description
+    private PackedScene TSDScene = GD.Load<PackedScene>("uid://0n7bdgefraxr"); // title-subtitle-description
+    private PackedScene TSPDScene = GD.Load<PackedScene>("uid://b7j8yd82762kx"); // title-subtitle-price-description
+
+    private Dictionary<PackedScene, Type[]> scenesUI;
+
+    public HoverPointer()
+    {
+        scenesUI = new()
+        {
+            { TDScene, new Type[] { typeof(HiveGridObject) } },
+            { TSDScene, new Type[] { typeof(HiveGridObject), typeof(Flower) } },
+            { TSPDScene, new Type[] { typeof(UpgradeNode), typeof(Selectable) } },
+        };
+    }
 
     /// Spawn the appropriate UI for the hovered node.
     private void OnHovered(Node target)
     {
         Clear();
-        Control? ui = target switch
+        foreach ((PackedScene scene, Type[] types) in scenesUI)
         {
-            UpgradeNode upgradeNode => Spawn(upgradeDescriptionScene, target),
-            _ => Spawn(generalDescriptionScene, target),
-        };
+            if (types.Any(type => type.IsInstanceOfType(target)))
+                Spawn(scene, target);
+        }
     }
 
     public override void _EnterTree()

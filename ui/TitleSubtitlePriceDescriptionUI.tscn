@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b7j8yd82762kx"]
+
+[ext_resource type="PackedScene" uid="uid://caeokvlcu74wj" path="res://ui/TitleDescriptionUI.tscn" id="1_yvjke"]
+[ext_resource type="Script" uid="uid://bmjvet1mne648" path="res://ui/TitleSubtitlePriceDescriptionUI.cs" id="2_6xy38"]
+[ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="3_y66rr"]
+[ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="4_h5owd"]
+
+[node name="UpgradeDescriptionUI" unique_id=1935115770 instance=ExtResource("1_yvjke")]
+script = ExtResource("2_6xy38")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(141479681) index="1" unique_id=640940341]
+layout_mode = 2
+
+[node name="SubtitleLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" index="0" unique_id=470433628 instance=ExtResource("3_y66rr")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "lvl. 2/5"
+
+[node name="PriceLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" index="1" unique_id=1558216477 instance=ExtResource("4_h5owd")]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "$10"
+fit_content = true
+autowrap_mode = 0

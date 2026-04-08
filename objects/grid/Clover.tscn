@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b8s7e2yvuum2v"]
+
+[ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/BaseFlower.tscn" id="1_3ukkp"]
+[ext_resource type="Script" uid="uid://jacshr6b22xa" path="res://objects/grid/Clover.cs" id="2_7jxwf"]
+
+[node name="Clover" unique_id=1691567109 instance=ExtResource("1_3ukkp")]
+modulate = Color(0.19215687, 1, 0.3529412, 1)
+script = ExtResource("2_7jxwf")
+ObjectName = "Clover"
+Description = "<ObjectDescription>"

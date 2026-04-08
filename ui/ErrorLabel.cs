@@ -5,6 +5,7 @@ public partial class ErrorLabel : Label
     [Export]
     private Vector2 offset = new(0, -16);
 
+    private const float fadeOutTime = 2f;
     private Tween tween;
 
     public override void _EnterTree()
@@ -37,7 +38,7 @@ public partial class ErrorLabel : Label
         if (tween != null)
             tween.Kill();
         tween = GetTree().CreateTween();
-        tween.TweenProperty(this, "modulate:a", 0, 0.5f);
+        tween.TweenProperty(this, "modulate:a", 0, fadeOutTime);
         SetProcess(true);
 
         void onTweenFinished()

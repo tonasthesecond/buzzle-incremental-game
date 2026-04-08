@@ -1,9 +1,9 @@
 using Godot;
 
 [GlobalClass]
-public partial class RocketBeeResource : BeeResource
+public partial class RocketBee : Bee
 {
-    public override void ApplyStats(BeeEntity bee)
+    public override void ApplyStats(Bee bee)
     {
         bee.Speed = new Stat(() => GameStore.BeeSpeed.Value);
         bee.BopSpeed = 10f;

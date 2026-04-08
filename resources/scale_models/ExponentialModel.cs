@@ -11,4 +11,12 @@ public partial class ExponentialModel : IScaleModel
     public float Rate { get; set; } = 1.5f;
 
     public override float Get(int x) => Base * Mathf.Pow(Rate, x);
+
+    public ExponentialModel() { }
+
+    public ExponentialModel(float baseValue, float rate)
+    {
+        Base = baseValue;
+        Rate = rate;
+    }
 }

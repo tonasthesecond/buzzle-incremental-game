@@ -72,7 +72,12 @@ public partial class SelectContainer : PanelContainer
         SelectedResources.Add(selectedResource);
         var selectable = SelectableScene.Instantiate<Selectable>();
         selectablesContainer.AddChild(selectable);
-        selectable.Setup(SelectedResources.Count - 1, buttonGroup, selectedResource.Icon);
+        selectable.Setup(
+            SelectedResources.Count - 1,
+            buttonGroup,
+            selectedResource.Icon,
+            selectedResource
+        );
 
         // selected signal
         // in selectable.Selected +=
