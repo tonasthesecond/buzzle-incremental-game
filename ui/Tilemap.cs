@@ -22,7 +22,7 @@ public partial class Tilemap : TileMapLayer
     private static readonly Dictionary<Type, int> TileSources = new()
     {
         { typeof(GreenTile), 0 },
-        { typeof(PurpleTile), 1 },
+        { typeof(LoamTile), 1 },
     };
 
     public override void _EnterTree()

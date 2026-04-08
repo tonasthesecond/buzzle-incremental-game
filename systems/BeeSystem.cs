@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -82,7 +83,7 @@ public partial class BeeSystem : GameSystem
 
     public Bee? SpawnBeeAnywhere(PackedScene scene)
     {
-        var hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
+        HiveGridObject[] hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
         if (hives.Length == 0)
             return null;
         return SpawnBee(scene, Utils.GetRandom(hives));
@@ -90,7 +91,7 @@ public partial class BeeSystem : GameSystem
 
     public Bee[] GetBees()
     {
-        var bees = new List<Bee>();
+        List<Bee> bees = new List<Bee>();
         foreach (Node node in GetTree().GetNodesInGroup("bees"))
             if (node is Bee bee)
                 bees.Add(bee);
@@ -98,6 +99,8 @@ public partial class BeeSystem : GameSystem
     }
 
     public int GetBeeCount() => GetBees().Length;
+
+    public int GetBeeCountOfType(Type t) => GetBees().Count(b => b.GetType() == t);
 
     public Bee[] GetIdleBees() => GetBees().Where(b => b.job is IdleJob).ToArray();
 

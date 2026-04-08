@@ -11,4 +11,12 @@ public partial class PolynomialModel : IScaleModel
     public float Exponent { get; set; } = 2f;
 
     public override float Get(int x) => Base * Mathf.Pow(x + 1, Exponent);
+
+    public PolynomialModel() { }
+
+    public PolynomialModel(float baseValue, float exponent)
+    {
+        Base = baseValue;
+        Exponent = exponent;
+    }
 }

@@ -94,6 +94,7 @@ public partial class TitleSubtitlePriceDescriptionUI : TitleDescriptionUI
                 switch (node)
                 {
                     case HiveGridObject hiveGridObject:
+                        subtitleLabel.Hide();
                         priceLabel.Hide();
                         break;
                 }

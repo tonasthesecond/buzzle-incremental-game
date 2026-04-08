@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -353,6 +354,10 @@ public partial class Grid : Node2D
         }
         return closest;
     }
+
+    public int GetObjectCountOfType(Type t) => objects.Values.Count(o => o.GetType() == t);
+
+    public int GetTileCountOfType(Type t) => tiles.Values.Count(tile => tile.GetType() == t);
 
     // True if any tile (excluding `exclude`) is within `distance` of `pos`.
     private bool HasTileWithin(Vector2I pos, int distance, HashSet<Vector2I>? exclude = null)

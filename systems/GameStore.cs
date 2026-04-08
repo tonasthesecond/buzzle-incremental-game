@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Godot;
@@ -40,7 +41,34 @@ public partial class GameStore : Node
     public static Stat CloverJackpotChance { get; } = new(0.1f);
     public static Stat CloverPollinationTime { get; } = new(3f);
 
-    public static Stat SmoothSoilPollinationTimeReductionBuff { get; } = new(0.2f);
+    public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
+
+    // --- Placement Price Models ---
+    public static Dictionary<Type, IScaleModel> PriceModels { get; } =
+        new()
+        {
+            { typeof(HiveGridObject), new PolynomialModel(100f, 2f) },
+            { typeof(BaseFlower), new LinearModel(5f, 5f) },
+            { typeof(Clover), new LinearModel(10f, 5f) },
+            { typeof(GreenTile), new LinearModel(50f, 5f) },
+            { typeof(LoamTile), new LinearModel(50f, 5f) },
+            { typeof(Bee), new LinearModel(10f, 5f) },
+            { typeof(RocketBee), new LinearModel(50f, 10f) },
+            { typeof(FatBee), new LinearModel(50f, 10f) },
+            { typeof(QueenBee), new LinearModel(50f, 10f) },
+        };
+
+    public static int GetPlacementCost(Type t)
+    {
+        if (!PriceModels.TryGetValue(t, out var model))
+            return 0;
+        var grid = Services.Get<Grid>();
+        int count =
+            t.IsSubclassOf(typeof(BaseTile)) ? grid.GetTileCountOfType(t)
+            : t.IsSubclassOf(typeof(BaseGridObject)) ? grid.GetObjectCountOfType(t)
+            : Services.Get<BeeSystem>().GetBeeCountOfType(t);
+        return (int)model.Get(count);
+    }
 
     // --- Honey ---
     private static int honey { get; set; } = 10;

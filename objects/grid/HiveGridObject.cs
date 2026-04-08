@@ -48,8 +48,7 @@ public partial class HiveGridObject : BaseGridObject
     public override string GetHoverDescription()
     {
         Dictionary<string, int> beeCounts = GetBeeCounts();
-        string desc =
-            $"A home for maximum of {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
+        string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
         Dictionary<string, int> beeTypesCounts = new();
         foreach (Bee bee in bees)
         {

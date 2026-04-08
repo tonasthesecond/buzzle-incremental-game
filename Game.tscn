@@ -29,7 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://bevo06gsimv4" path="res://assets/tilemap_purple.png" id="23_gebyw"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
-[ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/PurpleTile.tscn" id="24_4my3f"]
+[ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
 [ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
 [ext_resource type="PackedScene" uid="uid://cbfj4mro5unew" path="res://objects/bees/QueenBee.tscn" id="24_w7ht3"]
 [ext_resource type="PackedScene" uid="uid://c8x1d3wmlgxlb" path="res://objects/bees/FatBee.tscn" id="25_8ktx7"]

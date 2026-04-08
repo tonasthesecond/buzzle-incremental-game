@@ -11,4 +11,12 @@ public partial class LinearModel : IScaleModel
     public float Step { get; set; } = 1f;
 
     public override float Get(int x) => Base + Step * x;
+
+    public LinearModel() { }
+
+    public LinearModel(float baseValue, float step)
+    {
+        Base = baseValue;
+        Step = step;
+    }
 }
