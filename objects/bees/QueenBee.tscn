@@ -7,6 +7,7 @@
 
 [node name="QueenBee" unique_id=384287205 instance=ExtResource("1_fbet4")]
 script = ExtResource("2_6ms37")
+BeeTypeName = "Queen"
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
 modulate = Color(1, 0.30980393, 1, 1)

@@ -6,6 +6,9 @@ public abstract partial class Bee : CharacterBody2D
     [Signal]
     public delegate void ArrivedEventHandler(Bee bee);
 
+    [Export]
+    public string BeeTypeName { get; set; } = "regular";
+
     public IBeeJob job = new IdleJob();
     public required HiveGridObject Home;
     public bool IsAnimating { get; private set; }

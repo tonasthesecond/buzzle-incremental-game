@@ -4,6 +4,7 @@ public partial class Selectable : Control
 {
     [Signal]
     public delegate void SelectedEventHandler(int index);
+    public SelectedResource Resource = null!;
     public TextureButton Button = null!;
     int Index = 0;
 
@@ -21,12 +22,13 @@ public partial class Selectable : Control
     }
 
     /// Set the button group for the button.
-    public void Setup(int index, ButtonGroup group, Texture2D texture)
+    public void Setup(int index, ButtonGroup group, Texture2D texture, SelectedResource resource)
     {
         Button.ButtonGroup = group;
         Index = index;
         Button.TextureNormal = texture;
         Button.TexturePressed = texture;
         Button.TextureHover = texture;
+        Resource = resource;
     }
 }

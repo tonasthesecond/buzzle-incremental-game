@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c0k7inugat8q5" path="res://ui/Selectable.cs" id="1_1tg3v"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_ouei4"]
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="2_1tg3v"]
+[ext_resource type="PackedScene" uid="uid://cr0v8bs56ywu1" path="res://components/HoverAreaComponent.tscn" id="4_sldah"]
 
 [node name="Selectable" type="Panel" unique_id=920582071]
 custom_minimum_size = Vector2(32, 32)
@@ -35,3 +36,10 @@ texture_normal = ExtResource("2_1tg3v")
 texture_pressed = ExtResource("2_1tg3v")
 texture_hover = ExtResource("2_1tg3v")
 stretch_mode = 4
+
+[node name="HoverAreaComponent" parent="MarginContainer/Button" unique_id=1435551690 instance=ExtResource("4_sldah")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 632.0
+offset_bottom = 472.0

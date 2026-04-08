@@ -22,9 +22,9 @@ public partial class HiveGridObject : BaseGridObject
     public Dictionary<string, int> GetBeeCounts()
     {
         var counts = new Dictionary<string, int>();
-        foreach (var bee in bees)
+        foreach (Bee bee in bees)
         {
-            var type = bee.GetType().Name;
+            string type = bee.GetType().Name;
             counts.TryGetValue(type, out int cur);
             counts[type] = cur + 1;
         }
@@ -43,5 +43,24 @@ public partial class HiveGridObject : BaseGridObject
         int possible = int.Min(amount, GameStore.Honey);
         GameStore.Honey -= possible;
         return possible;
+    }
+
+    public override string GetHoverDescription()
+    {
+        Dictionary<string, int> beeCounts = GetBeeCounts();
+        string desc =
+            $"A home for maximum of {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
+        Dictionary<string, int> beeTypesCounts = new();
+        foreach (Bee bee in bees)
+        {
+            string type = bee.BeeTypeName;
+            beeTypesCounts.TryGetValue(type, out int cur);
+            beeTypesCounts[type] = cur + 1;
+        }
+        foreach (KeyValuePair<string, int> beeType in beeTypesCounts)
+        {
+            desc += $"{beeType.Value} {Style.CK(beeType.Key, $"noun_{beeType.Key}")} bees.\n";
+        }
+        return desc;
     }
 }

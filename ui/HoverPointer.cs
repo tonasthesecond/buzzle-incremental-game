@@ -9,11 +9,9 @@ public partial class HoverPointer : Control
     [Export]
     private Vector2 offset = new(16, 16);
 
-    private PackedScene generalDescriptionScene = GD.Load<PackedScene>("uid://caeokvlcu74wj");
-    private PackedScene generalDescriptionSceneWithSubtitle = GD.Load<PackedScene>(
-        "uid://0n7bdgefraxr"
-    );
-    private PackedScene upgradeDescriptionScene = GD.Load<PackedScene>("uid://b7j8yd82762kx");
+    private PackedScene TDScene = GD.Load<PackedScene>("uid://caeokvlcu74wj"); // title-description
+    private PackedScene TSDScene = GD.Load<PackedScene>("uid://0n7bdgefraxr"); // title-subtitle-description
+    private PackedScene TSPDScene = GD.Load<PackedScene>("uid://b7j8yd82762kx"); // title-subtitle-price-description
 
     private Dictionary<PackedScene, Type[]> scenesUI;
 
@@ -21,12 +19,9 @@ public partial class HoverPointer : Control
     {
         scenesUI = new()
         {
-            { generalDescriptionScene, new Type[] { typeof(HiveGridObject) } },
-            {
-                generalDescriptionSceneWithSubtitle,
-                new Type[] { typeof(HiveGridObject), typeof(Flower) }
-            },
-            { upgradeDescriptionScene, new Type[] { typeof(UpgradeNode) } },
+            { TDScene, new Type[] { typeof(HiveGridObject) } },
+            { TSDScene, new Type[] { typeof(HiveGridObject), typeof(Flower) } },
+            { TSPDScene, new Type[] { typeof(UpgradeNode), typeof(Selectable) } },
         };
     }
 

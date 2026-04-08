@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_oq0la"]
 [ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="2_4m8ay"]
-[ext_resource type="Script" uid="uid://dssiiwl3tqxtk" path="res://ui/GeneralDescriptionUI.cs" id="2_iux3v"]
+[ext_resource type="Script" uid="uid://dssiiwl3tqxtk" path="res://ui/TitleDescriptionUI.cs" id="2_iux3v"]
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_iux3v"]
 
-[node name="GeneralDescriptionUi" type="PanelContainer" unique_id=1935115770]
+[node name="TitleDescriptionUI" type="PanelContainer" unique_id=1935115770]
 custom_minimum_size = Vector2(150, 0)
 offset_right = 150.0
 offset_bottom = 46.0

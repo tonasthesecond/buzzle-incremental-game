@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
+public partial class TitleDescriptionUI : PanelContainer, IHoverUI
 {
     protected RichTextLabel titleLabel = null!;
     protected RichTextLabel descriptionLabel = null!;
@@ -28,12 +28,12 @@ public partial class GeneralDescriptionUI : PanelContainer, IHoverUI
         {
             case HiveGridObject hive:
                 SetTitle(hive.ObjectName);
-                SetDescription(hive.Description);
+                SetDescription(hive.GetHoverDescription());
                 break;
 
             case BaseGridObject obj:
                 SetTitle(obj.ObjectName);
-                SetDescription(obj.Description);
+                SetDescription(obj.GetHoverDescription());
                 break;
         }
     }

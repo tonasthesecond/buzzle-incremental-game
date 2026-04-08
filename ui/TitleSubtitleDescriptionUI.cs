@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public partial class GeneralDescriptionWithSubtitleUI : GeneralDescriptionUI
+public partial class TitleSubtitleDescriptionUI : TitleDescriptionUI
 {
     protected RichTextLabel subtitleLabel = null!;
 
