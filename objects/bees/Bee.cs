@@ -1,7 +1,11 @@
 using Godot;
 
 [GlobalClass]
-public abstract partial class Bee : CharacterBody2D
+public abstract partial class Bee
+    : CharacterBody2D,
+        IHasHoverTitle,
+        IHasHoverDescription,
+        IHasHoverPrice
 {
     [Signal]
     public delegate void ArrivedEventHandler(Bee bee);
@@ -10,7 +14,7 @@ public abstract partial class Bee : CharacterBody2D
     public string BeeTypeName { get; set; } = "regular";
 
     public IBeeJob job = new IdleJob();
-    public required HiveGridObject Home;
+    public required Hive Home;
     public bool IsAnimating { get; private set; }
     public int carryingHoney = 0;
     public Vector2 targetPosition;
@@ -152,7 +156,7 @@ public abstract partial class Bee : CharacterBody2D
     }
 
     /// Initialize bee at home hive.
-    public void Setup(HiveGridObject home)
+    public void Setup(Hive home)
     {
         Home = home;
         home.AddBee(this);
@@ -188,5 +192,27 @@ public abstract partial class Bee : CharacterBody2D
         fadeTween.TweenProperty(this, "modulate:a", alpha, duration);
         if (alpha == 0f)
             fadeTween.TweenCallback(Callable.From(() => Visible = false));
+    }
+
+    public string GetHoverTitle()
+    {
+        if (BeeTypeName == "")
+            return "Bee";
+        return $"{BeeTypeName} Bee";
+    }
+
+    public virtual string GetHoverDescription()
+    {
+        return $"{BeeTypeName} Bee";
+    }
+
+    public virtual int GetHoverCost()
+    {
+        return GameStore.GetPlacementCost(GetType());
+    }
+
+    public bool IsEnough()
+    {
+        return GameStore.Honey >= GetHoverCost();
     }
 }

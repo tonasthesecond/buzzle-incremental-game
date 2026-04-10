@@ -8,31 +8,37 @@
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 [ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
 [ext_resource type="PackedScene" uid="uid://bmriyvd8cma8a" path="res://upgrades/UpgradeTree.tscn" id="7_yx171"]
-[ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GreenTile.tscn" id="8_2vekm"]
+[ext_resource type="PackedScene" uid="uid://jqoybnegr6bc" path="res://objects/tiles/GrassTile.tscn" id="8_2vekm"]
 [ext_resource type="Script" uid="uid://yq5ra5q2w8oc" path="res://resources/SelectedResource.cs" id="8_joorw"]
 [ext_resource type="PackedScene" uid="uid://ky0eb4q7ufyw" path="res://objects/BeekeeperEffectZone.tscn" id="8_jsoai"]
 [ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
-[ext_resource type="Resource" uid="uid://be6pjdrb67smq" path="res://resources/RemoveObject.tres" id="9_qjyg3"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="10_0yprl"]
-[ext_resource type="PackedScene" uid="uid://bbh6aex2oxcg6" path="res://objects/grid/HiveGridObject.tscn" id="11_cpsxm"]
+[ext_resource type="PackedScene" uid="uid://bbh6aex2oxcg6" path="res://objects/grid/Hive.tscn" id="11_cpsxm"]
 [ext_resource type="PackedScene" uid="uid://b466og2ju7b2g" path="res://ui/NumberDisplay.tscn" id="11_lvtmh"]
 [ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="11_yhmtn"]
 [ext_resource type="Script" uid="uid://ca5lej4xayi2l" path="res://ui/HoneyDisplay.cs" id="12_yyih5"]
-[ext_resource type="Resource" uid="uid://c0tw6kouxj131" path="res://resources/RemoveTile.tres" id="13_cpsxm"]
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
 [ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
-[ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/BaseFlower.tscn" id="20_4my3f"]
+[ext_resource type="Texture2D" uid="uid://brxniuvbritbs" path="res://assets/cross.png" id="16_5he1h"]
+[ext_resource type="Script" uid="uid://dtjq0xs62aa6r" path="res://resources/RemoveObject.cs" id="17_xwkxq"]
+[ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/Poppy.tscn" id="20_4my3f"]
 [ext_resource type="Script" uid="uid://bomuqqxbk22bi" path="res://ui/HoverPointer.cs" id="21_0mevm"]
+[ext_resource type="PackedScene" uid="uid://rtbaieb6a50t" path="res://objects/grid/Sunflower.tscn" id="21_5he1h"]
 [ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
 [ext_resource type="Texture2D" uid="uid://bevo06gsimv4" path="res://assets/tilemap_purple.png" id="23_gebyw"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
+[ext_resource type="PackedScene" uid="uid://brb5bcs3dh361" path="res://objects/grid/Yarrow.tscn" id="23_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
 [ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
 [ext_resource type="PackedScene" uid="uid://cbfj4mro5unew" path="res://objects/bees/QueenBee.tscn" id="24_w7ht3"]
+[ext_resource type="PackedScene" uid="uid://dvinr3qg6witu" path="res://objects/grid/Rose.tscn" id="24_wdm1y"]
 [ext_resource type="PackedScene" uid="uid://c8x1d3wmlgxlb" path="res://objects/bees/FatBee.tscn" id="25_8ktx7"]
+[ext_resource type="Script" uid="uid://co550qpijgpnv" path="res://resources/RemoveTile.cs" id="26_xwkxq"]
+[ext_resource type="Texture2D" uid="uid://ciawes7fupkve" path="res://assets/tilemap_brown.png" id="27_hxy8k"]
+[ext_resource type="PackedScene" uid="uid://cvi41mdqkh0au" path="res://objects/tiles/DirtTile.tscn" id="28_hxy8k"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
 load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
@@ -48,6 +54,12 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
 atlas = ExtResource("11_yhmtn")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_wdm1y"]
+resource_name = "RemoveObject"
+script = ExtResource("17_xwkxq")
+Icon = ExtResource("16_5he1h")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bvhbk"]
 atlas = ExtResource("10_0yprl")
@@ -72,6 +84,20 @@ Resource = ExtResource("20_4my3f")
 Icon = SubResource("AtlasTexture_suycs")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hxy8k"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t1a5"]
+atlas = SubResource("CompressedTexture2D_hxy8k")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_8576b"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("21_5he1h")
+Icon = SubResource("AtlasTexture_2t1a5")
+UnlockKey = "Sunflower"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_suycs"]
 load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
 
@@ -83,26 +109,70 @@ region = Rect2(64, 0, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_aeq37")
 Icon = SubResource("AtlasTexture_202ut")
+UnlockKey = "Clover"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
-atlas = ExtResource("14_hmewc")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_68r7h"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7vltt"]
+atlas = SubResource("CompressedTexture2D_68r7h")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_fj2yu"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("23_xwkxq")
+Icon = SubResource("AtlasTexture_7vltt")
+UnlockKey = "Yarrow"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_iueff"]
+load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7324"]
+atlas = SubResource("CompressedTexture2D_iueff")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_o6tbt"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("24_wdm1y")
+Icon = SubResource("AtlasTexture_n7324")
+UnlockKey = "Rose"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="Resource" id="Resource_hxy8k"]
+script = ExtResource("26_xwkxq")
+Icon = ExtResource("16_5he1h")
+metadata/_custom_type_script = "uid://co550qpijgpnv"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8576b"]
+atlas = ExtResource("27_hxy8k")
 region = Rect2(96, 96, 32, 32)
 
-[sub_resource type="Resource" id="Resource_w2501"]
+[sub_resource type="Resource" id="Resource_68r7h"]
 script = ExtResource("8_joorw")
-Resource = ExtResource("8_2vekm")
-Icon = SubResource("AtlasTexture_0mevm")
+Resource = ExtResource("28_hxy8k")
+Icon = SubResource("AtlasTexture_8576b")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aeq37"]
 atlas = ExtResource("23_gebyw")
 region = Rect2(96, 96, 32, 32)
 
-[sub_resource type="Resource" id="Resource_suycs"]
+[sub_resource type="Resource" id="Resource_7vltt"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_4my3f")
 Icon = SubResource("AtlasTexture_aeq37")
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
+atlas = ExtResource("14_hmewc")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_2t1a5"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("8_2vekm")
+Icon = SubResource("AtlasTexture_0mevm")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_w7ht3"]
@@ -214,14 +284,17 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="ObjectsSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
+unique_name_in_owner = true
 layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("9_qjyg3"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_5he1h")])
+SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
 
 [node name="TilesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
+unique_name_in_owner = true
 layout_mode = 2
-SelectedResources = Array[Object]([ExtResource("13_cpsxm"), SubResource("Resource_w2501"), SubResource("Resource_suycs")])
+SelectedResources = Array[Object]([SubResource("Resource_hxy8k"), SubResource("Resource_68r7h"), SubResource("Resource_7vltt"), SubResource("Resource_2t1a5")])
 
 [node name="BeesSelectContainer" parent="UILayer/BottomRight/VBoxContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
+unique_name_in_owner = true
 layout_mode = 2
 SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_8ktx7"), SubResource("Resource_hwsgv")])
 

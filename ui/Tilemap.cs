@@ -21,8 +21,9 @@ public partial class Tilemap : TileMapLayer
     // maps tile types to tile source ids
     private static readonly Dictionary<Type, int> TileSources = new()
     {
-        { typeof(GreenTile), 0 },
-        { typeof(LoamTile), 1 },
+        { typeof(GrassTile), 0 },
+        { typeof(DirtTile), 1 },
+        { typeof(LoamTile), 2 },
     };
 
     public override void _EnterTree()

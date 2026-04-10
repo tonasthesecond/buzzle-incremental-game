@@ -9,6 +9,7 @@ radius = 6.0827627
 [node name="BaseBee" type="CharacterBody2D" unique_id=384287205 groups=["bees"]]
 z_index = 1
 script = ExtResource("1_87m66")
+BeeTypeName = ""
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2116123333]
 texture = ExtResource("2_vr4ei")

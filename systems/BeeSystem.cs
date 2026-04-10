@@ -22,7 +22,7 @@ public partial class BeeSystem : GameSystem
         var grid = Services.Get<Grid>();
         foreach (var saved in GameStore.Save.Hives)
         {
-            var hive = grid.GetObjectAt(new Vector2I(saved.X, saved.Y)) as HiveGridObject;
+            var hive = grid.GetObjectAt(new Vector2I(saved.X, saved.Y)) as Hive;
             if (hive == null)
                 continue;
             foreach (var kv in saved.BeeCounts)
@@ -55,7 +55,7 @@ public partial class BeeSystem : GameSystem
     }
 
     /// Spawn a bee by scene name (used by save load).
-    public Bee? SpawnBee(string sceneName, HiveGridObject home)
+    public Bee? SpawnBee(string sceneName, Hive home)
     {
         var scene = GD.Load<PackedScene>($"res://objects/bees/{sceneName}.tscn");
         if (scene == null)
@@ -67,7 +67,7 @@ public partial class BeeSystem : GameSystem
     }
 
     /// Spawn a bee by scene (used by placement system).
-    public Bee? SpawnBee(PackedScene scene, HiveGridObject home)
+    public Bee? SpawnBee(PackedScene scene, Hive home)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
         {
@@ -83,7 +83,7 @@ public partial class BeeSystem : GameSystem
 
     public Bee? SpawnBeeAnywhere(PackedScene scene)
     {
-        HiveGridObject[] hives = Services.Get<Grid>().GetObjectsOfType<HiveGridObject>();
+        Hive[] hives = Services.Get<Grid>().GetObjectsOfType<Hive>();
         if (hives.Length == 0)
             return null;
         return SpawnBee(scene, Utils.GetRandom(hives));

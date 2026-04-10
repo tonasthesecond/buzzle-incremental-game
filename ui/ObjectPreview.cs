@@ -48,7 +48,7 @@ public partial class ObjectPreview : TextureRect
         else if (mode == PlacementSystem.Mode.Bee)
         {
             Scale = Vector2.One;
-            HiveGridObject hive = grid.GetClosestObjectOfType<HiveGridObject>(worldPos)!;
+            Hive hive = grid.GetClosestObjectOfType<Hive>(worldPos)!;
             if (hive != null)
             {
                 Vector2 worldMouse =

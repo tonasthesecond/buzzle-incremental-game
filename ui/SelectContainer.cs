@@ -44,7 +44,8 @@ public partial class SelectContainer : PanelContainer
 
         // add resources
         foreach (SelectedResource selectedResource in SelectedResources)
-            Add(selectedResource);
+            if (selectedResource.IsUnlocked())
+                Add(selectedResource);
 
         // connect signals
         expandButton.Pressed += () =>
@@ -53,6 +54,12 @@ public partial class SelectContainer : PanelContainer
                 Shrink();
             else
                 Expand();
+        };
+        GameStore.Instance.OnUnlocked += (string key) =>
+        {
+            foreach (SelectedResource res in SelectedResources)
+                if (res.UnlockKey == key)
+                    Add(res);
         };
     }
 
@@ -64,33 +71,23 @@ public partial class SelectContainer : PanelContainer
             Reset();
     }
 
-    public void Add(SelectedResource selectedResource, int index = -1)
+    public void Add(SelectedResource selectedResource)
     {
-        if (index == -1)
-            index = SelectedResources.Count;
-
-        SelectedResources.Add(selectedResource);
         var selectable = SelectableScene.Instantiate<Selectable>();
         selectablesContainer.AddChild(selectable);
-        selectable.Setup(
-            SelectedResources.Count - 1,
-            buttonGroup,
-            selectedResource.Icon,
-            selectedResource
-        );
+        int index = selectablesContainer.GetChildCount() - 1;
+        selectable.Setup(index, buttonGroup, selectedResource.Icon, selectedResource);
 
-        // selected signal
-        // in selectable.Selected +=
-        selectable.Selected += (int index) =>
+        selectable.Selected += (int i) =>
         {
-            SelectedIndex = index;
+            SelectedIndex = i;
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.ResourceSelected,
                 GetSelectedResource()
             );
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.SelectedResourceSelected,
-                SelectedResources[index]
+                SelectedResources[i]
             );
         };
     }

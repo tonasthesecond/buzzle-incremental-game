@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://rtbaieb6a50t"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_bn22v"]
+[ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="2_aqtox"]
+[ext_resource type="Script" uid="uid://ddyrc6n64uv34" path="res://objects/grid/Sunflower.cs" id="2_lclig"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pblul"]
+atlas = ExtResource("2_aqtox")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jrk61"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pblul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Sunflower" unique_id=1691567109 instance=ExtResource("1_bn22v")]
+modulate = Color(0.99607843, 1, 0, 1)
+script = ExtResource("2_lclig")
+ObjectName = "Sunflower"
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_jrk61")
+speed_scale = 0.0

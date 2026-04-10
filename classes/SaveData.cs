@@ -7,6 +7,7 @@ public class SaveData
     public List<SavedHive> Hives { get; set; } = new();
     public List<SavedTileGroup> Tiles { get; set; } = new();
     public List<SavedObject> Objects { get; set; } = new();
+    public List<string> UnlockedKeys { get; set; } = new();
 }
 
 public class SavedUpgrade

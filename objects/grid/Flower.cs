@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class Flower : BaseGridObject
+public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverSubtitle
 {
     [Signal]
     public delegate void PollinatedEventHandler(int honey);
@@ -89,5 +89,17 @@ public partial class Flower : BaseGridObject
             sprite.Modulate = Colors.White;
         else
             sprite.Modulate = Colors.DarkGray;
+    }
+
+    public string GetHoverSubtitle()
+    {
+        if (CurState == State.Pollinated)
+            return Style.CK($"{Honey} honey", "subtitle");
+        if (CurState == State.Pollinating)
+            return Style.CK(
+                $"pollinating {Honey}/{HoneyCost.Value} ({Honey / HoneyCost.Value * 100f:P0}%)",
+                "subtitle"
+            );
+        return "";
     }
 }

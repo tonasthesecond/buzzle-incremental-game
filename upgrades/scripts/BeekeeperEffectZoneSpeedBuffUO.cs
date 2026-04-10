@@ -8,7 +8,7 @@ public partial class BeekeeperEffectZoneSpeedBuffUO : IUpgradeOption
 
     private float value => GameStore.BeekeeperEffectZoneSpeedBuff.Value;
 
-    public override string GetText() =>
+    public override string GetHoverDescription() => 
         $"{Style.CK("Beekeeper Effect Zone", "noun_beekeeper")} increases all {Style.CK("Bees", "noun_bee")}' speed by {Style.NumberChangePercent(value, value + IncreaseBy)}";
 
     public override void Apply()

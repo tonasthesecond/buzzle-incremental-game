@@ -27,10 +27,10 @@ public partial class Grid : Node2D
     {
         for (int x = 0; x < 5; x++)
         for (int y = 0; y < 5; y++)
-            PlaceTile<GreenTile>(new Vector2I(x, y));
-        PlaceTile<GreenTile>(new Vector2I(5, 2));
+            PlaceTile<GrassTile>(new Vector2I(x, y));
+        PlaceTile<GrassTile>(new Vector2I(5, 2));
 
-        PlaceObject<HiveGridObject>(new Vector2I(2, 2), out var hive);
+        PlaceObject<Hive>(new Vector2I(2, 2), out var hive);
 
         Vector2I[] flowers = [new(0, 1), new(4, 0), new(1, 4), new(3, 3)];
         foreach (var pos in flowers)
@@ -82,7 +82,7 @@ public partial class Grid : Node2D
             })
             .ToList();
 
-        GameStore.Save.Hives = GetObjectsOfType<HiveGridObject>()
+        GameStore.Save.Hives = GetObjectsOfType<Hive>()
             .Select(h => new SavedHive
             {
                 X = h.GridPosition.X,
@@ -240,6 +240,7 @@ public partial class Grid : Node2D
         obj.GridPosition = pos;
         objects[pos] = obj;
         SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridObjectPlaced, obj);
+        obj.Placed = true;
         failMessage = null;
         return true;
     }
