@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dvinr3qg6witu"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_6v4vg"]
+[ext_resource type="Script" uid="uid://b7sp0x473xtdu" path="res://objects/grid/Rose.cs" id="2_6v4vg"]
+[ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_k10vv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pblul"]
+atlas = ExtResource("3_k10vv")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jrk61"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pblul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Rose" unique_id=1691567109 instance=ExtResource("1_6v4vg")]
+script = ExtResource("2_6v4vg")
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_jrk61")
+speed_scale = 0.0

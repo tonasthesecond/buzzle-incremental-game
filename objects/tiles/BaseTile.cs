@@ -9,7 +9,7 @@ public partial class BaseTile : Node2D
     {
         switch (obj)
         {
-            case HiveGridObject hive:
+            case Hive hive:
                 ModifyHive(hive);
                 break;
             case Flower flower:
@@ -18,7 +18,7 @@ public partial class BaseTile : Node2D
         }
     }
 
-    protected virtual void ModifyHive(HiveGridObject hive) { }
+    protected virtual void ModifyHive(Hive hive) { }
 
     protected virtual void ModifyFlower(Flower flower) { }
 

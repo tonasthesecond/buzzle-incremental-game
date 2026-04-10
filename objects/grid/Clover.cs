@@ -26,9 +26,6 @@ public partial class Clover : Flower
     protected override void OnPollinated()
     {
         base.OnPollinated();
-        if (isJackpot)
-        {
-            GD.Print($"Jackpot!");
-        }
+        // if (isJackpot) { }
     }
 }

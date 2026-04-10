@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
-public partial class HiveGridObject : BaseGridObject
+public partial class Hive : BaseGridObject
 {
     [Signal]
     public delegate void BeeAddedEventHandler(Bee bee);
@@ -58,7 +58,11 @@ public partial class HiveGridObject : BaseGridObject
         }
         foreach (KeyValuePair<string, int> beeType in beeTypesCounts)
         {
-            desc += $"{beeType.Value} {Style.CK(beeType.Key, $"noun_{beeType.Key}")} bees.\n";
+            string noun = beeType.Key.ToLower() + "_";
+            if (noun == "_")
+                noun = "";
+            desc +=
+                $"{beeType.Value} {Style.CK(beeType.Key, $"noun_{beeType.Key.ToLower()}bee")} bees.\n";
         }
         return desc;
     }

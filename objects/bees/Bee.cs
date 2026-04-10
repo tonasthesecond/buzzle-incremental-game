@@ -10,7 +10,7 @@ public abstract partial class Bee : CharacterBody2D
     public string BeeTypeName { get; set; } = "regular";
 
     public IBeeJob job = new IdleJob();
-    public required HiveGridObject Home;
+    public required Hive Home;
     public bool IsAnimating { get; private set; }
     public int carryingHoney = 0;
     public Vector2 targetPosition;
@@ -152,7 +152,7 @@ public abstract partial class Bee : CharacterBody2D
     }
 
     /// Initialize bee at home hive.
-    public void Setup(HiveGridObject home)
+    public void Setup(Hive home)
     {
         Home = home;
         home.AddBee(this);

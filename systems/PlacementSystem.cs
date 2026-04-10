@@ -117,7 +117,7 @@ public partial class PlacementSystem : GameSystem
         {
             case Mode.Bee:
                 SetHighlight(
-                    grid.GetClosestObjectOfType<HiveGridObject>(grid.GridToWorld(cell)),
+                    grid.GetClosestObjectOfType<Hive>(grid.GridToWorld(cell)),
                     "highlight_target"
                 );
                 break;
@@ -183,7 +183,7 @@ public partial class PlacementSystem : GameSystem
             case Mode.Bee:
                 if (
                     selectedScene != null
-                    && highlighted is HiveGridObject hive
+                    && highlighted is Hive hive
                     && TryCharge(selectedType, out fail)
                 )
                     Services.Get<BeeSystem>().SpawnBee(selectedScene, hive);

@@ -30,7 +30,7 @@ public partial class Grid : Node2D
             PlaceTile<GreenTile>(new Vector2I(x, y));
         PlaceTile<GreenTile>(new Vector2I(5, 2));
 
-        PlaceObject<HiveGridObject>(new Vector2I(2, 2), out var hive);
+        PlaceObject<Hive>(new Vector2I(2, 2), out var hive);
 
         Vector2I[] flowers = [new(0, 1), new(4, 0), new(1, 4), new(3, 3)];
         foreach (var pos in flowers)
@@ -82,7 +82,7 @@ public partial class Grid : Node2D
             })
             .ToList();
 
-        GameStore.Save.Hives = GetObjectsOfType<HiveGridObject>()
+        GameStore.Save.Hives = GetObjectsOfType<Hive>()
             .Select(h => new SavedHive
             {
                 X = h.GridPosition.X,

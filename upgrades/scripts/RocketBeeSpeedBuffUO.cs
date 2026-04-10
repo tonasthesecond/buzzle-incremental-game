@@ -1,0 +1,21 @@
+using Godot;
+
+[GlobalClass]
+public partial class RocketBeeSpeedBuffUO : IUpgradeOption
+{
+    [Export]
+    public float IncreaseBy { get; set; } = 0.5f;
+
+    [Export]
+    public int BaseCost { get; set; } = 10;
+
+    public override string GetText() =>
+        $"{Style.CK("Rocket Bee Speed Buff", "noun_rocket_bee")} {Style.NumberChange(GameStore.RocketBeeSpeedBuff.Value, GameStore.RocketBeeSpeedBuff.Value + IncreaseBy)}x";
+
+    public override int GetCost() => Level * BaseCost;
+
+    public override void Apply()
+    {
+        GameStore.RocketBeeSpeedBuff.AddFlat(Name, IncreaseBy * Level);
+    }
+}

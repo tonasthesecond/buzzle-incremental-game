@@ -32,7 +32,7 @@
   ],
   "Tiles": [
     {
-      "Type": "LoamTile",
+      "Type": "GreenTile",
       "Spans": [
         [2, 2, -2],
         [1, 3, -1],
@@ -50,27 +50,27 @@
     {
       "X": 2,
       "Y": 2,
-      "Type": "HiveGridObject"
+      "Type": "Hive"
     },
     {
       "X": 0,
       "Y": 1,
-      "Type": "BaseFlower"
+      "Type": "Poppy"
     },
     {
       "X": 4,
       "Y": 0,
-      "Type": "BaseFlower"
+      "Type": "Poppy"
     },
     {
       "X": 1,
       "Y": 4,
-      "Type": "BaseFlower"
+      "Type": "Poppy"
     },
     {
       "X": 3,
       "Y": 3,
-      "Type": "BaseFlower"
+      "Type": "Poppy"
     },
     {
       "X": 2,

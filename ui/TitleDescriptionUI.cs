@@ -26,7 +26,7 @@ public partial class TitleDescriptionUI : PanelContainer, IHoverUI
     {
         switch (target)
         {
-            case HiveGridObject hive:
+            case Hive hive:
                 SetTitle(hive.ObjectName);
                 SetDescription(hive.GetHoverDescription());
                 break;

@@ -93,7 +93,7 @@ public partial class TitleSubtitlePriceDescriptionUI : TitleDescriptionUI
                 base.Setup(node);
                 switch (node)
                 {
-                    case HiveGridObject hiveGridObject:
+                    case Hive hiveGridObject:
                         subtitleLabel.Hide();
                         priceLabel.Hide();
                         break;

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bbh6aex2oxcg6"]
 
 [ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_11w1l"]
-[ext_resource type="Script" uid="uid://bybv3vp6ucy4h" path="res://objects/grid/HiveGridObject.cs" id="2_u4imk"]
+[ext_resource type="Script" uid="uid://bybv3vp6ucy4h" path="res://objects/grid/Hive.cs" id="2_u4imk"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_ypjnr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kpe26"]
@@ -43,7 +43,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="HiveTile" unique_id=1691567109 instance=ExtResource("1_11w1l")]
+[node name="Hive" unique_id=1691567109 instance=ExtResource("1_11w1l")]
 script = ExtResource("2_u4imk")
 ObjectName = "Hive"
 Description = "A home for your bees!"

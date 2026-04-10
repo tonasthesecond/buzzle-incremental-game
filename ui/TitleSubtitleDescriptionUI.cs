@@ -22,14 +22,14 @@ public partial class TitleSubtitleDescriptionUI : TitleDescriptionUI
 
         switch (target)
         {
-            case HiveGridObject hive:
+            case Hive hive:
                 Action setBeeCount = () =>
                 {
                     SetSubtitle(
                         Style.SubTitle($"{hive.BeeCount}/{GameStore.HiveCapacityBee.Value} bees")
                     );
                 };
-                HiveGridObject.BeeAddedEventHandler onBeeAdded = (Bee bee) => setBeeCount();
+                Hive.BeeAddedEventHandler onBeeAdded = (Bee bee) => setBeeCount();
                 hive.BeeAdded += onBeeAdded;
                 TreeExiting += () => hive.BeeAdded -= onBeeAdded;
                 setBeeCount();

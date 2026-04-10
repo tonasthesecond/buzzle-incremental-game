@@ -19,8 +19,8 @@ public partial class HoverPointer : Control
     {
         scenesUI = new()
         {
-            { TDScene, new Type[] { typeof(HiveGridObject) } },
-            { TSDScene, new Type[] { typeof(HiveGridObject), typeof(Flower) } },
+            { TDScene, new Type[] { typeof(Hive) } },
+            { TSDScene, new Type[] { typeof(Hive), typeof(Flower) } },
             { TSPDScene, new Type[] { typeof(UpgradeNode), typeof(Selectable) } },
         };
     }

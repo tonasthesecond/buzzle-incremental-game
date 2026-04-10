@@ -31,15 +31,32 @@ public partial class GameStore : Node
     public static Stat RocketBeeChargeTime { get; } = new(2000f);
     public static Stat RocketBeeChargeDistance { get; } = new(20f);
 
-    public static Stat BaseFlowerHoneyCost { get; } = new(1f);
-    public static Stat BaseFlowerHoneyGain { get; } = new(2f);
-    public static Stat BaseFlowerPollinationTime { get; } = new(3f);
+    public static Stat PoppyHoneyCost { get; } = new(1f);
+    public static Stat PoppyHoneyGain { get; } = new(2f);
+    public static Stat PoppyPollinationTime { get; } = new(3f);
+
+    public static Stat SunflowerHoneyCost { get; } = new(1f);
+    public static Stat SunflowerHoneyGain { get; } = new(2f);
+    public static Stat SunflowerPollinationTime { get; } = new(3f);
 
     public static Stat CloverHoneyCost { get; } = new(2f);
     public static Stat CloverRegularHoneyGain { get; } = new(2f);
     public static Stat CloverJackpotHoneyGain { get; } = new(7f);
-    public static Stat CloverJackpotChance { get; } = new(0.1f);
     public static Stat CloverPollinationTime { get; } = new(3f);
+    public static Stat CloverJackpotChance { get; } = new(0.1f);
+
+    public static Stat YarrowHoneyCost { get; } = new(1f);
+    public static Stat YarrowHoneyGain { get; } = new(2f);
+    public static Stat YarrowPollinationTime { get; } = new(3f);
+    public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.2f);
+
+    public static Stat RoseHoneyCost { get; } = new(1f);
+    public static Stat RoseHoneyGain { get; } = new(2f);
+    public static Stat RosePollinationTime { get; } = new(3f);
+    public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
+    public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.2f);
+
+    public static Stat RichSoilHoneyGainBuff { get; } = new(0.2f);
 
     public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
 
@@ -47,8 +64,8 @@ public partial class GameStore : Node
     public static Dictionary<Type, IScaleModel> PriceModels { get; } =
         new()
         {
-            { typeof(HiveGridObject), new PolynomialModel(100f, 2f) },
-            { typeof(BaseFlower), new LinearModel(5f, 5f) },
+            { typeof(Hive), new PolynomialModel(100f, 2f) },
+            { typeof(Poppy), new LinearModel(5f, 5f) },
             { typeof(Clover), new LinearModel(10f, 5f) },
             { typeof(GreenTile), new LinearModel(50f, 5f) },
             { typeof(LoamTile), new LinearModel(50f, 5f) },
