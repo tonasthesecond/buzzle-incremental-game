@@ -28,4 +28,13 @@ public partial class Clover : Flower
         base.OnPollinated();
         // if (isJackpot) { }
     }
+
+    public override string GetHoverDescription()
+    {
+        string desc =
+            $"{Style.CK("Flower", "noun_flower")} that has a  {Style.CKPercent(1f - GameStore.CloverJackpotChance.Value)} chance of producing {Style.CK(GameStore.CloverRegularHoneyGain.Value.ToString("F0"))} honey and a {Style.CKPercent(GameStore.CloverJackpotChance.Value)} chance of jackpot, producing {Style.CK(GameStore.CloverJackpotHoneyGain.Value.ToString("F0"))} honey.";
+        if (isJackpot)
+            desc += "\nThis flower is a jackpot!";
+        return desc;
+    }
 }

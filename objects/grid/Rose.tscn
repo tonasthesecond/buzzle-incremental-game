@@ -21,7 +21,9 @@ animations = [{
 
 [node name="Rose" unique_id=1691567109 instance=ExtResource("1_6v4vg")]
 script = ExtResource("2_6v4vg")
+ObjectName = "Rose"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
+modulate = Color(1, 0.32156864, 0.18431373, 1)
 sprite_frames = SubResource("SpriteFrames_jrk61")
 speed_scale = 0.0

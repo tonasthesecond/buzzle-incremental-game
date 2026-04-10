@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public partial class BaseTile : Node2D
+public partial class BaseTile : Node2D, IHasHoverTitle, IHasHoverDescription, IHasHoverPrice
 {
     public Vector2I GridPosition { get; set; }
 
@@ -32,4 +32,12 @@ public partial class BaseTile : Node2D
                 ModifyObject(obj);
         };
     }
+
+    public virtual string GetHoverTitle() => "<Tile>";
+
+    public virtual string GetHoverDescription() => "<Tile>";
+
+    public int GetHoverCost() => GameStore.GetPlacementCost(GetType());
+
+    public bool IsEnough() => GameStore.Honey >= GetHoverCost();
 }

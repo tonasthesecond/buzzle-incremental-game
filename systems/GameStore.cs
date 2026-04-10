@@ -10,6 +10,9 @@ public partial class GameStore : Node
     [Signal]
     public delegate void HoneyChangedEventHandler(int newHoney);
 
+    [Signal]
+    public delegate void OnUnlockedEventHandler(string key);
+
     // --- Computed Stats ---
     public static Stat HiveCapacityBee { get; } = new(10f);
 
@@ -66,10 +69,14 @@ public partial class GameStore : Node
         {
             { typeof(Hive), new PolynomialModel(100f, 2f) },
             { typeof(Poppy), new LinearModel(5f, 5f) },
+            { typeof(Sunflower), new LinearModel(5f, 5f) },
             { typeof(Clover), new LinearModel(10f, 5f) },
-            { typeof(GreenTile), new LinearModel(50f, 5f) },
+            { typeof(Yarrow), new LinearModel(5f, 5f) },
+            { typeof(Rose), new LinearModel(5f, 5f) },
+            { typeof(DirtTile), new LinearModel(5f, 5f) },
+            { typeof(GrassTile), new LinearModel(50f, 5f) },
             { typeof(LoamTile), new LinearModel(50f, 5f) },
-            { typeof(Bee), new LinearModel(10f, 5f) },
+            { typeof(BaseBee), new LinearModel(10f, 5f) },
             { typeof(RocketBee), new LinearModel(50f, 10f) },
             { typeof(FatBee), new LinearModel(50f, 10f) },
             { typeof(QueenBee), new LinearModel(50f, 10f) },
@@ -86,6 +93,32 @@ public partial class GameStore : Node
             : Services.Get<BeeSystem>().GetBeeCountOfType(t);
         return (int)model.Get(count);
     }
+
+    // --- Unlocks ---
+    public static readonly string[] AllUnlocks =
+    [
+        "Sunflower",
+        "Clover",
+        "Yarrow",
+        "Rose",
+        "RichSoil",
+        "Loam",
+        "QueenBee",
+        "RocketBee",
+        "FatBee",
+    ];
+    private static readonly HashSet<string> unlockedKeys = new();
+
+    public static void Unlock(string key)
+    {
+        if (unlockedKeys.Add(key))
+        {
+            Save.UnlockedKeys.Add(key);
+            Instance.EmitSignal(SignalName.OnUnlocked, key);
+        }
+    }
+
+    public static bool IsUnlocked(string key) => unlockedKeys.Contains(key);
 
     // --- Honey ---
     private static int honey { get; set; } = 10;
@@ -171,6 +204,8 @@ public partial class GameStore : Node
         // apply all dynamic contents
         honey = Save.Honey;
         ApplyUpgrades();
+        foreach (string key in Save.UnlockedKeys)
+            unlockedKeys.Add(key);
 
         Callable
             .From(() =>

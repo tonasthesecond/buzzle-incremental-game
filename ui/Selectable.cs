@@ -1,6 +1,13 @@
+using System;
 using Godot;
 
-public partial class Selectable : Control
+public partial class Selectable
+    : Control,
+        IHasHoverTitle,
+        IHasHoverDescription,
+        IHasHoverSubtitle,
+        IHasHoverPrice,
+        IHasHoverRefresh
 {
     [Signal]
     public delegate void SelectedEventHandler(int index);
@@ -31,4 +38,18 @@ public partial class Selectable : Control
         Button.TextureHover = texture;
         Resource = resource;
     }
+
+    public string GetHoverTitle() => Resource.GetHoverTitle();
+
+    public string GetHoverDescription() => Resource.GetHoverDescription();
+
+    public string GetHoverSubtitle() => Resource.GetHoverSubtitle();
+
+    public int GetHoverCost() => Resource.GetHoverCost();
+
+    public bool IsEnough() => Resource.IsEnough();
+
+    public void RegisterRefresh(Action refresh) => Resource.RegisterRefresh(refresh);
+
+    public void UnregisterRefresh(Action refresh) => Resource.UnregisterRefresh(refresh);
 }

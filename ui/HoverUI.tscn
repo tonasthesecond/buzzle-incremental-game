@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://b7j8yd82762kx"]
+
+[ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="1_0bdvj"]
+[ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="2_8ixex"]
+[ext_resource type="Script" uid="uid://cv5dprgwp2nq5" path="res://ui/HoverUI.cs" id="2_sgtpv"]
+[ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_sgtpv"]
+
+[node name="HoverUI" type="PanelContainer" unique_id=1935115770]
+custom_minimum_size = Vector2(150, 0)
+offset_right = 150.0
+offset_bottom = 46.0
+theme = ExtResource("1_0bdvj")
+script = ExtResource("2_sgtpv")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=52499008]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=767470004]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TitleLabel" parent="MarginContainer/VBoxContainer" unique_id=470433628 instance=ExtResource("2_8ixex")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=640940341]
+layout_mode = 2
+alignment = 2
+
+[node name="SubtitleLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=675219446 instance=ExtResource("2_8ixex")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "lvl. 2/5"
+
+[node name="PriceLabel" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1558216477 instance=ExtResource("3_sgtpv")]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "$10"
+fit_content = true
+autowrap_mode = 0
+
+[node name="DescriptionLabel" parent="MarginContainer/VBoxContainer" unique_id=807301646 instance=ExtResource("3_sgtpv")]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+text = "This is just a general desc."
+fit_content = true
+autowrap_mode = 2

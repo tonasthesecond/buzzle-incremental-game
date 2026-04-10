@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cvi41mdqkh0au"]
+
+[ext_resource type="PackedScene" uid="uid://bl1b65io17tnk" path="res://objects/tiles/BaseTile.tscn" id="1_we0g5"]
+[ext_resource type="Script" uid="uid://dtkpb5s881tc1" path="res://objects/tiles/DirtTile.cs" id="2_ok4ms"]
+
+[node name="DirtTile" unique_id=1083697076 instance=ExtResource("1_we0g5")]
+script = ExtResource("2_ok4ms")

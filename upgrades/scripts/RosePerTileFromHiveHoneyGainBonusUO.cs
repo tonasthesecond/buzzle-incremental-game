@@ -6,13 +6,8 @@ public partial class RosePerTileFromHiveHoneyGainBonusUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 0.5f;
 
-    [Export]
-    public int BaseCost { get; set; } = 10;
-
-    public override string GetText() =>
+    public override string GetHoverDescription() => 
         $"{Style.CK("Rose Hive Distance Bonus", "noun_rose")} {Style.NumberChange(GameStore.RosePerTileFromHiveHoneyGainBonus.Value, GameStore.RosePerTileFromHiveHoneyGainBonus.Value + IncreaseBy)} per tile";
-
-    public override int GetCost() => Level * BaseCost;
 
     public override void Apply()
     {

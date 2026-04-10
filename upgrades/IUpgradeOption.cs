@@ -1,7 +1,7 @@
 using Godot;
 
 [GlobalClass]
-public abstract partial class IUpgradeOption : Resource
+public abstract partial class IUpgradeOption : Resource, IHasHoverDescription
 {
     [Signal]
     public delegate void AppliedEventHandler();
@@ -10,15 +10,15 @@ public abstract partial class IUpgradeOption : Resource
     public string Name { get; set; } = "Upgrade";
 
     [Export]
-    public int MaxLevel { get; set; } = -1; // -1 = unlimited
+    public virtual int MaxLevel { get; set; } = -1; // -1 = infinite
 
     [Export]
     public IScaleModel CostScaler { get; set; }
 
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
 
-    public abstract string GetText(); // Text to display
-    public abstract void Apply(); // Apply upgrade
+    public abstract string GetHoverDescription(); // description of upgrade
+    public abstract void Apply(); // apply upgrade
 
     public virtual int GetCost() => (int)CostScaler.Get(Level);
 

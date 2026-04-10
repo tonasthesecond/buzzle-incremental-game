@@ -58,11 +58,11 @@ public partial class Hive : BaseGridObject
         }
         foreach (KeyValuePair<string, int> beeType in beeTypesCounts)
         {
-            string noun = beeType.Key.ToLower() + "_";
-            if (noun == "_")
-                noun = "";
-            desc +=
-                $"{beeType.Value} {Style.CK(beeType.Key, $"noun_{beeType.Key.ToLower()}bee")} bees.\n";
+            string noun = beeType.Key.ToLower();
+            if (noun == "")
+                desc += $"\n{beeType.Value} bees";
+            else
+                desc += $"\n{beeType.Value} {Style.CK(beeType.Key, "noun_" + noun)} bees";
         }
         return desc;
     }

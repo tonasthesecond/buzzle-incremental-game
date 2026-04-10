@@ -1,40 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Godot;
 
 [GlobalClass]
 public partial class HoverPointer : Control
 {
     [Export]
-    private Vector2 offset = new(16, 16);
+    private Vector2 offset = new(4, 4);
 
-    private PackedScene TDScene = GD.Load<PackedScene>("uid://caeokvlcu74wj"); // title-description
-    private PackedScene TSDScene = GD.Load<PackedScene>("uid://0n7bdgefraxr"); // title-subtitle-description
-    private PackedScene TSPDScene = GD.Load<PackedScene>("uid://b7j8yd82762kx"); // title-subtitle-price-description
+    private PackedScene HoverUIScene = GD.Load<PackedScene>("uid://b7j8yd82762kx");
 
-    private Dictionary<PackedScene, Type[]> scenesUI;
-
-    public HoverPointer()
-    {
-        scenesUI = new()
-        {
-            { TDScene, new Type[] { typeof(Hive) } },
-            { TSDScene, new Type[] { typeof(Hive), typeof(Flower) } },
-            { TSPDScene, new Type[] { typeof(UpgradeNode), typeof(Selectable) } },
-        };
-    }
-
-    /// Spawn the appropriate UI for the hovered node.
-    private void OnHovered(Node target)
-    {
-        Clear();
-        foreach ((PackedScene scene, Type[] types) in scenesUI)
-        {
-            if (types.Any(type => type.IsInstanceOfType(target)))
-                Spawn(scene, target);
-        }
-    }
+    private Vector2 cachedSize = Vector2.Zero;
+    private Control? activeUI;
 
     public override void _EnterTree()
     {
@@ -43,30 +18,56 @@ public partial class HoverPointer : Control
 
     public override void _Ready()
     {
-        Services.Register(this);
         SignalBus.Instance.Hovered += OnHovered;
         SignalBus.Instance.Unhovered += Clear;
     }
 
     public override void _Process(double delta)
     {
-        GlobalPosition = GetGlobalMousePosition() + offset;
+        var mouse = GetGlobalMousePosition();
+        var screenMouse = GetViewport().GetMousePosition();
+        var viewport = GetViewportRect().Size;
+        float x =
+            screenMouse.X + cachedSize.X + offset.X > viewport.X
+                ? mouse.X - offset.X - cachedSize.X
+                : mouse.X + offset.X;
+        float y =
+            screenMouse.Y + cachedSize.Y + offset.Y > viewport.Y
+                ? mouse.Y - offset.Y - cachedSize.Y
+                : mouse.Y + offset.Y;
+        GlobalPosition = new Vector2(x, y);
     }
 
-    private Control? Spawn(PackedScene? scene, Node target)
+    /// Spawn hover UI for the hovered node if it has anything to show.
+    private void OnHovered(Node target)
     {
-        if (scene == null)
-            return null;
-        var ui = scene.Instantiate<Control>();
+        Clear();
+        if (target is not IHasHoverTitle)
+            return;
+        var ui = HoverUIScene.Instantiate<Control>();
+        activeUI = ui;
         AddChild(ui);
-        if (ui is IHoverUI hoverUI)
+        ui.MinimumSizeChanged += CacheSize;
+        ui.Hide();
+        if (ui is HoverUI hoverUI)
             hoverUI.Setup(target);
-        return ui;
+    }
+
+    private async void CacheSize()
+    {
+        if (activeUI != null)
+            cachedSize = activeUI.GetCombinedMinimumSize();
+
+        await ToSignal(GetTree(), "process_frame");
+        if (!IsInstanceValid(activeUI))
+            return;
+        activeUI.Show();
     }
 
     private void Clear()
     {
         foreach (Node child in GetChildren())
             child.QueueFree();
+        cachedSize = Vector2.Zero;
     }
 }

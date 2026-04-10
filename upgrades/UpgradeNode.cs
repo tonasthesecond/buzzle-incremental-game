@@ -1,9 +1,16 @@
+using System;
 using Godot;
 using Godot.Collections;
 
 [Tool]
 [GlobalClass]
-public partial class UpgradeNode : Node2D
+public partial class UpgradeNode
+    : Node2D,
+        IHasHoverTitle,
+        IHasHoverDescription,
+        IHasHoverSubtitle,
+        IHasHoverPrice,
+        IHasHoverRefresh
 {
     // soft cast for editor, otherwise it bugs out with "Cannot convert from 'Resource' to 'IUpgradeOption'"
     [Export]
@@ -92,4 +99,24 @@ public partial class UpgradeNode : Node2D
         IsShown = false;
         Hide();
     }
+
+    public string GetHoverTitle() => Upgrade?.Name ?? "";
+
+    public string GetHoverDescription() => Upgrade?.GetHoverDescription() ?? "";
+
+    public string GetHoverSubtitle()
+    {
+        string max = Upgrade?.MaxLevel != -1 ? Upgrade!.MaxLevel.ToString() : "inf";
+        return $"lvl. {Upgrade?.Level}/{max}";
+    }
+
+    public int GetHoverCost() => Upgrade?.GetCost() ?? 0;
+
+    public bool IsEnough() => Upgrade?.IsEnough() ?? false;
+
+    public void RegisterRefresh(Action onRefresh) =>
+        Upgrade!.Applied += new IUpgradeOption.AppliedEventHandler(onRefresh);
+
+    public void UnregisterRefresh(Action onRefresh) =>
+        Upgrade!.Applied -= new IUpgradeOption.AppliedEventHandler(onRefresh);
 }

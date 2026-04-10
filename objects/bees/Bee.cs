@@ -1,7 +1,11 @@
 using Godot;
 
 [GlobalClass]
-public abstract partial class Bee : CharacterBody2D
+public abstract partial class Bee
+    : CharacterBody2D,
+        IHasHoverTitle,
+        IHasHoverDescription,
+        IHasHoverPrice
 {
     [Signal]
     public delegate void ArrivedEventHandler(Bee bee);
@@ -188,5 +192,27 @@ public abstract partial class Bee : CharacterBody2D
         fadeTween.TweenProperty(this, "modulate:a", alpha, duration);
         if (alpha == 0f)
             fadeTween.TweenCallback(Callable.From(() => Visible = false));
+    }
+
+    public string GetHoverTitle()
+    {
+        if (BeeTypeName == "")
+            return "Bee";
+        return $"{BeeTypeName} Bee";
+    }
+
+    public virtual string GetHoverDescription()
+    {
+        return $"{BeeTypeName} Bee";
+    }
+
+    public virtual int GetHoverCost()
+    {
+        return GameStore.GetPlacementCost(GetType());
+    }
+
+    public bool IsEnough()
+    {
+        return GameStore.Honey >= GetHoverCost();
     }
 }

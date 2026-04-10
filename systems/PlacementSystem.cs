@@ -42,12 +42,12 @@ public partial class PlacementSystem : GameSystem
     {
         SignalBus.Instance.ResourceSelected += (Resource resource) =>
         {
-            if (resource.ResourceName == "RemoveTile")
+            if (resource is RemoveTile)
             {
                 CurMode = Mode.RemoveTile;
                 return;
             }
-            if (resource.ResourceName == "RemoveObject")
+            if (resource is RemoveObject)
             {
                 CurMode = Mode.RemoveObject;
                 return;

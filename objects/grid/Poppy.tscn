@@ -20,7 +20,9 @@ animations = [{
 }]
 
 [node name="Poppy" unique_id=1691567109 instance=ExtResource("1_epoqe")]
+modulate = Color(1, 0.61557627, 0.9941905, 1)
 script = ExtResource("2_rjt5a")
+ObjectName = "Poppy"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
 sprite_frames = SubResource("SpriteFrames_jrk61")

@@ -1,11 +1,28 @@
-using Godot;
+using System;
 
-public interface IHoverUI
+public interface IHasHoverTitle
 {
-    void Setup(Node target);
+    string GetHoverTitle();
 }
 
 public interface IHasHoverDescription
 {
     string GetHoverDescription();
+}
+
+public interface IHasHoverSubtitle
+{
+    string GetHoverSubtitle();
+}
+
+public interface IHasHoverPrice
+{
+    int GetHoverCost();
+    bool IsEnough();
+}
+
+public interface IHasHoverRefresh
+{
+    void RegisterRefresh(Action onRefresh);
+    void UnregisterRefresh(Action onRefresh);
 }
