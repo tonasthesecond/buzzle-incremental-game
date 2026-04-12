@@ -110,7 +110,14 @@ public partial class UpgradeNode
         return $"lvl. {Upgrade?.Level}/{max}";
     }
 
-    public int GetHoverCost() => Upgrade?.GetCost() ?? 0;
+    public int GetHoverCost()
+    {
+        if (Upgrade == null)
+            return 0;
+        if (Upgrade.Level < Upgrade.MaxLevel)
+            return Upgrade.GetCost();
+        return 0;
+    }
 
     public bool IsEnough() => Upgrade?.IsEnough() ?? false;
 
