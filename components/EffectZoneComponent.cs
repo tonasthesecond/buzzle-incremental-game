@@ -61,6 +61,7 @@ public abstract partial class EffectZoneComponent : Area2D
 
     public void Deactivate()
     {
+        fadeTimer.WaitTime = FadeoutTime.Value;
         fadeTimer.Start();
     }
 

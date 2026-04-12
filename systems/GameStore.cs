@@ -101,7 +101,7 @@ public partial class GameStore : Node
         "Clover",
         "Yarrow",
         "Rose",
-        "RichSoil",
+        "Grass",
         "Loam",
         "QueenBee",
         "RocketBee",
