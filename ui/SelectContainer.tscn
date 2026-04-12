@@ -21,28 +21,13 @@ theme = ExtResource("1_f72ot")
 script = ExtResource("2_rbqro")
 metadata/_custom_type_script = "uid://diauaougoh3gu"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=588056793]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="ExpandButton" type="Button" parent="HBoxContainer" unique_id=1750014425]
+[node name="ContentsContainer" type="MarginContainer" parent="." unique_id=730491872]
 unique_name_in_owner = true
 layout_mode = 2
-text = ">"
-
-[node name="ExpandContainer" type="ScrollContainer" parent="HBoxContainer" unique_id=819351886]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-horizontal_scroll_mode = 3
-vertical_scroll_mode = 0
-
-[node name="ContentsContainer" type="MarginContainer" parent="HBoxContainer/ExpandContainer" unique_id=730491872]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 size_flags_vertical = 3
 
-[node name="SelectablesContainer" type="HBoxContainer" parent="HBoxContainer/ExpandContainer/ContentsContainer" unique_id=180348723]
+[node name="SelectablesContainer" type="HBoxContainer" parent="ContentsContainer" unique_id=180348723]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 0
