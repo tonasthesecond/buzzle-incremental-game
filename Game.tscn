@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bpag1univam2w"]
+[gd_scene format=3 uid="uid://bj341en8f28fl"]
 
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
 [ext_resource type="Script" uid="uid://djwp6oi8qnn1b" path="res://ui/PlacementMenu.cs" id="15_2t1a5"]
 [ext_resource type="Texture2D" uid="uid://brxniuvbritbs" path="res://assets/cross.png" id="16_5he1h"]
+[ext_resource type="Texture2D" uid="uid://b5tgb0g3yna21" path="res://assets/white_9slice.png" id="17_eu6ph"]
 [ext_resource type="Script" uid="uid://dtjq0xs62aa6r" path="res://resources/RemoveObject.cs" id="17_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/Poppy.tscn" id="20_4my3f"]
 [ext_resource type="Script" uid="uid://bomuqqxbk22bi" path="res://ui/HoverPointer.cs" id="21_0mevm"]
@@ -56,6 +57,16 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
 atlas = ExtResource("11_yhmtn")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_biaja"]
+atlas = ExtResource("17_eu6ph")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_edr7y"]
+texture = SubResource("AtlasTexture_biaja")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
 
 [sub_resource type="Resource" id="Resource_wdm1y"]
 resource_name = "RemoveObject"
@@ -97,7 +108,6 @@ region = Rect2(64, 0, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_5he1h")
 Icon = SubResource("AtlasTexture_2t1a5")
-UnlockKey = "Sunflower"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_suycs"]
@@ -111,7 +121,6 @@ region = Rect2(64, 0, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_aeq37")
 Icon = SubResource("AtlasTexture_202ut")
-UnlockKey = "Clover"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_68r7h"]
@@ -125,7 +134,6 @@ region = Rect2(64, 0, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("23_xwkxq")
 Icon = SubResource("AtlasTexture_7vltt")
-UnlockKey = "Yarrow"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_iueff"]
@@ -139,7 +147,6 @@ region = Rect2(64, 0, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_wdm1y")
 Icon = SubResource("AtlasTexture_n7324")
-UnlockKey = "Rose"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_hxy8k"]
@@ -165,7 +172,6 @@ region = Rect2(96, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_4my3f")
 Icon = SubResource("AtlasTexture_aeq37")
-UnlockKey = "LoamTile"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
@@ -176,7 +182,6 @@ region = Rect2(96, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("8_2vekm")
 Icon = SubResource("AtlasTexture_0mevm")
-UnlockKey = "Grass"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_w7ht3"]
@@ -189,7 +194,6 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 script = ExtResource("8_joorw")
 Resource = ExtResource("25_8ktx7")
 Icon = ExtResource("13_yyih5")
-UnlockKey = "FatBee"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7vltt"]
@@ -199,14 +203,12 @@ load_path = "res://.godot/imported/bee.png-469d020af86c28d3c23c050401c784ff.ctex
 script = ExtResource("8_joorw")
 Resource = ExtResource("36_8576b")
 Icon = SubResource("CompressedTexture2D_7vltt")
-UnlockKey = "RocketBee"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_8ktx7"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_w7ht3")
 Icon = ExtResource("13_yyih5")
-UnlockKey = "QueenBee"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [node name="Game" type="Node" unique_id=1808904952]
@@ -306,6 +308,7 @@ tab_2/title = "Bees"
 [node name="ObjectsSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
 ExpandDirection = 1
 metadata/_tab_index = 0
