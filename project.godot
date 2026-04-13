@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Buzzle"
-run/main_scene="uid://bpag1univam2w"
+run/main_scene="uid://bj341en8f28fl"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="uid://c4virkxoyn6xe"
 
