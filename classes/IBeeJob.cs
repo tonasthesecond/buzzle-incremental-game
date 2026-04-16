@@ -79,7 +79,7 @@ public abstract class FlowerJob : IBeeJob
                     return;
                 }
 
-                beeSystem.ClaimObject(flower);
+                beeSystem.ClaimObject(flower, bee);
                 bee.FadeTo(1f);
                 state = State.PreMove;
                 break;
@@ -197,7 +197,7 @@ public abstract class RocketFlowerJob : FlowerJob
                 return false;
             }
 
-            Services.Get<BeeSystem>().ClaimObject(flower!);
+            Services.Get<BeeSystem>().ClaimObject(flower!, bee);
             chargeStartMs = Time.GetTicksMsec();
             bee.Speed.AddPercent("rocket_charge", -GameStore.RocketBeeChargeSpeedDebuff.Value);
             var pullDir = (bee.GlobalPosition - flower!.GlobalPosition).Normalized();

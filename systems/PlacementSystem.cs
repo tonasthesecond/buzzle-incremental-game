@@ -24,6 +24,7 @@ public partial class PlacementSystem : GameSystem
         Bee,
         RemoveTile,
         RemoveObject,
+        RemoveBee,
     }
 
     private Mode curMode = Mode.None;
@@ -37,25 +38,26 @@ public partial class PlacementSystem : GameSystem
             EmitSignal(SignalName.ModeChanged, (int)value);
         }
     }
+    private RemoveBee? removeBeeResource;
 
     public override void _Ready()
     {
         SignalBus.Instance.ResourceSelected += (Resource resource) =>
         {
             if (resource is RemoveTile)
-            {
                 CurMode = Mode.RemoveTile;
-                return;
-            }
-            if (resource is RemoveObject)
-            {
+            else if (resource is RemoveObject)
                 CurMode = Mode.RemoveObject;
+            else if (resource is RemoveBee rb)
+            {
+                removeBeeResource = rb;
+                CurMode = Mode.RemoveBee;
                 return;
             }
             if (resource is not PackedScene scene)
                 return;
 
-            var instance = scene.Instantiate();
+            Node instance = scene.Instantiate();
             if (instance is BaseTile)
                 CurMode = Mode.Tile;
             else if (instance is BaseGridObject)
@@ -105,8 +107,7 @@ public partial class PlacementSystem : GameSystem
         return true;
     }
 
-    // --- Process / highlight (unchanged) ---
-
+    // Highlighting
     public override void _Process(double delta)
     {
         var grid = Services.Get<Grid>();
@@ -124,6 +125,12 @@ public partial class PlacementSystem : GameSystem
             case Mode.RemoveObject:
             case Mode.RemoveTile:
                 SetHighlight(grid.GetObjectAt(cell), "highlight_delete");
+                break;
+            case Mode.RemoveBee:
+                SetHighlight(
+                    grid.GetClosestObjectOfType<Hive>(grid.GridToWorld(cell)),
+                    "highlight_delete"
+                );
                 break;
             default:
                 ClearHighlight();
@@ -195,6 +202,20 @@ public partial class PlacementSystem : GameSystem
 
             case Mode.RemoveObject:
                 grid.RemoveObject(pos, out fail);
+                break;
+
+            case Mode.RemoveBee:
+                if (highlighted is Hive targetHive && removeBeeResource?.BeeScene != null)
+                {
+                    var t = removeBeeResource.BeeScene.Instantiate();
+                    var beeType = t.GetType();
+                    t.QueueFree();
+                    if (!Services.Get<BeeSystem>().RemoveBee(beeType, targetHive))
+                        fail = new FailMessage(
+                            "No bee to remove",
+                            $"No {beeType.Name} found at hive"
+                        );
+                }
                 break;
         }
 

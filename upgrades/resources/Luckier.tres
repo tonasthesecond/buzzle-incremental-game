@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CloverJackpotChanceUO" format=3 uid="uid://c6ctybmvd6mgc"]
+
+[ext_resource type="Script" uid="uid://cbtp54s86g153" path="res://upgrades/scripts/CloverJackpotChanceUO.cs" id="1_6t3ce"]
+[ext_resource type="Script" uid="uid://chybk5t5vu0yc" path="res://resources/scale_models/LinearModel.cs" id="1_vf33c"]
+
+[sub_resource type="Resource" id="Resource_l1m0g"]
+script = ExtResource("1_vf33c")
+Base = 200.0
+Step = 100.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[resource]
+script = ExtResource("1_6t3ce")
+IncreaseBy = 0.5
+Name = "Luckier"
+MaxLevel = 3
+CostScaler = SubResource("Resource_l1m0g")
+metadata/_custom_type_script = "uid://cbtp54s86g153"

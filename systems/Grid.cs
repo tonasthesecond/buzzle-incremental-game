@@ -126,6 +126,7 @@ public partial class Grid : Node2D
             var obj = scene.Instantiate<BaseGridObject>();
             AddChild(obj);
             obj.GlobalPosition = GridToWorld(pos);
+            obj.Placed = true;
             obj.GridPosition = pos;
             objects[pos] = obj;
 

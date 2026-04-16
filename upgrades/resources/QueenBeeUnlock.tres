@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnlockUO" format=3 uid="uid://cu1d70sqh50wk"]
+
+[ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="1_lwakx"]
+[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="1_m1mdh"]
+
+[sub_resource type="Resource" id="Resource_4q10h"]
+script = ExtResource("1_lwakx")
+Value = 200.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[resource]
+script = ExtResource("1_m1mdh")
+UnlockKey = "Queen"
+Description = "A bee that doesn't do any work, but boosts the speed of all bees around it."
+Name = "Queen Bee"
+MaxLevel = 1
+CostScaler = SubResource("Resource_4q10h")
+metadata/_custom_type_script = "uid://bomacbqabtgga"

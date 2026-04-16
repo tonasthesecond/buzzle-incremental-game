@@ -7,9 +7,10 @@ public partial class UnlockUO : IUpgradeOption
     public string UnlockKey { get; set; } = "";
 
     [Export]
-    public string DisplayName { get; set; } = "";
+    public string Description { get; set; } = "";
 
-    public override string GetHoverDescription() =>  $"Unlock {Style.CK(DisplayName, UnlockKey)}.";
+    public override string GetHoverDescription() =>
+        $"Unlock {Style.CK(Name, "noun_" + UnlockKey.ToLower())}. {Description}";
 
     public override int MaxLevel { get; set; } = 1;
 

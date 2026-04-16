@@ -9,11 +9,11 @@ public partial class BeeSystem : GameSystem
     [Signal]
     public delegate void OnBeeSpawnedEventHandler(Bee bee);
 
-    private HashSet<BaseGridObject> claimedObjects = new();
+    private Dictionary<BaseGridObject, Bee> claimedObjects = new();
 
-    public bool IsClaimed(BaseGridObject obj) => claimedObjects.Contains(obj);
+    public bool IsClaimed(BaseGridObject obj) => claimedObjects.ContainsKey(obj);
 
-    public bool ClaimObject(BaseGridObject obj) => claimedObjects.Add(obj);
+    public bool ClaimObject(BaseGridObject obj, Bee bee) => claimedObjects.TryAdd(obj, bee);
 
     public void ReleaseObject(BaseGridObject obj) => claimedObjects.Remove(obj);
 
@@ -34,6 +34,7 @@ public partial class BeeSystem : GameSystem
     public override void _Ready()
     {
         SignalBus.Instance.GameLoaded += SpawnFromSave;
+        SignalBus.Instance.GridObjectRemoved += OnGridObjectRemoved;
     }
 
     public override void _Process(double delta)
@@ -52,6 +53,14 @@ public partial class BeeSystem : GameSystem
             if (job != null && !(job is IdleJob))
                 bee.SetJob(job);
         }
+    }
+
+    private void OnGridObjectRemoved(BaseGridObject obj)
+    {
+        if (!claimedObjects.TryGetValue(obj, out var bee))
+            return;
+        claimedObjects.Remove(obj);
+        bee.SetJob(new IdleJob());
     }
 
     /// Spawn a bee by scene name (used by save load).
@@ -87,6 +96,21 @@ public partial class BeeSystem : GameSystem
         if (hives.Length == 0)
             return null;
         return SpawnBee(scene, Utils.GetRandom(hives));
+    }
+
+    public bool RemoveBee(Type beeType, Hive hive)
+    {
+        var bee = GetBees().FirstOrDefault(b => b.GetType() == beeType && b.Home == hive);
+        if (bee == null)
+            return false;
+
+        // release any object this bee has claimed
+        var claimed = claimedObjects.Where(kv => kv.Value == bee).Select(kv => kv.Key).ToArray();
+        foreach (var obj in claimed)
+            claimedObjects.Remove(obj);
+
+        bee.QueueFree();
+        return true;
     }
 
     public Bee[] GetBees()

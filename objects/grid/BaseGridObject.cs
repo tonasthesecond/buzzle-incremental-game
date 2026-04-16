@@ -36,7 +36,7 @@ public partial class BaseGridObject : Node2D, IHasHoverTitle, IHasHoverDescripti
 
     public virtual int GetHoverCost()
     {
-        if (Placed)
+        if (!Placed)
             return GameStore.GetPlacementCost(GetType());
         return 0;
     }

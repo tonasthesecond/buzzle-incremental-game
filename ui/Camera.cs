@@ -61,9 +61,7 @@ public partial class Camera : Camera2D
         if (@event is InputEventKey keyEvent && keyEvent.Pressed)
         {
             if (keyEvent.Keycode == Key.E)
-            {
                 ResetToCenter();
-            }
         }
 
         // Mouse wheel zoom
@@ -115,7 +113,7 @@ public partial class Camera : Camera2D
 
     private void ResetToCenter()
     {
-        _targetPosition = new Vector2(320, 241); //center of the game
+        _targetPosition = new Vector2(0, 0); //center of the game
         _targetZoom = new Vector2(1, 1); // Reset zoom to default
     }
 }

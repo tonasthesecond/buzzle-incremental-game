@@ -47,6 +47,8 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
         // deactivate on release left click
         else if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
         {
+            if (GameStore.BeekeeperEffectZoneNeverFade)
+                return;
             Deactivate();
             GetViewport().SetInputAsHandled();
         }

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnlockUO" format=3 uid="uid://cxjhlgky1yopm"]
+
+[ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="1_l2agk"]
+[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="2_fkbh8"]
+
+[sub_resource type="Resource" id="Resource_l2agk"]
+script = ExtResource("1_l2agk")
+Value = 200.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[resource]
+script = ExtResource("2_fkbh8")
+UnlockKey = "Fat"
+Description = "A slower bee that can carry more honey."
+Name = "Fat Bee"
+MaxLevel = 1
+CostScaler = SubResource("Resource_l2agk")
+metadata/_custom_type_script = "uid://bomacbqabtgga"

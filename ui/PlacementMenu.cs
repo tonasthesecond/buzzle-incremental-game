@@ -12,14 +12,14 @@ public partial class PlacementMenu : Control
     [Export]
     public float ButtonDropDistance { get; set; } = -40f;
 
-    private BaseButton collapseButton = null!;
+    public BaseButton collapseButton = null!;
     private bool isCollapsed = false;
     private float panelOriginY;
     private float buttonOriginY;
 
     public override void _Ready()
     {
-        collapseButton = GetNode<BaseButton>("%CollapseButton");
+        collapseButton = GetParent().GetNode<BaseButton>("CollapseButton");
         collapseButton.Pressed += Toggle;
         Callable
             .From(() =>
@@ -50,7 +50,7 @@ public partial class PlacementMenu : Control
         );
 
         var buttonTween = CreateTween();
-        buttonTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+        buttonTween.SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Back);
         buttonTween.TweenProperty(
             collapseButton,
             "position:y",

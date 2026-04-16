@@ -3,8 +3,14 @@ using Godot;
 [GlobalClass]
 public partial class BeeCapacityHoneyUO : IUpgradeOption
 {
-    public override string GetHoverDescription() => 
-        $"Bees can carry {GameStore.BeeCapacityHoney.Value} ➞ {GameStore.BeeCapacityHoney.Value + 1} honey.";
+    [Export]
+    public int IncreaseBy { get; set; } = 1;
 
-    public override void Apply() => GameStore.BeeCapacityHoney.AddFlat(Name, Level);
+    public override string GetHoverDescription() =>
+        $"Bees can carry {GameStore.BeeCapacityHoney.Value} ➞ {GameStore.BeeCapacityHoney.Value + IncreaseBy} honey.";
+
+    public override void Apply()
+    {
+        GameStore.BeeCapacityHoney.AddFlat(Name, IncreaseBy * Level);
+    }
 }

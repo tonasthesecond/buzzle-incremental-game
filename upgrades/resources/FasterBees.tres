@@ -11,7 +11,8 @@ metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [resource]
 script = ExtResource("1_w622u")
+IncreaseBy = 5
 Name = "Faster Bees"
-MaxLevel = 5
+MaxLevel = 3
 CostScaler = SubResource("Resource_p5ffb")
 metadata/_custom_type_script = "uid://cuyp0jsj48rwu"
