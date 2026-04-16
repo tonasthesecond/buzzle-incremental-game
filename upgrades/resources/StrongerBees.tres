@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BeeCapacityHoneyUO" format=3 uid="uid://c0snkp00gfbaa"]
+
+[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="1_66w47"]
+[ext_resource type="Script" uid="uid://bmum0chjme3h4" path="res://resources/scale_models/ExponentialModel.cs" id="1_ioye0"]
+
+[sub_resource type="Resource" id="Resource_ednsd"]
+script = ExtResource("1_ioye0")
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[resource]
+script = ExtResource("1_66w47")
+Name = "Stronger Bees"
+MaxLevel = 5
+CostScaler = SubResource("Resource_ednsd")
+metadata/_custom_type_script = "uid://hno7niifmwh"

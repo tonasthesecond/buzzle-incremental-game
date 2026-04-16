@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="RocketBeeSpeedBuffUO" format=3 uid="uid://dawopdmu252af"]
+
+[ext_resource type="Script" uid="uid://dbfhk2e0slj6c" path="res://upgrades/scripts/RocketBeeSpeedBuffUO.cs" id="1_hurd4"]
+[ext_resource type="Script" uid="uid://bmum0chjme3h4" path="res://resources/scale_models/ExponentialModel.cs" id="1_uuhta"]
+
+[sub_resource type="Resource" id="Resource_fqivr"]
+script = ExtResource("1_uuhta")
+Base = 200.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[resource]
+script = ExtResource("1_hurd4")
+IncreaseBy = 0.25
+Name = "Better Rockets"
+MaxLevel = 5
+CostScaler = SubResource("Resource_fqivr")
+metadata/_custom_type_script = "uid://dbfhk2e0slj6c"

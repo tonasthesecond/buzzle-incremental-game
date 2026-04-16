@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnlockUO" format=3 uid="uid://leja3jjeypqc"]
+
+[ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="1_vnt60"]
+[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="2_85n28"]
+
+[sub_resource type="Resource" id="Resource_4q10h"]
+script = ExtResource("1_vnt60")
+Value = 300.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[resource]
+script = ExtResource("2_85n28")
+UnlockKey = "Sunflower"
+Description = "A flower that costs more and produces more."
+Name = "Sunflower"
+MaxLevel = 1
+CostScaler = SubResource("Resource_4q10h")
+metadata/_custom_type_script = "uid://bomacbqabtgga"

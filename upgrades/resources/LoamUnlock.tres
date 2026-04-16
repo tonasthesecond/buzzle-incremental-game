@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UnlockUO" format=3 uid="uid://c06k23x8j3r4y"]
+
+[ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="1_hgf6x"]
+[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="2_c5yxa"]
+
+[sub_resource type="Resource" id="Resource_4q10h"]
+script = ExtResource("1_hgf6x")
+Value = 400.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[resource]
+script = ExtResource("2_c5yxa")
+UnlockKey = "Loam"
+Description = "A tile that lets flowers be pollinated faster."
+Name = "Loam Tile"
+MaxLevel = 1
+CostScaler = SubResource("Resource_4q10h")
+metadata/_custom_type_script = "uid://bomacbqabtgga"

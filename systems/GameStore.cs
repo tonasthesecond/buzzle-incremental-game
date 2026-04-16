@@ -22,6 +22,7 @@ public partial class GameStore : Node
     public static Stat BeekeeperEffectZoneRadius { get; } = new(32f);
     public static Stat BeekeeperEffectZoneSpeedBuff { get; } = new(0.5f);
     public static Stat BeekeeperEffectZoneFadeoutTime { get; } = new(1f);
+    public static bool BeekeeperEffectZoneNeverFade { get; set; } = false;
 
     public static Stat QueenBeeEffectZoneRadius { get; } = new(32f);
     public static Stat QueenBeeEffectZoneSpeedBuff { get; } = new(0.5f);
@@ -59,7 +60,7 @@ public partial class GameStore : Node
     public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
     public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.2f);
 
-    public static Stat RichSoilHoneyGainBuff { get; } = new(0.2f);
+    public static Stat GrassHoneyGainBuff { get; } = new(0.2f);
 
     public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
 
@@ -103,9 +104,9 @@ public partial class GameStore : Node
         "Rose",
         "Grass",
         "Loam",
-        "QueenBee",
-        "RocketBee",
-        "FatBee",
+        "Queen",
+        "Rocket",
+        "Fat",
     ];
     private static readonly HashSet<string> unlockedKeys = new();
 
@@ -142,6 +143,30 @@ public partial class GameStore : Node
         PropertyNameCaseInsensitive = true,
         WriteIndented = true,
     };
+
+    public static void LoadGame()
+    {
+        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
+
+        // load save data
+        Save = FileAccess.FileExists(SavePath)
+            ? JsonSerializer.Deserialize<SaveData>(FileAccess.GetFileAsString(SavePath), JsonOpts)!
+            : new SaveData();
+
+        // apply all dynamic contents
+        honey = Save.Honey;
+        ApplyUpgrades();
+        foreach (string key in Save.UnlockedKeys)
+            unlockedKeys.Add(key);
+
+        Callable
+            .From(() =>
+            {
+                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameLoaded);
+            })
+            .CallDeferred();
+        Save = JsonSerializer.Deserialize<SaveData>(file.GetAsText(), JsonOpts)!;
+    }
 
     public static void SaveGame()
     {

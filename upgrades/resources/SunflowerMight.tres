@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SunflowerHoneyGainUO" format=3 uid="uid://idymxda4j8mh"]
+
+[ext_resource type="Script" uid="uid://chybk5t5vu0yc" path="res://resources/scale_models/LinearModel.cs" id="1_4jagu"]
+[ext_resource type="Script" uid="uid://weji0awx20uq" path="res://upgrades/scripts/SunflowerHoneyGainUO.cs" id="1_iug4d"]
+
+[sub_resource type="Resource" id="Resource_3hhas"]
+script = ExtResource("1_4jagu")
+Base = 100.0
+Step = 150.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[resource]
+script = ExtResource("1_iug4d")
+Name = "Might of the Sun"
+MaxLevel = 3
+CostScaler = SubResource("Resource_3hhas")
+metadata/_custom_type_script = "uid://weji0awx20uq"

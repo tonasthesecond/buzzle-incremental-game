@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="QueenBeeEffectZoneRadiusUO" format=3 uid="uid://bt0qehhp12uhb"]
+
+[ext_resource type="Script" uid="uid://drcxuvuwf5dk3" path="res://upgrades/scripts/QueenBeeEffectZoneRadiusUO.cs" id="1_fqrg1"]
+[ext_resource type="Script" uid="uid://bkk0od77fveep" path="res://resources/scale_models/PolynomialModel.cs" id="1_xc6os"]
+
+[sub_resource type="Resource" id="Resource_xkql0"]
+script = ExtResource("1_xc6os")
+Base = 100.0
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[resource]
+script = ExtResource("1_fqrg1")
+IncreaseBy = 8.0
+Name = "Queen Domain"
+MaxLevel = 5
+CostScaler = SubResource("Resource_xkql0")
+metadata/_custom_type_script = "uid://drcxuvuwf5dk3"

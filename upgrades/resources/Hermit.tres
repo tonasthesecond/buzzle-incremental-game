@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="RosePerEmptyNeighborHoneyGainBuffUO" format=3 uid="uid://bye1i4gcs0d1d"]
+
+[ext_resource type="Script" uid="uid://chybk5t5vu0yc" path="res://resources/scale_models/LinearModel.cs" id="1_eu8x1"]
+[ext_resource type="Script" uid="uid://c8ml1ht2jj346" path="res://upgrades/scripts/RosePerEmptyNeighborHoneyGainBuffUO.cs" id="2_g46fl"]
+
+[sub_resource type="Resource" id="Resource_4mx6d"]
+script = ExtResource("1_eu8x1")
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[resource]
+script = ExtResource("2_g46fl")
+Name = "Hermit"
+MaxLevel = 3
+CostScaler = SubResource("Resource_4mx6d")
+metadata/_custom_type_script = "uid://c8ml1ht2jj346"
