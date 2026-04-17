@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://i38f6dvn7ddt" path="res://assets/title.png" id="1_1fe6l"]
 [ext_resource type="Script" uid="uid://byws8fa8qtstw" path="res://ui/TitleScreen.cs" id="1_xvltj"]
-[ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="2_cpjdo"]
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="2_emmnt"]
+[ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="4_xvltj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ddekp"]
 atlas = ExtResource("1_1fe6l")
@@ -12,12 +12,16 @@ region = Rect2(0, 8, 80, 37)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1fe6l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_emmnt"]
-atlas = ExtResource("2_cpjdo")
-region = Rect2(0, 0, 32, 0)
+atlas = ExtResource("4_xvltj")
+region = Rect2(0, 0, 64, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xvltj"]
-atlas = ExtResource("2_cpjdo")
-region = Rect2(32, 0, 32, 0)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqn05"]
+atlas = ExtResource("4_xvltj")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7j3k"]
+atlas = ExtResource("4_xvltj")
+region = Rect2(0, 32, 64, 32)
 
 [node name="TitleScreen" type="Node" unique_id=1995645679]
 script = ExtResource("1_xvltj")
@@ -77,5 +81,6 @@ offset_top = 416.0
 offset_right = 416.0
 offset_bottom = 448.0
 texture_normal = SubResource("AtlasTexture_emmnt")
-texture_pressed = SubResource("AtlasTexture_xvltj")
+texture_pressed = SubResource("AtlasTexture_kqn05")
+texture_hover = SubResource("AtlasTexture_p7j3k")
 stretch_mode = 5

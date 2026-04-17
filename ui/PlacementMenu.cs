@@ -64,11 +64,11 @@ public partial class PlacementMenu : Control
     public void Expand()
     {
         var panelTween = CreateTween();
-        panelTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+        panelTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Back);
         panelTween.TweenProperty(this, "position:y", panelOriginY, TweenDuration);
 
         var buttonTween = CreateTween();
-        buttonTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
+        buttonTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Back);
         buttonTween.TweenProperty(collapseButton, "position:y", buttonOriginY, TweenDuration);
 
         isCollapsed = false;
