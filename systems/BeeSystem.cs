@@ -33,7 +33,7 @@ public partial class BeeSystem : GameSystem
 
     public override void _Ready()
     {
-        SignalBus.Instance.GameLoaded += SpawnFromSave;
+        SignalBus.Instance.GridLoaded += SpawnFromSave;
         SignalBus.Instance.GridObjectRemoved += OnGridObjectRemoved;
     }
 

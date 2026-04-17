@@ -155,7 +155,7 @@ public partial class GameStore : Node
 
         // apply all dynamic contents
         honey = Save.Honey;
-        ApplyUpgrades();
+        Services.Get<UpgradeTree>().ApplyUpgrades();
         foreach (string key in Save.UnlockedKeys)
             unlockedKeys.Add(key);
 
@@ -172,41 +172,12 @@ public partial class GameStore : Node
     {
         Save.Honey = Honey;
         Services.Get<Grid>().Snapshot();
-        SaveUpgrades(Services.Get<UpgradeTree>());
+        Services.Get<UpgradeTree>().SaveUpgrades();
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
     }
 
     // --- Upgrades ---
-    public static void SaveUpgrades(UpgradeTree tree)
-    {
-        GameStore.Save.Upgrades.Clear();
-        foreach (var upgrade in tree.GetUpgrades())
-        {
-            var saved = new SavedUpgrade
-            {
-                Id = upgrade.ResourcePath.GetFile().GetBaseName(),
-                Level = upgrade.Level,
-            };
-            GameStore.Save.Upgrades.Add(saved);
-        }
-    }
-
-    public static void ApplyUpgrades()
-    {
-        foreach (SavedUpgrade saved in Save.Upgrades)
-        {
-            var upgrade = GD.Load<IUpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
-            if (upgrade == null)
-            {
-                GD.PushError($"[GameStore] Missing upgrade: {saved.Id}");
-                continue;
-            }
-            upgrade.Level = saved.Level;
-            for (int i = 0; i <= saved.Level; i++)
-                upgrade.Apply();
-        }
-    }
 
     // --- Constants ---
     public const int TILE_SIZE = 32;
@@ -220,23 +191,5 @@ public partial class GameStore : Node
     public override void _Ready()
     {
         Instance = this;
-
-        // load save data
-        Save = FileAccess.FileExists(SavePath)
-            ? JsonSerializer.Deserialize<SaveData>(FileAccess.GetFileAsString(SavePath), JsonOpts)!
-            : new SaveData();
-
-        // apply all dynamic contents
-        honey = Save.Honey;
-        ApplyUpgrades();
-        foreach (string key in Save.UnlockedKeys)
-            unlockedKeys.Add(key);
-
-        Callable
-            .From(() =>
-            {
-                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameLoaded);
-            })
-            .CallDeferred();
     }
 }

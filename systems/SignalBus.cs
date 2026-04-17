@@ -8,6 +8,9 @@ public partial class SignalBus : Node
     public delegate void GameLoadedEventHandler();
 
     [Signal]
+    public delegate void GridLoadedEventHandler();
+
+    [Signal]
     public delegate void ResourceSelectedEventHandler(Resource resource);
 
     [Signal]

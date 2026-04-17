@@ -13,12 +13,18 @@ public partial class Grid : Node2D
     {
         Services.Register(this);
 
+        SignalBus.Instance.GameLoaded += () => OnGameLoaded();
+
+        Services.Get<Tilemap>().Update(tiles.Values);
+    }
+
+    private void OnGameLoaded()
+    {
         if (GameStore.Save.Tiles.Count > 0)
             LoadFrom(GameStore.Save);
         else
             BuildDefault();
-
-        Services.Get<Tilemap>().Update(tiles.Values);
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridLoaded);
     }
 
     // --- Default Layout ---

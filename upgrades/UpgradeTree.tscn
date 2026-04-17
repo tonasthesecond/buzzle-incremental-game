@@ -323,6 +323,7 @@ NodePath("../MoreSmoke"): 3
 texture_normal = ExtResource("17_mqxrb")
 
 [node name="UpgradeNode" parent="." unique_id=743070016 instance=ExtResource("2_5s8lu")]
+visible = false
 
 [node name="Button" parent="UpgradeNode" index="0" unique_id=2079804154]
 texture_normal = ExtResource("15_0qucf")

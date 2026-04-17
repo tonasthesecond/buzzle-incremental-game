@@ -3,6 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://b5tgb0g3yna21" path="res://assets/white_9slice.png" id="1_ols5k"]
 [ext_resource type="FontFile" uid="uid://cvi21btg8kurh" path="res://assets/MirandaSans-Bold.ttf" id="2_biaja"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_biaja"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_biaja"]
 texture = ExtResource("1_ols5k")
 texture_margin_left = 8.0
@@ -26,7 +28,10 @@ texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 modulate_color = Color(0, 0, 0, 0.78431374)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_biaja"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vnc4k"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [resource]
 default_font = ExtResource("2_biaja")
@@ -36,15 +41,16 @@ MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
+MenuButton/styles/disabled = SubResource("StyleBoxEmpty_biaja")
+MenuButton/styles/disabled_mirrored = SubResource("StyleBoxEmpty_biaja")
+MenuButton/styles/focus = SubResource("StyleBoxEmpty_biaja")
+MenuButton/styles/hover = SubResource("StyleBoxEmpty_biaja")
 Panel/styles/panel = SubResource("StyleBoxTexture_biaja")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_vnc4k")
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 TabContainer/fonts/font = ExtResource("2_biaja")
-TabContainer/styles/panel = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tab_disabled = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tab_hovered = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tab_selected = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_biaja")
-TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_vnc4k")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxFlat_vnc4k")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_vnc4k")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_vnc4k")
 TextEdit/fonts/font = ExtResource("2_biaja")

@@ -23,6 +23,8 @@ public partial class UpgradeTree : Control
                 continue;
             node.Upgrade.Applied += () => QueueRedraw();
         }
+
+        SignalBus.Instance.GameLoaded += () => ApplyUpgrades();
     }
 
     public override void _Draw()
@@ -62,5 +64,38 @@ public partial class UpgradeTree : Control
             .Select(file => GD.Load<IUpgradeOption>(UpgradePath + file))
             .Where(upgrade => upgrade != null)
             .ToArray();
+    }
+
+    public void SaveUpgrades()
+    {
+        GameStore.Save.Upgrades.Clear();
+        foreach (var upgrade in GetUpgrades())
+        {
+            var saved = new SavedUpgrade
+            {
+                Id = upgrade.ResourcePath.GetFile().GetBaseName(),
+                Level = upgrade.Level,
+            };
+            GameStore.Save.Upgrades.Add(saved);
+        }
+    }
+
+    public void ApplyUpgrades()
+    {
+        foreach (SavedUpgrade saved in GameStore.Save.Upgrades)
+        {
+            var upgrade = GD.Load<IUpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
+            if (upgrade == null)
+            {
+                GD.PushError($"[GameStore] Missing upgrade: {saved.Id}");
+                continue;
+            }
+            upgrade.Level = saved.Level;
+            for (int i = 0; i <= saved.Level; i++)
+            {
+                upgrade.EmitSignal(IUpgradeOption.SignalName.Applied);
+                upgrade.Apply();
+            }
+        }
     }
 }
