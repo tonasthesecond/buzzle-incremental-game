@@ -15,10 +15,10 @@
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="10_0yprl"]
 [ext_resource type="PackedScene" uid="uid://bbh6aex2oxcg6" path="res://objects/grid/Hive.tscn" id="11_cpsxm"]
 [ext_resource type="PackedScene" uid="uid://b466og2ju7b2g" path="res://ui/NumberDisplay.tscn" id="11_lvtmh"]
-[ext_resource type="Texture2D" uid="uid://5v2pvf72bjd6" path="res://assets/simple-button.png" id="11_yhmtn"]
 [ext_resource type="Script" uid="uid://ca5lej4xayi2l" path="res://ui/HoneyDisplay.cs" id="12_yyih5"]
 [ext_resource type="Texture2D" uid="uid://blegaiv34naad" path="res://assets/bee.png" id="13_yyih5"]
 [ext_resource type="Script" uid="uid://bekfqjb8awv8c" path="res://ui/BeeCountDisplay.cs" id="14_elkpi"]
+[ext_resource type="Texture2D" uid="uid://caixw83chwdvm" path="res://assets/icons.png" id="14_fj2yu"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="14_hmewc"]
 [ext_resource type="Script" uid="uid://djwp6oi8qnn1b" path="res://ui/PlacementMenu.cs" id="15_2t1a5"]
 [ext_resource type="Texture2D" uid="uid://brxniuvbritbs" path="res://assets/cross.png" id="16_5he1h"]
@@ -29,7 +29,6 @@
 [ext_resource type="PackedScene" uid="uid://rtbaieb6a50t" path="res://objects/grid/Sunflower.tscn" id="21_5he1h"]
 [ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
-[ext_resource type="Texture2D" uid="uid://bevo06gsimv4" path="res://assets/tilemap_purple.png" id="23_gebyw"]
 [ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 [ext_resource type="PackedScene" uid="uid://brb5bcs3dh361" path="res://objects/grid/Yarrow.tscn" id="23_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
@@ -41,23 +40,34 @@
 [ext_resource type="Script" uid="uid://co550qpijgpnv" path="res://resources/RemoveTile.cs" id="26_xwkxq"]
 [ext_resource type="Texture2D" uid="uid://ciawes7fupkve" path="res://assets/tilemap_brown.png" id="27_hxy8k"]
 [ext_resource type="PackedScene" uid="uid://cvi41mdqkh0au" path="res://objects/tiles/DirtTile.tscn" id="28_hxy8k"]
+[ext_resource type="Texture2D" uid="uid://dfp788lbo7pfe" path="res://assets/tilemap_cyan.png" id="31_fj2yu"]
 [ext_resource type="Script" uid="uid://eem2ebdmliip" path="res://resources/RemoveBee.cs" id="36_7vltt"]
 [ext_resource type="PackedScene" uid="uid://cyqsoj4m042r5" path="res://objects/bees/RocketBee.tscn" id="36_8576b"]
+[ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_elkpi"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7324"]
+texture = ExtResource("17_eu6ph")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.9915313, 0.6633954, 0, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0yprl"]
-atlas = SubResource("CompressedTexture2D_elkpi")
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj2yu"]
+atlas = ExtResource("14_fj2yu")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gwjdr"]
-atlas = ExtResource("11_yhmtn")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o6tbt"]
+texture = ExtResource("17_eu6ph")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.48235294, 0.36862746, 0.3019608, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvtmh"]
-atlas = ExtResource("11_yhmtn")
-region = Rect2(32, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_iueff"]
+atlas = ExtResource("14_fj2yu")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_biaja"]
 atlas = ExtResource("17_eu6ph")
@@ -165,14 +175,14 @@ Resource = ExtResource("28_hxy8k")
 Icon = SubResource("AtlasTexture_8576b")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aeq37"]
-atlas = ExtResource("23_gebyw")
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6tbt"]
+atlas = ExtResource("31_fj2yu")
 region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_7vltt"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_4my3f")
-Icon = SubResource("AtlasTexture_aeq37")
+Icon = SubResource("AtlasTexture_o6tbt")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
@@ -238,6 +248,18 @@ BeeScene = ExtResource("24_w7ht3")
 UnlockKey = "Queen"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_emmnt"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqn05"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7j3k"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 32, 64, 32)
+
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
 
@@ -296,20 +318,27 @@ layout_mode = 2
 
 [node name="HoneyDisplay" parent="UILayer/TopLeft/VBoxContainer/HBoxContainer" unique_id=184207357 instance=ExtResource("11_lvtmh")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_n7324")
 script = ExtResource("12_yyih5")
-Icon = SubResource("AtlasTexture_0yprl")
+Icon = SubResource("AtlasTexture_fj2yu")
 
 [node name="BeeCountDisplay" parent="UILayer/TopLeft/VBoxContainer/HBoxContainer" unique_id=674330754 instance=ExtResource("11_lvtmh")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_n7324")
 script = ExtResource("14_elkpi")
 Icon = ExtResource("13_yyih5")
 
-[node name="ShowUpgradesButton" type="TextureButton" parent="UILayer/TopLeft/VBoxContainer" unique_id=1841922307]
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/TopLeft/VBoxContainer" unique_id=1809206670]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_o6tbt")
+
+[node name="ShowUpgradesButton" type="TextureButton" parent="UILayer/TopLeft/VBoxContainer/PanelContainer" unique_id=1841922307]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
-texture_normal = SubResource("AtlasTexture_gwjdr")
-texture_pressed = SubResource("AtlasTexture_lvtmh")
+texture_normal = SubResource("AtlasTexture_iueff")
 
 [node name="PlacementMenu" type="MarginContainer" parent="UILayer" unique_id=1434174203]
 unique_name_in_owner = true
@@ -330,13 +359,15 @@ ButtonDropDistance = 65.0
 [node name="TabContainer" type="TabContainer" parent="UILayer/PlacementMenu" unique_id=985846521]
 unique_name_in_owner = true
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 tab_0/title = "Objects"
 tab_1/title = "Tiles"
 tab_2/title = "Bees"
 
 [node name="ObjectsSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
+visible = false
+self_modulate = Color(0.64735013, 0.5137487, 0.3635122, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
@@ -346,8 +377,9 @@ metadata/_tab_name = "Objects"
 
 [node name="TilesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
-visible = false
+self_modulate = Color(0.3858, 0.5587994, 0.4010992, 1)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_hxy8k"), SubResource("Resource_68r7h"), SubResource("Resource_7vltt"), SubResource("Resource_2t1a5")])
 metadata/_tab_index = 1
 metadata/_tab_name = "Tiles"
@@ -355,20 +387,23 @@ metadata/_tab_name = "Tiles"
 [node name="BeesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
 visible = false
+self_modulate = Color(0.5588187, 0.65045756, 0.6302859, 1)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_n7324"), SubResource("Resource_hwsgv"), SubResource("Resource_v5dxo"), SubResource("Resource_iueff"), SubResource("Resource_dyvha"), SubResource("Resource_8ktx7"), SubResource("Resource_xc54d")])
 metadata/_tab_index = 2
 metadata/_tab_name = "Bees"
 
 [node name="CollapseButton" type="TextureButton" parent="UILayer" unique_id=1596705947]
-offset_left = 598.0
+offset_left = 563.0
 offset_top = 376.0
-offset_right = 630.0
+offset_right = 627.0
 offset_bottom = 408.0
 size_flags_horizontal = 8
 size_flags_vertical = 0
-texture_normal = SubResource("AtlasTexture_gwjdr")
-texture_pressed = SubResource("AtlasTexture_lvtmh")
+texture_normal = SubResource("AtlasTexture_emmnt")
+texture_pressed = SubResource("AtlasTexture_kqn05")
+texture_hover = SubResource("AtlasTexture_p7j3k")
 
 [node name="HoverPointer" type="Control" parent="UILayer" unique_id=62494922]
 layout_mode = 3

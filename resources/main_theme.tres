@@ -1,6 +1,19 @@
 [gd_resource type="Theme" format=3 uid="uid://chnmma08ljpaf"]
 
 [ext_resource type="Texture2D" uid="uid://b5tgb0g3yna21" path="res://assets/white_9slice.png" id="1_ols5k"]
+[ext_resource type="FontFile" uid="uid://cvi21btg8kurh" path="res://assets/MirandaSans-Bold.ttf" id="2_biaja"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_biaja"]
+texture = ExtResource("1_ols5k")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+modulate_color = Color(0.11599999, 0.19430006, 0.29, 0.16078432)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_biaja"]
 atlas = ExtResource("1_ols5k")
@@ -13,15 +26,24 @@ texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 modulate_color = Color(0, 0, 0, 0.78431374)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_biaja"]
+
 [resource]
+default_font = ExtResource("2_biaja")
+default_font_size = 13
 Label/font_sizes/font_size = 7
 MarginContainer/constants/margin_bottom = 5
 MarginContainer/constants/margin_left = 5
 MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
+Panel/styles/panel = SubResource("StyleBoxTexture_biaja")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_vnc4k")
-RichTextLabel/font_sizes/bold_font_size = 11
-RichTextLabel/font_sizes/bold_italics_font_size = 11
-RichTextLabel/font_sizes/italics_font_size = 11
-RichTextLabel/font_sizes/mono_font_size = 11
-RichTextLabel/font_sizes/normal_font_size = 11
+TabContainer/fonts/font = ExtResource("2_biaja")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_selected = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_biaja")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_biaja")
+TextEdit/fonts/font = ExtResource("2_biaja")
