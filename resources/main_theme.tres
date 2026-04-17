@@ -38,6 +38,7 @@ MarginContainer/constants/margin_right = 5
 MarginContainer/constants/margin_top = 5
 Panel/styles/panel = SubResource("StyleBoxTexture_biaja")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_vnc4k")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 TabContainer/fonts/font = ExtResource("2_biaja")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_biaja")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxEmpty_biaja")

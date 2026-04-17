@@ -1,5 +1,5 @@
 {
-  "Honey": 1622,
+  "Honey": 1984,
   "Upgrades": [
     {
       "Id": "BeekeepersWarmth",
@@ -31,7 +31,7 @@
     },
     {
       "Id": "FasterBees",
-      "Level": 0
+      "Level": 3
     },
     {
       "Id": "FatBeeUnlock",
@@ -133,7 +133,17 @@
       "X": -5,
       "Y": 5,
       "BeeCounts": {
-        "FatBee": 4
+        "FatBee": 4,
+        "BaseBee": 6
+      }
+    },
+    {
+      "X": 2,
+      "Y": 1,
+      "BeeCounts": {
+        "RocketBee": 5,
+        "QueenBee": 4,
+        "BaseBee": 1
       }
     }
   ],
@@ -165,11 +175,6 @@
           1,
           3,
           -4
-        ],
-        [
-          10,
-          11,
-          -3
         ],
         [
           2,
@@ -237,11 +242,6 @@
       "Type": "GrassTile",
       "Spans": [
         [
-          8,
-          9,
-          -3
-        ],
-        [
           -6,
           -4,
           3
@@ -269,11 +269,6 @@
         [
           -5,
           -3,
-          -3
-        ],
-        [
-          6,
-          7,
           -3
         ],
         [
@@ -424,6 +419,11 @@
       "X": -4,
       "Y": -1,
       "Type": "Sunflower"
+    },
+    {
+      "X": 2,
+      "Y": 1,
+      "Type": "Hive"
     }
   ],
   "UnlockedKeys": [

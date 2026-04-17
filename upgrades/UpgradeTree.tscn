@@ -322,6 +322,11 @@ NodePath("../MoreSmoke"): 3
 [node name="Button" parent="ForeverPresent" index="0" unique_id=2079804154]
 texture_normal = ExtResource("17_mqxrb")
 
+[node name="UpgradeNode" parent="." unique_id=743070016 instance=ExtResource("2_5s8lu")]
+
+[node name="Button" parent="UpgradeNode" index="0" unique_id=2079804154]
+texture_normal = ExtResource("15_0qucf")
+
 [editable path="BeekeepersWarmth"]
 [editable path="MoreSmoke"]
 [editable path="FasterBees"]
@@ -351,3 +356,4 @@ texture_normal = ExtResource("17_mqxrb")
 [editable path="Companionship"]
 [editable path="EvenFatter"]
 [editable path="ForeverPresent"]
+[editable path="UpgradeNode"]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
-public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverSubtitle, IHasHoverRefresh
+public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescription, IHasHoverSubtitle, IHasHoverRefresh
 {
     [Signal]
     public delegate void PollinatedEventHandler(int honey);
@@ -103,6 +103,11 @@ public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverSubtitle,
                 $"pollinating {Honey}/{HoneyCost.Value} ({Honey / HoneyCost.Value:P0})",
                 "subtitle"
             );
+        return "";
+    }
+
+    public override string GetHoverDescription()
+    {
         return "";
     }
 

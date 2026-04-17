@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bj341en8f28fl"]
+[gd_scene format=3 uid="uid://b0v7fjfk35jvf"]
 
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
@@ -51,7 +51,7 @@ texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
-modulate_color = Color(0.9915313, 0.6633954, 0, 1)
+modulate_color = Color(0.78575546, 0.5045569, 0.29658696, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fj2yu"]
 atlas = ExtResource("14_fj2yu")
@@ -359,15 +359,14 @@ ButtonDropDistance = 65.0
 [node name="TabContainer" type="TabContainer" parent="UILayer/PlacementMenu" unique_id=985846521]
 unique_name_in_owner = true
 layout_mode = 2
-current_tab = 1
+current_tab = 0
 tab_0/title = "Objects"
 tab_1/title = "Tiles"
 tab_2/title = "Bees"
 
 [node name="ObjectsSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
-visible = false
-self_modulate = Color(0.64735013, 0.5137487, 0.3635122, 1)
+self_modulate = Color(0, 0.83137256, 0.34901962, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
@@ -377,7 +376,8 @@ metadata/_tab_name = "Objects"
 
 [node name="TilesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=2139555641 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
-self_modulate = Color(0.3858, 0.5587994, 0.4010992, 1)
+visible = false
+self_modulate = Color(0.78431374, 0.5058824, 0.29803923, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_hxy8k"), SubResource("Resource_68r7h"), SubResource("Resource_7vltt"), SubResource("Resource_2t1a5")])
@@ -387,7 +387,7 @@ metadata/_tab_name = "Tiles"
 [node name="BeesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
 visible = false
-self_modulate = Color(0.5588187, 0.65045756, 0.6302859, 1)
+self_modulate = Color(0.44313726, 0.84313726, 0.8039216, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_n7324"), SubResource("Resource_hwsgv"), SubResource("Resource_v5dxo"), SubResource("Resource_iueff"), SubResource("Resource_dyvha"), SubResource("Resource_8ktx7"), SubResource("Resource_xc54d")])
@@ -421,3 +421,5 @@ theme = ExtResource("22_0mevm")
 text = "error message right now"
 horizontal_alignment = 1
 script = ExtResource("23_w2501")
+
+[editable path="UILayer/TopLeft/VBoxContainer/HBoxContainer/HoneyDisplay"]
