@@ -2,9 +2,63 @@
 
 [ext_resource type="PackedScene" uid="uid://c2axeywje8mmm" path="res://objects/grid/Poppy.tscn" id="1_3ukkp"]
 [ext_resource type="Script" uid="uid://jacshr6b22xa" path="res://objects/grid/Clover.cs" id="2_7jxwf"]
+[ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_3sd6e"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="4_e4chb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pblul"]
+atlas = ExtResource("3_3sd6e")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t35i1"]
+atlas = ExtResource("4_e4chb")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cyk4"]
+atlas = ExtResource("4_e4chb")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvay4"]
+atlas = ExtResource("4_e4chb")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_188o6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pblul")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t35i1")
+}],
+"loop": true,
+"name": &"jackpot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8cyk4")
+}],
+"loop": true,
+"name": &"pollinated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvay4")
+}],
+"loop": true,
+"name": &"unpollinated",
+"speed": 5.0
+}]
 
 [node name="Clover" unique_id=1691567109 instance=ExtResource("1_3ukkp")]
-modulate = Color(0.19215687, 1, 0.3529412, 1)
 script = ExtResource("2_7jxwf")
 ObjectName = "Clover"
-Description = "<ObjectDescription>"
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_188o6")

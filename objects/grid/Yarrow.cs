@@ -12,16 +12,7 @@ public partial class Yarrow : Flower
     {
         HoneyGain = new(() =>
         {
-            Grid grid = Services.Get<Grid>()!;
-            int neighbors = 0;
-            for (int dx = -1; dx <= 1; dx++)
-            for (int dy = -1; dy <= 1; dy++)
-            {
-                if (dx == 0 && dy == 0)
-                    continue;
-                if (grid.GetObjectAt(GridPosition + new Vector2I(dx, dy)) is Yarrow)
-                    neighbors++;
-            }
+            int neighbors = GetYarrowNeighbors();
             return GameStore.YarrowHoneyGain.Value
                 * (1f + neighbors * GameStore.YarrowPerSameNeighborHoneyGainBuff.Value);
         });
@@ -29,7 +20,13 @@ public partial class Yarrow : Flower
 
     public override string GetHoverDescription()
     {
-        var grid = Services.Get<Grid>();
+        int neighbors = GetYarrowNeighbors();
+        return $"Yarrow | neighbors: {neighbors} | honey: {HoneyGain.Value:F2}";
+    }
+
+    private int GetYarrowNeighbors()
+    {
+        Grid grid = Services.Get<Grid>()!;
         int neighbors = 0;
         for (int dx = -1; dx <= 1; dx++)
         for (int dy = -1; dy <= 1; dy++)
@@ -39,6 +36,18 @@ public partial class Yarrow : Flower
             if (grid.GetObjectAt(GridPosition + new Vector2I(dx, dy)) is Yarrow)
                 neighbors++;
         }
-        return $"Yarrow | neighbors: {neighbors} | honey: {HoneyGain.Value:F2}";
+        return neighbors;
+    }
+
+    protected override void OnPollinated()
+    {
+        base.OnPollinated();
+        if (GetYarrowNeighbors() == 8)
+        {
+            sprite.Play("max");
+            return;
+        }
+        if (GetYarrowNeighbors() > 1)
+            sprite.Play("plenty");
     }
 }

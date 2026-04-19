@@ -8,7 +8,7 @@ public partial class BeekeeperEffectZoneFadeoutTimeUO : IUpgradeOption
 
     private float value => GameStore.BeekeeperEffectZoneFadeoutTime.Value;
 
-    public override string GetHoverDescription() => 
+    public override string GetTechnicalText() => 
         $"{Style.CK("Beekeeper Effect Zone", "noun_beekeeper")} lingers for {Style.NumberChange(value, value + IncreaseBy)} seconds.";
 
     public override void Apply()

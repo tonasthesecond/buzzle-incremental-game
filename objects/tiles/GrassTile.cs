@@ -2,7 +2,12 @@ public partial class GrassTile : BaseTile, IHasHoverTitle, IHasHoverDescription
 {
     protected override void ModifyFlower(Flower flower)
     {
-        flower.HoneyGain.AddPercent("rich_soil", GameStore.GrassHoneyGainBuff.Value);
+        flower.HoneyGain.AddPercent("grass", GameStore.GrassHoneyGainBuff.Value);
+        if (flower is Clover clover)
+            GameStore.CloverJackpotChance.AddPercent(
+                "natural habitat",
+                GameStore.GrassCloverJackpotChanceBonus.Value
+            );
     }
 
     public override string GetHoverTitle() => "Grass Tile";

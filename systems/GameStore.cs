@@ -41,26 +41,27 @@ public partial class GameStore : Node
 
     public static Stat SunflowerHoneyCost { get; } = new(1f);
     public static Stat SunflowerHoneyGain { get; } = new(2f);
-    public static Stat SunflowerPollinationTime { get; } = new(3f);
+    public static Stat SunflowerPollinationTime { get; } = new(6f);
 
-    public static Stat CloverHoneyCost { get; } = new(2f);
-    public static Stat CloverRegularHoneyGain { get; } = new(2f);
+    public static Stat CloverHoneyCost { get; } = new(3f);
+    public static Stat CloverRegularHoneyGain { get; } = new(3f);
     public static Stat CloverJackpotHoneyGain { get; } = new(7f);
     public static Stat CloverPollinationTime { get; } = new(3f);
     public static Stat CloverJackpotChance { get; } = new(0.1f);
 
-    public static Stat YarrowHoneyCost { get; } = new(1f);
-    public static Stat YarrowHoneyGain { get; } = new(2f);
-    public static Stat YarrowPollinationTime { get; } = new(3f);
-    public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.2f);
+    public static Stat YarrowHoneyCost { get; } = new(4f);
+    public static Stat YarrowHoneyGain { get; } = new(6f);
+    public static Stat YarrowPollinationTime { get; } = new(7f);
+    public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.1f);
 
-    public static Stat RoseHoneyCost { get; } = new(1f);
-    public static Stat RoseHoneyGain { get; } = new(2f);
-    public static Stat RosePollinationTime { get; } = new(3f);
+    public static Stat RoseHoneyCost { get; } = new(5f);
+    public static Stat RoseHoneyGain { get; } = new(1f);
+    public static Stat RosePollinationTime { get; } = new(15f);
     public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
-    public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.2f);
+    public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.1f);
 
     public static Stat GrassHoneyGainBuff { get; } = new(0.2f);
+    public static Stat GrassCloverJackpotChanceBonus { get; } = new(0f);
 
     public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
 
@@ -156,8 +157,6 @@ public partial class GameStore : Node
         // apply all dynamic contents
         honey = Save.Honey;
         Services.Get<UpgradeTree>().ApplyUpgrades();
-        foreach (string key in Save.UnlockedKeys)
-            unlockedKeys.Add(key);
 
         Callable
             .From(() =>
@@ -176,8 +175,6 @@ public partial class GameStore : Node
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
     }
-
-    // --- Upgrades ---
 
     // --- Constants ---
     public const int TILE_SIZE = 32;

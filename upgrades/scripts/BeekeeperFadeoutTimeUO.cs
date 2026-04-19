@@ -8,7 +8,7 @@ public partial class BeekeeperFadeoutTimeUO : IUpgradeOption
 
     private float value => GameStore.BeekeeperEffectZoneFadeoutTime.Value * 2;
 
-    public override string GetHoverDescription() => 
+    public override string GetTechnicalText() => 
         $"{Style.CK("Beekeeper Fadeout Time", "noun_beekeeper")} decreases by {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles.";
 
     public override void Apply()

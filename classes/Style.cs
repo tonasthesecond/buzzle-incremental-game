@@ -20,6 +20,9 @@ public class Style
 
     public static string CK(string name, string colorKey) => ColorKey(name, colorKey);
 
+    public static string CK(float value, string colorKey = "primary_color") =>
+        ColorKey(value.ToString("F0"), colorKey);
+
     public static string CKPercent(float value, string colorKey = "primary_color")
     {
         return ColorKey((value * 100f).ToString("F0"), colorKey) + "%";

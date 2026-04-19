@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="3_sgtpv"]
 
 [node name="HoverUI" type="PanelContainer" unique_id=1935115770]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(200, 0)
 offset_right = 150.0
 offset_bottom = 46.0
 theme = ExtResource("1_0bdvj")

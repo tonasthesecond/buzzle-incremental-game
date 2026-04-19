@@ -76,7 +76,7 @@ public abstract partial class Bee
     private bool latchedFlipH;
 
     /// Orbit the sprite around a center point for the pollination animation.
-    public void StartPollinatingAnim(Vector2 center, float duration, float radius = 15f)
+    public void StartPollinatingAnim(Vector2 center, float duration, float radius = 10f)
     {
         IsAnimating = true;
         orbitCenter = center + centerOffset;
