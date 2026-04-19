@@ -1,11 +1,9 @@
-using System;
 using System.Linq;
 using Godot;
 
 [Tool]
 public partial class UpgradeTree : Control
 {
-    private const string UpgradePath = "res://upgrades/resources/";
     private UpgradeNode[] nodes => GetChildren().OfType<UpgradeNode>().ToArray();
 
     public override void _EnterTree()
@@ -17,14 +15,51 @@ public partial class UpgradeTree : Control
 
     public override void _Ready()
     {
+        if (Engine.IsEditorHint())
+        {
+            foreach (var node in nodes)
+            {
+                if (node.Upgrade == null)
+                    continue;
+                node.Upgrade.Applied += () => QueueRedraw();
+            }
+            return;
+        }
         foreach (UpgradeNode node in nodes)
         {
             if (node.Upgrade == null)
                 continue;
-            node.Upgrade.Applied += () => QueueRedraw();
+            node.Upgrade.Applied += () => RedrawLines();
         }
-
         SignalBus.Instance.GameLoaded += () => ApplyUpgrades();
+    }
+
+    private void RedrawLines()
+    {
+        // clear old lines
+        foreach (var child in GetChildren().OfType<Line2D>())
+            child.QueueFree();
+
+        foreach (UpgradeNode node in nodes)
+        {
+            if (node.Dependencies == null || !node.IsShown)
+                continue;
+
+            foreach (NodePath path in node.Dependencies.Keys)
+            {
+                var dep = node.GetNode<UpgradeNode>(path);
+                if (!IsInstanceValid(dep) || !dep.IsShown)
+                    continue;
+
+                var line = new Line2D();
+                line.AddPoint(node.GlobalPosition - GlobalPosition);
+                line.AddPoint(dep.GlobalPosition - GlobalPosition);
+                line.DefaultColor = Colors.LightGray;
+                line.Width = 2;
+                line.ZIndex = -1;
+                AddChild(line);
+            }
+        }
     }
 
     public override void _Draw()
@@ -51,31 +86,17 @@ public partial class UpgradeTree : Control
         }
     }
 
-    public IUpgradeOption[] GetUpgrades()
-    {
-        using var dir = DirAccess.Open(UpgradePath);
-        if (dir == null)
-        {
-            GD.PrintErr($"Could not open path: {UpgradePath}");
-            return Array.Empty<IUpgradeOption>();
-        }
-        return dir.GetFiles()
-            .Where(file => file.EndsWith(".tres"))
-            .Select(file => GD.Load<IUpgradeOption>(UpgradePath + file))
-            .Where(upgrade => upgrade != null)
-            .ToArray();
-    }
+    public UpgradeNode[] GetUpgradeNodes() => nodes;
 
     public void SaveUpgrades()
     {
         GameStore.Save.Upgrades.Clear();
-        foreach (var upgrade in GetUpgrades())
+        foreach (UpgradeNode node in GetUpgradeNodes())
         {
-            var saved = new SavedUpgrade
-            {
-                Id = upgrade.ResourcePath.GetFile().GetBaseName(),
-                Level = upgrade.Level,
-            };
+            if (node.Upgrade == null)
+                continue;
+
+            var saved = new SavedUpgrade { Id = node.Name, Level = node.Upgrade.Level };
             GameStore.Save.Upgrades.Add(saved);
         }
     }
@@ -84,17 +105,19 @@ public partial class UpgradeTree : Control
     {
         foreach (SavedUpgrade saved in GameStore.Save.Upgrades)
         {
-            var upgrade = GD.Load<IUpgradeOption>("res://upgrades/resources/" + saved.Id + ".tres");
-            if (upgrade == null)
+            UpgradeNode node = GetUpgradeNodes().FirstOrDefault(n => n.Name == saved.Id)!;
+
+            if (node.Upgrade == null)
             {
-                GD.PushError($"[GameStore] Missing upgrade: {saved.Id}");
+                GD.PushError($"[UpgradeTree] Missing upgrade node: {saved.Id}");
                 continue;
             }
-            upgrade.Level = saved.Level;
+
+            node.Upgrade.Level = saved.Level;
             for (int i = 0; i <= saved.Level; i++)
             {
-                upgrade.EmitSignal(IUpgradeOption.SignalName.Applied);
-                upgrade.Apply();
+                node.Upgrade.EmitSignal(IUpgradeOption.SignalName.Applied);
+                node.Upgrade.Apply();
             }
         }
     }
