@@ -9,7 +9,10 @@ public partial class RocketBee : Bee
         bee.BopSpeed = 10f;
     }
 
-    public override IBeeJob HarvestJob() => new RocketHarvesterJob();
+    public override IBeeJob HarvestJob() =>
+        GameStore.RocketBeeIsolatedHarvest
+            ? new RocketIsolatedHarvesterJob()
+            : new RocketHarvesterJob();
 
     public override IBeeJob PollinateJob() => new RocketPollinatorJob();
 }

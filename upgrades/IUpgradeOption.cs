@@ -24,33 +24,10 @@ public abstract partial class IUpgradeOption : Resource, IHasHoverDescription
     public string GetHoverDescription()
     {
         // parse flavor text format of [color_id](text) into Style.CK(text, color_id)
-        StringBuilder hoverDescription = new StringBuilder();
-        string flavorText = FlavorText;
-        int i = 0;
-
-        while (i < flavorText.Length)
-        {
-            if (flavorText[i] == '[')
-            {
-                int closeBracket = flavorText.IndexOf(']', i);
-                int openParen = closeBracket + 1;
-                int closeParen = flavorText.IndexOf(')', openParen);
-
-                string colorId = flavorText.Substring(i + 1, closeBracket - i - 1);
-                string text = flavorText.Substring(openParen + 1, closeParen - openParen - 1);
-
-                hoverDescription.Append(Style.CK(text, colorId));
-                i = closeParen + 1;
-            }
-            else
-            {
-                hoverDescription.Append(flavorText[i]);
-                i++;
-            }
-        }
+        string hoverDescription = Style.ParseFlavorText(FlavorText);
 
         if (GetTechnicalText() != "")
-            hoverDescription.Append("\n\n" + GetTechnicalText());
+            hoverDescription += "\n\n" + GetTechnicalText();
         return hoverDescription.ToString();
     }
 

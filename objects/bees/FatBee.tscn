@@ -6,6 +6,7 @@
 [node name="FatBee" unique_id=384287205 instance=ExtResource("1_3tv51")]
 script = ExtResource("2_uqwpp")
 BeeTypeName = "Fat"
+Description = "Caste of [noun_bee](bees) that can carry significant honey, but slow."
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
 modulate = Color(0.87401557, 0.73605067, 0.40752846, 1)

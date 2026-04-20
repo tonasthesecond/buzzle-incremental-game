@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
@@ -57,42 +58,38 @@ public abstract class FlowerJob : IBeeJob
         bee.SetJob(new IdleJob());
     }
 
+    /// Override to rank/sort candidates before random selection.
+    protected virtual IEnumerable<Flower> GetCandidates(Flower[] eligible) => eligible;
+
     public void Tick(Bee bee)
     {
         Grid grid = Services.Get<Grid>()!;
         BeeSystem beeSystem = Services.Get<BeeSystem>()!;
-
         switch (state)
         {
             case State.SeekingFlower:
                 if (!CanSeek(bee))
                     return;
-
-                flower = grid.GetObjectsOfType<Flower>()
+                var eligible = grid.GetObjectsOfType<Flower>()
                     .Where(f => IsEligible(f) && !beeSystem.IsClaimed(f))
-                    .OrderBy(_ => GD.Randf())
-                    .FirstOrDefault();
-
+                    .ToArray();
+                flower = GetCandidates(eligible).OrderBy(_ => GD.Randf()).FirstOrDefault();
                 if (flower == null)
                 {
                     bee.SetJob(new IdleJob());
                     return;
                 }
-
                 beeSystem.ClaimObject(flower, bee);
                 bee.FadeTo(1f);
                 state = State.PreMove;
                 break;
-
             case State.PreMove:
                 if (PreMoveTick(bee))
                     state = State.TravelingToFlower;
                 break;
-
             case State.TravelingToFlower:
                 if (bee.IsMoving)
                     return;
-
                 if (!OnArrived(bee))
                 {
                     bee.SetJob(new IdleJob());
@@ -100,7 +97,6 @@ public abstract class FlowerJob : IBeeJob
                 }
                 state = State.AtFlower;
                 break;
-
             case State.AtFlower:
                 ProcessAtFlower(bee, out bool isDone);
                 if (!isDone)
@@ -109,11 +105,9 @@ public abstract class FlowerJob : IBeeJob
                 bee.MoveTo(bee.Home.GlobalPosition);
                 state = State.TravelingHome;
                 break;
-
             case State.TravelingHome:
                 if (bee.IsMoving)
                     return;
-
                 OnHome(bee);
                 break;
         }
@@ -242,6 +236,32 @@ public class RocketHarvesterJob : RocketFlowerJob
     }
 }
 
+public class RocketIsolatedHarvesterJob : RocketHarvesterJob
+{
+    protected override IEnumerable<Flower> GetCandidates(Flower[] eligible)
+    {
+        if (eligible.Length == 0)
+            return eligible;
+
+        var grid = Services.Get<Grid>();
+        var hives = grid.GetObjectsOfType<Hive>();
+
+        var mostIsolated = eligible
+            .Select(f => new
+            {
+                Flower = f,
+                ClosestHiveDist = hives.Min(h =>
+                    h.GlobalPosition.DistanceSquaredTo(f.GlobalPosition)
+                ),
+            })
+            .OrderByDescending(x => x.ClosestHiveDist)
+            .First()
+            .Flower;
+
+        return new[] { mostIsolated };
+    }
+}
+
 public class RocketPollinatorJob : RocketFlowerJob
 {
     protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinating;
@@ -293,11 +313,11 @@ public class QueenJob : IBeeJob
     private static readonly ulong MaxMoveMs = 3000;
     private static readonly float LeashTiles = 2.5f;
     private static readonly float LeashPull = 1.8f; // radians/sec toward hive
+    private static readonly float RoseLeashPull = 2.2f; // radians/sec toward closest rose
     private static readonly float FlockPull = 0.8f; // radians/sec toward hive-mates
     private static readonly float TurnBiasMax = 2.2f; // radians/sec max curve
     private static readonly float TurnBiasShift = 1f; // how much bias shifts on each new bout
     private static readonly float Lookahead = 24f; // pixels ahead to target
-
     private State state = State.Waiting;
     private ulong stateUntil = 0;
     private float angle;
@@ -313,33 +333,38 @@ public class QueenJob : IBeeJob
             stateUntil = Time.GetTicksMsec() + (ulong)GD.RandRange(MinWaitMs, MaxWaitMs);
             initialized = true;
         }
-
         float dt = (float)bee.GetProcessDeltaTime();
-
         switch (state)
         {
             case State.Waiting:
                 bee.MoveTo(bee.GlobalPosition); // stay put
                 if (Time.GetTicksMsec() < stateUntil)
                     return;
-
                 turnBias += (float)GD.RandRange(-TurnBiasShift, TurnBiasShift);
                 turnBias = Mathf.Clamp(turnBias, -TurnBiasMax, TurnBiasMax);
                 stateUntil = Time.GetTicksMsec() + (ulong)GD.RandRange(MinMoveMs, MaxMoveMs);
                 state = State.Moving;
                 break;
-
             case State.Moving:
                 bee.FadeTo(1f);
-
                 // continuously rotate angle
                 angle += turnBias * dt;
-
                 // soft hive leash
                 Vector2 toHive = bee.Home.GlobalPosition - bee.GlobalPosition;
                 if (toHive.Length() > LeashTiles * GameStore.TILE_SIZE)
                     angle = Mathf.LerpAngle(angle, toHive.Angle(), LeashPull * dt);
-
+                // rose leash (if enabled and rose exists)
+                if (GameStore.QueenBeeLeashRose)
+                {
+                    Rose? rose = Services
+                        .Get<Grid>()
+                        .GetClosestObjectOfType<Rose>(bee.Home.GlobalPosition);
+                    if (rose != null)
+                    {
+                        Vector2 toRose = rose.GlobalPosition - bee.GlobalPosition;
+                        angle = Mathf.LerpAngle(angle, toRose.Angle(), RoseLeashPull * dt);
+                    }
+                }
                 // bias toward visible hive-mates
                 Bee[] hivemates = Services
                     .Get<BeeSystem>()
@@ -356,12 +381,10 @@ public class QueenJob : IBeeJob
                     if (toFlock.Length() > GameStore.TILE_SIZE)
                         angle = Mathf.LerpAngle(angle, toFlock.Angle(), FlockPull * dt);
                 }
-
                 // rolling lookahead — updates every frame so movement curves
                 bee.MoveTo(
                     bee.GlobalPosition + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Lookahead
                 );
-
                 if (Time.GetTicksMsec() >= stateUntil)
                 {
                     stateUntil = Time.GetTicksMsec() + (ulong)GD.RandRange(MinWaitMs, MaxWaitMs);

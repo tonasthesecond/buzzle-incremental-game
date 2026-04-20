@@ -53,6 +53,12 @@ public partial class BeeSystem : GameSystem
             if (job != null && !(job is IdleJob))
                 bee.SetJob(job);
         }
+
+        foreach (BaseGridObject obj in claimedObjects.Keys)
+        {
+            if (!IsInstanceValid(claimedObjects[obj]))
+                claimedObjects.Remove(obj);
+        }
     }
 
     private void OnGridObjectRemoved(BaseGridObject obj)

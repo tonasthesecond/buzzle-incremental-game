@@ -21,11 +21,18 @@ public partial class PlacementMenu : Control
     {
         collapseButton = GetParent().GetNode<BaseButton>("CollapseButton");
         collapseButton.Pressed += Toggle;
+        Hide();
         Callable
             .From(() =>
             {
                 panelOriginY = Position.Y;
                 buttonOriginY = collapseButton.Position.Y;
+
+                collapseButton.Position = new Vector2(
+                    collapseButton.Position.X,
+                    buttonOriginY + ButtonDropDistance
+                );
+                Collapse();
             })
             .CallDeferred();
     }
@@ -63,6 +70,7 @@ public partial class PlacementMenu : Control
 
     public void Expand()
     {
+        Show();
         var panelTween = CreateTween();
         panelTween.SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Back);
         panelTween.TweenProperty(this, "position:y", panelOriginY, TweenDuration);

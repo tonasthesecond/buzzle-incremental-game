@@ -29,10 +29,19 @@ public class Stat
         Changed?.Invoke();
     }
 
+    public float? Get(string key) => flat.TryGetValue(key, out float value) ? value : null;
+
     public void Remove(string key)
     {
         flat.Remove(key);
         percent.Remove(key);
+        Changed?.Invoke();
+    }
+
+    public void RemoveAll()
+    {
+        flat.Clear();
+        percent.Clear();
         Changed?.Invoke();
     }
 }

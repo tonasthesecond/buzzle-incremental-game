@@ -4,11 +4,15 @@ using Godot;
 public partial class RemoveBee : SelectedResource
 {
     [Export]
-    public PackedScene BeeScene { get; set; }
+    public string BeeTypeName { get; set; } = "";
 
-    public override string GetHoverTitle() => "Remove Bee";
+    private Bee? bee;
 
-    public override string GetHoverDescription() => "Remove a bee from a hive.";
+    public override string GetHoverTitle() =>
+        $"Remove {Style.CK(BeeTypeName == "Rocket" ? "Jetpack" : BeeTypeName, "noun_" + BeeTypeName.ToLower())} bee";
+
+    public override string GetHoverDescription() =>
+        $"Remove a {Style.CK(BeeTypeName == "Rocket" ? "Jetpack" : BeeTypeName, "noun_" + BeeTypeName.ToLower())} bee from a hive.";
 
     public override string GetHoverSubtitle() => "";
 

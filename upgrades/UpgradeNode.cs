@@ -50,6 +50,7 @@ public partial class UpgradeNode
             node.Upgrade.Applied += onDependencyApplied;
         }
         button.Pressed += onButtonPressed;
+        HideNode();
         onDependencyApplied(); // initial check for visibility
     }
 
@@ -57,8 +58,6 @@ public partial class UpgradeNode
     {
         if (isDependencyMet(out FailMessage? failMessage))
             ShowNode();
-        else
-            HideNode();
     }
 
     private void onButtonPressed()

@@ -10,9 +10,17 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
             return;
 
         bee.Speed.AddPercent(Key, GameStore.QueenBeeEffectZoneSpeedBuff.Value);
+        bee.PollinationTimeReductionBuff.AddFlat(
+            Key,
+            GameStore.QueenBeeEffectZonePollinationTimeReductionBuff.Value
+        );
     }
 
-    protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
+    protected override void OnBeeExited(Bee bee)
+    {
+        bee.Speed.Remove(Key);
+        bee.PollinationTimeReductionBuff.Remove(Key);
+    }
 
     public override void _Ready()
     {

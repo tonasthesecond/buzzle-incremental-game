@@ -4,6 +4,9 @@ using Godot;
 [Tool]
 public partial class UpgradeTree : Control
 {
+    [Export]
+    public bool ShowAllUpgrades = false;
+
     private UpgradeNode[] nodes => GetChildren().OfType<UpgradeNode>().ToArray();
 
     public override void _EnterTree()
@@ -32,6 +35,9 @@ public partial class UpgradeTree : Control
             node.Upgrade.Applied += () => RedrawLines();
         }
         SignalBus.Instance.GameLoaded += () => ApplyUpgrades();
+
+        if (ShowAllUpgrades)
+            GameStore.UnlockAll();
     }
 
     private void RedrawLines()
@@ -39,6 +45,36 @@ public partial class UpgradeTree : Control
         // clear old lines
         foreach (var child in GetChildren().OfType<Line2D>())
             child.QueueFree();
+
+        void DrawLine(Vector2 a, Vector2 b, float width = 2)
+        {
+            var line = new Line2D();
+            line.AddPoint(a);
+            line.AddPoint(b);
+            line.DefaultColor = new Color(GameStore.Colors["upgrade_line"]);
+            line.Width = width;
+            line.ZIndex = -1;
+            AddChild(line);
+        }
+
+        if (ShowAllUpgrades)
+        {
+            foreach (var node in nodes)
+            {
+                node.ShowNode();
+                foreach (NodePath path in node.Dependencies.Keys)
+                {
+                    var dep = node.GetNode<UpgradeNode>(path);
+                    if (!IsInstanceValid(dep) || !dep.IsShown)
+                        continue;
+                    DrawLine(
+                        node.GlobalPosition - GlobalPosition,
+                        dep.GlobalPosition - GlobalPosition
+                    );
+                }
+            }
+            return;
+        }
 
         foreach (UpgradeNode node in nodes)
         {
@@ -50,14 +86,7 @@ public partial class UpgradeTree : Control
                 var dep = node.GetNode<UpgradeNode>(path);
                 if (!IsInstanceValid(dep) || !dep.IsShown)
                     continue;
-
-                var line = new Line2D();
-                line.AddPoint(node.GlobalPosition - GlobalPosition);
-                line.AddPoint(dep.GlobalPosition - GlobalPosition);
-                line.DefaultColor = Colors.LightGray;
-                line.Width = 2;
-                line.ZIndex = -1;
-                AddChild(line);
+                DrawLine(node.GlobalPosition - GlobalPosition, dep.GlobalPosition - GlobalPosition);
             }
         }
     }
