@@ -20,6 +20,7 @@ public abstract partial class Bee
     public Vector2 targetPosition;
     public Stat Speed = new(() => GameStore.BeeSpeed.Value);
     public Stat HoneyCapacity = new(() => GameStore.BeeCapacityHoney.Value);
+    public Stat PollinationTimeReductionBuff = new(0f);
     public bool IsMoving =>
         Position.DistanceSquaredTo(targetPosition) >= Mathf.Pow(GameStore.TILE_SIZE / 20f, 2);
     private float phase;
@@ -76,7 +77,7 @@ public abstract partial class Bee
     private bool latchedFlipH;
 
     /// Orbit the sprite around a center point for the pollination animation.
-    public void StartPollinatingAnim(Vector2 center, float duration, float radius = 15f)
+    public void StartPollinatingAnim(Vector2 center, float duration, float radius = 10f)
     {
         IsAnimating = true;
         orbitCenter = center + centerOffset;
@@ -97,7 +98,7 @@ public abstract partial class Bee
             ),
             0f,
             1f,
-            duration
+            duration * (1f - PollinationTimeReductionBuff.Value)
         );
         tween.Finished += () =>
         {
@@ -201,18 +202,27 @@ public abstract partial class Bee
         return $"{BeeTypeName} Bee";
     }
 
+    [Export]
+    public string Description { get; set; } = "";
+
     public virtual string GetHoverDescription()
     {
-        return $"{BeeTypeName} Bee";
+        string desc = Style.ParseFlavorText(Description);
+
+        int capacity = (int)HoneyCapacity.Value;
+        float speedTilesPerSec = Utils.PixelsToTiles(Speed.Value);
+
+        desc +=
+            $"\n\n{Style.CK("Speed")}: {Style.CK(speedTilesPerSec.ToString("F1"))} tiles per sec";
+        if (capacity > 5000)
+            desc += $"\n{Style.CK("Capacity")}: {Style.CK("inf")} honey";
+        else
+            desc += $"\n{Style.CK("Capacity")}: {Style.CK(capacity.ToString("F0"))} honey";
+
+        return desc;
     }
 
-    public virtual int GetHoverCost()
-    {
-        return GameStore.GetPlacementCost(GetType());
-    }
+    public virtual int GetHoverCost() => GameStore.GetPlacementCost(GetType());
 
-    public bool IsEnough()
-    {
-        return GameStore.Honey >= GetHoverCost();
-    }
+    public bool IsEnough() => GameStore.Honey >= GetHoverCost();
 }

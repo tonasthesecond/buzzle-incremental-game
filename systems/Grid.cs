@@ -13,34 +13,29 @@ public partial class Grid : Node2D
     {
         Services.Register(this);
 
+        SignalBus.Instance.GameLoaded += () => OnGameLoaded();
+
+        Services.Get<Tilemap>().Update(tiles.Values);
+    }
+
+    private void OnGameLoaded()
+    {
         if (GameStore.Save.Tiles.Count > 0)
             LoadFrom(GameStore.Save);
         else
             BuildDefault();
-
-        Services.Get<Tilemap>().Update(tiles.Values);
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridLoaded);
     }
 
     // --- Default Layout ---
 
     private void BuildDefault()
     {
-        for (int x = 0; x < 5; x++)
-        for (int y = 0; y < 5; y++)
-            PlaceTile<GrassTile>(new Vector2I(x, y));
-        PlaceTile<GrassTile>(new Vector2I(5, 2));
+        for (int x = -2; x <= 2; x++)
+        for (int y = -2; y <= 2; y++)
+            PlaceTile<DirtTile>(new Vector2I(x, y));
 
-        PlaceObject<Hive>(new Vector2I(2, 2), out var hive);
-
-        Vector2I[] flowers = [new(0, 1), new(4, 0), new(1, 4), new(3, 3)];
-        foreach (var pos in flowers)
-            PlaceObject<Flower>(pos, out _);
-
-        // spawn bees
-        // FIXME: something
-
-        // for (int i = 0; i < 5; i++)
-        //     Services.Get<BeeSystem>().SpawnBee(hive!);
+        PlaceObject<Hive>(new Vector2I(0, 0), out var hive);
     }
 
     // --- Persistence ---
@@ -288,6 +283,11 @@ public partial class Grid : Node2D
         {
             failMessage = new FailMessage($"No object at {pos}.", "No object there!");
             return false;
+        }
+        if (obj is Hive hive)
+        {
+            foreach (Bee bee in hive.Bees)
+                bee.QueueFree();
         }
         obj.QueueFree();
         objects.Remove(pos);

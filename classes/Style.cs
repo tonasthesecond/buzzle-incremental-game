@@ -1,3 +1,4 @@
+using System.Text;
 using Godot;
 
 public class Style
@@ -49,6 +50,9 @@ public class Style
     public static string NC(int originalValue, int newValue) =>
         NumberChange(originalValue, newValue);
 
+    public static string NC(string originalValue, string newValue) =>
+        NumberChange(originalValue, newValue);
+
     public static string NCPercent(float originalValue, float newValue) =>
         NumberChangePercent(originalValue, newValue);
 
@@ -64,5 +68,36 @@ public class Style
     {
         string colorKey = isEnough ? "price_enough" : "price_not_enough";
         return $"[color={GameStore.Colors[colorKey]}]${price}[/color]";
+    }
+
+    // --- Flavor Text ---
+    public static string ParseFlavorText(string flavorText)
+    {
+        // parse flavor text format of [color_id](text) into Style.CK(text, color_id)
+        StringBuilder res = new StringBuilder();
+        int i = 0;
+
+        while (i < flavorText.Length)
+        {
+            if (flavorText[i] == '[')
+            {
+                int closeBracket = flavorText.IndexOf(']', i);
+                int openParen = closeBracket + 1;
+                int closeParen = flavorText.IndexOf(')', openParen);
+
+                string colorId = flavorText.Substring(i + 1, closeBracket - i - 1);
+                string text = flavorText.Substring(openParen + 1, closeParen - openParen - 1);
+
+                res.Append(CK(text, colorId));
+                i = closeParen + 1;
+            }
+            else
+            {
+                res.Append(flavorText[i]);
+                i++;
+            }
+        }
+
+        return res.ToString();
     }
 }

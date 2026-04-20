@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b0v7fjfk35jvf"]
+[gd_scene format=3 uid="uid://bj341en8f28fl"]
 
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
@@ -34,6 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
 [ext_resource type="PackedScene" uid="uid://ta1elcl0w7u5" path="res://ui/ObjectPreview.tscn" id="24_bisgb"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="24_iueff"]
 [ext_resource type="PackedScene" uid="uid://cbfj4mro5unew" path="res://objects/bees/QueenBee.tscn" id="24_w7ht3"]
 [ext_resource type="PackedScene" uid="uid://dvinr3qg6witu" path="res://objects/grid/Rose.tscn" id="24_wdm1y"]
 [ext_resource type="PackedScene" uid="uid://c8x1d3wmlgxlb" path="res://objects/bees/FatBee.tscn" id="25_8ktx7"]
@@ -95,69 +96,58 @@ Resource = ExtResource("11_cpsxm")
 Icon = SubResource("AtlasTexture_bvhbk")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aeq37"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_suycs"]
-atlas = SubResource("CompressedTexture2D_aeq37")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5dxo"]
+atlas = ExtResource("24_iueff")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="Resource" id="Resource_202ut"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("20_4my3f")
-Icon = SubResource("AtlasTexture_suycs")
+Icon = SubResource("AtlasTexture_v5dxo")
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hxy8k"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2t1a5"]
-atlas = SubResource("CompressedTexture2D_hxy8k")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyvha"]
+atlas = ExtResource("24_iueff")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="Resource" id="Resource_8576b"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_5he1h")
-Icon = SubResource("AtlasTexture_2t1a5")
+Icon = SubResource("AtlasTexture_dyvha")
+UnlockKey = "Sunflower"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_suycs"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_202ut"]
-atlas = SubResource("CompressedTexture2D_suycs")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc54d"]
+atlas = ExtResource("24_iueff")
+region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_5he1h"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_aeq37")
-Icon = SubResource("AtlasTexture_202ut")
+Icon = SubResource("AtlasTexture_xc54d")
+UnlockKey = "Yarrow"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_68r7h"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7vltt"]
-atlas = SubResource("CompressedTexture2D_68r7h")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_w250u"]
+atlas = ExtResource("24_iueff")
+region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fj2yu"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("23_xwkxq")
-Icon = SubResource("AtlasTexture_7vltt")
+Icon = SubResource("AtlasTexture_w250u")
+UnlockKey = "Yarrow"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_iueff"]
-load_path = "res://.godot/imported/hive.png-0ff8f8f190b7613280b83b5d155fc6e2.ctex"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_n7324"]
-atlas = SubResource("CompressedTexture2D_iueff")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("24_iueff")
+region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="Resource" id="Resource_o6tbt"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_wdm1y")
 Icon = SubResource("AtlasTexture_n7324")
+UnlockKey = "Rose"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_hxy8k"]
@@ -183,6 +173,7 @@ region = Rect2(96, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_4my3f")
 Icon = SubResource("AtlasTexture_o6tbt")
+UnlockKey = "Loam"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0mevm"]
@@ -193,6 +184,7 @@ region = Rect2(96, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("8_2vekm")
 Icon = SubResource("AtlasTexture_0mevm")
+UnlockKey = "Grass"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_w7ht3"]
@@ -203,7 +195,6 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_n7324"]
 script = ExtResource("36_7vltt")
-BeeScene = ExtResource("23_y5ctq")
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
 [sub_resource type="Resource" id="Resource_hwsgv"]
@@ -215,7 +206,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_v5dxo"]
 script = ExtResource("36_7vltt")
-BeeScene = ExtResource("25_8ktx7")
+BeeTypeName = "Fat"
 UnlockKey = "Fat"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -231,7 +222,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_dyvha"]
 script = ExtResource("36_7vltt")
-BeeScene = ExtResource("36_8576b")
+BeeTypeName = "Rocket"
 UnlockKey = "Rocket"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -244,7 +235,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_xc54d"]
 script = ExtResource("36_7vltt")
-BeeScene = ExtResource("24_w7ht3")
+BeeTypeName = "Queen"
 UnlockKey = "Queen"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -359,6 +350,7 @@ ButtonDropDistance = 65.0
 [node name="TabContainer" type="TabContainer" parent="UILayer/PlacementMenu" unique_id=985846521]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("22_0mevm")
 current_tab = 0
 tab_0/title = "Objects"
 tab_1/title = "Tiles"
@@ -421,5 +413,3 @@ theme = ExtResource("22_0mevm")
 text = "error message right now"
 horizontal_alignment = 1
 script = ExtResource("23_w2501")
-
-[editable path="UILayer/TopLeft/VBoxContainer/HBoxContainer/HoneyDisplay"]

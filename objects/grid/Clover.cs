@@ -26,7 +26,9 @@ public partial class Clover : Flower
     protected override void OnPollinated()
     {
         base.OnPollinated();
-        // if (isJackpot) { }
+
+        if (isJackpot)
+            sprite.Play("jackpot");
     }
 
     public override string GetHoverDescription()

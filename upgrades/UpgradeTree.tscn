@@ -2,358 +2,1220 @@
 
 [ext_resource type="Script" uid="uid://blprwswd4po86" path="res://upgrades/UpgradeTree.cs" id="1_wyc47"]
 [ext_resource type="PackedScene" uid="uid://bcyt4rofmmeik" path="res://upgrades/UpgradeNode.tscn" id="2_5s8lu"]
-[ext_resource type="Resource" uid="uid://dw881vtugr54q" path="res://upgrades/resources/BeekeepersWarmth.tres" id="3_ea44d"]
-[ext_resource type="Resource" uid="uid://b5wwqnpr1wnyr" path="res://upgrades/resources/MoreSmoke.tres" id="4_dq57c"]
-[ext_resource type="Resource" uid="uid://dnsqss4kdxdii" path="res://upgrades/resources/FasterBees.tres" id="4_m26cu"]
-[ext_resource type="Texture2D" uid="uid://dr6veu5ud1q4o" path="res://resources/atlases/frame_yellow.tres" id="4_r2e1u"]
-[ext_resource type="Resource" uid="uid://cwudm6t0aihqo" path="res://upgrades/resources/LingeringHeat.tres" id="6_vvd1a"]
-[ext_resource type="Resource" uid="uid://c4j8yqmtlnf7g" path="res://upgrades/resources/BiggerHive.tres" id="7_hmr6f"]
-[ext_resource type="Texture2D" uid="uid://j1f1m3udivnc" path="res://resources/atlases/frame_blue.tres" id="7_rb3gu"]
-[ext_resource type="Resource" uid="uid://cu1d70sqh50wk" path="res://upgrades/resources/QueenBeeUnlock.tres" id="8_ftddy"]
-[ext_resource type="Resource" uid="uid://vahusyi5w3go" path="res://upgrades/resources/EvenBiggerHives.tres" id="8_vfo37"]
-[ext_resource type="Resource" uid="uid://bt0qehhp12uhb" path="res://upgrades/resources/QueenDomain.tres" id="9_801hv"]
-[ext_resource type="Resource" uid="uid://c7672u6ydcdmj" path="res://upgrades/resources/QueenInfluence.tres" id="10_801hv"]
+[ext_resource type="Script" uid="uid://chybk5t5vu0yc" path="res://resources/scale_models/LinearModel.cs" id="3_m26cu"]
+[ext_resource type="Script" uid="uid://dpgbociariu82" path="res://upgrades/scripts/PoppyHoneyGainUO.cs" id="4_dq57c"]
+[ext_resource type="Texture2D" uid="uid://caixw83chwdvm" path="res://assets/icons.png" id="5_mg5gc"]
+[ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="6_c1vnt"]
+[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="7_ftddy"]
+[ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="9_25eif"]
+[ext_resource type="Script" uid="uid://dibxskqnfspn4" path="res://upgrades/scripts/GrassHoneyGainBuffUO.cs" id="9_801hv"]
 [ext_resource type="Texture2D" uid="uid://cod2igjain6ns" path="res://resources/atlases/frame_green.tres" id="10_s0uq4"]
-[ext_resource type="Resource" uid="uid://15lefjtbgbfr" path="res://upgrades/resources/GrassUnlock.tres" id="11_85qk5"]
-[ext_resource type="Resource" uid="uid://c06k23x8j3r4y" path="res://upgrades/resources/LoamUnlock.tres" id="12_aneh0"]
-[ext_resource type="Resource" uid="uid://bcavh7iqk1qtj" path="res://upgrades/resources/RoseUnlock.tres" id="12_i2cq8"]
-[ext_resource type="Resource" uid="uid://leja3jjeypqc" path="res://upgrades/resources/SunflowerUnlock.tres" id="13_0hbup"]
+[ext_resource type="Script" uid="uid://bkk0od77fveep" path="res://resources/scale_models/PolynomialModel.cs" id="11_fnqkb"]
+[ext_resource type="Script" uid="uid://cux1ml5vs1tm" path="res://upgrades/scripts/RosePerTileFromHiveHoneyGainBonusUO.cs" id="12_85qk5"]
+[ext_resource type="Script" uid="uid://dyusmper7s3tl" path="res://upgrades/scripts/DirtPoppyHoneyGainBuffUO.cs" id="12_s0uq4"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="12_vfo37"]
+[ext_resource type="Script" uid="uid://cbtp54s86g153" path="res://upgrades/scripts/CloverJackpotChanceUO.cs" id="13_85qk5"]
 [ext_resource type="Texture2D" uid="uid://smcvi2fpigc" path="res://resources/atlases/frame_red.tres" id="13_cjepv"]
-[ext_resource type="Resource" uid="uid://bmx6ck72itd83" path="res://upgrades/resources/YarrowUnlock.tres" id="14_aneh0"]
-[ext_resource type="Resource" uid="uid://clcyjt47rvu74" path="res://upgrades/resources/PoppyHoneyGain.tres" id="15_0hbup"]
+[ext_resource type="Script" uid="uid://di5nnjlai4xot" path="res://upgrades/scripts/CloverJackpotChanceJackpotHoneyGainUO.cs" id="14_0hbup"]
 [ext_resource type="Texture2D" uid="uid://c1a8ec0hqx1vd" path="res://resources/atlases/frame_rainbow.tres" id="15_0qucf"]
-[ext_resource type="Resource" uid="uid://bye1i4gcs0d1d" path="res://upgrades/resources/Hermit.tres" id="15_bhyaa"]
-[ext_resource type="Resource" uid="uid://bnif32qss1jer" path="res://upgrades/resources/RicherSoil.tres" id="16_jvrcb"]
-[ext_resource type="Resource" uid="uid://bfj2f4t3b41oq" path="res://upgrades/resources/RocketBeeUnlock.tres" id="17_7ix0q"]
-[ext_resource type="Texture2D" uid="uid://cyxxlgjb7t4sa" path="res://resources/atlases/frame_purple.tres" id="17_mqxrb"]
-[ext_resource type="Resource" uid="uid://kggd05y44u7r" path="res://upgrades/resources/CloverUnlock.tres" id="19_mg5gc"]
-[ext_resource type="Resource" uid="uid://idymxda4j8mh" path="res://upgrades/resources/SunflowerMight.tres" id="20_6qo0q"]
-[ext_resource type="Resource" uid="uid://dawopdmu252af" path="res://upgrades/resources/BetterRockets.tres" id="20_pmee0"]
-[ext_resource type="Resource" uid="uid://blhh4ae0edpu1" path="res://upgrades/resources/SmootherSoil.tres" id="21_6qo0q"]
-[ext_resource type="Resource" uid="uid://c6ctybmvd6mgc" path="res://upgrades/resources/Luckier.tres" id="22_nigh1"]
-[ext_resource type="Resource" uid="uid://dsj3plbapvu0p" path="res://upgrades/resources/JackpotSize.tres" id="23_hbxd2"]
-[ext_resource type="Resource" uid="uid://cxjhlgky1yopm" path="res://upgrades/resources/FatBeeUnlock.tres" id="24_75vtr"]
-[ext_resource type="Resource" uid="uid://c0snkp00gfbaa" path="res://upgrades/resources/StrongerBees.tres" id="25_yrpnl"]
-[ext_resource type="Resource" uid="uid://ifdcy8gtb6qx" path="res://upgrades/resources/Companionship.tres" id="29_a2873"]
-[ext_resource type="Resource" uid="uid://d3s5ypy0sppju" path="res://upgrades/resources/EvenFatter.tres" id="30_8pqeo"]
-[ext_resource type="Resource" uid="uid://gyn0few1pb2k" path="res://upgrades/resources/ForeverPresent.tres" id="31_bhyaa"]
+[ext_resource type="Script" uid="uid://cg6t6u15dxyx0" path="res://upgrades/scripts/CloverJackpotHoneyGainUO.cs" id="15_jvrcb"]
+[ext_resource type="Script" uid="uid://c8ml1ht2jj346" path="res://upgrades/scripts/RosePerEmptyNeighborHoneyGainBuffUO.cs" id="15_pmee0"]
+[ext_resource type="Script" uid="uid://crragbfhec5s2" path="res://upgrades/scripts/CloverJackpotChanceJackpotHoneyGainSetUO.cs" id="16_jvrcb"]
+[ext_resource type="Texture2D" uid="uid://cyxxlgjb7t4sa" path="res://resources/atlases/frame_purple.tres" id="18_6qo0q"]
+[ext_resource type="Script" uid="uid://eco5p6gpxqu5" path="res://upgrades/scripts/GrassCloverJackpotChanceBonusUO.cs" id="18_cte4y"]
+[ext_resource type="Script" uid="uid://b5gptt5qf7qnq" path="res://upgrades/scripts/BeekeeperEffectZoneRadiusUO.cs" id="19_upkeo"]
+[ext_resource type="Texture2D" uid="uid://dr6veu5ud1q4o" path="res://resources/atlases/frame_yellow.tres" id="20_f667q"]
+[ext_resource type="Script" uid="uid://db5tsqjg333o0" path="res://upgrades/scripts/BeekeeperEffectZoneSpeedBuffUO.cs" id="21_6qo0q"]
+[ext_resource type="Script" uid="uid://drcxuvuwf5dk3" path="res://upgrades/scripts/QueenBeeEffectZoneRadiusUO.cs" id="23_nigh1"]
+[ext_resource type="Script" uid="uid://chk64awtk8kdi" path="res://upgrades/scripts/QueenBeeEffectZoneSpeedBuffUO.cs" id="24_hbxd2"]
+[ext_resource type="Script" uid="uid://b5iugn0740237" path="res://upgrades/scripts/BeekeeperEffectZoneFadeoutTimeUO.cs" id="25_hbxd2"]
+[ext_resource type="Script" uid="uid://ng3sb3wsia6v" path="res://upgrades/scripts/BeekeeperEffectZoneNeverFade.cs" id="26_75vtr"]
+[ext_resource type="Script" uid="uid://c3emdo7qrw31g" path="res://upgrades/scripts/PoppyPollinationTimeUO.cs" id="27_75vtr"]
+[ext_resource type="Script" uid="uid://bmum0chjme3h4" path="res://resources/scale_models/ExponentialModel.cs" id="27_tcyta"]
+[ext_resource type="Script" uid="uid://bqwvwrati7y2r" path="res://upgrades/scripts/QueenBeeEffectZonePollinationTimeReductionBuffUO.cs" id="29_d6r41"]
+[ext_resource type="Script" uid="uid://h3271vl0m3x8" path="res://upgrades/scripts/HiveCapacityBeeUO.cs" id="29_vfo37"]
+[ext_resource type="Script" uid="uid://dyjcdahhyrvt8" path="res://upgrades/scripts/QueenBeeLeashRoseUO.cs" id="30_0qucf"]
+[ext_resource type="Script" uid="uid://dlo0qub5tf4ui" path="res://upgrades/scripts/QueenBeeBeePriceReductionBuffUO.cs" id="31_0qucf"]
+[ext_resource type="Script" uid="uid://tod0173ft425" path="res://upgrades/scripts/QueenBeeEffectZoneEverythingUO.cs" id="31_mdxam"]
+[ext_resource type="Script" uid="uid://dywr0eryk5vpc" path="res://upgrades/scripts/HiveCapacityBeePerBeeCasteBonusUO.cs" id="31_mqxrb"]
+[ext_resource type="Script" uid="uid://dqy55wig5fjrt" path="res://upgrades/scripts/YarrowPerSameNeighborHoneyGainBuffUO.cs" id="32_a2873"]
+[ext_resource type="Script" uid="uid://cuyp0jsj48rwu" path="res://upgrades/scripts/BeeSpeedUO.cs" id="33_1ww1q"]
+[ext_resource type="Texture2D" uid="uid://j1f1m3udivnc" path="res://resources/atlases/frame_blue.tres" id="34_25eif"]
+[ext_resource type="Script" uid="uid://ceajcjsuncn1q" path="res://upgrades/scripts/SunflowerHoneyGainHoneyCostUO.cs" id="35_5mxo5"]
+[ext_resource type="Script" uid="uid://taxmnkanoeak" path="res://upgrades/scripts/FatBeeCapacityHoneyBonusUO.cs" id="35_r2e1u"]
+[ext_resource type="Texture2D" uid="uid://dfp788lbo7pfe" path="res://assets/tilemap_cyan.png" id="37_r2e1u"]
+[ext_resource type="Script" uid="uid://w8owaql54efu" path="res://upgrades/scripts/LoamPollinationTimeReductionBuffUO.cs" id="38_rb3gu"]
+[ext_resource type="Script" uid="uid://ckjh2cg06c47x" path="res://upgrades/scripts/LoamYarrowHoneyGainBuffUO.cs" id="40_d8jsh"]
+[ext_resource type="Script" uid="uid://x76won3ygvdw" path="res://upgrades/scripts/RocketBeeIsolatedHarvestUO.cs" id="42_n8po2"]
+[ext_resource type="Script" uid="uid://dbfhk2e0slj6c" path="res://upgrades/scripts/RocketBeeSpeedBuffUO.cs" id="42_psuir"]
+[ext_resource type="Script" uid="uid://b3mr6nymxqvv5" path="res://upgrades/scripts/SunflowerHoneyGainPerFatBeeBonusUO.cs" id="43_08nwj"]
+[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="44_f3y2j"]
+[ext_resource type="Script" uid="uid://d332a5n3ju154" path="res://upgrades/scripts/FatBeeCapacityHoneySetInfiniteUO.cs" id="46_psuir"]
+[ext_resource type="Script" uid="uid://biyjiqtn4dufi" path="res://upgrades/scripts/FatBeeSpeedBuffPerRocketBeeBonusUO.cs" id="50_cpb0m"]
+[ext_resource type="Script" uid="uid://c5bpw24jk6l6y" path="res://upgrades/scripts/RocketBeeCapacityHoneyPerFatBeeBonusUO.cs" id="51_f3y2j"]
+
+[sub_resource type="Resource" id="Resource_vvd1a"]
+script = ExtResource("3_m26cu")
+Base = 25.0
+Step = 25.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_hmr6f"]
+script = ExtResource("4_dq57c")
+Name = "Poppier Poppies"
+MaxLevel = 3
+CostScaler = SubResource("Resource_vvd1a")
+FlavorText = "Poppies are poppier."
+metadata/_custom_type_script = "uid://dpgbociariu82"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cte4y"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_801hv"]
+script = ExtResource("6_c1vnt")
+Value = 100.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_e6xll"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Grass"
+Name = "Grass Tile"
+MaxLevel = 1
+CostScaler = SubResource("Resource_801hv")
+FlavorText = "Unlock [noun_grass](Grass), a [noun_tile](tile) which boosts the honey production of [noun_flower](flowers)."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2e1u"]
+atlas = ExtResource("9_25eif")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_psyav"]
+script = ExtResource("27_tcyta")
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_etfk1"]
+script = ExtResource("12_s0uq4")
+IncreaseBy = 0.1
+Name = "Natural Habitat"
+MaxLevel = 2
+CostScaler = SubResource("Resource_psyav")
+FlavorText = "[noun_poppy](Poppies) grow better on their natural habitat."
+metadata/_custom_type_script = "uid://dyusmper7s3tl"
+
+[sub_resource type="Resource" id="Resource_fnqkb"]
+script = ExtResource("3_m26cu")
+Base = 75.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_85qk5"]
+script = ExtResource("9_801hv")
+Name = "Greener On Your Side"
+MaxLevel = 3
+CostScaler = SubResource("Resource_fnqkb")
+FlavorText = "[noun_grass](Grass) is slightly greener!"
+metadata/_custom_type_script = "uid://dibxskqnfspn4"
+
+[sub_resource type="Resource" id="Resource_aneh0"]
+script = ExtResource("6_c1vnt")
+Value = 250.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_0hbup"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Rose"
+Name = "Rose"
+MaxLevel = 1
+CostScaler = SubResource("Resource_aneh0")
+FlavorText = "Unlock [noun_rose](Rose), a [noun_flower](flower) that produces more honey when isolated."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhyaa"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="Resource" id="Resource_jvrcb"]
+script = ExtResource("11_fnqkb")
+Base = 300.0
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_i2cq8"]
+script = ExtResource("12_85qk5")
+IncreaseBy = 1.0
+Name = "Hermit"
+MaxLevel = 3
+CostScaler = SubResource("Resource_jvrcb")
+FlavorText = "[noun_rose](Roses) shy away from bee-vilization."
+metadata/_custom_type_script = "uid://cux1ml5vs1tm"
+
+[sub_resource type="Resource" id="Resource_4kdt0"]
+script = ExtResource("27_tcyta")
+Base = 300.0
+Rate = 2.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_qanwl"]
+script = ExtResource("15_pmee0")
+Name = "Antisocial"
+MaxLevel = 3
+CostScaler = SubResource("Resource_4kdt0")
+FlavorText = "A [noun_queen](Queen) need no one but herself... Well maybe some hundred [noun_bee](bees) would be better..."
+metadata/_custom_type_script = "uid://c8ml1ht2jj346"
+
+[sub_resource type="Resource" id="Resource_7ix0q"]
+script = ExtResource("6_c1vnt")
+Value = 7.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_2gnkc"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Clover"
+Name = "Clover"
+MaxLevel = 1
+CostScaler = SubResource("Resource_7ix0q")
+FlavorText = "Unlock [noun_clover](clover), a [noun_flower](flower) that has a chance to produce significant honey."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmee0"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_mg5gc"]
+script = ExtResource("6_c1vnt")
+Value = 77.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_6qo0q"]
+script = ExtResource("13_85qk5")
+IncreaseBy = 0.025
+Name = "Luckier"
+MaxLevel = 3
+CostScaler = SubResource("Resource_mg5gc")
+FlavorText = "You feel luckier."
+metadata/_custom_type_script = "uid://cbtp54s86g153"
+
+[sub_resource type="Resource" id="Resource_upkeo"]
+script = ExtResource("6_c1vnt")
+Value = 777.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_f667q"]
+script = ExtResource("13_85qk5")
+IncreaseBy = 0.05
+Name = "Even Luckier"
+MaxLevel = 2
+CostScaler = SubResource("Resource_upkeo")
+FlavorText = "You feel even luckier!"
+metadata/_custom_type_script = "uid://cbtp54s86g153"
+
+[sub_resource type="Resource" id="Resource_cte4y"]
+script = ExtResource("6_c1vnt")
+Value = 777.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_nigh1"]
+script = ExtResource("14_0hbup")
+IncreaseChanceBy = -0.05
+IncreaseHoneyGainBy = 10.0
+Name = "Risky Play"
+CostScaler = SubResource("Resource_cte4y")
+FlavorText = "Do you risk it?"
+metadata/_custom_type_script = "uid://di5nnjlai4xot"
+
+[sub_resource type="Resource" id="Resource_hbxd2"]
+script = ExtResource("6_c1vnt")
+Value = 77.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_75vtr"]
+script = ExtResource("15_jvrcb")
+IncreaseBy = 3.0
+Name = "Jackpot!!!"
+MaxLevel = 2
+CostScaler = SubResource("Resource_hbxd2")
+FlavorText = "[noun_clover](Clovers)' jackpot produce more honey."
+metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
+
+[sub_resource type="Resource" id="Resource_yrpnl"]
+script = ExtResource("6_c1vnt")
+Value = 777.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_tcyta"]
+script = ExtResource("13_85qk5")
+IncreaseBy = 5.0
+Name = "Pay Day"
+MaxLevel = 2
+CostScaler = SubResource("Resource_yrpnl")
+FlavorText = "[noun_clover](Clovers) find even more honey on jackpot."
+metadata/_custom_type_script = "uid://cbtp54s86g153"
+
+[sub_resource type="Resource" id="Resource_vfo37"]
+script = ExtResource("6_c1vnt")
+Value = 7777.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_bhyaa"]
+script = ExtResource("16_jvrcb")
+SetChanceTo = 0.02
+SetHoneyGainTo = 100.0
+Name = "Final Gambit"
+MaxLevel = 1
+CostScaler = SubResource("Resource_vfo37")
+FlavorText = "All in."
+metadata/_custom_type_script = "uid://crragbfhec5s2"
+
+[sub_resource type="Resource" id="Resource_25eif"]
+script = ExtResource("6_c1vnt")
+Value = 444.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_s0uq4"]
+script = ExtResource("18_cte4y")
+Name = "Natural Habitat"
+MaxLevel = 1
+CostScaler = SubResource("Resource_25eif")
+FlavorText = "[noun_clover](Clovers) grow better on their natural habitats."
+metadata/_custom_type_script = "uid://eco5p6gpxqu5"
+
+[sub_resource type="Resource" id="Resource_pmee0"]
+script = ExtResource("3_m26cu")
+Base = 100.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_a2873"]
+script = ExtResource("19_upkeo")
+IncreaseBy = 5.0
+Name = "Spread Warmth"
+MaxLevel = 3
+CostScaler = SubResource("Resource_pmee0")
+FlavorText = "[noun_beekeeper](You) spread warmth and comfort to your [noun_bee](bees)."
+metadata/_custom_type_script = "uid://b5gptt5qf7qnq"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pqeo"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="Resource" id="Resource_8pqeo"]
+script = ExtResource("3_m26cu")
+Base = 300.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_1ww1q"]
+script = ExtResource("21_6qo0q")
+IncreaseBy = 0.05
+Name = "Smoky"
+MaxLevel = 3
+CostScaler = SubResource("Resource_8pqeo")
+FlavorText = "[noun_bee](Bees) feel more inspired to work in your presence."
+metadata/_custom_type_script = "uid://db5tsqjg333o0"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25eif"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="Resource" id="Resource_r2e1u"]
+script = ExtResource("3_m26cu")
+Base = 400.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_rb3gu"]
+script = ExtResource("21_6qo0q")
+IncreaseBy = 0.05
+Name = "Smokier"
+MaxLevel = 2
+CostScaler = SubResource("Resource_r2e1u")
+FlavorText = "[noun_bee](Bees) feel more inspired to work in your presence."
+metadata/_custom_type_script = "uid://db5tsqjg333o0"
+
+[sub_resource type="Resource" id="Resource_cjepv"]
+script = ExtResource("6_c1vnt")
+Value = 500.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_0qucf"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Queen"
+Name = "Queen Bee"
+MaxLevel = 1
+CostScaler = SubResource("Resource_cjepv")
+FlavorText = "Unlock [noun_queen](Queen bee), a [noun_bee](bee) that doesn't do work, but boost the speed of [noun_bee](bees) around it."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="Resource" id="Resource_mqxrb"]
+script = ExtResource("3_m26cu")
+Base = 500.0
+Step = 100.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_6u1sw"]
+script = ExtResource("23_nigh1")
+IncreaseBy = 5.0
+Name = "Her Domain"
+MaxLevel = 3
+CostScaler = SubResource("Resource_mqxrb")
+FlavorText = "[noun_queen](She) expands her domain."
+metadata/_custom_type_script = "uid://drcxuvuwf5dk3"
+
+[sub_resource type="Resource" id="Resource_lrw2g"]
+script = ExtResource("3_m26cu")
+Base = 500.0
+Step = 100.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_gkb3u"]
+script = ExtResource("29_d6r41")
+Name = "Her Influence"
+MaxLevel = 2
+CostScaler = SubResource("Resource_lrw2g")
+FlavorText = "[noun_queen](She) establishes her influence."
+metadata/_custom_type_script = "uid://bqwvwrati7y2r"
+
+[sub_resource type="Resource" id="Resource_5mxo5"]
+script = ExtResource("3_m26cu")
+Base = 500.0
+Step = 100.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_n8po2"]
+script = ExtResource("24_hbxd2")
+Name = "Her Will"
+MaxLevel = 3
+CostScaler = SubResource("Resource_5mxo5")
+FlavorText = "[noun_queen](She) manifests her will."
+metadata/_custom_type_script = "uid://chk64awtk8kdi"
+
+[sub_resource type="Resource" id="Resource_nal1u"]
+script = ExtResource("11_fnqkb")
+Base = 700.0
+Exponent = 1.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_mwxu3"]
+script = ExtResource("31_mdxam")
+IncreaseBeeSpeedBuffBy = 0.05
+IncreaseBeePollinationTimeReductionBuffBy = 0.05
+Name = "Matriarchy"
+CostScaler = SubResource("Resource_nal1u")
+FlavorText = "All [noun_bee](bees) shall heed her."
+metadata/_custom_type_script = "uid://tod0173ft425"
+
+[sub_resource type="Resource" id="Resource_ih80e"]
+script = ExtResource("6_c1vnt")
+Value = 600.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_bdkte"]
+script = ExtResource("30_0qucf")
+Name = "Befitting a Queen"
+MaxLevel = 1
+CostScaler = SubResource("Resource_ih80e")
+FlavorText = "[noun_queen](Queen bees) are drawn to [noun_rose](Roses) and moves towards them."
+metadata/_custom_type_script = "uid://dyjcdahhyrvt8"
+
+[sub_resource type="Resource" id="Resource_canik"]
+script = ExtResource("11_fnqkb")
+Base = 1000.0
+Exponent = 0.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_7udnn"]
+script = ExtResource("31_0qucf")
+IncreaseBy = 0.11
+Name = "Bees, Assemble!"
+MaxLevel = 9
+CostScaler = SubResource("Resource_canik")
+FlavorText = "[noun_bee](Bees) gathers at the call of their trusted [noun_queen](Queens)."
+metadata/_custom_type_script = "uid://dlo0qub5tf4ui"
+
+[sub_resource type="Resource" id="Resource_psuir"]
+script = ExtResource("3_m26cu")
+Base = 300.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_d8jsh"]
+script = ExtResource("25_hbxd2")
+IncreaseBy = 0.5
+Name = "Impression"
+MaxLevel = 3
+CostScaler = SubResource("Resource_psuir")
+FlavorText = "[noun_beekeeper](You) leave a stronger impression on [noun_bee](bees)."
+metadata/_custom_type_script = "uid://b5iugn0740237"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08nwj"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="Resource" id="Resource_d6r41"]
+script = ExtResource("3_m26cu")
+Base = 300.0
+Step = 50.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_mdxam"]
+script = ExtResource("25_hbxd2")
+Name = "Presence"
+MaxLevel = 2
+CostScaler = SubResource("Resource_d6r41")
+FlavorText = "[noun_beekeeper](Your presence lingers longer.)"
+metadata/_custom_type_script = "uid://b5iugn0740237"
+
+[sub_resource type="Resource" id="Resource_wxhmu"]
+script = ExtResource("6_c1vnt")
+Value = 1000.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_cpb0m"]
+script = ExtResource("26_75vtr")
+Name = "Always Here For You"
+MaxLevel = 1
+CostScaler = SubResource("Resource_wxhmu")
+FlavorText = "[noun_beekeeper](You) and your [noun_bee](bees) have an inseparable bond."
+metadata/_custom_type_script = "uid://ng3sb3wsia6v"
+
+[sub_resource type="Resource" id="Resource_f3y2j"]
+script = ExtResource("27_tcyta")
+Base = 50.0
+Rate = 2.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_08nwj"]
+script = ExtResource("27_75vtr")
+Name = "Hurry Up"
+MaxLevel = 5
+CostScaler = SubResource("Resource_f3y2j")
+FlavorText = "[noun_poppy](Poppies) pollinate faster."
+metadata/_custom_type_script = "uid://c3emdo7qrw31g"
+
+[sub_resource type="Resource" id="Resource_s6d4w"]
+script = ExtResource("6_c1vnt")
+Value = 200.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_knk3e"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Sunflower"
+Name = "Sunflower"
+MaxLevel = 1
+CostScaler = SubResource("Resource_s6d4w")
+FlavorText = "Unlock [noun_sunflower](Sunflowers), a [noun_flower](flower) that costs more but produces more."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qanwl"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="Resource" id="Resource_q2lbx"]
+script = ExtResource("11_fnqkb")
+Base = 150.0
+Exponent = 0.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_wg08u"]
+script = ExtResource("35_5mxo5")
+Name = "Might of The Sun"
+MaxLevel = 3
+CostScaler = SubResource("Resource_q2lbx")
+FlavorText = "[noun_sunflower](Sunflowers) costs more, but also produce more."
+metadata/_custom_type_script = "uid://ceajcjsuncn1q"
+
+[sub_resource type="Resource" id="Resource_1fl7q"]
+script = ExtResource("11_fnqkb")
+Base = 100.0
+Exponent = 1.1
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_x7h8b"]
+script = ExtResource("29_vfo37")
+Name = "Spacious Hives"
+MaxLevel = 5
+CostScaler = SubResource("Resource_1fl7q")
+FlavorText = "[noun_hive](Hives) are more spacious!"
+metadata/_custom_type_script = "uid://h3271vl0m3x8"
+
+[sub_resource type="Resource" id="Resource_sbyyp"]
+script = ExtResource("11_fnqkb")
+Base = 600.0
+Exponent = 0.3
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_bowu7"]
+script = ExtResource("29_vfo37")
+IncreaseBy = 2
+Name = "Squeeze More In"
+MaxLevel = 3
+CostScaler = SubResource("Resource_sbyyp")
+FlavorText = "With some planning, you can squeeze a few more [noun_bee](bees) into these [noun_hive](hives)."
+metadata/_custom_type_script = "uid://h3271vl0m3x8"
+
+[sub_resource type="Resource" id="Resource_0akw4"]
+script = ExtResource("27_tcyta")
+Base = 1000.0
+Rate = 0.2
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_4ebyn"]
+script = ExtResource("31_mqxrb")
+Name = "Metropolis"
+MaxLevel = 3
+CostScaler = SubResource("Resource_0akw4")
+metadata/_custom_type_script = "uid://dywr0eryk5vpc"
+
+[sub_resource type="Resource" id="Resource_3aonl"]
+script = ExtResource("6_c1vnt")
+Value = 130.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_fyt5j"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Yarrow"
+Name = "Yarrow"
+MaxLevel = 1
+CostScaler = SubResource("Resource_3aonl")
+FlavorText = "Unlock [noun_yarrow](Yarrow), a [noun_flower](flower) that produces money the more of its kind is around."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vfo37"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="Resource" id="Resource_ny6u4"]
+script = ExtResource("11_fnqkb")
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_2kffd"]
+script = ExtResource("32_a2873")
+Name = "Companionship"
+MaxLevel = 3
+CostScaler = SubResource("Resource_ny6u4")
+FlavorText = "[noun_yarrow](Yarrows) enjoy each other's company."
+metadata/_custom_type_script = "uid://dqy55wig5fjrt"
+
+[sub_resource type="Resource" id="Resource_ty7u1"]
+script = ExtResource("40_d8jsh")
+Name = "Natural Habitat"
+FlavorText = "[noun_yarrow](Yarrows) grow better on their natural habitat."
+metadata/_custom_type_script = "uid://ckjh2cg06c47x"
+
+[sub_resource type="Resource" id="Resource_iy5no"]
+script = ExtResource("11_fnqkb")
+Base = 30.0
+Exponent = 1.8
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_780k2"]
+script = ExtResource("33_1ww1q")
+Name = "Zoom Zoom"
+MaxLevel = 10
+CostScaler = SubResource("Resource_iy5no")
+metadata/_custom_type_script = "uid://cuyp0jsj48rwu"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty56o"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="Resource" id="Resource_nprm6"]
+script = ExtResource("11_fnqkb")
+Base = 30.0
+Exponent = 1.9
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_nt58m"]
+script = ExtResource("44_f3y2j")
+Name = "Honey Hungry"
+MaxLevel = 10
+CostScaler = SubResource("Resource_nprm6")
+metadata/_custom_type_script = "uid://hno7niifmwh"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ww1q"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="Resource" id="Resource_vml0s"]
+script = ExtResource("6_c1vnt")
+Value = 400.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_aauu0"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Fat"
+Name = "Fat bee"
+MaxLevel = 1
+CostScaler = SubResource("Resource_vml0s")
+FlavorText = "Unlock [noun_fat](Fat bee), a caste of [noun_bee](bees) that can carry significant honey, but slow."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="Resource" id="Resource_ty56o"]
+script = ExtResource("3_m26cu")
+Base = 400.0
+Step = 150.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_ciphy"]
+script = ExtResource("35_r2e1u")
+Name = "Even Fatter Fat Bees"
+MaxLevel = 3
+CostScaler = SubResource("Resource_ty56o")
+metadata/_custom_type_script = "uid://taxmnkanoeak"
+
+[sub_resource type="Resource" id="Resource_p45vh"]
+script = ExtResource("27_tcyta")
+Base = 300.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_utg4q"]
+script = ExtResource("43_08nwj")
+Name = "Giantism"
+MaxLevel = 5
+CostScaler = SubResource("Resource_p45vh")
+FlavorText = "[noun_sunflower](Sunflowers) and [noun_fat](Fat bees) form the \"Gigantic club\" where they can be big together."
+metadata/_custom_type_script = "uid://b3mr6nymxqvv5"
+
+[sub_resource type="Resource" id="Resource_8ldxa"]
+script = ExtResource("6_c1vnt")
+Value = 400.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_ref67"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Rocket"
+Name = "Jetpack Bee"
+MaxLevel = 1
+CostScaler = SubResource("Resource_8ldxa")
+FlavorText = "Unlock [noun_rocket](Rocket bee), a caste of [noun_bee](bees) that charges before launching to their target destination."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="Resource" id="Resource_1pdsp"]
+script = ExtResource("3_m26cu")
+Base = 500.0
+Step = 100.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
+
+[sub_resource type="Resource" id="Resource_w0s8b"]
+script = ExtResource("42_psuir")
+IncreaseBy = 0.1
+Name = "Improved Jetpack Suits"
+MaxLevel = 3
+CostScaler = SubResource("Resource_1pdsp")
+FlavorText = "[noun_rocket](Jetpack bees)' jetpacks use honey particle accelerators to speed themselves up."
+metadata/_custom_type_script = "uid://dbfhk2e0slj6c"
+
+[sub_resource type="Resource" id="Resource_j2nm1"]
+script = ExtResource("6_c1vnt")
+Value = 300.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_c4cow"]
+script = ExtResource("42_n8po2")
+Name = "Fly to the Rescue!"
+MaxLevel = 1
+CostScaler = SubResource("Resource_j2nm1")
+FlavorText = "[noun_rocket](Jetpack bees) fly to [noun_flower](flowers)' rescue!"
+metadata/_custom_type_script = "uid://x76won3ygvdw"
+
+[sub_resource type="Resource" id="Resource_fqokv"]
+script = ExtResource("6_c1vnt")
+Value = 100.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_uqu33"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Loam"
+Name = "Loam Tile"
+MaxLevel = 1
+CostScaler = SubResource("Resource_fqokv")
+FlavorText = "Unlock [noun_loam](Loam), a [noun_tile](tile) that speeds up pollination time of [noun_flower](flowers)."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb3gu"]
+atlas = ExtResource("37_r2e1u")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="Resource" id="Resource_vj0ng"]
+script = ExtResource("38_rb3gu")
+Name = "Smoother Soil"
+MaxLevel = 3
+metadata/_custom_type_script = "uid://w8owaql54efu"
+
+[sub_resource type="Resource" id="Resource_qkssm"]
+script = ExtResource("11_fnqkb")
+Base = 600.0
+Exponent = 1.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_0kuy1"]
+script = ExtResource("50_cpb0m")
+Name = "Shared Swiftness"
+MaxLevel = 3
+CostScaler = SubResource("Resource_qkssm")
+FlavorText = "[noun_fat](Fat bees) are jealous of the [noun_rocket](Jetpack bees') cool jetpacks, and decides to move faster."
+metadata/_custom_type_script = "uid://biyjiqtn4dufi"
+
+[sub_resource type="Resource" id="Resource_wnxhy"]
+script = ExtResource("11_fnqkb")
+Base = 600.0
+Exponent = 1.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
+
+[sub_resource type="Resource" id="Resource_fp4lt"]
+script = ExtResource("51_f3y2j")
+Name = "Shared Strength"
+MaxLevel = 3
+CostScaler = SubResource("Resource_wnxhy")
+FlavorText = "[noun_rocket](Jetpack bees) are in awe of the strength of [noun_fat](Fat bees) and decide to work harder."
+metadata/_custom_type_script = "uid://c5bpw24jk6l6y"
+
+[sub_resource type="Resource" id="Resource_m02lh"]
+script = ExtResource("6_c1vnt")
+Value = 1000.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_q7055"]
+script = ExtResource("46_psuir")
+Name = "Infinite Gluttony"
+MaxLevel = 1
+CostScaler = SubResource("Resource_m02lh")
+FlavorText = "No amount of honey can satisfy the [noun_fat](Fat bees)' hunger."
+metadata/_custom_type_script = "uid://d332a5n3ju154"
+
+[sub_resource type="Resource" id="Resource_fk1kx"]
+script = ExtResource("6_c1vnt")
+Value = 10000.0
+metadata/_custom_type_script = "uid://bbl6u512llin"
+
+[sub_resource type="Resource" id="Resource_eag0h"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Rainbow"
+Name = "Rainbow"
+MaxLevel = 1
+CostScaler = SubResource("Resource_fk1kx")
+FlavorText = "Win the game. Doesn't do anything yet."
+metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_wyc47")
 
-[node name="BeekeepersWarmth" parent="." unique_id=643946242 instance=ExtResource("2_5s8lu")]
-position = Vector2(-64, -64)
-UpgradeResource = ExtResource("3_ea44d")
-
-[node name="Button" parent="BeekeepersWarmth" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
-
-[node name="MoreSmoke" parent="." unique_id=566355151 instance=ExtResource("2_5s8lu")]
-position = Vector2(-160, -96)
-UpgradeResource = ExtResource("4_dq57c")
-Dependencies = {
-NodePath("../BeekeepersWarmth"): 1
-}
-
-[node name="Button" parent="MoreSmoke" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
-
-[node name="FasterBees" parent="." unique_id=186426185 instance=ExtResource("2_5s8lu")]
-position = Vector2(64, 64)
-UpgradeResource = ExtResource("4_m26cu")
-
-[node name="Button" parent="FasterBees" index="0" unique_id=2079804154]
-texture_normal = ExtResource("7_rb3gu")
-
-[node name="LingeringHeat" parent="." unique_id=1741055249 instance=ExtResource("2_5s8lu")]
-position = Vector2(-96, -160)
-UpgradeResource = ExtResource("6_vvd1a")
-Dependencies = {
-NodePath("../BeekeepersWarmth"): 1
-}
-
-[node name="Button" parent="LingeringHeat" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
-
-[node name="BiggerHives" parent="." unique_id=1469398106 instance=ExtResource("2_5s8lu")]
-position = Vector2(-64, 64)
-UpgradeResource = ExtResource("7_hmr6f")
-
-[node name="Button" parent="BiggerHives" index="0" unique_id=2079804154]
-texture_normal = ExtResource("10_s0uq4")
-
-[node name="EvenBiggerHives" parent="." unique_id=1828218091 instance=ExtResource("2_5s8lu")]
-position = Vector2(-96, 168)
-UpgradeResource = ExtResource("8_vfo37")
-Dependencies = {
-NodePath("../BiggerHives"): 3
-}
-
-[node name="Button" parent="EvenBiggerHives" index="0" unique_id=2079804154]
-texture_normal = ExtResource("10_s0uq4")
-
-[node name="PoppyHoneyGain" parent="." unique_id=794909826 instance=ExtResource("2_5s8lu")]
+[node name="PoppierPoppies" parent="." unique_id=643946242 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, -64)
-UpgradeResource = ExtResource("15_0hbup")
+UpgradeResource = SubResource("Resource_hmr6f")
+Icon = SubResource("AtlasTexture_cte4y")
+Frame = ExtResource("13_cjepv")
 
-[node name="Button" parent="PoppyHoneyGain" index="0" unique_id=2079804154]
-texture_normal = ExtResource("13_cjepv")
-
-[node name="QueenBeeUnlock" parent="." unique_id=2075505310 instance=ExtResource("2_5s8lu")]
-position = Vector2(-128, -256)
-UpgradeResource = ExtResource("8_ftddy")
-Dependencies = {
-NodePath("../LingeringHeat"): 1
-}
-
-[node name="Button" parent="QueenBeeUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="QueenDomain" parent="." unique_id=1929618191 instance=ExtResource("2_5s8lu")]
-position = Vector2(-168, -360)
-UpgradeResource = ExtResource("9_801hv")
-Dependencies = {
-NodePath("../QueenBeeUnlock"): 1
-}
-
-[node name="Button" parent="QueenDomain" index="0" unique_id=2079804154]
-texture_normal = ExtResource("17_mqxrb")
-
-[node name="QueenInfluence" parent="." unique_id=210527737 instance=ExtResource("2_5s8lu")]
-position = Vector2(-240, -280)
-UpgradeResource = ExtResource("10_801hv")
-Dependencies = {
-NodePath("../QueenBeeUnlock"): 1
-}
-
-[node name="Button" parent="QueenInfluence" index="0" unique_id=2079804154]
-texture_normal = ExtResource("17_mqxrb")
-
-[node name="GrassUnlock" parent="." unique_id=1038166430 instance=ExtResource("2_5s8lu")]
+[node name="GrassUnlock" parent="." unique_id=976079663 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, -160)
-UpgradeResource = ExtResource("11_85qk5")
+UpgradeResource = SubResource("Resource_e6xll")
+Icon = SubResource("AtlasTexture_r2e1u")
+Frame = ExtResource("15_0qucf")
 Dependencies = {
-NodePath("../PoppyHoneyGain"): 1
+NodePath("../PoppierPoppies"): 2
 }
 
-[node name="Button" parent="GrassUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="RoseUnlock" parent="." unique_id=1629871011 instance=ExtResource("2_5s8lu")]
-position = Vector2(64, -360)
-UpgradeResource = ExtResource("12_i2cq8")
+[node name="NaturalHabitatPoppy" parent="." unique_id=561524672 instance=ExtResource("2_5s8lu")]
+position = Vector2(0, -192)
+UpgradeResource = SubResource("Resource_etfk1")
+Frame = ExtResource("10_s0uq4")
 Dependencies = {
-NodePath("../RicherSoil"): 1
+NodePath("../PoppierPoppies"): 3,
+NodePath("../GrassUnlock"): 1
 }
 
-[node name="Button" parent="RoseUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="Hermit" parent="." unique_id=572078627 instance=ExtResource("2_5s8lu")]
-position = Vector2(128, -440)
-UpgradeResource = ExtResource("15_bhyaa")
-Dependencies = {
-NodePath("../RoseUnlock"): 1
-}
-
-[node name="Button" parent="Hermit" index="0" unique_id=2079804154]
-texture_normal = ExtResource("13_cjepv")
-
-[node name="LoamUnlock" parent="." unique_id=1819179591 instance=ExtResource("2_5s8lu")]
-position = Vector2(120, 136)
-UpgradeResource = ExtResource("12_aneh0")
-Dependencies = {
-NodePath("../FasterBees"): 1
-}
-
-[node name="Button" parent="LoamUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="SunflowerUnlock" parent="." unique_id=2125705417 instance=ExtResource("2_5s8lu")]
-position = Vector2(184, -112)
-UpgradeResource = ExtResource("13_0hbup")
-Dependencies = {
-NodePath("../PoppyHoneyGain"): 1
-}
-
-[node name="Button" parent="SunflowerUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="YarrowUnlock" parent="." unique_id=50690724 instance=ExtResource("2_5s8lu")]
-position = Vector2(-176, 112)
-UpgradeResource = ExtResource("14_aneh0")
-Dependencies = {
-NodePath("../BiggerHives"): 1
-}
-
-[node name="Button" parent="YarrowUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="RocketBeeUnlock" parent="." unique_id=1662745710 instance=ExtResource("2_5s8lu")]
-position = Vector2(48, 184)
-UpgradeResource = ExtResource("17_7ix0q")
-Dependencies = {
-NodePath("../FasterBees"): 3
-}
-
-[node name="Button" parent="RocketBeeUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="BetterRockets" parent="." unique_id=1485839207 instance=ExtResource("2_5s8lu")]
-position = Vector2(24, 296)
-UpgradeResource = ExtResource("20_pmee0")
-Dependencies = {
-NodePath("../RocketBeeUnlock"): 1
-}
-
-[node name="Button" parent="BetterRockets" index="0" unique_id=2079804154]
-texture_normal = ExtResource("7_rb3gu")
-
-[node name="RicherSoil" parent="." unique_id=1856909311 instance=ExtResource("2_5s8lu")]
+[node name="GreenerOnYourSide" parent="." unique_id=14557379 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, -256)
-UpgradeResource = ExtResource("16_jvrcb")
+UpgradeResource = SubResource("Resource_85qk5")
+Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../GrassUnlock"): 1
 }
 
-[node name="Button" parent="RicherSoil" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
-
-[node name="CloverUnlock" parent="." unique_id=1298874907 instance=ExtResource("2_5s8lu")]
-position = Vector2(160, -192)
-UpgradeResource = ExtResource("19_mg5gc")
+[node name="RoseUnlock" parent="." unique_id=1453335679 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, -352)
+UpgradeResource = SubResource("Resource_0hbup")
+Icon = SubResource("AtlasTexture_bhyaa")
+Frame = ExtResource("15_0qucf")
 Dependencies = {
-NodePath("../PoppyHoneyGain"): 2
+NodePath("../GreenerOnYourSide"): 1
 }
 
-[node name="Button" parent="CloverUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
+[node name="Hermit" parent="." unique_id=821325284 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, -448)
+UpgradeResource = SubResource("Resource_i2cq8")
+Frame = ExtResource("13_cjepv")
+Dependencies = {
+NodePath("../RoseUnlock"): 1
+}
 
-[node name="SunflowerMight" parent="." unique_id=155141683 instance=ExtResource("2_5s8lu")]
-position = Vector2(296, -160)
-UpgradeResource = ExtResource("20_6qo0q")
+[node name="Antisocial" parent="." unique_id=1088708515 instance=ExtResource("2_5s8lu")]
+position = Vector2(128, -448)
+UpgradeResource = SubResource("Resource_qanwl")
+Frame = ExtResource("13_cjepv")
+Dependencies = {
+NodePath("../RoseUnlock"): 1
+}
+
+[node name="CloverUnlock" parent="." unique_id=853699678 instance=ExtResource("2_5s8lu")]
+position = Vector2(128, -128)
+UpgradeResource = SubResource("Resource_2gnkc")
+Icon = SubResource("AtlasTexture_pmee0")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../PoppierPoppies"): 3
+}
+
+[node name="Luckier" parent="." unique_id=2094320003 instance=ExtResource("2_5s8lu")]
+position = Vector2(160, -224)
+UpgradeResource = SubResource("Resource_6qo0q")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../CloverUnlock"): 1
+}
+
+[node name="EvenLuckier" parent="." unique_id=1056437387 instance=ExtResource("2_5s8lu")]
+position = Vector2(224, -288)
+UpgradeResource = SubResource("Resource_f667q")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../Luckier"): 3
+}
+
+[node name="RiskyPlay" parent="." unique_id=2107240654 instance=ExtResource("2_5s8lu")]
+position = Vector2(288, -352)
+UpgradeResource = SubResource("Resource_nigh1")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../EvenLuckier"): 1
+}
+
+[node name="Jackpot" parent="." unique_id=1673654890 instance=ExtResource("2_5s8lu")]
+position = Vector2(224, -160)
+UpgradeResource = SubResource("Resource_75vtr")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../CloverUnlock"): 1
+}
+
+[node name="PayDay" parent="." unique_id=517944291 instance=ExtResource("2_5s8lu")]
+position = Vector2(288, -224)
+UpgradeResource = SubResource("Resource_tcyta")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../Jackpot"): 2
+}
+
+[node name="FinalGambit" parent="." unique_id=169950039 instance=ExtResource("2_5s8lu")]
+position = Vector2(384, -384)
+UpgradeResource = SubResource("Resource_bhyaa")
+Frame = ExtResource("10_s0uq4")
+Dependencies = {
+NodePath("../RiskyPlay"): 1,
+NodePath("../PayDay"): 2
+}
+
+[node name="NaturalHabitatClover" parent="." unique_id=1775325875 instance=ExtResource("2_5s8lu")]
+position = Vector2(128, -320)
+UpgradeResource = SubResource("Resource_s0uq4")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../CloverUnlock"): 1,
+NodePath("../GrassUnlock"): 1
+}
+
+[node name="SpreadWarmth" parent="." unique_id=1225162421 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, -64)
+UpgradeResource = SubResource("Resource_a2873")
+Icon = SubResource("AtlasTexture_8pqeo")
+Frame = ExtResource("20_f667q")
+
+[node name="Smoky" parent="." unique_id=1927796953 instance=ExtResource("2_5s8lu")]
+position = Vector2(-96, -160)
+UpgradeResource = SubResource("Resource_1ww1q")
+Icon = SubResource("AtlasTexture_25eif")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../SpreadWarmth"): 1
+}
+
+[node name="Smokier" parent="." unique_id=122659255 instance=ExtResource("2_5s8lu")]
+position = Vector2(-160, -224)
+UpgradeResource = SubResource("Resource_rb3gu")
+Icon = SubResource("AtlasTexture_25eif")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../Smoky"): 1
+}
+
+[node name="QueenUnlock" parent="." unique_id=1554209836 instance=ExtResource("2_5s8lu")]
+position = Vector2(-96, -288)
+UpgradeResource = SubResource("Resource_0qucf")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../Smoky"): 2
+}
+
+[node name="HerDomain" parent="." unique_id=312378780 instance=ExtResource("2_5s8lu")]
+position = Vector2(-32, -384)
+UpgradeResource = SubResource("Resource_6u1sw")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../QueenUnlock"): 1
+}
+
+[node name="HerInfluence" parent="." unique_id=2076750553 instance=ExtResource("2_5s8lu")]
+position = Vector2(-96, -384)
+UpgradeResource = SubResource("Resource_gkb3u")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../QueenUnlock"): 1
+}
+
+[node name="HerWill" parent="." unique_id=1117817270 instance=ExtResource("2_5s8lu")]
+position = Vector2(-160, -384)
+UpgradeResource = SubResource("Resource_n8po2")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../QueenUnlock"): 1
+}
+
+[node name="Matriarchy" parent="." unique_id=1796947850 instance=ExtResource("2_5s8lu")]
+position = Vector2(-96, -448)
+UpgradeResource = SubResource("Resource_mwxu3")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../HerDomain"): 2,
+NodePath("../HerWill"): 2,
+NodePath("../HerInfluence"): 2
+}
+
+[node name="BefittingAQueen" parent="." unique_id=1975943554 instance=ExtResource("2_5s8lu")]
+position = Vector2(0, -448)
+UpgradeResource = SubResource("Resource_bdkte")
+Frame = ExtResource("13_cjepv")
+Dependencies = {
+NodePath("../RoseUnlock"): 1,
+NodePath("../HerDomain"): 1
+}
+
+[node name="BeesAssemble" parent="." unique_id=1042474054 instance=ExtResource("2_5s8lu")]
+position = Vector2(-256, -416)
+UpgradeResource = SubResource("Resource_7udnn")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../Smokier"): 1,
+NodePath("../HerWill"): 1
+}
+
+[node name="Impression" parent="." unique_id=406646144 instance=ExtResource("2_5s8lu")]
+position = Vector2(-160, -96)
+UpgradeResource = SubResource("Resource_d8jsh")
+Icon = SubResource("AtlasTexture_08nwj")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../SpreadWarmth"): 1
+}
+
+[node name="Presence" parent="." unique_id=1898350136 instance=ExtResource("2_5s8lu")]
+position = Vector2(-224, -160)
+UpgradeResource = SubResource("Resource_mdxam")
+Icon = SubResource("AtlasTexture_08nwj")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../Impression"): 3
+}
+
+[node name="AlwaysHereForYou" parent="." unique_id=1477787691 instance=ExtResource("2_5s8lu")]
+position = Vector2(-256, -256)
+UpgradeResource = SubResource("Resource_cpb0m")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../Smokier"): 2,
+NodePath("../Presence"): 2
+}
+
+[node name="HurryUp" parent="." unique_id=1852617575 instance=ExtResource("2_5s8lu")]
+position = Vector2(160, -64)
+UpgradeResource = SubResource("Resource_08nwj")
+Frame = ExtResource("13_cjepv")
+Dependencies = {
+NodePath("../PoppierPoppies"): 1
+}
+
+[node name="SunflowerUnlock" parent="." unique_id=1510599499 instance=ExtResource("2_5s8lu")]
+position = Vector2(256, -64)
+UpgradeResource = SubResource("Resource_knk3e")
+Icon = SubResource("AtlasTexture_qanwl")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../HurryUp"): 2
+}
+
+[node name="MightOfTheSun" parent="." unique_id=1260614183 instance=ExtResource("2_5s8lu")]
+position = Vector2(352, -64)
+UpgradeResource = SubResource("Resource_wg08u")
+Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../SunflowerUnlock"): 1
 }
 
-[node name="Button" parent="SunflowerMight" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
+[node name="SpaciousHives" parent="." unique_id=1704045994 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, 64)
+UpgradeResource = SubResource("Resource_x7h8b")
+Frame = ExtResource("20_f667q")
 
-[node name="SmootherSoil" parent="." unique_id=712668215 instance=ExtResource("2_5s8lu")]
-position = Vector2(184, 192)
-UpgradeResource = ExtResource("21_6qo0q")
+[node name="SqueezeMoreIn" parent="." unique_id=31183738 instance=ExtResource("2_5s8lu")]
+position = Vector2(-160, 64)
+UpgradeResource = SubResource("Resource_bowu7")
+Frame = ExtResource("20_f667q")
 Dependencies = {
-NodePath("../LoamUnlock"): 1
+NodePath("../SpaciousHives"): 2
 }
 
-[node name="Button" parent="SmootherSoil" index="0" unique_id=2079804154]
-texture_normal = ExtResource("10_s0uq4")
-
-[node name="Luckier" parent="." unique_id=544815968 instance=ExtResource("2_5s8lu")]
-position = Vector2(176, -288)
-UpgradeResource = ExtResource("22_nigh1")
+[node name="Metropolis" parent="." unique_id=2096160037 instance=ExtResource("2_5s8lu")]
+position = Vector2(-224, 128)
+UpgradeResource = SubResource("Resource_4ebyn")
+Frame = ExtResource("18_6qo0q")
 Dependencies = {
-NodePath("../CloverUnlock"): 1
+NodePath("../SqueezeMoreIn"): 3
 }
 
-[node name="Button" parent="Luckier" index="0" unique_id=2079804154]
-texture_normal = ExtResource("10_s0uq4")
-
-[node name="JacpotSize" parent="." unique_id=1482449222 instance=ExtResource("2_5s8lu")]
-position = Vector2(248, -232)
-UpgradeResource = ExtResource("23_hbxd2")
+[node name="YarrowUnlock" parent="." unique_id=1539636078 instance=ExtResource("2_5s8lu")]
+position = Vector2(-64, 160)
+UpgradeResource = SubResource("Resource_fyt5j")
+Icon = SubResource("AtlasTexture_vfo37")
+Frame = ExtResource("15_0qucf")
 Dependencies = {
-NodePath("../CloverUnlock"): 1
+NodePath("../SpaciousHives"): 1
 }
 
-[node name="Button" parent="JacpotSize" index="0" unique_id=2079804154]
-texture_normal = ExtResource("10_s0uq4")
-
-[node name="StrongerBees" parent="." unique_id=1683108842 instance=ExtResource("2_5s8lu")]
-position = Vector2(176, 64)
-UpgradeResource = ExtResource("25_yrpnl")
-Dependencies = {
-NodePath("../FasterBees"): 1
-}
-
-[node name="Button" parent="StrongerBees" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
-
-[node name="FatBeeUnlock" parent="." unique_id=479492664 instance=ExtResource("2_5s8lu")]
-position = Vector2(272, 72)
-UpgradeResource = ExtResource("24_75vtr")
-Dependencies = {
-NodePath("../StrongerBees"): 2
-}
-
-[node name="Button" parent="FatBeeUnlock" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
-
-[node name="Companionship" parent="." unique_id=435224001 instance=ExtResource("2_5s8lu")]
-position = Vector2(-280, 168)
-UpgradeResource = ExtResource("29_a2873")
+[node name="Companionship" parent="." unique_id=1311351367 instance=ExtResource("2_5s8lu")]
+position = Vector2(-128, 224)
+UpgradeResource = SubResource("Resource_2kffd")
+Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../YarrowUnlock"): 1
 }
 
-[node name="Button" parent="Companionship" index="0" unique_id=2079804154]
-texture_normal = ExtResource("17_mqxrb")
-
-[node name="EvenFatter" parent="." unique_id=1321971329 instance=ExtResource("2_5s8lu")]
-position = Vector2(360, 96)
-UpgradeResource = ExtResource("30_8pqeo")
+[node name="NaturalHabitatYarrow" parent="." unique_id=670405780 instance=ExtResource("2_5s8lu")]
+position = Vector2(0, 224)
+UpgradeResource = SubResource("Resource_ty7u1")
+Frame = ExtResource("10_s0uq4")
 Dependencies = {
-NodePath("../FatBeeUnlock"): 1
+NodePath("../YarrowUnlock"): 1,
+NodePath("../LoamUnlock"): 1
 }
 
-[node name="Button" parent="EvenFatter" index="0" unique_id=2079804154]
-texture_normal = ExtResource("4_r2e1u")
+[node name="ZoomZoom" parent="." unique_id=1521326801 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, 64)
+UpgradeResource = SubResource("Resource_780k2")
+Icon = SubResource("AtlasTexture_ty56o")
+Frame = ExtResource("34_25eif")
 
-[node name="ForeverPresent" parent="." unique_id=2091175823 instance=ExtResource("2_5s8lu")]
-position = Vector2(-200, -200)
-UpgradeResource = ExtResource("31_bhyaa")
+[node name="HoneyHungry" parent="." unique_id=1269962501 instance=ExtResource("2_5s8lu")]
+position = Vector2(160, 64)
+UpgradeResource = SubResource("Resource_nt58m")
+Icon = SubResource("AtlasTexture_1ww1q")
+Frame = ExtResource("20_f667q")
 Dependencies = {
-NodePath("../LingeringHeat"): 3,
-NodePath("../MoreSmoke"): 3
+NodePath("../ZoomZoom"): 1
 }
 
-[node name="Button" parent="ForeverPresent" index="0" unique_id=2079804154]
-texture_normal = ExtResource("17_mqxrb")
+[node name="FatUnlock" parent="." unique_id=918634065 instance=ExtResource("2_5s8lu")]
+position = Vector2(256, 64)
+UpgradeResource = SubResource("Resource_aauu0")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../HoneyHungry"): 1
+}
 
-[node name="UpgradeNode" parent="." unique_id=743070016 instance=ExtResource("2_5s8lu")]
+[node name="EvenFatterFatBees" parent="." unique_id=1492197151 instance=ExtResource("2_5s8lu")]
+position = Vector2(352, 64)
+UpgradeResource = SubResource("Resource_ciphy")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../FatUnlock"): 1
+}
 
-[node name="Button" parent="UpgradeNode" index="0" unique_id=2079804154]
-texture_normal = ExtResource("15_0qucf")
+[node name="Gigantism" parent="." unique_id=315478389 instance=ExtResource("2_5s8lu")]
+position = Vector2(416, 0)
+UpgradeResource = SubResource("Resource_utg4q")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../EvenFatterFatBees"): 1,
+NodePath("../MightOfTheSun"): 1
+}
 
-[editable path="BeekeepersWarmth"]
-[editable path="MoreSmoke"]
-[editable path="FasterBees"]
-[editable path="LingeringHeat"]
-[editable path="BiggerHives"]
-[editable path="EvenBiggerHives"]
-[editable path="PoppyHoneyGain"]
-[editable path="QueenBeeUnlock"]
-[editable path="QueenDomain"]
-[editable path="QueenInfluence"]
-[editable path="GrassUnlock"]
-[editable path="RoseUnlock"]
-[editable path="Hermit"]
-[editable path="LoamUnlock"]
-[editable path="SunflowerUnlock"]
-[editable path="YarrowUnlock"]
-[editable path="RocketBeeUnlock"]
-[editable path="BetterRockets"]
-[editable path="RicherSoil"]
-[editable path="CloverUnlock"]
-[editable path="SunflowerMight"]
-[editable path="SmootherSoil"]
-[editable path="Luckier"]
-[editable path="JacpotSize"]
-[editable path="StrongerBees"]
-[editable path="FatBeeUnlock"]
-[editable path="Companionship"]
-[editable path="EvenFatter"]
-[editable path="ForeverPresent"]
-[editable path="UpgradeNode"]
+[node name="JetpackUnlock" parent="." unique_id=61094089 instance=ExtResource("2_5s8lu")]
+position = Vector2(128, 128)
+UpgradeResource = SubResource("Resource_ref67")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../ZoomZoom"): 3
+}
+
+[node name="ImprovedJetpackSuits" parent="." unique_id=1623868635 instance=ExtResource("2_5s8lu")]
+position = Vector2(192, 192)
+UpgradeResource = SubResource("Resource_w0s8b")
+Frame = ExtResource("34_25eif")
+Dependencies = {
+NodePath("../JetpackUnlock"): 1
+}
+
+[node name="FlyToTheRescue" parent="." unique_id=1093825238 instance=ExtResource("2_5s8lu")]
+position = Vector2(192, 288)
+UpgradeResource = SubResource("Resource_c4cow")
+Frame = ExtResource("34_25eif")
+Dependencies = {
+NodePath("../ImprovedJetpackSuits"): 3
+}
+
+[node name="LoamUnlock" parent="." unique_id=726821013 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, 160)
+UpgradeResource = SubResource("Resource_uqu33")
+Icon = SubResource("AtlasTexture_rb3gu")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../ZoomZoom"): 2
+}
+
+[node name="SmootherSoil" parent="." unique_id=403043899 instance=ExtResource("2_5s8lu")]
+position = Vector2(64, 256)
+UpgradeResource = SubResource("Resource_vj0ng")
+Frame = ExtResource("34_25eif")
+Dependencies = {
+NodePath("../LoamUnlock"): 1
+}
+
+[node name="SharedSwiftness" parent="." unique_id=107396499 instance=ExtResource("2_5s8lu")]
+position = Vector2(384, 128)
+UpgradeResource = SubResource("Resource_0kuy1")
+Frame = ExtResource("34_25eif")
+Dependencies = {
+NodePath("../JetpackUnlock"): 1,
+NodePath("../EvenFatterFatBees"): 2
+}
+
+[node name="SharedStrength" parent="." unique_id=171551504 instance=ExtResource("2_5s8lu")]
+position = Vector2(288, 192)
+UpgradeResource = SubResource("Resource_fp4lt")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../ImprovedJetpackSuits"): 2,
+NodePath("../FatUnlock"): 1
+}
+
+[node name="InfiniteGluttony" parent="." unique_id=938309548 instance=ExtResource("2_5s8lu")]
+position = Vector2(448, 64)
+UpgradeResource = SubResource("Resource_q7055")
+Frame = ExtResource("20_f667q")
+Dependencies = {
+NodePath("../EvenFatterFatBees"): 3
+}
+
+[node name="Rainbow" parent="." unique_id=1770383304 instance=ExtResource("2_5s8lu")]
+UpgradeResource = SubResource("Resource_eag0h")
+Frame = ExtResource("15_0qucf")

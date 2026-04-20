@@ -33,7 +33,7 @@ public partial class BeeSystem : GameSystem
 
     public override void _Ready()
     {
-        SignalBus.Instance.GameLoaded += SpawnFromSave;
+        SignalBus.Instance.GridLoaded += SpawnFromSave;
         SignalBus.Instance.GridObjectRemoved += OnGridObjectRemoved;
     }
 
@@ -52,6 +52,12 @@ public partial class BeeSystem : GameSystem
             IBeeJob? job = bee.SelectJob(bee, pollinatedFlowers, unpollinatedFlowers);
             if (job != null && !(job is IdleJob))
                 bee.SetJob(job);
+        }
+
+        foreach (BaseGridObject obj in claimedObjects.Keys)
+        {
+            if (!IsInstanceValid(claimedObjects[obj]))
+                claimedObjects.Remove(obj);
         }
     }
 

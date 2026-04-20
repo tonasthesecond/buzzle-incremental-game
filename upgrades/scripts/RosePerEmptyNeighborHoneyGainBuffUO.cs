@@ -6,12 +6,9 @@ public partial class RosePerEmptyNeighborHoneyGainBuffUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 0.05f;
 
-    public override string GetHoverDescription() => 
-        $"{Style.CK("Rose Empty Neighbor Bonus", "noun_rose")} {Style.NumberChange(GameStore.RosePerEmptyNeighborHoneyGainBuff.Value * 100f, (GameStore.RosePerEmptyNeighborHoneyGainBuff.Value + IncreaseBy) * 100f)}"
-        + "% per empty";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Roses", "noun_rose")} produce +{Style.NCPercent(GameStore.RosePerEmptyNeighborHoneyGainBuff.Value, GameStore.RosePerEmptyNeighborHoneyGainBuff.Value + IncreaseBy)} more honey per empty neighbor tile";
 
-    public override void Apply()
-    {
+    public override void Apply() =>
         GameStore.RosePerEmptyNeighborHoneyGainBuff.AddFlat(Name, IncreaseBy * Level);
-    }
 }

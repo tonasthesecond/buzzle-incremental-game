@@ -6,9 +6,8 @@ public partial class CloverJackpotChanceUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 0.05f;
 
-    public override string GetHoverDescription() =>
-        $"{Style.CK("Clover Jackpot Chance", "noun_clover")} {Style.NumberChange(GameStore.CloverJackpotChance.Value * 100f, (GameStore.CloverJackpotChance.Value + IncreaseBy) * 100f)}"
-        + "%";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Clovers", "noun_clover")} have a {Style.NCPercent(GameStore.CloverJackpotChance.Value, GameStore.CloverJackpotChance.Value + IncreaseBy * Level)} chance to jackpot";
 
     public override void Apply()
     {

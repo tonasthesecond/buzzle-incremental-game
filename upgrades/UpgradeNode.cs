@@ -20,17 +20,21 @@ public partial class UpgradeNode
     [Export]
     public Texture2D Icon { get; set; }
 
+    [Export]
+    public Texture2D Frame { get; set; }
+
     // dependencies: upgrade node, level
     [Export]
     public Dictionary<NodePath, int> Dependencies;
 
     public bool IsShown { get; set; } = true; // default true for editor
-    private BaseButton button = null!;
+    private TextureButton button = null!;
 
     public override void _Ready()
     {
         GetNode<TextureRect>("%IconRect").Texture = Icon;
-        button = GetNode<BaseButton>("%Button");
+        button = GetNode<TextureButton>("%Button");
+        button.TextureNormal = Frame;
         if (Dependencies == null || Engine.IsEditorHint())
         {
             IsShown = true;
@@ -46,6 +50,7 @@ public partial class UpgradeNode
             node.Upgrade.Applied += onDependencyApplied;
         }
         button.Pressed += onButtonPressed;
+        HideNode();
         onDependencyApplied(); // initial check for visibility
     }
 
@@ -53,8 +58,6 @@ public partial class UpgradeNode
     {
         if (isDependencyMet(out FailMessage? failMessage))
             ShowNode();
-        else
-            HideNode();
     }
 
     private void onButtonPressed()

@@ -1,7 +1,0 @@
-[gd_resource type="Resource" script_class="LoamPollinationTimeReductionBuffUO" format=3 uid="uid://blhh4ae0edpu1"]
-
-[ext_resource type="Script" uid="uid://w8owaql54efu" path="res://upgrades/scripts/LoamPollinationTimeReductionBuffUO.cs" id="1_2yjgl"]
-
-[resource]
-script = ExtResource("1_2yjgl")
-metadata/_custom_type_script = "uid://w8owaql54efu"

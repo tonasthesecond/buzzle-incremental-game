@@ -205,16 +205,29 @@ public partial class PlacementSystem : GameSystem
                 break;
 
             case Mode.RemoveBee:
-                if (highlighted is Hive targetHive && removeBeeResource?.BeeScene != null)
+                if (highlighted is Hive targetHive && removeBeeResource != null)
                 {
-                    var t = removeBeeResource.BeeScene.Instantiate();
-                    var beeType = t.GetType();
-                    t.QueueFree();
-                    if (!Services.Get<BeeSystem>().RemoveBee(beeType, targetHive))
+                    string beeType = removeBeeResource.BeeTypeName;
+
+                    Type t = beeType switch
+                    {
+                        "" => typeof(BaseBee),
+                        "Queen" => typeof(QueenBee),
+                        "Rocket" => typeof(RocketBee),
+                        "Jetpack" => typeof(RocketBee),
+                        "Fat" => typeof(FatBee),
+                        _ => throw new ArgumentException($"Unknown bee type: {beeType}"),
+                    };
+
+                    if (!Services.Get<BeeSystem>().RemoveBee(t, targetHive))
+                    {
+                        if (beeType == "Rocket")
+                            beeType = "Jetpack";
                         fail = new FailMessage(
-                            "No bee to remove",
-                            $"No {beeType.Name} found at hive"
+                            $"No {beeType} bee to remove.",
+                            $"No {beeType} bee found at hive!"
                         );
+                    }
                 }
                 break;
         }

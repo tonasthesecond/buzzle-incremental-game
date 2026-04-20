@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
-public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescription, IHasHoverSubtitle, IHasHoverRefresh
+public partial class Flower
+    : BaseGridObject,
+        IHasHoverTitle,
+        IHasHoverDescription,
+        IHasHoverSubtitle,
+        IHasHoverRefresh
 {
     [Signal]
     public delegate void PollinatedEventHandler(int honey);
@@ -42,7 +47,8 @@ public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescripti
     public override void _Ready()
     {
         base._Ready();
-        SetModulate();
+        // SetModulate();
+        sprite.Play("unpollinated");
     }
 
     /// Pollinate the flower, adding honey.
@@ -74,15 +80,17 @@ public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescripti
     protected virtual void OnPollinated()
     {
         CurState = State.Pollinated;
-        SetModulate();
+        // SetModulate();
         Honey = (int)HoneyGain.Value;
         EmitSignal(SignalName.Pollinated, Honey);
+        sprite.Play("pollinated");
     }
 
     protected virtual void OnEmptied()
     {
+        sprite.Play("unpollinated");
         CurState = State.Pollinating;
-        SetModulate();
+        // SetModulate();
         EmitSignal(SignalName.Emptied);
     }
 
@@ -96,6 +104,8 @@ public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescripti
 
     public string GetHoverSubtitle()
     {
+        if (!Placed)
+            return "";
         if (CurState == State.Pollinated)
             return Style.CK($"{Honey} honey", "subtitle");
         if (CurState == State.Pollinating)
@@ -106,10 +116,7 @@ public partial class Flower : BaseGridObject, IHasHoverTitle, IHasHoverDescripti
         return "";
     }
 
-    public override string GetHoverDescription()
-    {
-        return "";
-    }
+    public override string GetHoverDescription() => "";
 
     private readonly Dictionary<Action, HoneyChangedEventHandler> _refreshHandlers = new();
     private readonly Dictionary<Action, PollinatedEventHandler> _pollinatedHandlers = new();

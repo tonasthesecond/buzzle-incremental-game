@@ -1,6 +1,0 @@
-[gd_resource type="Resource" format=3 uid="uid://gyn0few1pb2k"]
-
-[ext_resource type="Script" uid="uid://ng3sb3wsia6v" path="res://upgrades/scripts/BeekeeperEffectZoneNeverFade.cs" id="1_nhsfc"]
-
-[resource]
-script = ExtResource("1_nhsfc")

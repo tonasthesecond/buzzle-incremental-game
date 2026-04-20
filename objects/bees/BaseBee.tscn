@@ -10,6 +10,7 @@ radius = 6.0827627
 z_index = 1
 script = ExtResource("1_87m66")
 BeeTypeName = ""
+Description = "Your hardworking little [noun_bee](bee)!"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2116123333]
 texture = ExtResource("2_vr4ei")

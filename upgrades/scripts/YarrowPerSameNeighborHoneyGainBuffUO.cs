@@ -6,7 +6,7 @@ public partial class YarrowPerSameNeighborHoneyGainBuffUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 0.05f;
 
-    public override string GetHoverDescription() => 
+    public override string GetTechnicalText() => 
         $"{Style.CK("Yarrow Neighbor Bonus", "noun_yarrow")} {Style.NumberChange(GameStore.YarrowPerSameNeighborHoneyGainBuff.Value * 100f, (GameStore.YarrowPerSameNeighborHoneyGainBuff.Value + IncreaseBy) * 100f)}"
         + "% per same neighbor";
 

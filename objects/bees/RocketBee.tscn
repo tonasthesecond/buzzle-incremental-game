@@ -5,7 +5,8 @@
 
 [node name="RocketBee" unique_id=384287205 instance=ExtResource("1_adiur")]
 script = ExtResource("2_ge5v6")
-BeeTypeName = "Rocket"
+BeeTypeName = "Jetpack"
+Description = "Caste of [noun_bee](bees) that charges before launching to their target destination."
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
 modulate = Color(0, 0.6745098, 0.8352941, 1)

@@ -8,7 +8,7 @@ public partial class BeeSpeedUO : IUpgradeOption
 
     private float value => GameStore.BeeSpeed.Value;
 
-    public override string GetHoverDescription() => 
+    public override string GetTechnicalText() => 
         $"{Style.CK("Bees", "noun_bee")} moves {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles per second.";
 
     public override void Apply()

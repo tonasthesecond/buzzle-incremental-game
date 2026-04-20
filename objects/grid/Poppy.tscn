@@ -3,10 +3,19 @@
 [ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_epoqe"]
 [ext_resource type="Script" uid="uid://b1ayj6l37pbsm" path="res://objects/grid/Poppy.cs" id="2_rjt5a"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_2vt12"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="4_jwjlu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pblul"]
 atlas = ExtResource("3_2vt12")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_niost"]
+atlas = ExtResource("4_jwjlu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bskx0"]
+atlas = ExtResource("4_jwjlu")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jrk61"]
 animations = [{
@@ -17,13 +26,29 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_niost")
+}],
+"loop": true,
+"name": &"pollinated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bskx0")
+}],
+"loop": true,
+"name": &"unpollinated",
+"speed": 5.0
 }]
 
 [node name="Poppy" unique_id=1691567109 instance=ExtResource("1_epoqe")]
-modulate = Color(1, 0.61557627, 0.9941905, 1)
 script = ExtResource("2_rjt5a")
 ObjectName = "Poppy"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
 sprite_frames = SubResource("SpriteFrames_jrk61")
+animation = &"unpollinated"
 speed_scale = 0.0

@@ -1,3 +1,4 @@
+using System.Text;
 using Godot;
 
 [GlobalClass]
@@ -17,7 +18,21 @@ public abstract partial class IUpgradeOption : Resource, IHasHoverDescription
 
     public int Level { get; set; } = 0; // How many times this upgrade has been bought
 
-    public abstract string GetHoverDescription(); // description of upgrade
+    [Export]
+    public string FlavorText { get; set; } = "";
+
+    public string GetHoverDescription()
+    {
+        // parse flavor text format of [color_id](text) into Style.CK(text, color_id)
+        string hoverDescription = Style.ParseFlavorText(FlavorText);
+
+        if (GetTechnicalText() != "")
+            hoverDescription += "\n\n" + GetTechnicalText();
+        return hoverDescription.ToString();
+    }
+
+    public abstract string GetTechnicalText(); // text of what values have changed
+
     public abstract void Apply(); // apply upgrade
 
     public virtual int GetCost() => (int)CostScaler.Get(Level);

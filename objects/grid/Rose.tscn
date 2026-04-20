@@ -3,10 +3,23 @@
 [ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_6v4vg"]
 [ext_resource type="Script" uid="uid://b7sp0x473xtdu" path="res://objects/grid/Rose.cs" id="2_6v4vg"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="3_k10vv"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="4_7y1gx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pblul"]
 atlas = ExtResource("3_k10vv")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k10vv"]
+atlas = ExtResource("4_7y1gx")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuhyt"]
+atlas = ExtResource("4_7y1gx")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rmlok"]
+atlas = ExtResource("4_7y1gx")
+region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jrk61"]
 animations = [{
@@ -17,6 +30,30 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k10vv")
+}],
+"loop": true,
+"name": &"isolated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuhyt")
+}],
+"loop": true,
+"name": &"pollinated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rmlok")
+}],
+"loop": true,
+"name": &"unpollinated",
+"speed": 5.0
 }]
 
 [node name="Rose" unique_id=1691567109 instance=ExtResource("1_6v4vg")]
@@ -24,6 +61,6 @@ script = ExtResource("2_6v4vg")
 ObjectName = "Rose"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]
-modulate = Color(1, 0.32156864, 0.18431373, 1)
 sprite_frames = SubResource("SpriteFrames_jrk61")
+animation = &"isolated"
 speed_scale = 0.0

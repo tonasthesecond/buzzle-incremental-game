@@ -6,8 +6,8 @@ public partial class FatBeeCapacityHoneyBonusUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 1f;
 
-    public override string GetHoverDescription() => 
-        $"{Style.CK("Fat Bee Carry Bonus", "noun_fat_bee")} {Style.NumberChange(GameStore.FatBeeCapacityHoneyBonus.Value, GameStore.FatBeeCapacityHoneyBonus.Value + IncreaseBy)}";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Fat bees", "noun_fat")} can carry {Style.NC(GameStore.FatBeeCapacityHoneyBonus.Value, GameStore.FatBeeCapacityHoneyBonus.Value + IncreaseBy)} honey";
 
     public override void Apply()
     {
