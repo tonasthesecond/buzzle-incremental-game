@@ -54,7 +54,7 @@ public partial class Game : GameSystem
     {
         if (Input.IsActionJustPressed("save_game"))
         {
-            GD.Print("Saving game");
+            GD.Print("Saved Game!");
             GameStore.SaveGame();
         }
     }

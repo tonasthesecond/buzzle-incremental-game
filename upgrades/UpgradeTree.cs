@@ -37,7 +37,10 @@ public partial class UpgradeTree : Control
         SignalBus.Instance.GameLoaded += () => ApplyUpgrades();
 
         if (ShowAllUpgrades)
+        {
             GameStore.UnlockAll();
+            RedrawLines();
+        }
     }
 
     private void RedrawLines()
