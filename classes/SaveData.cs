@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class SaveData
 {
-    public int Honey { get; set; } = 10;
+    public int Honey { get; set; } = 11;
     public List<SavedUpgrade> Upgrades { get; set; } = new();
     public List<SavedHive> Hives { get; set; } = new();
     public List<SavedTileGroup> Tiles { get; set; } = new();

@@ -12,6 +12,7 @@ public partial class UnlockUO : IUpgradeOption
 
     public override void Apply()
     {
-        GameStore.Unlock(UnlockKey);
+        if (Level > 0)
+            GameStore.Unlock(UnlockKey);
     }
 }

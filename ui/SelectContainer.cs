@@ -23,9 +23,6 @@ public partial class SelectContainer : PanelContainer
     private MarginContainer contentsContainer = null!;
     private Container selectablesContainer = null!;
 
-    // private Container expandContainer = null!;
-    // private Button expandButton = null!;
-
     public int SelectedIndex = -1;
     public bool IsExpanded = false;
 
@@ -36,8 +33,6 @@ public partial class SelectContainer : PanelContainer
         // get nodes
         contentsContainer = GetNode<MarginContainer>("%ContentsContainer");
         selectablesContainer = GetNode<Container>("%SelectablesContainer");
-        // expandContainer = GetNode<Container>("%ExpandContainer");
-        // expandButton = GetNode<Button>("%ExpandButton");
 
         // clear templates
         foreach (Node child in selectablesContainer.GetChildren())
@@ -48,14 +43,6 @@ public partial class SelectContainer : PanelContainer
             if (selectedResource.IsUnlocked())
                 Add(selectedResource);
 
-        // connect signals
-        // expandButton.Pressed += () =>
-        // {
-        //     if (IsExpanded)
-        //         Shrink();
-        //     else
-        //         Expand();
-        // };
         GameStore.Instance.OnUnlocked += (string key) =>
         {
             foreach (SelectedResource res in SelectedResources)
@@ -114,26 +101,4 @@ public partial class SelectContainer : PanelContainer
             return SelectedResources[SelectedIndex];
         return resource;
     }
-
-    // /// --- Expand/Shrink ---
-    // public void Expand()
-    // {
-    //     TweenWidth(
-    //         float.Min(MaxWidth, contentsContainer.Size.X)
-    //             + contentsContainer.GetThemeConstant("margin_right") / 4
-    //     );
-    //     IsExpanded = true;
-    // }
-    //
-    // public void Shrink()
-    // {
-    //     TweenWidth(0f);
-    //     IsExpanded = false;
-    // }
-    //
-    // private void TweenWidth(float target)
-    // {
-    //     var tween = CreateTween();
-    //     tween.TweenProperty(expandContainer, "custom_minimum_size:x", target, TweenDuration);
-    // }
 }

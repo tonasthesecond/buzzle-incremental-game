@@ -9,10 +9,19 @@ public partial class RemoveBee : SelectedResource
     private Bee? bee;
 
     public override string GetHoverTitle() =>
-        $"Remove {Style.CK(BeeTypeName == "Rocket" ? "Jetpack" : BeeTypeName, "noun_" + BeeTypeName.ToLower())} bee";
+        $"Remove {(BeeTypeName == "Rocket" ? "Jetpack" : BeeTypeName)} bee";
 
-    public override string GetHoverDescription() =>
-        $"Remove a {Style.CK(BeeTypeName == "Rocket" ? "Jetpack" : BeeTypeName, "noun_" + BeeTypeName.ToLower())} bee from a hive.";
+    public override string GetHoverDescription()
+    {
+        string color_code = "noun_" + BeeTypeName.ToLower();
+        if (color_code == "noun_")
+            color_code = "noun_bee";
+
+        if (BeeTypeName == "Rocket")
+            BeeTypeName = "Jetpack";
+
+        return $"Remove a {Style.CK(BeeTypeName + " ", color_code)}bee from a hive.";
+    }
 
     public override string GetHoverSubtitle() => "";
 

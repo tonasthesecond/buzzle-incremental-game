@@ -256,7 +256,6 @@ script = ExtResource("1_yx171")
 
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
 script = ExtResource("9_2vekm")
-FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]

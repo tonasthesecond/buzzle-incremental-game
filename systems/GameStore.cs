@@ -83,19 +83,28 @@ public partial class GameStore : Node
     public static Dictionary<Type, IScaleModel> PriceModels { get; } =
         new()
         {
-            { typeof(Hive), new PolynomialModel(100f, 2f) },
-            { typeof(Poppy), new LinearModel(5f, 5f) },
-            { typeof(Sunflower), new LinearModel(5f, 5f) },
-            { typeof(Clover), new LinearModel(10f, 5f) },
-            { typeof(Yarrow), new LinearModel(5f, 5f) },
-            { typeof(Rose), new LinearModel(5f, 5f) },
-            { typeof(DirtTile), new LinearModel(5f, 5f) },
-            { typeof(GrassTile), new LinearModel(50f, 5f) },
-            { typeof(LoamTile), new LinearModel(50f, 5f) },
-            { typeof(BaseBee), new LinearModel(10f, 5f) },
-            { typeof(RocketBee), new LinearModel(50f, 10f) },
-            { typeof(FatBee), new LinearModel(50f, 10f) },
-            { typeof(QueenBee), new LinearModel(50f, 10f) },
+            {
+                typeof(Poppy),
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
+            },
+            { typeof(Sunflower), new PolynomialModel(20f, 0.3f) },
+            { typeof(Clover), new PolynomialModel(25f, 0.2f) },
+            { typeof(Yarrow), new PolynomialModel(15f, 0.1f) },
+            { typeof(Rose), new PolynomialModel(50f, 0.3f) },
+            { typeof(Hive), new PaddingModel(new float[] { 0f }, new PolynomialModel(10f, 0.5f)) },
+            {
+                typeof(DirtTile),
+                new PaddingModel(new float[] { 0f, 0f }, new LinearModel(5f, 0.5f))
+            },
+            { typeof(GrassTile), new LinearModel(10f, 5f) },
+            { typeof(LoamTile), new LinearModel(15, 10f) },
+            {
+                typeof(BaseBee),
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.5f))
+            },
+            { typeof(FatBee), new PolynomialModel(10f, 0.3f) },
+            { typeof(RocketBee), new PolynomialModel(10f, 0.3f) },
+            { typeof(QueenBee), new PolynomialModel(50f, 0.2f) },
         };
 
     public static int GetPlacementCost(Type t)
@@ -211,7 +220,7 @@ public partial class GameStore : Node
             Save = new SaveData();
 
         // apply all dynamic contents
-        honey = Save.Honey;
+        Honey = Save.Honey;
         Services.Get<UpgradeTree>().ApplyUpgrades();
 
         Callable
