@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 
@@ -22,6 +23,8 @@ public partial class SelectContainer : PanelContainer
 
     private MarginContainer contentsContainer = null!;
     private Container selectablesContainer = null!;
+    private int _selectableCount = 0;
+    private List<SelectedResource> _addedResources = new();
 
     public int SelectedIndex = -1;
     public bool IsExpanded = false;
@@ -61,9 +64,10 @@ public partial class SelectContainer : PanelContainer
 
     public void Add(SelectedResource selectedResource)
     {
-        var selectable = SelectableScene.Instantiate<Selectable>();
+        Selectable selectable = SelectableScene.Instantiate<Selectable>();
         selectablesContainer.AddChild(selectable);
-        int index = selectablesContainer.GetChildCount() - 1;
+        int index = _selectableCount++;
+        _addedResources.Add(selectedResource);
         selectable.Setup(index, buttonGroup, selectedResource.Icon, selectedResource);
 
         selectable.Selected += (int i) =>
@@ -75,7 +79,7 @@ public partial class SelectContainer : PanelContainer
             );
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.SelectedResourceSelected,
-                SelectedResources[i]
+                selectedResource
             );
         };
     }
@@ -96,9 +100,9 @@ public partial class SelectContainer : PanelContainer
     {
         if (SelectedIndex == -1)
             return null;
-        var resource = SelectedResources[SelectedIndex].Resource;
+        var resource = _addedResources[SelectedIndex].Resource;
         if (resource == null)
-            return SelectedResources[SelectedIndex];
+            return _addedResources[SelectedIndex];
         return resource;
     }
 }

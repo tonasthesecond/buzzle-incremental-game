@@ -42,7 +42,7 @@ public partial class Yarrow : Flower
         {
             int neighbors = GetYarrowNeighbors();
             desc +=
-                $"\n{Style.CK("Yarrow Neighbor Buff", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey))} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
+                $"\n{Style.CK("Yarrow Neighbor Buff", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey)!)} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
         }
         else
         {

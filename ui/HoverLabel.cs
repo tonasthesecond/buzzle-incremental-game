@@ -26,6 +26,8 @@ public partial class HoverLabel : Label
     /// Shows a persistent message following the mouse.
     public void ShowMessage(string message, Color color)
     {
+        if (isError)
+            return;
         tween?.Kill();
         persistentText = message;
         persistentColor = color;
@@ -43,6 +45,8 @@ public partial class HoverLabel : Label
         Visible = false;
     }
 
+    public bool isError = false;
+
     /// Shows a transient error message.
     public void ShowError(FailMessage message)
     {
@@ -51,6 +55,7 @@ public partial class HoverLabel : Label
         Text = message.GameMessage;
         Visible = true;
         Modulate = Colors.Red;
+        isError = true;
 
         tween?.Kill();
         tween = GetTree().CreateTween();
@@ -58,6 +63,7 @@ public partial class HoverLabel : Label
         SetProcess(true);
         tween.Finished += () =>
         {
+            isError = false;
             if (hasPersistent)
             {
                 Text = persistentText;

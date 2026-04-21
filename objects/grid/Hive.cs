@@ -49,16 +49,22 @@ public partial class Hive : BaseGridObject
     {
         string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
         if (GetBeeCounts().Count == 0)
-            desc += "\nNo bees in this hive.";
+            desc += "\nEmpty";
         else
+        {
+            desc += "\nHousing:";
             foreach (KeyValuePair<string, int> beeType in GetBeeCounts())
             {
-                string noun = beeType.Key.ToLower();
-                if (noun == "")
-                    desc += $"\n{beeType.Value} bees";
+                string noun = beeType.Key.ToLower().Substr(0, beeType.Key.Length - 3);
+                if (noun == "jetpack")
+                    noun = "rocket";
+                if (noun == "basebee")
+                    desc += $"\n• {Style.CK(beeType.Value.ToString("F0"))} bees";
                 else
-                    desc += $"\n{beeType.Value} {Style.CK(beeType.Key, "noun_" + noun)} bees";
+                    desc +=
+                        $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK(beeType.Key, "noun_" + noun)} bees";
             }
+        }
         return desc;
     }
 }

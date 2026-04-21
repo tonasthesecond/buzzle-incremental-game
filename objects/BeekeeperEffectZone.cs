@@ -2,49 +2,44 @@ using Godot;
 
 public partial class BeekeeperEffectZone : EffectZoneComponent
 {
-    private string Key => $"Beekeeper";
+    private string Key => "Beekeeper";
 
-    // bees entering the zone get a speed buff
     protected override void OnBeeEntered(Bee bee) =>
         bee.Speed.AddPercent(Key, GameStore.BeekeeperEffectZoneSpeedBuff.Value);
 
-    // bees leaving the zone lose the speed buff
     protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
 
     public override void _Ready()
     {
         base._Ready();
-
-        // collision shape updates using the radius stat
         Radius = new(() => GameStore.BeekeeperEffectZoneRadius.Value);
+        FadeoutTime = new(() => GameStore.BeekeeperEffectZoneFadeoutTime.Value);
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
         GameStore.BeekeeperEffectZoneRadius.Changed += () =>
             (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
-
-        // fadeout time updates using the fadeout time stat
-        FadeoutTime = new(() => GameStore.BeekeeperEffectZoneFadeoutTime.Value);
+        fadeTimer.Timeout += () =>
+        {
+            heatVapor.Emitting = false;
+        };
     }
 
     public override void _Process(double delta)
     {
-        // follow mouse when holding
-        if (active && fadeTimer.IsStopped())
+        if (active && fadeTimer.IsStopped() && !GameStore.BeekeeperEffectZoneNeverFade)
             GlobalPosition = GetGlobalMousePosition();
     }
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        // don't activate when placing tiles or objects
         if (Services.Get<PlacementSystem>().CurMode != PlacementSystem.Mode.None)
             return;
-
-        // activate on left click
         if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
         {
             Activate();
+            UpdateHeatVapor();
+            heatVapor.Emitting = true;
             GetViewport().SetInputAsHandled();
         }
-        // deactivate on release left click
         else if (@event is InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: false })
         {
             if (GameStore.BeekeeperEffectZoneNeverFade)
@@ -52,5 +47,11 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
             Deactivate();
             GetViewport().SetInputAsHandled();
         }
+    }
+
+    private void UpdateHeatVapor()
+    {
+        heatVapor.SetHeatLevel(GameStore.BeekeeperEffectZoneSpeedBuff.Value);
+        heatVapor.UpdateRadius(Radius.Value);
     }
 }

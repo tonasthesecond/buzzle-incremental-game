@@ -14,6 +14,8 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
             Key,
             GameStore.QueenBeeEffectZonePollinationTimeReductionBuff.Value
         );
+        heatVapor.Emitting = true;
+        UpdateHeatVapor();
     }
 
     protected override void OnBeeExited(Bee bee)
@@ -27,6 +29,7 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
         base._Ready();
         Radius = new(() => GameStore.QueenBeeEffectZoneRadius.Value);
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+        Radius.Changed += () => UpdateHeatVapor();
         GameStore.QueenBeeEffectZoneRadius.Changed += () =>
             (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
         Activate();
@@ -37,5 +40,10 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
         // follow the queen's parent bee
         if (GetParent() is Bee queen)
             GlobalPosition = queen.GlobalPosition;
+    }
+
+    private void UpdateHeatVapor()
+    {
+        heatVapor.EmitRadius = Radius.Value;
     }
 }

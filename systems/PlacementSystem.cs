@@ -15,6 +15,8 @@ public partial class PlacementSystem : GameSystem
     private BaseGridObject? highlighted;
     private const float HighlightAlpha = 0.7f;
 
+    private PlacementExplosionParticles explosionParticles = null!;
+
     public enum Mode
     {
         None,
@@ -41,6 +43,9 @@ public partial class PlacementSystem : GameSystem
 
     public override void _Ready()
     {
+        explosionParticles = GetParent()
+            .GetNode<PlacementExplosionParticles>("%ExplosionParticles");
+
         SignalBus.Instance.ResourceSelected += (Resource resource) =>
         {
             if (resource is RemoveTile)
@@ -87,28 +92,35 @@ public partial class PlacementSystem : GameSystem
     }
 
     /// Deduct cost if affordable. Returns false + fail on rejection.
-    private bool TryCharge(Type? t, out FailMessage? fail)
+    private bool TryCharge(Type? t, out int cost, out FailMessage? fail)
     {
         fail = null;
         if (FreePlace || t == null)
+        {
+            cost = 0;
             return true;
-        int cost = GameStore.GetPlacementCost(t);
+        }
+        cost = GameStore.GetPlacementCost(t);
+        GD.Print($"Charging {cost} honey");
         if (cost == 0)
             return true;
         if (GameStore.Honey < cost)
         {
-            fail = new FailMessage(
-                $"Need {cost} honey",
-                $"Insufficient honey for {t.Name}: need {cost}"
-            );
+            fail = new FailMessage($"Need {cost} honey", $"Need {cost} honey!");
             return false;
         }
-        GameStore.Honey -= cost;
-        UpdateHoverText(t);
         return true;
     }
 
+    private void ChargeHoney(Type? t, int cost)
+    {
+        GameStore.Honey -= cost;
+        UpdateHoverText(t);
+    }
+
     private GameStore.HoneyChangedEventHandler? honeyChangedHandler;
+    private SignalBus.GridObjectPlacedEventHandler? gridObjectPlacedHandler;
+    private SignalBus.GridObjectRemovedEventHandler? gridObjectRemovedHandler;
 
     private void UpdateHoverText(Type? t)
     {
@@ -117,6 +129,16 @@ public partial class PlacementSystem : GameSystem
         {
             GameStore.Instance.HoneyChanged -= honeyChangedHandler;
             honeyChangedHandler = null;
+        }
+        if (gridObjectPlacedHandler != null)
+        {
+            SignalBus.Instance.GridObjectPlaced -= gridObjectPlacedHandler;
+            gridObjectPlacedHandler = null;
+        }
+        if (gridObjectRemovedHandler != null)
+        {
+            SignalBus.Instance.GridObjectRemoved -= gridObjectRemovedHandler;
+            gridObjectRemovedHandler = null;
         }
 
         void show()
@@ -131,7 +153,11 @@ public partial class PlacementSystem : GameSystem
         }
 
         honeyChangedHandler = (_) => show();
+        gridObjectPlacedHandler = (_) => show();
+        gridObjectRemovedHandler = (_) => show();
         GameStore.Instance.HoneyChanged += honeyChangedHandler;
+        SignalBus.Instance.GridObjectPlaced += gridObjectPlacedHandler;
+        SignalBus.Instance.GridObjectRemoved += gridObjectRemovedHandler;
         show();
     }
 
@@ -210,36 +236,56 @@ public partial class PlacementSystem : GameSystem
 
         var grid = Services.Get<Grid>();
         var tilemap = Services.Get<Tilemap>();
-        var pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
+        Vector2I pos = tilemap.LocalToMap(tilemap.GetLocalMousePosition());
         FailMessage? fail = null;
+        int cost = 0;
 
         switch (CurMode)
         {
             case Mode.Tile:
-                if (selectedScene != null && TryCharge(selectedType, out fail))
-                    grid.PlaceTile(selectedScene, pos, out fail);
+                if (
+                    selectedScene != null
+                    && TryCharge(selectedType, out cost, out fail)
+                    && grid.PlaceTile(selectedScene, pos, out fail)
+                )
+                {
+                    ChargeHoney(selectedType, cost);
+                }
                 break;
 
             case Mode.Object:
-                if (selectedScene != null && TryCharge(selectedType, out fail))
-                    grid.PlaceObject(selectedScene, pos, out fail);
+                if (
+                    selectedScene != null
+                    && TryCharge(selectedType, out cost, out fail)
+                    && grid.PlaceObject(selectedScene, pos, out fail)
+                )
+                {
+                    ChargeHoney(selectedType, cost);
+                    explosionParticles.Emit(grid.GridToWorld(pos));
+                }
                 break;
 
             case Mode.Bee:
                 if (
                     selectedScene != null
                     && highlighted is Hive hive
-                    && TryCharge(selectedType, out fail)
+                    && TryCharge(selectedType, out cost, out fail)
+                    && Services.Get<BeeSystem>().SpawnBee(selectedScene, hive, out fail) != null
                 )
-                    Services.Get<BeeSystem>().SpawnBee(selectedScene, hive);
+                {
+                    GD.Print($"Spawning {selectedType.Name}");
+                    ChargeHoney(selectedType, cost);
+                }
                 break;
 
             case Mode.RemoveTile:
-                grid.RemoveTile(pos, out fail);
+                if (grid.RemoveTile(pos, out fail))
+                    explosionParticles.Emit(grid.GridToWorld(pos));
                 break;
 
             case Mode.RemoveObject:
-                grid.RemoveObject(pos, out fail);
+                if (grid.RemoveObject(pos, out fail))
+                    explosionParticles.Emit(grid.GridToWorld(pos));
                 break;
 
             case Mode.RemoveBee:
@@ -249,7 +295,7 @@ public partial class PlacementSystem : GameSystem
 
                     Type t = beeType switch
                     {
-                        "" => typeof(BaseBee),
+                        "Base" => typeof(BaseBee),
                         "Queen" => typeof(QueenBee),
                         "Rocket" => typeof(RocketBee),
                         "Jetpack" => typeof(RocketBee),

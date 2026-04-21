@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b2qhw754acagl" path="res://systems/BeeSystem.cs" id="1_wbfu4"]
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
+[ext_resource type="Script" uid="uid://bxiv6k7h3frth" path="res://systems/HoneyTracker.cs" id="2_n7324"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
-[ext_resource type="Script" uid="uid://dg46vvctsd64m" path="res://systems/ParticleSystem.cs" id="3_w2501"]
+[ext_resource type="PackedScene" uid="uid://vkecggc367du" path="res://particles/PlacementExplosionParticles.tscn" id="4_n7324"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
 [ext_resource type="PackedScene" uid="uid://833dmns5hsfq" path="res://ui/SelectContainer.tscn" id="7_3mrqo"]
 [ext_resource type="PackedScene" uid="uid://bmriyvd8cma8a" path="res://upgrades/UpgradeTree.tscn" id="7_yx171"]
@@ -254,16 +255,17 @@ region = Rect2(0, 32, 64, 32)
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
 
+[node name="HoneyTracker" type="Node" parent="." unique_id=1552688911]
+script = ExtResource("2_n7324")
+metadata/_custom_type_script = "uid://bxiv6k7h3frth"
+
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
 script = ExtResource("9_2vekm")
+FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
 unique_name_in_owner = true
-
-[node name="ParticleSystem" type="Node" parent="GameLayer" unique_id=2112819387]
-script = ExtResource("3_w2501")
-metadata/_custom_type_script = "uid://dg46vvctsd64m"
 
 [node name="BeeSystem" type="Node" parent="GameLayer" unique_id=474014426]
 script = ExtResource("1_wbfu4")
@@ -279,11 +281,17 @@ metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
 [node name="EffectZoneComponent" parent="GameLayer" unique_id=513508709 instance=ExtResource("8_jsoai")]
 
+[node name="Particles" type="Node2D" parent="GameLayer" unique_id=1336458773]
+
+[node name="ExplosionParticles" parent="GameLayer/Particles" unique_id=48595200 instance=ExtResource("4_n7324")]
+unique_name_in_owner = true
+
 [node name="UpgradeLayer" type="Node2D" parent="." unique_id=320393624]
 unique_name_in_owner = true
 visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
+ShowAllUpgrades = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
 

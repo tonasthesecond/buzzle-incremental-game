@@ -209,47 +209,71 @@
   "Hives": [
 	{
 	  "X": 0,
-	  "Y": 0,
+	  "Y": -1,
 	  "BeeCounts": {}
+	},
+	{
+	  "X": 1,
+	  "Y": -1,
+	  "BeeCounts": {
+		"QueenBee": 1
+	  }
+	},
+	{
+	  "X": 0,
+	  "Y": 1,
+	  "BeeCounts": {
+		"QueenBee": 1
+	  }
 	}
   ],
   "Tiles": [
 	{
 	  "Type": "DirtTile",
 	  "Spans": [
-		[-2, 2, -2],
-		[-2, 2, -1],
-		[-2, 2, 0],
-		[-2, 2, 1],
-		[-2, 2, 2]
+		[
+		  -2,
+		  2,
+		  -2
+		],
+		[
+		  -2,
+		  2,
+		  -1
+		],
+		[
+		  -2,
+		  2,
+		  0
+		],
+		[
+		  -2,
+		  2,
+		  1
+		],
+		[
+		  -2,
+		  2,
+		  2
+		]
 	  ]
 	}
   ],
   "Objects": [
 	{
 	  "X": 0,
-	  "Y": 0,
+	  "Y": -1,
 	  "Type": "Hive"
 	},
 	{
-	  "X": 2,
-	  "Y": 0,
-	  "Type": "Sunflower"
-	},
-	{
-	  "X": -2,
-	  "Y": 0,
-	  "Type": "Clover"
+	  "X": 1,
+	  "Y": -1,
+	  "Type": "Hive"
 	},
 	{
 	  "X": 0,
-	  "Y": -2,
-	  "Type": "Yarrow"
-	},
-	{
-	  "X": 0,
-	  "Y": 2,
-	  "Type": "Rose"
+	  "Y": 1,
+	  "Type": "Hive"
 	}
   ],
   "UnlockedKeys": []
