@@ -53,6 +53,8 @@ public abstract class FlowerJob : IBeeJob
     protected virtual void OnHome(Bee bee)
     {
         bee.Home.Deposit(bee.carryingHoney);
+        Services.Get<HoneyTracker>().Record(bee.HoneySource, bee.carryingHoney);
+        Services.Get<HoneyTracker>().Record(bee.BeeTypeName, bee.carryingHoney);
         bee.carryingHoney = 0;
         bee.FadeTo(0f);
         bee.SetJob(new IdleJob());
@@ -140,6 +142,7 @@ public class PollinatorJob : FlowerJob
     {
         int needed = Mathf.Min(flower!.HoneyRequired(), (int)bee.HoneyCapacity.Value);
         bee.carryingHoney = bee.Home.TakePossible(needed);
+        bee.HoneySource = flower.ObjectName;
         if (bee.carryingHoney == 0)
         {
             state = State.SeekingFlower;

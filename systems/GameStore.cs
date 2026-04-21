@@ -85,33 +85,33 @@ public partial class GameStore : Node
         {
             {
                 typeof(Poppy),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.7f))
             },
-            { typeof(Sunflower), new PolynomialModel(20f, 0.3f) },
-            { typeof(Clover), new PolynomialModel(25f, 0.2f) },
-            { typeof(Yarrow), new PolynomialModel(15f, 0.1f) },
-            { typeof(Rose), new PolynomialModel(50f, 0.3f) },
-            { typeof(Hive), new PaddingModel(new float[] { 0f }, new PolynomialModel(10f, 0.5f)) },
+            { typeof(Sunflower), new PolynomialModel(20f, 0.7f) },
+            { typeof(Clover), new PolynomialModel(25f, 0.4f) },
+            { typeof(Yarrow), new PolynomialModel(15f, 0.2f) },
+            { typeof(Rose), new PolynomialModel(50f, 0.2f) },
+            { typeof(Hive), new PaddingModel(new float[] { 0f }, new ExponentialModel(10f, 1.5f)) },
             {
                 typeof(DirtTile),
-                new PaddingModel(new float[] { 0f, 0f }, new LinearModel(5f, 0.5f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
             },
-            { typeof(GrassTile), new LinearModel(10f, 5f) },
-            { typeof(LoamTile), new LinearModel(15, 10f) },
+            { typeof(LoamTile), new PolynomialModel(15, 0.6f) },
+            { typeof(GrassTile), new PolynomialModel(10f, 0.7f) },
             {
                 typeof(BaseBee),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.5f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.7f))
             },
-            { typeof(FatBee), new PolynomialModel(10f, 0.3f) },
-            { typeof(RocketBee), new PolynomialModel(10f, 0.3f) },
-            { typeof(QueenBee), new PolynomialModel(50f, 0.2f) },
+            { typeof(FatBee), new PolynomialModel(10f, 0.8f) },
+            { typeof(RocketBee), new PolynomialModel(10f, 0.8f) },
+            { typeof(QueenBee), new PolynomialModel(50f, 0.7f) },
         };
 
     public static int GetPlacementCost(Type t)
     {
         if (!PriceModels.TryGetValue(t, out var model))
             return 0;
-        var grid = Services.Get<Grid>();
+        Grid grid = Services.Get<Grid>()!;
         int count =
             t.IsSubclassOf(typeof(BaseTile)) ? grid.GetTileCountOfType(t)
             : t.IsSubclassOf(typeof(BaseGridObject)) ? grid.GetObjectCountOfType(t)
@@ -191,7 +191,7 @@ public partial class GameStore : Node
         get => honey;
         set
         {
-            honey = value;
+            honey = Mathf.Max(1, value);
             Save.Honey = honey;
             Instance.EmitSignal(SignalName.HoneyChanged, value);
         }

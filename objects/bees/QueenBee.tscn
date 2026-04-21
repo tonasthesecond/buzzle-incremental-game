@@ -16,3 +16,10 @@ modulate = Color(1, 0.30980393, 1, 1)
 [node name="EffectZoneComponent" parent="." index="2" unique_id=513508709 instance=ExtResource("3_ja3py")]
 unique_name_in_owner = true
 script = ExtResource("4_gxdci")
+
+[node name="HeatVapor" parent="EffectZoneComponent" index="1" unique_id=1329572307]
+BaseAmount = 5
+ParticleLifetime = 0.5
+ParticleSize = 0.5
+
+[editable path="EffectZoneComponent"]

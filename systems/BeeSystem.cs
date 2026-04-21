@@ -7,7 +7,7 @@ using Godot;
 public partial class BeeSystem : GameSystem
 {
     [Signal]
-    public delegate void OnBeeSpawnedEventHandler(Bee bee);
+    public delegate void BeeSpawnedEventHandler(Bee bee);
 
     private Dictionary<BaseGridObject, Bee> claimedObjects = new();
 
@@ -41,10 +41,10 @@ public partial class BeeSystem : GameSystem
     {
         Grid grid = Services.Get<Grid>()!;
         Flower[] pollinatedFlowers = grid.GetObjectsOfType<Flower>()
-            .Where(f => f.CurState == Flower.State.Pollinated)
+            .Where(f => f.CurState == Flower.State.Pollinated && !IsClaimed(f))
             .ToArray();
         Flower[] unpollinatedFlowers = grid.GetObjectsOfType<Flower>()
-            .Where(f => f.CurState == Flower.State.Pollinating)
+            .Where(f => f.CurState == Flower.State.Pollinating && !IsClaimed(f))
             .ToArray();
 
         foreach (var bee in GetIdleBees())
@@ -54,6 +54,7 @@ public partial class BeeSystem : GameSystem
                 bee.SetJob(job);
         }
 
+        // remove invalid objects
         foreach (BaseGridObject obj in claimedObjects.Keys)
         {
             if (!IsInstanceValid(claimedObjects[obj]))
@@ -78,21 +79,25 @@ public partial class BeeSystem : GameSystem
             GD.PushError($"[BeeSystem] Missing bee scene: {sceneName}");
             return null;
         }
-        return SpawnBee(scene, home);
+        return SpawnBee(scene, home, out FailMessage? failMessage);
     }
 
     /// Spawn a bee by scene (used by placement system).
-    public Bee? SpawnBee(PackedScene scene, Hive home)
+    public Bee? SpawnBee(PackedScene scene, Hive home, out FailMessage? failMessage)
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
         {
-            GD.Print($"[BeeSystem] Hive at {home.GridPosition} is full ({home.BeeCount} bees)");
+            failMessage = new FailMessage(
+                $"Hive at {home.GridPosition} is full ({home.BeeCount} bees)",
+                "Hive is full!"
+            );
             return null;
         }
         var bee = scene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home);
-        EmitSignal(SignalName.OnBeeSpawned, bee);
+        EmitSignal(SignalName.BeeSpawned, bee);
+        failMessage = null;
         return bee;
     }
 
@@ -101,7 +106,7 @@ public partial class BeeSystem : GameSystem
         Hive[] hives = Services.Get<Grid>().GetObjectsOfType<Hive>();
         if (hives.Length == 0)
             return null;
-        return SpawnBee(scene, Utils.GetRandom(hives));
+        return SpawnBee(scene, Utils.GetRandom(hives), out FailMessage? failMessage);
     }
 
     public bool RemoveBee(Type beeType, Hive hive)

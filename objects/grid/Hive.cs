@@ -47,22 +47,23 @@ public partial class Hive : BaseGridObject
 
     public override string GetHoverDescription()
     {
-        Dictionary<string, int> beeCounts = GetBeeCounts();
         string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
-        Dictionary<string, int> beeTypesCounts = new();
-        foreach (Bee bee in Bees)
+        if (GetBeeCounts().Count == 0)
+            desc += "\nEmpty";
+        else
         {
-            string type = bee.BeeTypeName;
-            beeTypesCounts.TryGetValue(type, out int cur);
-            beeTypesCounts[type] = cur + 1;
-        }
-        foreach (KeyValuePair<string, int> beeType in beeTypesCounts)
-        {
-            string noun = beeType.Key.ToLower();
-            if (noun == "")
-                desc += $"\n{beeType.Value} bees";
-            else
-                desc += $"\n{beeType.Value} {Style.CK(beeType.Key, "noun_" + noun)} bees";
+            desc += "\nHousing:";
+            foreach (KeyValuePair<string, int> beeType in GetBeeCounts())
+            {
+                string noun = beeType.Key.ToLower().Substr(0, beeType.Key.Length - 3);
+                if (noun == "jetpack")
+                    noun = "rocket";
+                if (noun == "basebee")
+                    desc += $"\n• {Style.CK(beeType.Value.ToString("F0"))} bees";
+                else
+                    desc +=
+                        $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK(beeType.Key, "noun_" + noun)} bees";
+            }
         }
         return desc;
     }

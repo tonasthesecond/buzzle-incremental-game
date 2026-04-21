@@ -58,6 +58,7 @@ animations = [{
 
 [node name="Clover" unique_id=1691567109 instance=ExtResource("1_3ukkp")]
 script = ExtResource("2_7jxwf")
+FlavorText = "This [noun_flower](flower) produces no extra honey, with a chance of jackpot, producing significant honey."
 ObjectName = "Clover"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]

@@ -4,22 +4,20 @@ public abstract partial class EffectZoneComponent : Area2D
 {
     public Stat Radius { get; set; } = new(GameStore.TILE_SIZE / 2);
     public Stat FadeoutTime { get; set; } = new(1f);
-
     protected Timer fadeTimer;
-
     protected CollisionShape2D collisionShape;
     protected bool active = false;
+
+    protected HeatVaporParticles heatVapor;
 
     public override void _Ready()
     {
         BodyEntered += OnBodyEntered;
         BodyExited += OnBodyExited;
-
         // collision shape
         collisionShape = GetNode<CollisionShape2D>("%CollisionShape");
         collisionShape.Shape = new CircleShape2D();
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
-
         // fade timer
         fadeTimer = new Timer { OneShot = true, WaitTime = FadeoutTime.Value };
         AddChild(fadeTimer);
@@ -27,14 +25,14 @@ public abstract partial class EffectZoneComponent : Area2D
         {
             Hide();
             active = false;
-            // call exited event for all bees in the zone
+            heatVapor?.Set(GpuParticles2D.PropertyName.Emitting, false);
             foreach (var body in GetOverlappingBodies())
                 if (body is Bee bee)
                     OnBeeExited(bee);
         };
-
         // immediately hide
         Hide();
+        heatVapor = GetNode<HeatVaporParticles>("%HeatVapor");
     }
 
     private void OnBodyEntered(Node2D body)
@@ -54,6 +52,7 @@ public abstract partial class EffectZoneComponent : Area2D
         fadeTimer.Stop();
         active = true;
         Show();
+        heatVapor?.Set(GpuParticles2D.PropertyName.Emitting, true);
         foreach (var body in GetOverlappingBodies())
             if (body is Bee bee)
                 OnBeeEntered(bee);
@@ -63,6 +62,7 @@ public abstract partial class EffectZoneComponent : Area2D
     {
         fadeTimer.WaitTime = FadeoutTime.Value;
         fadeTimer.Start();
+        heatVapor?.Set(GpuParticles2D.PropertyName.Emitting, false);
     }
 
     protected abstract void OnBeeEntered(Bee bee);

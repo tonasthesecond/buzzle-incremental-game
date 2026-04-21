@@ -29,11 +29,13 @@ public abstract partial class Bee
     public bool? FlipOverride = null;
     private float spriteY = 0f;
 
+    public string HoneySource { get; set; } = "";
+
     // cached services
     private Grid grid = null!;
     private BeeSystem beeSystem = null!;
     public Sprite2D Sprite = null!;
-    private CpuParticles2D drip = null!;
+    private GpuParticles2D drip = null!;
 
     /// Apply stat modifiers to the bee on spawn.
     public virtual void ApplyStats(Bee bee) { }
@@ -54,11 +56,9 @@ public abstract partial class Bee
     )
     {
         BeeSystem beeSystem = Services.Get<BeeSystem>()!;
-        int harvesters = beeSystem.GetBeesWithJob<HarvesterJob>().Length;
-        int pollinators = beeSystem.GetBeesWithJob<PollinatorJob>().Length;
-        if (harvesters < pollinatedFlowers.Length)
+        if (pollinatedFlowers.Length > 0)
             return HarvestJob();
-        if (pollinators < unpollinatedFlowers.Length)
+        if (unpollinatedFlowers.Length > 0)
             return PollinateJob();
         return null;
     }
@@ -113,7 +113,7 @@ public abstract partial class Bee
         Sprite = GetNode<Sprite2D>("Sprite2D")!;
         grid = Services.Get<Grid>()!;
         beeSystem = Services.Get<BeeSystem>()!;
-        drip = Services.Get<ParticleSystem>().AttachHoneyDrip(this);
+        drip = GetNode<GpuParticles2D>("%HoneyDrip");
         Callable.From(() => targetPosition = Position).CallDeferred();
     }
 

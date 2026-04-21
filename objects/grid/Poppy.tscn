@@ -46,6 +46,7 @@ animations = [{
 
 [node name="Poppy" unique_id=1691567109 instance=ExtResource("1_epoqe")]
 script = ExtResource("2_rjt5a")
+FlavorText = "This [noun_flower](flower) costs little, produces little, and quick to pollinate."
 ObjectName = "Poppy"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]

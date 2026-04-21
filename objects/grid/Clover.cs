@@ -31,12 +31,18 @@ public partial class Clover : Flower
             sprite.Play("jackpot");
     }
 
-    public override string GetHoverDescription()
+    protected override string GetTechnicalText()
     {
-        string desc =
-            $"{Style.CK("Flower", "noun_flower")} that has a  {Style.CKPercent(1f - GameStore.CloverJackpotChance.Value)} chance of producing {Style.CK(GameStore.CloverRegularHoneyGain.Value.ToString("F0"))} honey and a {Style.CKPercent(GameStore.CloverJackpotChance.Value)} chance of jackpot, producing {Style.CK(GameStore.CloverJackpotHoneyGain.Value.ToString("F0"))} honey.";
-        if (isJackpot)
-            desc += "\nThis flower is a jackpot!";
+        string desc = "";
+        desc +=
+            $"{Style.CK("Regular Prod.")}: {Style.CK(GameStore.CloverRegularHoneyGain.Value.ToString("F0"))} honey\n";
+        desc +=
+            $"{Style.CK("Jackpot Chance")}: {Style.CKPercent(GameStore.CloverJackpotChance.Value)}\n";
+        desc +=
+            $"{Style.CK("Jackpot Prod.")}: {Style.CK(GameStore.CloverJackpotHoneyGain.Value.ToString("F0"))} honey\n";
+        desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
+        desc +=
+            $"{Style.CK("Pol. Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
         return desc;
     }
 }

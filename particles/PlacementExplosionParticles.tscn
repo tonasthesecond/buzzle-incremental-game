@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://vkecggc367du"]
+
+[ext_resource type="Shader" uid="uid://ddjx4se5tn358" path="res://resources/shaders/placement_explosion.gdshader" id="1_lsfjk"]
+[ext_resource type="Script" uid="uid://xl5tbpavagol" path="res://particles/PlacementExplosionParticles.cs" id="2_cvsul"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvsul"]
+shader = ExtResource("1_lsfjk")
+shader_parameter/burst_speed_min = 50.0
+shader_parameter/burst_speed_max = 100.0
+shader_parameter/damping = 3.0
+shader_parameter/particle_size = 1.0
+shader_parameter/linger_start = 0.6
+shader_parameter/gravity = 200.0
+
+[node name="PlacementExplosion" type="GPUParticles2D" unique_id=48595200]
+emitting = false
+amount = 64
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ShaderMaterial_cvsul")
+script = ExtResource("2_cvsul")

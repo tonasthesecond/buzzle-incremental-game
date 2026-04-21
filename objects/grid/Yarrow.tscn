@@ -70,6 +70,7 @@ animations = [{
 
 [node name="Yarrow" unique_id=1691567109 instance=ExtResource("1_gsxrk")]
 script = ExtResource("2_gsxrk")
+FlavorText = "This [noun_flower](flower) produces more the more of its kind are neighbors."
 ObjectName = "Yarrow"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]

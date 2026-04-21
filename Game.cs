@@ -57,5 +57,12 @@ public partial class Game : GameSystem
             GD.Print("Saved Game!");
             GameStore.SaveGame();
         }
+        if (Input.IsActionJustPressed("test"))
+        {
+            foreach (string source in Services.Get<HoneyTracker>().GetHPSBySource().Keys)
+            {
+                GD.Print($"{source}: {Services.Get<HoneyTracker>().GetHPSBySource()[source]:P2}");
+            }
+        }
     }
 }

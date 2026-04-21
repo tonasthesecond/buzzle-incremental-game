@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://bfmgg3fmm16x0"]
 
+[ext_resource type="PackedScene" uid="uid://biil1snh7w0n1" path="res://particles/HeatVaporParticles.tscn" id="1_nsj3d"]
+
 [node name="EffectZoneComponent" type="Area2D" unique_id=513508709]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=995929508]
 unique_name_in_owner = true
+
+[node name="HeatVapor" parent="." unique_id=1329572307 instance=ExtResource("1_nsj3d")]
+unique_name_in_owner = true
+emitting = false
