@@ -46,6 +46,7 @@ animations = [{
 
 [node name="Sunflower" unique_id=1691567109 instance=ExtResource("1_bn22v")]
 script = ExtResource("2_lclig")
+FlavorText = "This large [noun_flower](flower) that costs more but produces more."
 ObjectName = "Sunflower"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]

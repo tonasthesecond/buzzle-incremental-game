@@ -230,6 +230,26 @@
 	  "X": 0,
 	  "Y": 0,
 	  "Type": "Hive"
+	},
+	{
+	  "X": 2,
+	  "Y": 0,
+	  "Type": "Sunflower"
+	},
+	{
+	  "X": -2,
+	  "Y": 0,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 0,
+	  "Y": -2,
+	  "Type": "Yarrow"
+	},
+	{
+	  "X": 0,
+	  "Y": 2,
+	  "Type": "Rose"
 	}
   ],
   "UnlockedKeys": []

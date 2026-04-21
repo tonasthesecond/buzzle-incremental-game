@@ -12,7 +12,7 @@ public partial class BeeCountDisplay : NumberDisplay
             GD.PrintErr("[BeeCountDisplay] BeeSystem not found");
             return;
         }
-        beeSystem.OnBeeSpawned += (_) => SetNumber(beeSystem.GetBeeCount());
+        beeSystem.BeeSpawned += (_) => SetNumber(beeSystem.GetBeeCount());
         SetNumber(beeSystem.GetBeeCount());
     }
 }

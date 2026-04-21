@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
@@ -67,11 +66,13 @@ public partial class PlacementSystem : GameSystem
             else
             {
                 instance.QueueFree();
+                ClearHoverText();
                 CurMode = Mode.None;
                 return;
             }
 
             selectedType = instance.GetType();
+            UpdateHoverText(selectedType);
             instance.QueueFree();
             selectedScene = scene;
         };
@@ -80,11 +81,10 @@ public partial class PlacementSystem : GameSystem
         {
             selectedScene = null;
             selectedType = null;
+            ClearHoverText();
             CurMode = Mode.None;
         };
     }
-
-    // --- Cost ---
 
     /// Deduct cost if affordable. Returns false + fail on rejection.
     private bool TryCharge(Type? t, out FailMessage? fail)
@@ -104,7 +104,45 @@ public partial class PlacementSystem : GameSystem
             return false;
         }
         GameStore.Honey -= cost;
+        UpdateHoverText(t);
         return true;
+    }
+
+    private GameStore.HoneyChangedEventHandler? honeyChangedHandler;
+
+    private void UpdateHoverText(Type? t)
+    {
+        // clear any existing subscription first
+        if (honeyChangedHandler != null)
+        {
+            GameStore.Instance.HoneyChanged -= honeyChangedHandler;
+            honeyChangedHandler = null;
+        }
+
+        void show()
+        {
+            bool enough = t != null && GameStore.Honey >= GameStore.GetPlacementCost(t);
+            Services
+                .Get<HoverLabel>()
+                .ShowMessage(
+                    "$" + GameStore.GetPlacementCost(t).ToString(),
+                    new Color(GameStore.Colors["price_" + (enough ? "" : "not_") + "enough"])
+                );
+        }
+
+        honeyChangedHandler = (_) => show();
+        GameStore.Instance.HoneyChanged += honeyChangedHandler;
+        show();
+    }
+
+    private void ClearHoverText()
+    {
+        if (honeyChangedHandler != null)
+        {
+            GameStore.Instance.HoneyChanged -= honeyChangedHandler;
+            honeyChangedHandler = null;
+        }
+        Services.Get<HoverLabel>().HideMessage();
     }
 
     // Highlighting
@@ -235,7 +273,7 @@ public partial class PlacementSystem : GameSystem
         if (fail != null)
         {
             GD.Print($"[PlacementSystem] {fail.Log}");
-            Services.Get<ErrorLabel>().ShowError(fail);
+            Services.Get<HoverLabel>().ShowError(fail);
         }
     }
 }

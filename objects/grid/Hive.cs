@@ -47,23 +47,18 @@ public partial class Hive : BaseGridObject
 
     public override string GetHoverDescription()
     {
-        Dictionary<string, int> beeCounts = GetBeeCounts();
         string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
-        Dictionary<string, int> beeTypesCounts = new();
-        foreach (Bee bee in Bees)
-        {
-            string type = bee.BeeTypeName;
-            beeTypesCounts.TryGetValue(type, out int cur);
-            beeTypesCounts[type] = cur + 1;
-        }
-        foreach (KeyValuePair<string, int> beeType in beeTypesCounts)
-        {
-            string noun = beeType.Key.ToLower();
-            if (noun == "")
-                desc += $"\n{beeType.Value} bees";
-            else
-                desc += $"\n{beeType.Value} {Style.CK(beeType.Key, "noun_" + noun)} bees";
-        }
+        if (GetBeeCounts().Count == 0)
+            desc += "\nNo bees in this hive.";
+        else
+            foreach (KeyValuePair<string, int> beeType in GetBeeCounts())
+            {
+                string noun = beeType.Key.ToLower();
+                if (noun == "")
+                    desc += $"\n{beeType.Value} bees";
+                else
+                    desc += $"\n{beeType.Value} {Style.CK(beeType.Key, "noun_" + noun)} bees";
+            }
         return desc;
     }
 }

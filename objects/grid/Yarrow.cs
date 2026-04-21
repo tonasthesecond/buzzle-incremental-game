@@ -8,20 +8,48 @@ public partial class Yarrow : Flower
         new(() => GameStore.YarrowPollinationTime.Value);
     public override Stat HoneyGain { set; get; }
 
+    const string YarrowNeighborsKey = "neighbor";
+
     public Yarrow()
     {
-        HoneyGain = new(() =>
-        {
-            int neighbors = GetYarrowNeighbors();
-            return GameStore.YarrowHoneyGain.Value
-                * (1f + neighbors * GameStore.YarrowPerSameNeighborHoneyGainBuff.Value);
-        });
+        HoneyGain = new(() => GameStore.YarrowHoneyGain.Value);
+
+        // TEST: optimize by adding a condition
+        SignalBus.Instance.GridObjectPlaced += (_) => UpdateNeighborBonus();
+        SignalBus.Instance.GridObjectRemoved += (_) => UpdateNeighborBonus();
+
+        // also update when the store value changes
+        GameStore.YarrowPerSameNeighborHoneyGainBuff.Changed += UpdateNeighborBonus;
     }
 
-    public override string GetHoverDescription()
+    private void UpdateNeighborBonus()
     {
+        if (!Placed)
+            return;
         int neighbors = GetYarrowNeighbors();
-        return $"Yarrow | neighbors: {neighbors} | honey: {HoneyGain.Value:F2}";
+        HoneyGain.AddFlat(
+            YarrowNeighborsKey,
+            neighbors * GameStore.YarrowPerSameNeighborHoneyGainBuff.Value
+        );
+    }
+
+    protected override string GetTechnicalText()
+    {
+        string desc = base.GetTechnicalText();
+        float bonusPerNeighbor = GameStore.YarrowPerSameNeighborHoneyGainBuff.Value;
+
+        if (Placed)
+        {
+            int neighbors = GetYarrowNeighbors();
+            desc +=
+                $"\n{Style.CK("Yarrow Neighbor Buff", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey))} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
+        }
+        else
+        {
+            desc +=
+                $"\n{Style.CK("Companionship", "noun_yarrow")}: +{Style.CKPercent(GameStore.YarrowPerSameNeighborHoneyGainBuff.Value)} per {Style.CK("Yarrow", "noun_yarrow")} neighbor";
+        }
+        return desc;
     }
 
     private int GetYarrowNeighbors()

@@ -29,7 +29,6 @@
 [ext_resource type="PackedScene" uid="uid://rtbaieb6a50t" path="res://objects/grid/Sunflower.tscn" id="21_5he1h"]
 [ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
-[ext_resource type="Script" uid="uid://g0qahamkd0yh" path="res://ui/ErrorLabel.cs" id="23_w2501"]
 [ext_resource type="PackedScene" uid="uid://brb5bcs3dh361" path="res://objects/grid/Yarrow.tscn" id="23_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
@@ -45,6 +44,7 @@
 [ext_resource type="Script" uid="uid://eem2ebdmliip" path="res://resources/RemoveBee.cs" id="36_7vltt"]
 [ext_resource type="PackedScene" uid="uid://cyqsoj4m042r5" path="res://objects/bees/RocketBee.tscn" id="36_8576b"]
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
+[ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7324"]
 texture = ExtResource("17_eu6ph")
@@ -403,12 +403,15 @@ script = ExtResource("21_0mevm")
 
 [node name="ObjectPreview" parent="UILayer" unique_id=705468323 instance=ExtResource("24_bisgb")]
 
-[node name="ErrorLabel" type="Label" parent="UILayer" unique_id=624382264]
+[node name="HoverLabel" type="Label" parent="UILayer" unique_id=624382264]
 modulate = Color(0.9835215, 0.31671628, 0.247318, 1)
 offset_right = 83.0
 offset_bottom = 11.0
 pivot_offset_ratio = Vector2(0.5, 1)
 theme = ExtResource("22_0mevm")
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
 text = "error message right now"
 horizontal_alignment = 1
-script = ExtResource("23_w2501")
+script = ExtResource("45_iueff")
+offset = Vector2(0, -32)

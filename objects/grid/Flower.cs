@@ -116,7 +116,26 @@ public partial class Flower
         return "";
     }
 
-    public override string GetHoverDescription() => "";
+    [Export]
+    public string FlavorText { get; set; } = "";
+
+    public sealed override string GetHoverDescription()
+    {
+        string desc = Style.ParseFlavorText(FlavorText);
+        if (GetTechnicalText() != "")
+            desc += "\n\n" + GetTechnicalText();
+        return desc;
+    }
+
+    protected virtual string GetTechnicalText()
+    {
+        string desc = "";
+        desc += $"{Style.CK("Total Prod.")}: {Style.CK(HoneyGain.Value.ToString("F0"))} honey\n";
+        desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
+        desc +=
+            $"{Style.CK("Pol. Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
+        return desc;
+    }
 
     private readonly Dictionary<Action, HoneyChangedEventHandler> _refreshHandlers = new();
     private readonly Dictionary<Action, PollinatedEventHandler> _pollinatedHandlers = new();

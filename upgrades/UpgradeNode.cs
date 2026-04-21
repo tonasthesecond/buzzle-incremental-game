@@ -67,7 +67,7 @@ public partial class UpgradeNode
             if (Upgrade.Buy(out failMessage)) { }
             else
             {
-                Services.Get<ErrorLabel>().ShowError(failMessage);
+                Services.Get<HoverLabel>().ShowError(failMessage);
                 GD.Print($"[UpgradeNode] {failMessage.Log}");
             }
         }

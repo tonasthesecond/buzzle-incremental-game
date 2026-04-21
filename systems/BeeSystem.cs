@@ -7,7 +7,7 @@ using Godot;
 public partial class BeeSystem : GameSystem
 {
     [Signal]
-    public delegate void OnBeeSpawnedEventHandler(Bee bee);
+    public delegate void BeeSpawnedEventHandler(Bee bee);
 
     private Dictionary<BaseGridObject, Bee> claimedObjects = new();
 
@@ -92,7 +92,7 @@ public partial class BeeSystem : GameSystem
         var bee = scene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home);
-        EmitSignal(SignalName.OnBeeSpawned, bee);
+        EmitSignal(SignalName.BeeSpawned, bee);
         return bee;
     }
 

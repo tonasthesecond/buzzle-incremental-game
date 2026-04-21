@@ -124,13 +124,6 @@ public partial class Grid : Node2D
             obj.Placed = true;
             obj.GridPosition = pos;
             objects[pos] = obj;
-
-            // if (obj is HiveGridObject hive)
-            // {
-            //     var savedHive = save.Hives.FirstOrDefault(h => h.X == pos.X && h.Y == pos.Y);
-            //     if (savedHive != null)
-            //         hive.BeeCount = savedHive.BeeCount;
-            // }
         }
 
         SyncTilemap();
@@ -227,7 +220,10 @@ public partial class Grid : Node2D
         if (objects.ContainsKey(pos))
         {
             obj.QueueFree();
-            failMessage = new FailMessage($"Object already at {pos}.", "Tile has an object!");
+            failMessage = new FailMessage(
+                $"Object already at {pos}.",
+                "Tile already has an object!"
+            );
             return false;
         }
 

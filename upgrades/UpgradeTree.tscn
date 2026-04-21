@@ -343,7 +343,7 @@ UnlockKey = "Queen"
 Name = "Queen Bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_cjepv")
-FlavorText = "Unlock [noun_queen](Queen bee), a [noun_bee](bee) that doesn't do work, but boost the speed of [noun_bee](bees) around it."
+FlavorText = "Unlock [noun_queen](Queen bee), a [noun_bee](bee) that doesn't do work, but boost [noun_bee](bees) around it."
 metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="Resource" id="Resource_mqxrb"]
@@ -414,7 +414,7 @@ script = ExtResource("30_0qucf")
 Name = "Befitting a Queen"
 MaxLevel = 1
 CostScaler = SubResource("Resource_ih80e")
-FlavorText = "[noun_queen](Queen bees) are drawn to [noun_rose](Roses) and moves towards them."
+FlavorText = "[noun_queen](Queen bees) desire beautiful [noun_rose](Roses)."
 metadata/_custom_type_script = "uid://dyjcdahhyrvt8"
 
 [sub_resource type="Resource" id="Resource_canik"]
@@ -647,7 +647,7 @@ UnlockKey = "Fat"
 Name = "Fat bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_vml0s")
-FlavorText = "Unlock [noun_fat](Fat bee), a caste of [noun_bee](bees) that can carry significant honey, but slow."
+FlavorText = "Unlock [noun_fat](Fat bee), a caste of [noun_bee](bees) that ate too much honey, becoming slow in movement but can carry more honey."
 metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="Resource" id="Resource_ty56o"]
@@ -687,7 +687,7 @@ UnlockKey = "Rocket"
 Name = "Jetpack Bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_8ldxa")
-FlavorText = "Unlock [noun_rocket](Rocket bee), a caste of [noun_bee](bees) that charges before launching to their target destination."
+FlavorText = "Unlock [noun_rocket](Jetpack bee), a caste of [noun_bee](bees) that uses jetpakcs to launch to their destinations. Probably safe."
 metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="Resource" id="Resource_1pdsp"]
