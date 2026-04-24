@@ -7,8 +7,7 @@ public partial class LoamYarrowHoneyGainBuffUO : IUpgradeOption
     public float IncreaseBy { get; set; } = 0.1f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Loam", "noun_loam")} boost {Style.CK("Yarrows", "noun_yarrow")}' honey production by {Style.NumberChange(GameStore.LoamYarrowHoneyGainBuff.Value, GameStore.LoamYarrowHoneyGainBuff.Value + IncreaseBy)}";
+        $"{Style.CK("Loam", "noun_loam")} tiles boost {Style.CK("Yarrows'", "noun_yarrow")} honey by {Style.NCPercent(GameStore.LoamYarrowHoneyGainBuff.Value, GameStore.LoamYarrowHoneyGainBuff.Value + IncreaseBy, !IsMaxLevel())}";
 
-    public override void Apply() =>
-        GameStore.LoamYarrowHoneyGainBuff.AddFlat(Name, IncreaseBy * Level);
+    public override void Apply() => GameStore.LoamYarrowHoneyGainBuff.AddFlat(Name, IncreaseBy * Level);
 }

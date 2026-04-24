@@ -41,8 +41,13 @@ public partial class Yarrow : Flower
         if (Placed)
         {
             int neighbors = GetYarrowNeighbors();
-            desc +=
-                $"\n{Style.CK("Yarrow Neighbor Buff", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey)!)} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
+            if (neighbors > 0)
+                desc +=
+                    $"\n{Style.CK("Companionship", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey)!)} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
+
+            if (GameStore.LoamYarrowHoneyGainBuff.Value > 0f)
+                desc +=
+                    $"\n{Style.CK("Natural Habitat", "noun_loam")}: +{Style.CKPercent(GameStore.LoamYarrowHoneyGainBuff.Value)} honey";
         }
         else
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Godot;
 
@@ -27,34 +28,63 @@ public class Style
     }
 
     /// --- Number Change ---
+    // format float without trailing .0 if whole
+    private static string FormatFloat(float value, int roundTo)
+    {
+        float rounded = MathF.Round(value, roundTo);
+        return rounded == MathF.Floor(rounded)
+            ? ((int)rounded).ToString()
+            : rounded.ToString($"F{roundTo}");
+    }
+
     private static string NumberChange(string originalValue, string newValue) =>
         $"[color={GameStore.Colors["number_original"]}]{originalValue}[/color] ➜ [color={GameStore.Colors["number_new"]}]{newValue}[/color]";
 
-    public static string NumberChange(int originalValue, int newValue) =>
-        NumberChange(originalValue.ToString(), newValue.ToString());
+    private static string NumberNew(string value) =>
+        $"[color={GameStore.Colors["number_new"]}]{value}[/color]";
 
-    public static string NumberChange(float originalValue, float newValue, int roundTo = 1)
-    {
-        string fmt = $"F{roundTo}";
-        return NumberChange(originalValue.ToString(fmt), newValue.ToString(fmt));
-    }
+    public static string NumberChange(int originalValue, int newValue, bool showChange = true) =>
+        showChange
+            ? NumberChange(originalValue.ToString(), newValue.ToString())
+            : NumberNew(originalValue.ToString());
 
-    public static string NumberChangePercent(float originalValue, float newValue)
-    {
-        return NumberChange(originalValue * 100, newValue * 100, 0) + "%";
-    }
+    public static string NumberChange(
+        float originalValue,
+        float newValue,
+        int roundTo = 1,
+        bool showChange = true
+    ) =>
+        showChange
+            ? NumberChange(FormatFloat(originalValue, roundTo), FormatFloat(newValue, roundTo))
+            : NumberNew(FormatFloat(originalValue, roundTo));
 
-    public static string NC(float originalValue, float newValue, int roundTo = 1) =>
-        NumberChange(originalValue, newValue, roundTo);
+    public static string NumberChangePercent(
+        float originalValue,
+        float newValue,
+        bool showChange = true
+    ) =>
+        showChange
+            ? NumberChange(
+                MathF.Round(originalValue * 100).ToString("F0"),
+                MathF.Round(newValue * 100).ToString("F0")
+            ) + "%"
+            : NumberNew(MathF.Round(originalValue * 100).ToString("F0")) + "%";
 
-    public static string NC(int originalValue, int newValue) =>
-        NumberChange(originalValue, newValue);
+    public static string NC(
+        float originalValue,
+        float newValue,
+        int roundTo = 1,
+        bool showChange = true
+    ) => NumberChange(originalValue, newValue, roundTo, showChange);
 
-    public static string NC(string originalValue, string newValue) =>
-        NumberChange(originalValue, newValue);
+    public static string NC(int originalValue, int newValue, bool showChange = true) =>
+        NumberChange(originalValue, newValue, showChange);
 
-    public static string NCPercent(float originalValue, float newValue) =>
-        NumberChangePercent(originalValue, newValue);
+    public static string NC(string originalValue, string newValue, bool showChange = true) =>
+        showChange ? NumberChange(originalValue, newValue) : NumberNew(originalValue);
+
+    public static string NCPercent(float originalValue, float newValue, bool showChange = true) =>
+        NumberChangePercent(originalValue, newValue, showChange);
 
     /// --- Title ---
     public static string Title(string text) =>

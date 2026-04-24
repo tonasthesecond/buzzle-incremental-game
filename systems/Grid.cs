@@ -283,7 +283,7 @@ public partial class Grid : Node2D
         if (obj is Hive hive)
         {
             foreach (Bee bee in hive.Bees)
-                bee.QueueFree();
+                bee.Remove();
         }
         obj.QueueFree();
         objects.Remove(pos);

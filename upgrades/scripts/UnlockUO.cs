@@ -8,11 +8,12 @@ public partial class UnlockUO : IUpgradeOption
 
     public override int MaxLevel { get; set; } = 1;
 
-    public override string GetTechnicalText() => $"";
+    public override string GetTechnicalText() => "";
 
     public override void Apply()
     {
-        if (Level > 0)
-            GameStore.Unlock(UnlockKey);
+        if (Level <= 0)
+            return;
+        GameStore.Unlock(UnlockKey);
     }
 }

@@ -2,6 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="1_adiur"]
 [ext_resource type="Script" uid="uid://c11diginan2l4" path="res://objects/bees/RocketBee.cs" id="2_ge5v6"]
+[ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="3_ge5v6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjd5b"]
+atlas = ExtResource("3_ge5v6")
+region = Rect2(0, 32, 32, 32)
 
 [node name="RocketBee" unique_id=384287205 instance=ExtResource("1_adiur")]
 script = ExtResource("2_ge5v6")
@@ -9,4 +14,4 @@ BeeTypeName = "Jetpack"
 Description = "Caste of [noun_bee](bees) that charges before launching to their target destination."
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
-modulate = Color(0, 0.6745098, 0.8352941, 1)
+texture = SubResource("AtlasTexture_mjd5b")

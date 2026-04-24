@@ -13,6 +13,7 @@ public partial class BeeCountDisplay : NumberDisplay
             return;
         }
         beeSystem.BeeSpawned += (_) => SetNumber(beeSystem.GetBeeCount());
+        beeSystem.BeeRemoved += () => SetNumber(beeSystem.GetBeeCount());
         SetNumber(beeSystem.GetBeeCount());
     }
 }

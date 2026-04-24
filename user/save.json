@@ -1,25 +1,25 @@
 {
-  "Honey": 11,
+  "Honey": 1790,
   "Upgrades": [
 	{
 	  "Id": "PoppierPoppies",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "GrassUnlock",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "NaturalHabitatPoppy",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "GreenerOnYourSide",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "RoseUnlock",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "Hermit",
@@ -31,27 +31,27 @@
 	},
 	{
 	  "Id": "CloverUnlock",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "Luckier",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "EvenLuckier",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "RiskyPlay",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "Jackpot",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "PayDay",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "FinalGambit",
@@ -59,43 +59,43 @@
 	},
 	{
 	  "Id": "NaturalHabitatClover",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "SpreadWarmth",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "Smoky",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "Smokier",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "QueenUnlock",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "HerDomain",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "HerInfluence",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "HerWill",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "Matriarchy",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "BefittingAQueen",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "BeesAssemble",
@@ -103,19 +103,19 @@
 	},
 	{
 	  "Id": "Impression",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "Presence",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "AlwaysHereForYou",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "HurryUp",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "SunflowerUnlock",
@@ -127,7 +127,7 @@
 	},
 	{
 	  "Id": "SpaciousHives",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "SqueezeMoreIn",
@@ -151,19 +151,19 @@
 	},
 	{
 	  "Id": "ZoomZoom",
-	  "Level": 0
+	  "Level": 4
 	},
 	{
 	  "Id": "HoneyHungry",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "FatUnlock",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "EvenFatterFatBees",
-	  "Level": 0
+	  "Level": 3
 	},
 	{
 	  "Id": "Gigantism",
@@ -199,31 +199,75 @@
 	},
 	{
 	  "Id": "InfiniteGluttony",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "Rainbow",
-	  "Level": 0
+	  "Level": 1
 	}
   ],
   "Hives": [
 	{
 	  "X": 0,
-	  "Y": -1,
-	  "BeeCounts": {}
-	},
-	{
-	  "X": 1,
-	  "Y": -1,
+	  "Y": 0,
 	  "BeeCounts": {
-		"QueenBee": 1
+		"FatBee": 6
 	  }
 	},
 	{
 	  "X": 0,
-	  "Y": 1,
+	  "Y": -2,
 	  "BeeCounts": {
-		"QueenBee": 1
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": 2,
+	  "Y": -2,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": 2,
+	  "Y": 2,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": 4,
+	  "Y": 3,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": -2,
+	  "Y": 2,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": 4,
+	  "Y": 0,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": -4,
+	  "Y": 0,
+	  "BeeCounts": {
+		"FatBee": 6
+	  }
+	},
+	{
+	  "X": -2,
+	  "Y": -1,
+	  "BeeCounts": {
+		"QueenBee": 6
 	  }
 	}
   ],
@@ -238,23 +282,83 @@
 		],
 		[
 		  -2,
-		  2,
+		  -2,
 		  -1
 		],
 		[
+		  -4,
 		  -2,
-		  2,
+		  0
+		],
+		[
+		  0,
+		  0,
 		  0
 		],
 		[
 		  -2,
+		  -2,
+		  1
+		],
+		[
+		  2,
 		  2,
 		  1
 		],
 		[
 		  -2,
+		  -2,
+		  2
+		],
+		[
+		  2,
 		  2,
 		  2
+		]
+	  ]
+	},
+	{
+	  "Type": "GrassTile",
+	  "Spans": [
+		[
+		  -1,
+		  4,
+		  -1
+		],
+		[
+		  -1,
+		  -1,
+		  0
+		],
+		[
+		  1,
+		  4,
+		  0
+		],
+		[
+		  -1,
+		  1,
+		  1
+		],
+		[
+		  3,
+		  4,
+		  1
+		],
+		[
+		  -1,
+		  1,
+		  2
+		],
+		[
+		  3,
+		  4,
+		  2
+		],
+		[
+		  2,
+		  4,
+		  3
 		]
 	  ]
 	}
@@ -262,19 +366,193 @@
   "Objects": [
 	{
 	  "X": 0,
-	  "Y": -1,
+	  "Y": 0,
 	  "Type": "Hive"
 	},
 	{
-	  "X": 1,
+	  "X": -1,
+	  "Y": 0,
+	  "Type": "Clover"
+	},
+	{
+	  "X": -1,
 	  "Y": -1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 0,
+	  "Y": -1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": -1,
+	  "Y": 1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 1,
+	  "Y": 1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 0,
+	  "Y": -2,
+	  "Type": "Hive"
+	},
+	{
+	  "X": 2,
+	  "Y": -2,
 	  "Type": "Hive"
 	},
 	{
 	  "X": 0,
 	  "Y": 1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 2,
+	  "Y": 2,
 	  "Type": "Hive"
+	},
+	{
+	  "X": 1,
+	  "Y": -1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 1,
+	  "Y": 0,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 3,
+	  "Y": 1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 3,
+	  "Y": 2,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 4,
+	  "Y": 3,
+	  "Type": "Hive"
+	},
+	{
+	  "X": 2,
+	  "Y": 3,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 3,
+	  "Y": 3,
+	  "Type": "Clover"
+	},
+	{
+	  "X": -2,
+	  "Y": 2,
+	  "Type": "Hive"
+	},
+	{
+	  "X": 4,
+	  "Y": 1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 4,
+	  "Y": 0,
+	  "Type": "Hive"
+	},
+	{
+	  "X": -4,
+	  "Y": 0,
+	  "Type": "Hive"
+	},
+	{
+	  "X": 4,
+	  "Y": 2,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 3,
+	  "Y": 0,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 3,
+	  "Y": -1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 4,
+	  "Y": -1,
+	  "Type": "Clover"
+	},
+	{
+	  "X": -2,
+	  "Y": -1,
+	  "Type": "Hive"
+	},
+	{
+	  "X": 2,
+	  "Y": 1,
+	  "Type": "Rose"
+	},
+	{
+	  "X": 0,
+	  "Y": 2,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 1,
+	  "Y": 2,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 2,
+	  "Y": 0,
+	  "Type": "Clover"
+	},
+	{
+	  "X": -1,
+	  "Y": 2,
+	  "Type": "Clover"
+	},
+	{
+	  "X": 2,
+	  "Y": -1,
+	  "Type": "Clover"
 	}
   ],
-  "UnlockedKeys": []
+  "UnlockedKeys": [
+	"Clover",
+	"Clover",
+	"Grass",
+	"Grass",
+	"Clover",
+	"Grass",
+	"Clover",
+	"Grass",
+	"Clover",
+	"Fat",
+	"Grass",
+	"Clover",
+	"Fat",
+	"Grass",
+	"Clover",
+	"Fat",
+	"Grass",
+	"Clover",
+	"Fat",
+	"Queen",
+	"Rose",
+	"Rainbow",
+	"Grass",
+	"Rose",
+	"Clover",
+	"Queen",
+	"Fat",
+    "Rainbow"
+  ]
 }

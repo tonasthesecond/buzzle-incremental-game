@@ -7,10 +7,7 @@ public partial class BeeCapacityHoneyUO : IUpgradeOption
     public int IncreaseBy { get; set; } = 1;
 
     public override string GetTechnicalText() =>
-        $"Bees can carry {GameStore.BeeCapacityHoney.Value} ➞ {GameStore.BeeCapacityHoney.Value + IncreaseBy} honey.";
+        $"{Style.CK("Bees", "noun_bee")} can carry {Style.NC((int)GameStore.BeeCapacityHoney.Value, (int)(GameStore.BeeCapacityHoney.Value + IncreaseBy), !IsMaxLevel())} honey";
 
-    public override void Apply()
-    {
-        GameStore.BeeCapacityHoney.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.BeeCapacityHoney.AddFlat(Name, IncreaseBy * Level);
 }

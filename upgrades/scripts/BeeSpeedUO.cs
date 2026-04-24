@@ -8,11 +8,8 @@ public partial class BeeSpeedUO : IUpgradeOption
 
     private float value => GameStore.BeeSpeed.Value;
 
-    public override string GetTechnicalText() => 
-        $"{Style.CK("Bees", "noun_bee")} moves {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles per second.";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Bees", "noun_bee")} move at {Style.NC(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy), showChange: !IsMaxLevel())} tiles/s";
 
-    public override void Apply()
-    {
-        GameStore.BeeSpeed.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.BeeSpeed.AddFlat(Name, IncreaseBy * Level);
 }

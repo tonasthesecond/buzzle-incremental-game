@@ -7,8 +7,7 @@ public partial class QueenBeeBeePriceReductionBuffUO : IUpgradeOption
     public float IncreaseBy { get; set; } = 0.1f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Queen Bees", "noun_queen")} reduce {Style.CK("bees", "noun_bee")}' price by {Style.NumberChangePercent(GameStore.QueenBeeBeePriceReductionBuff.Value, GameStore.QueenBeeBeePriceReductionBuff.Value + IncreaseBy)}";
+        $"{Style.CK("Queen bees", "noun_queen")} reduce all {Style.CK("bee", "noun_bee")} prices by {Style.NCPercent(GameStore.QueenBeeBeePriceReductionBuff.Value, GameStore.QueenBeeBeePriceReductionBuff.Value + IncreaseBy, !IsMaxLevel())}";
 
-    public override void Apply() =>
-        GameStore.QueenBeeBeePriceReductionBuff.AddFlat(Name, IncreaseBy * Level);
+    public override void Apply() => GameStore.QueenBeeBeePriceReductionBuff.AddFlat(Name, IncreaseBy * Level);
 }

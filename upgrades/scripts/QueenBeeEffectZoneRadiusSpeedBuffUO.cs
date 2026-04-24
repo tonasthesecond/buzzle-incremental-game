@@ -9,8 +9,15 @@ public partial class QueenBeeEffectZoneRadiusSpeedBuffUO : IUpgradeOption
     [Export]
     public float IncreaseSpeedBuffBy { get; set; } = 0.1f;
 
-    public override string GetTechnicalText() =>
-        $"{Style.CK("Queen bees", "noun_queen")} speed up bee upto {Style.NumberChange(Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value), Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value + IncreaseRadiusBy))} tiles away\n{Style.CK("Queen bees", "noun_queen")} increase affected {Style.CK("bees", "noun_bee")}' speed by {Style.NumberChangePercent(GameStore.QueenBeeEffectZoneSpeedBuff.Value, GameStore.QueenBeeEffectZoneSpeedBuff.Value + IncreaseSpeedBuffBy)}";
+    public override string GetTechnicalText()
+    {
+        float radius = GameStore.QueenBeeEffectZoneRadius.Value;
+        float speed = GameStore.QueenBeeEffectZoneSpeedBuff.Value;
+        bool show = !IsMaxLevel();
+
+        return $"{Style.CK("Queen bee", "noun_queen")} aura range {Style.NC(Utils.PixelsToTiles(radius), Utils.PixelsToTiles(radius + IncreaseRadiusBy), 0, show)} tiles\n"
+            + $"{Style.CK("Queen bee", "noun_queen")} speed buff {Style.NCPercent(speed, speed + IncreaseSpeedBuffBy, show)}";
+    }
 
     public override void Apply()
     {

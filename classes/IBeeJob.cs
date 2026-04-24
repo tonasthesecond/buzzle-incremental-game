@@ -7,9 +7,48 @@ public interface IBeeJob
     void Tick(Bee bee);
 }
 
+public class NoneJob : IBeeJob
+{
+    public void Tick(Bee bee) { }
+}
+
 public class IdleJob : IBeeJob
 {
     public void Tick(Bee bee) => bee.FadeTo(0f);
+}
+
+public class GoToHiveJob : IBeeJob
+{
+    enum State
+    {
+        Initial,
+        Moving,
+        Arrived,
+    }
+
+    private State state = State.Initial;
+
+    public void Tick(Bee bee)
+    {
+        switch (state)
+        {
+            case State.Initial:
+                bee.MoveTo(bee.Home.GlobalPosition);
+                bee.Visible = true;
+                bee.FadeTo(1f);
+                state = State.Moving;
+                break;
+            case State.Moving:
+                if (bee.IsMoving)
+                    return;
+                state = State.Arrived;
+                break;
+            case State.Arrived:
+                bee.FadeTo(0f);
+                bee.SetJob(new IdleJob());
+                break;
+        }
+    }
 }
 
 /// Shared skeleton: seek flower -> [pre-move hook] -> travel -> arrive -> [animation] -> home.

@@ -33,7 +33,7 @@ public partial class GameStore : Node
     public const float QueenBeeBeePriceReductionBuffMax = 0.99f;
     public static bool QueenBeeLeashRose { get; set; } = false;
 
-    public static Stat FatBeeSpeedDebuff { get; } = new(0.4f);
+    public static Stat FatBeeSpeedDebuff { get; } = new(0.7f);
     public static Stat FatBeeCapacityHoneyBonus { get; } = new(5f);
     public static Stat FatBeeSpeedPerRocketBeeBuff { get; } = new(0f);
     public static bool FatBeeCapacityHoneyInfinite { get; set; } = false;
@@ -57,7 +57,7 @@ public partial class GameStore : Node
     public static Stat CloverHoneyCost { get; } = new(3f);
     public static Stat CloverRegularHoneyGain { get; } = new(3f);
     public static Stat CloverJackpotHoneyGain { get; set; } = new(7f);
-    public static Stat CloverPollinationTime { get; } = new(3f);
+    public static Stat CloverPollinationTime { get; } = new(5f);
     public static Stat CloverJackpotChance { get; set; } = new(0.1f);
 
     public static Stat YarrowHoneyCost { get; } = new(4f);
@@ -96,15 +96,15 @@ public partial class GameStore : Node
                 typeof(DirtTile),
                 new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
             },
-            { typeof(LoamTile), new PolynomialModel(15, 0.6f) },
+            { typeof(LoamTile), new PolynomialModel(10f, 0.6f) },
             { typeof(GrassTile), new PolynomialModel(10f, 0.7f) },
             {
                 typeof(BaseBee),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.7f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.5f))
             },
-            { typeof(FatBee), new PolynomialModel(10f, 0.8f) },
-            { typeof(RocketBee), new PolynomialModel(10f, 0.8f) },
-            { typeof(QueenBee), new PolynomialModel(50f, 0.7f) },
+            { typeof(FatBee), new PolynomialModel(10f, 0.6f) },
+            { typeof(RocketBee), new PolynomialModel(10f, 0.6f) },
+            { typeof(QueenBee), new PolynomialModel(50f, 0.6f) },
         };
 
     public static int GetPlacementCost(Type t)

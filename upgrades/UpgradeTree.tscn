@@ -6,53 +6,53 @@
 [ext_resource type="Script" uid="uid://dpgbociariu82" path="res://upgrades/scripts/PoppyHoneyGainUO.cs" id="4_dq57c"]
 [ext_resource type="Texture2D" uid="uid://caixw83chwdvm" path="res://assets/icons.png" id="5_mg5gc"]
 [ext_resource type="Script" uid="uid://bbl6u512llin" path="res://resources/scale_models/FlatModel.cs" id="6_c1vnt"]
-[ext_resource type="Script" uid="uid://bomacbqabtgga" path="res://upgrades/scripts/UnlockUO.cs" id="7_ftddy"]
+[ext_resource type="Script" uid="uid://bir51tihpl7rh" path="res://upgrades/scripts/UnlockUO.cs" id="7_ftddy"]
 [ext_resource type="Texture2D" uid="uid://g2kvdv8mijum" path="res://assets/tilemap_green.png" id="9_25eif"]
-[ext_resource type="Script" uid="uid://dibxskqnfspn4" path="res://upgrades/scripts/GrassHoneyGainBuffUO.cs" id="9_801hv"]
+[ext_resource type="Script" uid="uid://b4vak1hlbobxc" path="res://upgrades/scripts/GrassHoneyGainBuffUO.cs" id="9_801hv"]
 [ext_resource type="Texture2D" uid="uid://cod2igjain6ns" path="res://resources/atlases/frame_green.tres" id="10_s0uq4"]
 [ext_resource type="Script" uid="uid://bkk0od77fveep" path="res://resources/scale_models/PolynomialModel.cs" id="11_fnqkb"]
-[ext_resource type="Script" uid="uid://cux1ml5vs1tm" path="res://upgrades/scripts/RosePerTileFromHiveHoneyGainBonusUO.cs" id="12_85qk5"]
-[ext_resource type="Script" uid="uid://dyusmper7s3tl" path="res://upgrades/scripts/DirtPoppyHoneyGainBuffUO.cs" id="12_s0uq4"]
+[ext_resource type="Script" uid="uid://xfggdrl1oleh" path="res://upgrades/scripts/RosePerTileFromHiveHoneyGainBonusUO.cs" id="12_85qk5"]
+[ext_resource type="Script" uid="uid://c6n68muh17s2w" path="res://upgrades/scripts/DirtPoppyHoneyGainBuffUO.cs" id="12_s0uq4"]
 [ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="12_vfo37"]
-[ext_resource type="Script" uid="uid://cbtp54s86g153" path="res://upgrades/scripts/CloverJackpotChanceUO.cs" id="13_85qk5"]
+[ext_resource type="Script" uid="uid://cp5d8mlrxwfhf" path="res://upgrades/scripts/CloverJackpotChanceUO.cs" id="13_85qk5"]
 [ext_resource type="Texture2D" uid="uid://smcvi2fpigc" path="res://resources/atlases/frame_red.tres" id="13_cjepv"]
 [ext_resource type="Script" uid="uid://di5nnjlai4xot" path="res://upgrades/scripts/CloverJackpotChanceJackpotHoneyGainUO.cs" id="14_0hbup"]
 [ext_resource type="Texture2D" uid="uid://c1a8ec0hqx1vd" path="res://resources/atlases/frame_rainbow.tres" id="15_0qucf"]
 [ext_resource type="Script" uid="uid://cg6t6u15dxyx0" path="res://upgrades/scripts/CloverJackpotHoneyGainUO.cs" id="15_jvrcb"]
-[ext_resource type="Script" uid="uid://c8ml1ht2jj346" path="res://upgrades/scripts/RosePerEmptyNeighborHoneyGainBuffUO.cs" id="15_pmee0"]
-[ext_resource type="Script" uid="uid://crragbfhec5s2" path="res://upgrades/scripts/CloverJackpotChanceJackpotHoneyGainSetUO.cs" id="16_jvrcb"]
+[ext_resource type="Script" uid="uid://d3lg7dypvlel2" path="res://upgrades/scripts/RosePerEmptyNeighborHoneyGainBuffUO.cs" id="15_pmee0"]
+[ext_resource type="Script" uid="uid://c5k1fjm0wo7qr" path="res://upgrades/scripts/CloverJackpotChanceJackpotHoneyGainSetUO.cs" id="16_jvrcb"]
 [ext_resource type="Texture2D" uid="uid://cyxxlgjb7t4sa" path="res://resources/atlases/frame_purple.tres" id="18_6qo0q"]
-[ext_resource type="Script" uid="uid://eco5p6gpxqu5" path="res://upgrades/scripts/GrassCloverJackpotChanceBonusUO.cs" id="18_cte4y"]
-[ext_resource type="Script" uid="uid://b5gptt5qf7qnq" path="res://upgrades/scripts/BeekeeperEffectZoneRadiusUO.cs" id="19_upkeo"]
+[ext_resource type="Script" uid="uid://dxba5c4l8hr4" path="res://upgrades/scripts/GrassCloverJackpotChanceBonusUO.cs" id="18_cte4y"]
+[ext_resource type="Script" uid="uid://d3x3ywvbx37x" path="res://upgrades/scripts/BeekeeperEffectZoneRadiusUO.cs" id="19_upkeo"]
 [ext_resource type="Texture2D" uid="uid://dr6veu5ud1q4o" path="res://resources/atlases/frame_yellow.tres" id="20_f667q"]
-[ext_resource type="Script" uid="uid://db5tsqjg333o0" path="res://upgrades/scripts/BeekeeperEffectZoneSpeedBuffUO.cs" id="21_6qo0q"]
-[ext_resource type="Script" uid="uid://drcxuvuwf5dk3" path="res://upgrades/scripts/QueenBeeEffectZoneRadiusUO.cs" id="23_nigh1"]
-[ext_resource type="Script" uid="uid://chk64awtk8kdi" path="res://upgrades/scripts/QueenBeeEffectZoneSpeedBuffUO.cs" id="24_hbxd2"]
-[ext_resource type="Script" uid="uid://b5iugn0740237" path="res://upgrades/scripts/BeekeeperEffectZoneFadeoutTimeUO.cs" id="25_hbxd2"]
-[ext_resource type="Script" uid="uid://ng3sb3wsia6v" path="res://upgrades/scripts/BeekeeperEffectZoneNeverFade.cs" id="26_75vtr"]
-[ext_resource type="Script" uid="uid://c3emdo7qrw31g" path="res://upgrades/scripts/PoppyPollinationTimeUO.cs" id="27_75vtr"]
+[ext_resource type="Script" uid="uid://ck8v5qn2c8be2" path="res://upgrades/scripts/BeekeeperEffectZoneSpeedBuffUO.cs" id="21_6qo0q"]
+[ext_resource type="Script" uid="uid://bfdhpsb442vx8" path="res://upgrades/scripts/QueenBeeEffectZoneRadiusUO.cs" id="23_nigh1"]
+[ext_resource type="Script" uid="uid://c8w72wwulo00h" path="res://upgrades/scripts/QueenBeeEffectZoneSpeedBuffUO.cs" id="24_hbxd2"]
+[ext_resource type="Script" uid="uid://daldpwnflert1" path="res://upgrades/scripts/BeekeeperEffectZoneFadeoutTimeUO.cs" id="25_hbxd2"]
+[ext_resource type="Script" uid="uid://h0tdqba3hfun" path="res://upgrades/scripts/BeekeeperEffectZoneNeverFade.cs" id="26_75vtr"]
+[ext_resource type="Script" uid="uid://dqnw2fvxct1sw" path="res://upgrades/scripts/PoppyPollinationTimeUO.cs" id="27_75vtr"]
 [ext_resource type="Script" uid="uid://bmum0chjme3h4" path="res://resources/scale_models/ExponentialModel.cs" id="27_tcyta"]
-[ext_resource type="Script" uid="uid://bqwvwrati7y2r" path="res://upgrades/scripts/QueenBeeEffectZonePollinationTimeReductionBuffUO.cs" id="29_d6r41"]
-[ext_resource type="Script" uid="uid://h3271vl0m3x8" path="res://upgrades/scripts/HiveCapacityBeeUO.cs" id="29_vfo37"]
-[ext_resource type="Script" uid="uid://dyjcdahhyrvt8" path="res://upgrades/scripts/QueenBeeLeashRoseUO.cs" id="30_0qucf"]
-[ext_resource type="Script" uid="uid://dlo0qub5tf4ui" path="res://upgrades/scripts/QueenBeeBeePriceReductionBuffUO.cs" id="31_0qucf"]
-[ext_resource type="Script" uid="uid://tod0173ft425" path="res://upgrades/scripts/QueenBeeEffectZoneEverythingUO.cs" id="31_mdxam"]
-[ext_resource type="Script" uid="uid://dywr0eryk5vpc" path="res://upgrades/scripts/HiveCapacityBeePerBeeCasteBonusUO.cs" id="31_mqxrb"]
+[ext_resource type="Script" uid="uid://cc4mn047y3b7a" path="res://upgrades/scripts/QueenBeeEffectZonePollinationTimeReductionBuffUO.cs" id="29_d6r41"]
+[ext_resource type="Script" uid="uid://di601ocyux1b2" path="res://upgrades/scripts/HiveCapacityBeeUO.cs" id="29_vfo37"]
+[ext_resource type="Script" uid="uid://c0b1nigy0fd3y" path="res://upgrades/scripts/QueenBeeLeashRoseUO.cs" id="30_0qucf"]
+[ext_resource type="Script" uid="uid://brn80i53tyyfo" path="res://upgrades/scripts/QueenBeeBeePriceReductionBuffUO.cs" id="31_0qucf"]
+[ext_resource type="Script" uid="uid://da18orr160dl6" path="res://upgrades/scripts/QueenBeeEffectZoneEverythingUO.cs" id="31_mdxam"]
+[ext_resource type="Script" uid="uid://dfi7goroq55x" path="res://upgrades/scripts/HiveCapacityBeePerBeeCasteBonusUO.cs" id="31_mqxrb"]
 [ext_resource type="Script" uid="uid://dqy55wig5fjrt" path="res://upgrades/scripts/YarrowPerSameNeighborHoneyGainBuffUO.cs" id="32_a2873"]
-[ext_resource type="Script" uid="uid://cuyp0jsj48rwu" path="res://upgrades/scripts/BeeSpeedUO.cs" id="33_1ww1q"]
+[ext_resource type="Script" uid="uid://dj806dfrjw5dg" path="res://upgrades/scripts/BeeSpeedUO.cs" id="33_1ww1q"]
 [ext_resource type="Texture2D" uid="uid://j1f1m3udivnc" path="res://resources/atlases/frame_blue.tres" id="34_25eif"]
 [ext_resource type="Script" uid="uid://ceajcjsuncn1q" path="res://upgrades/scripts/SunflowerHoneyGainHoneyCostUO.cs" id="35_5mxo5"]
-[ext_resource type="Script" uid="uid://taxmnkanoeak" path="res://upgrades/scripts/FatBeeCapacityHoneyBonusUO.cs" id="35_r2e1u"]
+[ext_resource type="Script" uid="uid://c7eydwm2tem6g" path="res://upgrades/scripts/FatBeeCapacityHoneyBonusUO.cs" id="35_r2e1u"]
 [ext_resource type="Texture2D" uid="uid://dfp788lbo7pfe" path="res://assets/tilemap_cyan.png" id="37_r2e1u"]
-[ext_resource type="Script" uid="uid://w8owaql54efu" path="res://upgrades/scripts/LoamPollinationTimeReductionBuffUO.cs" id="38_rb3gu"]
-[ext_resource type="Script" uid="uid://ckjh2cg06c47x" path="res://upgrades/scripts/LoamYarrowHoneyGainBuffUO.cs" id="40_d8jsh"]
-[ext_resource type="Script" uid="uid://x76won3ygvdw" path="res://upgrades/scripts/RocketBeeIsolatedHarvestUO.cs" id="42_n8po2"]
-[ext_resource type="Script" uid="uid://dbfhk2e0slj6c" path="res://upgrades/scripts/RocketBeeSpeedBuffUO.cs" id="42_psuir"]
-[ext_resource type="Script" uid="uid://b3mr6nymxqvv5" path="res://upgrades/scripts/SunflowerHoneyGainPerFatBeeBonusUO.cs" id="43_08nwj"]
-[ext_resource type="Script" uid="uid://hno7niifmwh" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="44_f3y2j"]
-[ext_resource type="Script" uid="uid://d332a5n3ju154" path="res://upgrades/scripts/FatBeeCapacityHoneySetInfiniteUO.cs" id="46_psuir"]
-[ext_resource type="Script" uid="uid://biyjiqtn4dufi" path="res://upgrades/scripts/FatBeeSpeedBuffPerRocketBeeBonusUO.cs" id="50_cpb0m"]
-[ext_resource type="Script" uid="uid://c5bpw24jk6l6y" path="res://upgrades/scripts/RocketBeeCapacityHoneyPerFatBeeBonusUO.cs" id="51_f3y2j"]
+[ext_resource type="Script" uid="uid://dgmkchrmlo1hl" path="res://upgrades/scripts/LoamPollinationTimeReductionBuffUO.cs" id="38_rb3gu"]
+[ext_resource type="Script" uid="uid://bjh2tau7fiatq" path="res://upgrades/scripts/LoamYarrowHoneyGainBuffUO.cs" id="40_d8jsh"]
+[ext_resource type="Script" uid="uid://da6f2lwyeadmn" path="res://upgrades/scripts/RocketBeeIsolatedHarvestUO.cs" id="42_n8po2"]
+[ext_resource type="Script" uid="uid://clyevppqs880p" path="res://upgrades/scripts/RocketBeeSpeedBuffUO.cs" id="42_psuir"]
+[ext_resource type="Script" uid="uid://bfcus0280l2k" path="res://upgrades/scripts/SunflowerHoneyGainPerFatBeeBonusUO.cs" id="43_08nwj"]
+[ext_resource type="Script" uid="uid://chime3rv0fv7g" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="44_f3y2j"]
+[ext_resource type="Script" uid="uid://bikgiiypkq157" path="res://upgrades/scripts/FatBeeCapacityHoneySetInfiniteUO.cs" id="46_psuir"]
+[ext_resource type="Script" uid="uid://bpv7waomuyqb5" path="res://upgrades/scripts/FatBeeSpeedBuffPerRocketBeeBonusUO.cs" id="50_cpb0m"]
+[ext_resource type="Script" uid="uid://bosu5bea6ji25" path="res://upgrades/scripts/RocketBeeCapacityHoneyPerFatBeeBonusUO.cs" id="51_f3y2j"]
 
 [sub_resource type="Resource" id="Resource_vvd1a"]
 script = ExtResource("3_m26cu")
@@ -84,7 +84,6 @@ Name = "Grass Tile"
 MaxLevel = 1
 CostScaler = SubResource("Resource_801hv")
 FlavorText = "Unlock [noun_grass](Grass), a [noun_tile](tile) which boosts the honey production of [noun_flower](flowers)."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2e1u"]
 atlas = ExtResource("9_25eif")
@@ -188,7 +187,7 @@ metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_6qo0q"]
 script = ExtResource("13_85qk5")
-IncreaseBy = 0.025
+IncreaseBy = 0.05
 Name = "Luckier"
 MaxLevel = 3
 CostScaler = SubResource("Resource_mg5gc")
@@ -219,6 +218,7 @@ script = ExtResource("14_0hbup")
 IncreaseChanceBy = -0.05
 IncreaseHoneyGainBy = 10.0
 Name = "Risky Play"
+MaxLevel = 3
 CostScaler = SubResource("Resource_cte4y")
 FlavorText = "Do you risk it?"
 metadata/_custom_type_script = "uid://di5nnjlai4xot"
@@ -237,19 +237,19 @@ CostScaler = SubResource("Resource_hbxd2")
 FlavorText = "[noun_clover](Clovers)' jackpot produce more honey."
 metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
 
-[sub_resource type="Resource" id="Resource_yrpnl"]
+[sub_resource type="Resource" id="Resource_2napb"]
 script = ExtResource("6_c1vnt")
 Value = 777.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
-[sub_resource type="Resource" id="Resource_tcyta"]
-script = ExtResource("13_85qk5")
+[sub_resource type="Resource" id="Resource_m8ywj"]
+script = ExtResource("15_jvrcb")
 IncreaseBy = 5.0
 Name = "Pay Day"
 MaxLevel = 2
-CostScaler = SubResource("Resource_yrpnl")
+CostScaler = SubResource("Resource_2napb")
 FlavorText = "[noun_clover](Clovers) find even more honey on jackpot."
-metadata/_custom_type_script = "uid://cbtp54s86g153"
+metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
 
 [sub_resource type="Resource" id="Resource_vfo37"]
 script = ExtResource("6_c1vnt")
@@ -273,6 +273,7 @@ metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_s0uq4"]
 script = ExtResource("18_cte4y")
+IncreaseBy = 0.2
 Name = "Natural Habitat"
 MaxLevel = 1
 CostScaler = SubResource("Resource_25eif")
@@ -281,7 +282,7 @@ metadata/_custom_type_script = "uid://eco5p6gpxqu5"
 
 [sub_resource type="Resource" id="Resource_pmee0"]
 script = ExtResource("3_m26cu")
-Base = 100.0
+Base = 50.0
 Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
@@ -486,6 +487,7 @@ metadata/_custom_type_script = "uid://bmum0chjme3h4"
 
 [sub_resource type="Resource" id="Resource_08nwj"]
 script = ExtResource("27_75vtr")
+IncreaseBy = -0.25
 Name = "Hurry Up"
 MaxLevel = 5
 CostScaler = SubResource("Resource_f3y2j")
@@ -638,7 +640,7 @@ region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_vml0s"]
 script = ExtResource("6_c1vnt")
-Value = 400.0
+Value = 300.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_aauu0"]
@@ -785,7 +787,7 @@ metadata/_custom_type_script = "uid://d332a5n3ju154"
 
 [sub_resource type="Resource" id="Resource_fk1kx"]
 script = ExtResource("6_c1vnt")
-Value = 10000.0
+Value = 100000.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_eag0h"]
@@ -902,7 +904,7 @@ NodePath("../CloverUnlock"): 1
 
 [node name="PayDay" parent="." unique_id=517944291 instance=ExtResource("2_5s8lu")]
 position = Vector2(288, -224)
-UpgradeResource = SubResource("Resource_tcyta")
+UpgradeResource = SubResource("Resource_m8ywj")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../Jackpot"): 2

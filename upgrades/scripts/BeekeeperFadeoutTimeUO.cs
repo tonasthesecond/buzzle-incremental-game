@@ -1,18 +1,15 @@
-using System;
 using Godot;
 
+[GlobalClass]
 public partial class BeekeeperFadeoutTimeUO : IUpgradeOption
 {
     [Export]
     public float IncreaseBy { get; set; } = 1f;
 
-    private float value => GameStore.BeekeeperEffectZoneFadeoutTime.Value * 2;
+    private float value => GameStore.BeekeeperEffectZoneFadeoutTime.Value;
 
-    public override string GetTechnicalText() => 
-        $"{Style.CK("Beekeeper Fadeout Time", "noun_beekeeper")} decreases by {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles.";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Beekeeper aura", "noun_beekeeper")} fadeout time {Style.NC(value, value + IncreaseBy, showChange: !IsMaxLevel())}s";
 
-    public override void Apply()
-    {
-        GameStore.BeekeeperEffectZoneFadeoutTime.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.BeekeeperEffectZoneFadeoutTime.AddFlat(Name, IncreaseBy * Level);
 }

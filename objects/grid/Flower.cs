@@ -49,6 +49,11 @@ public partial class Flower
         base._Ready();
         // SetModulate();
         sprite.Play("unpollinated");
+
+        if (GD.Randi() % 2 == 0)
+            sprite.FlipH = true;
+        else
+            sprite.FlipH = false;
     }
 
     /// Pollinate the flower, adding honey.
@@ -90,7 +95,6 @@ public partial class Flower
     {
         sprite.Play("unpollinated");
         CurState = State.Pollinating;
-        // SetModulate();
         EmitSignal(SignalName.Emptied);
     }
 
@@ -130,10 +134,26 @@ public partial class Flower
     protected virtual string GetTechnicalText()
     {
         string desc = "";
-        desc += $"{Style.CK("Total Prod.")}: {Style.CK(HoneyGain.Value.ToString("F0"))} honey\n";
         desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
+        desc += $"{Style.CK("Total Prod.")}: {Style.CK(HoneyGain.Value.ToString("F0"))} honey\n";
         desc +=
             $"{Style.CK("Pol. Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
+        if (Placed)
+        {
+            desc += GetTileStats();
+        }
+        return desc;
+    }
+
+    protected string GetTileStats()
+    {
+        string desc = "";
+        if (HoneyGain.Get("grass") != null && HoneyGain.Get("grass") > 0f)
+            desc +=
+                $"\n{Style.CK("Grass Buff", "noun_grass")}: +{Style.CKPercent((float)HoneyGain.Get("grass")!)} honey";
+        if (HoneyGain.Get("loam") != null && HoneyGain.Get("loam") > 0f)
+            desc +=
+                $"\n{Style.CK("Loam Buff", "noun_loam")}: +{Style.CKPercent((float)HoneyGain.Get("loam")!)} faster pollination";
         return desc;
     }
 

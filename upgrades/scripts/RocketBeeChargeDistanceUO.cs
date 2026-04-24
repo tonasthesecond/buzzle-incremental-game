@@ -6,11 +6,8 @@ public partial class RocketBeeChargeDistanceUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 5f;
 
-    public override string GetTechnicalText() => 
-        $"{Style.CK("Rocket Bee Charge Distance", "noun_rocket_bee")} {Style.NumberChange(GameStore.RocketBeeChargeDistance.Value, GameStore.RocketBeeChargeDistance.Value + IncreaseBy)} tiles";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Jetpack bees", "noun_rocket")} pull back {Style.NC(GameStore.RocketBeeChargeDistance.Value, GameStore.RocketBeeChargeDistance.Value + IncreaseBy, showChange: !IsMaxLevel())} pixels before launching";
 
-    public override void Apply()
-    {
-        GameStore.RocketBeeChargeDistance.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.RocketBeeChargeDistance.AddFlat(Name, IncreaseBy * Level);
 }

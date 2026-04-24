@@ -126,7 +126,7 @@ region = Rect2(32, 96, 32, 32)
 script = ExtResource("8_joorw")
 Resource = ExtResource("21_aeq37")
 Icon = SubResource("AtlasTexture_xc54d")
-UnlockKey = "Yarrow"
+UnlockKey = "Clover"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w250u"]
@@ -196,6 +196,8 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_n7324"]
 script = ExtResource("36_7vltt")
+BeeTypeName = "Base"
+Icon = ExtResource("16_5he1h")
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
 [sub_resource type="Resource" id="Resource_hwsgv"]
@@ -208,6 +210,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 [sub_resource type="Resource" id="Resource_v5dxo"]
 script = ExtResource("36_7vltt")
 BeeTypeName = "Fat"
+Icon = ExtResource("16_5he1h")
 UnlockKey = "Fat"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -224,6 +227,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 [sub_resource type="Resource" id="Resource_dyvha"]
 script = ExtResource("36_7vltt")
 BeeTypeName = "Rocket"
+Icon = ExtResource("16_5he1h")
 UnlockKey = "Rocket"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -237,6 +241,7 @@ metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 [sub_resource type="Resource" id="Resource_xc54d"]
 script = ExtResource("36_7vltt")
 BeeTypeName = "Queen"
+Icon = ExtResource("16_5he1h")
 UnlockKey = "Queen"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
@@ -261,7 +266,6 @@ metadata/_custom_type_script = "uid://bxiv6k7h3frth"
 
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
 script = ExtResource("9_2vekm")
-FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
@@ -291,7 +295,6 @@ unique_name_in_owner = true
 visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
-ShowAllUpgrades = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
 

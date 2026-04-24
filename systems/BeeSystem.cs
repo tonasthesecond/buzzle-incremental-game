@@ -9,6 +9,9 @@ public partial class BeeSystem : GameSystem
     [Signal]
     public delegate void BeeSpawnedEventHandler(Bee bee);
 
+    [Signal]
+    public delegate void BeeRemovedEventHandler();
+
     private Dictionary<BaseGridObject, Bee> claimedObjects = new();
 
     public bool IsClaimed(BaseGridObject obj) => claimedObjects.ContainsKey(obj);
@@ -83,7 +86,12 @@ public partial class BeeSystem : GameSystem
     }
 
     /// Spawn a bee by scene (used by placement system).
-    public Bee? SpawnBee(PackedScene scene, Hive home, out FailMessage? failMessage)
+    public Bee? SpawnBee(
+        PackedScene scene,
+        Hive home,
+        out FailMessage? failMessage,
+        bool travelToHive = false
+    )
     {
         if (home.BeeCount >= GameStore.HiveCapacityBee.Value)
         {
@@ -96,6 +104,13 @@ public partial class BeeSystem : GameSystem
         var bee = scene.Instantiate<Bee>();
         GetParent().AddChild(bee);
         bee.Setup(home);
+        if (travelToHive)
+        {
+            bee.Visible = true;
+            bee.SetJob(new GoToHiveJob());
+            bee.GlobalPosition = bee.GetGlobalMousePosition();
+            bee.Sprite.FlipH = bee.GlobalPosition.X < bee.Home.GlobalPosition.X;
+        }
         EmitSignal(SignalName.BeeSpawned, bee);
         failMessage = null;
         return bee;
@@ -111,7 +126,7 @@ public partial class BeeSystem : GameSystem
 
     public bool RemoveBee(Type beeType, Hive hive)
     {
-        var bee = GetBees().FirstOrDefault(b => b.GetType() == beeType && b.Home == hive);
+        Bee bee = GetBees().FirstOrDefault(b => b.GetType() == beeType && b.Home == hive)!;
         if (bee == null)
             return false;
 
@@ -120,7 +135,9 @@ public partial class BeeSystem : GameSystem
         foreach (var obj in claimed)
             claimedObjects.Remove(obj);
 
-        bee.QueueFree();
+        hive.RemoveBee(bee);
+        bee.Remove();
+        EmitSignal(SignalName.BeeRemoved);
         return true;
     }
 

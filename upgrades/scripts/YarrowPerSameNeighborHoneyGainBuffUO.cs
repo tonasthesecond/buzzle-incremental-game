@@ -6,12 +6,8 @@ public partial class YarrowPerSameNeighborHoneyGainBuffUO : IUpgradeOption
     [Export]
     public float IncreaseBy { get; set; } = 0.05f;
 
-    public override string GetTechnicalText() => 
-        $"{Style.CK("Yarrow Neighbor Bonus", "noun_yarrow")} {Style.NumberChange(GameStore.YarrowPerSameNeighborHoneyGainBuff.Value * 100f, (GameStore.YarrowPerSameNeighborHoneyGainBuff.Value + IncreaseBy) * 100f)}"
-        + "% per same neighbor";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Yarrows", "noun_yarrow")} gain +{Style.NCPercent(GameStore.YarrowPerSameNeighborHoneyGainBuff.Value, GameStore.YarrowPerSameNeighborHoneyGainBuff.Value + IncreaseBy, !IsMaxLevel())} honey per adjacent {Style.CK("Yarrow", "noun_yarrow")}";
 
-    public override void Apply()
-    {
-        GameStore.YarrowPerSameNeighborHoneyGainBuff.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.YarrowPerSameNeighborHoneyGainBuff.AddFlat(Name, IncreaseBy * Level);
 }

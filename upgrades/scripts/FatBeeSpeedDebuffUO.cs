@@ -7,10 +7,7 @@ public partial class FatBeeSpeedDebuffUO : IUpgradeOption
     public float IncreaseBy { get; set; } = -0.05f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Fat Bee Speed Penalty", "noun_fat_bee")} {Style.NumberChange(GameStore.FatBeeSpeedDebuff.Value, GameStore.FatBeeSpeedDebuff.Value + IncreaseBy)}x";
+        $"{Style.CK("Fat bee", "noun_fat")} speed penalty {Style.NCPercent(GameStore.FatBeeSpeedDebuff.Value, GameStore.FatBeeSpeedDebuff.Value + IncreaseBy, !IsMaxLevel())}";
 
-    public override void Apply()
-    {
-        GameStore.FatBeeSpeedDebuff.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.FatBeeSpeedDebuff.AddFlat(Name, IncreaseBy * Level);
 }

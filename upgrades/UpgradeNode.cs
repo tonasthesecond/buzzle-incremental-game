@@ -117,7 +117,7 @@ public partial class UpgradeNode
     {
         if (Upgrade == null)
             return 0;
-        if (Upgrade.Level < Upgrade.MaxLevel)
+        if (Upgrade.Level < Upgrade.MaxLevel || Upgrade.MaxLevel == -1)
             return Upgrade.GetCost();
         return 0;
     }

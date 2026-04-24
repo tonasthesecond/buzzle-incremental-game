@@ -9,10 +9,7 @@ public partial class BeekeeperEffectZoneSpeedBuffUO : IUpgradeOption
     private float value => GameStore.BeekeeperEffectZoneSpeedBuff.Value;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Beekeeper Aura", "noun_beekeeper")} increases all {Style.CK("Bees", "noun_bee")}' speed by {Style.NumberChangePercent(value, value + IncreaseBy)}";
+        $"{Style.CK("Beekeeper aura", "noun_beekeeper")} speeds up {Style.CK("bees", "noun_bee")} by {Style.NCPercent(value, value + IncreaseBy, !IsMaxLevel())}";
 
-    public override void Apply()
-    {
-        GameStore.BeekeeperEffectZoneSpeedBuff.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.BeekeeperEffectZoneSpeedBuff.AddFlat(Name, IncreaseBy * Level);
 }

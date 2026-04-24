@@ -1,4 +1,3 @@
-using System.Text;
 using Godot;
 
 [GlobalClass]
@@ -38,6 +37,8 @@ public abstract partial class IUpgradeOption : Resource, IHasHoverDescription
     public virtual int GetCost() => (int)CostScaler.Get(Level);
 
     public bool IsEnough() => GetCost() <= GameStore.Honey;
+
+    public bool IsMaxLevel() => MaxLevel != -1 && Level >= MaxLevel;
 
     // Check if this upgrade can be bought, and if not, return a message
     public virtual bool FailCondition(out FailMessage? fail_message)
