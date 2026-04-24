@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://ky0eb4q7ufyw" path="res://objects/BeekeeperEffectZone.tscn" id="8_jsoai"]
 [ext_resource type="Script" uid="uid://s3j2s3crukmu" path="res://systems/PlacementSystem.cs" id="9_2vekm"]
 [ext_resource type="Texture2D" uid="uid://drn1ices8mh1l" path="res://assets/hive.png" id="10_0yprl"]
+[ext_resource type="Texture2D" uid="uid://cak8mtxab0q06" path="res://assets/particles.png" id="10_v5dxo"]
 [ext_resource type="PackedScene" uid="uid://bbh6aex2oxcg6" path="res://objects/grid/Hive.tscn" id="11_cpsxm"]
 [ext_resource type="PackedScene" uid="uid://b466og2ju7b2g" path="res://ui/NumberDisplay.tscn" id="11_lvtmh"]
 [ext_resource type="Script" uid="uid://ca5lej4xayi2l" path="res://ui/HoneyDisplay.cs" id="12_yyih5"]
@@ -45,7 +46,16 @@
 [ext_resource type="Script" uid="uid://eem2ebdmliip" path="res://resources/RemoveBee.cs" id="36_7vltt"]
 [ext_resource type="PackedScene" uid="uid://cyqsoj4m042r5" path="res://objects/bees/RocketBee.tscn" id="36_8576b"]
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
+[ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="40_o6tbt"]
 [ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
+atlas = ExtResource("10_v5dxo")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndmee"]
+atlas = ExtResource("10_v5dxo")
+region = Rect2(32, 16, 16, 16)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n7324"]
 texture = ExtResource("17_eu6ph")
@@ -200,10 +210,14 @@ BeeTypeName = "Base"
 Icon = ExtResource("16_5he1h")
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h3yf"]
+atlas = ExtResource("40_o6tbt")
+region = Rect2(32, 32, 30, 32)
+
 [sub_resource type="Resource" id="Resource_hwsgv"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("25_8ktx7")
-Icon = ExtResource("13_yyih5")
+Icon = SubResource("AtlasTexture_3h3yf")
 UnlockKey = "Fat"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
@@ -214,13 +228,14 @@ Icon = ExtResource("16_5he1h")
 UnlockKey = "Fat"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7vltt"]
-load_path = "res://.godot/imported/bee.png-469d020af86c28d3c23c050401c784ff.ctex"
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyc7o"]
+atlas = ExtResource("40_o6tbt")
+region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_iueff"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("36_8576b")
-Icon = SubResource("CompressedTexture2D_7vltt")
+Icon = SubResource("AtlasTexture_nyc7o")
 UnlockKey = "Rocket"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
@@ -231,10 +246,14 @@ Icon = ExtResource("16_5he1h")
 UnlockKey = "Rocket"
 metadata/_custom_type_script = "uid://eem2ebdmliip"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ds8mp"]
+atlas = ExtResource("40_o6tbt")
+region = Rect2(32, 0, 30, 32)
+
 [sub_resource type="Resource" id="Resource_8ktx7"]
 script = ExtResource("8_joorw")
 Resource = ExtResource("24_w7ht3")
-Icon = ExtResource("13_yyih5")
+Icon = SubResource("AtlasTexture_ds8mp")
 UnlockKey = "Queen"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
@@ -257,6 +276,12 @@ region = Rect2(0, 64, 64, 32)
 atlas = ExtResource("40_fj2yu")
 region = Rect2(0, 32, 64, 32)
 
+[sub_resource type="Environment" id="Environment_v5dxo"]
+ssao_enabled = true
+ssao_intensity = 5.0
+fog_enabled = true
+fog_light_energy = 2.0
+
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
 
@@ -266,6 +291,7 @@ metadata/_custom_type_script = "uid://bxiv6k7h3frth"
 
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
 script = ExtResource("9_2vekm")
+FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
@@ -287,14 +313,26 @@ metadata/_custom_type_script = "uid://bw2wen42y1dki"
 
 [node name="Particles" type="Node2D" parent="GameLayer" unique_id=1336458773]
 
-[node name="ExplosionParticles" parent="GameLayer/Particles" unique_id=48595200 instance=ExtResource("4_n7324")]
+[node name="PlacementParticles" parent="GameLayer/Particles" unique_id=48595200 instance=ExtResource("4_n7324")]
 unique_name_in_owner = true
+amount = 32
+texture = SubResource("AtlasTexture_pbwgg")
+BurstSpeedMin = 75.0
+BurstSpeedMax = 125.0
+
+[node name="RemovalParticles" parent="GameLayer/Particles" unique_id=747975493 instance=ExtResource("4_n7324")]
+unique_name_in_owner = true
+amount = 32
+texture = SubResource("AtlasTexture_ndmee")
+BurstSpeedMin = 75.0
+BurstSpeedMax = 125.0
 
 [node name="UpgradeLayer" type="Node2D" parent="." unique_id=320393624]
 unique_name_in_owner = true
 visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
+ShowAllUpgrades = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
 
@@ -426,3 +464,6 @@ text = "error message right now"
 horizontal_alignment = 1
 script = ExtResource("45_iueff")
 offset = Vector2(0, -32)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1403709593]
+environment = SubResource("Environment_v5dxo")

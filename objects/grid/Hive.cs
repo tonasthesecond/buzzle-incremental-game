@@ -59,6 +59,8 @@ public partial class Hive : BaseGridObject, IHasHoverRefresh, IHasHoverSubtitle
     public override string GetHoverDescription()
     {
         string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
+        if (!Placed)
+            return "";
         if (GetBeeCounts().Count == 0)
             desc += "\nEmpty";
         else
@@ -66,14 +68,24 @@ public partial class Hive : BaseGridObject, IHasHoverRefresh, IHasHoverSubtitle
             desc += "\nHousing:";
             foreach (KeyValuePair<string, int> beeType in GetBeeCounts())
             {
-                string noun = beeType.Key.ToLower().Substr(0, beeType.Key.Length - 3);
-                if (noun == "jetpack")
-                    noun = "rocket";
-                if (noun == "base")
-                    desc += $"\n• {Style.CK(beeType.Value.ToString("F0"))} bees";
-                else
-                    desc +=
-                        $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK(beeType.Key, "noun_" + noun)} bees";
+                switch (beeType.Key.ToLower())
+                {
+                    case "basebee":
+                        desc += $"\n• {Style.CK(beeType.Value.ToString("F0"))} bees";
+                        break;
+                    case "rocketbee":
+                        desc +=
+                            $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK("Jetpack bees", "noun_rocket")}";
+                        break;
+                    case "fatbee":
+                        desc +=
+                            $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK("Fat bees", "noun_fat")}";
+                        break;
+                    case "queenbee":
+                        desc +=
+                            $"\n• {Style.CK(beeType.Value.ToString("F0"))} {Style.CK("Queen bees", "noun_queen")}";
+                        break;
+                }
             }
         }
         return desc;
