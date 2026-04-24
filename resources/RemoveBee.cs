@@ -17,10 +17,13 @@ public partial class RemoveBee : SelectedResource
         if (color_code == "noun_base")
             color_code = "noun_bee";
 
+        if (color_code == "noun_jetpack")
+            color_code = "noun_rocket";
+
         if (BeeTypeName == "Rocket")
             BeeTypeName = "Jetpack";
 
-        return $"Remove a {Style.CK(BeeTypeName + " ", color_code)}bee from a hive.";
+        return $"Remove a {Style.CK(BeeTypeName + " bee", color_code)} from a hive.";
     }
 
     public override string GetHoverSubtitle() => "";

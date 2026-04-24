@@ -15,7 +15,8 @@ public partial class PlacementSystem : GameSystem
     private BaseGridObject? highlighted;
     private const float HighlightAlpha = 0.7f;
 
-    private PlacementExplosionParticles explosionParticles = null!;
+    private PlacementExplosionParticles placementParticles = null!;
+    private PlacementExplosionParticles removalParticles = null!;
 
     public enum Mode
     {
@@ -43,8 +44,9 @@ public partial class PlacementSystem : GameSystem
 
     public override void _Ready()
     {
-        explosionParticles = GetParent()
-            .GetNode<PlacementExplosionParticles>("%ExplosionParticles");
+        placementParticles = GetParent()
+            .GetNode<PlacementExplosionParticles>("%PlacementParticles");
+        removalParticles = GetParent().GetNode<PlacementExplosionParticles>("%RemovalParticles");
 
         SignalBus.Instance.ResourceSelected += (Resource resource) =>
         {
@@ -249,6 +251,7 @@ public partial class PlacementSystem : GameSystem
                     && grid.PlaceTile(selectedScene, pos, out fail)
                 )
                 {
+                    placementParticles.Emit(grid.GridToWorld(pos));
                     ChargeHoney(selectedType, cost);
                 }
                 break;
@@ -261,7 +264,7 @@ public partial class PlacementSystem : GameSystem
                 )
                 {
                     ChargeHoney(selectedType, cost);
-                    explosionParticles.Emit(grid.GridToWorld(pos));
+                    placementParticles.Emit(grid.GridToWorld(pos));
                 }
                 break;
 
@@ -275,18 +278,19 @@ public partial class PlacementSystem : GameSystem
                 )
                 {
                     GD.Print($"Spawning {selectedType.Name}");
+                    placementParticles.Emit(grid.GridToWorld(pos));
                     ChargeHoney(selectedType, cost);
                 }
                 break;
 
             case Mode.RemoveTile:
                 if (grid.RemoveTile(pos, out fail))
-                    explosionParticles.Emit(grid.GridToWorld(pos));
+                    removalParticles.Emit(grid.GridToWorld(pos));
                 break;
 
             case Mode.RemoveObject:
                 if (grid.RemoveObject(pos, out fail))
-                    explosionParticles.Emit(grid.GridToWorld(pos));
+                    removalParticles.Emit(grid.GridToWorld(pos));
                 break;
 
             case Mode.RemoveBee:

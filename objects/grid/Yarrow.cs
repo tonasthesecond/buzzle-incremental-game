@@ -42,8 +42,12 @@ public partial class Yarrow : Flower
         {
             int neighbors = GetYarrowNeighbors();
             if (neighbors > 0)
+            {
+                if (HoneyGain.Get(YarrowNeighborsKey) == null)
+                    HoneyGain.AddFlat(YarrowNeighborsKey, 0f);
                 desc +=
                     $"\n{Style.CK("Companionship", "noun_yarrow")}: +{Style.CKPercent((float)HoneyGain.Get(YarrowNeighborsKey)!)} ({neighbors} {Style.CK("Yarrow", "noun_yarrow")} neighbors)";
+            }
 
             if (GameStore.LoamYarrowHoneyGainBuff.Value > 0f)
                 desc +=

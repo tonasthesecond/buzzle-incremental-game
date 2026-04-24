@@ -10,27 +10,27 @@
   "number_original": "#9CA3AF",
   "number_new": "#43A047",
 
-  "noun_hive": "yellow",
+  "noun_hive": "#f1d262",
   "noun_flower": "#EF4444",
-  "noun_beekeeper": "#F59E0B",
-  "noun_bee": "#F4C430",
-  "noun_queen": "#EC4899",
-  "noun_rocket": "#3B82F6",
-  "noun_fat": "#F97316",
+  "noun_beekeeper": "#957764",
+  "noun_bee": "#f1d262",
+  "noun_queen": "#d697ff",
+  "noun_rocket": "#8ff5ff",
+  "noun_fat": "#f16f62",
 
-  "noun_poppy": "#EF4444",
-  "noun_sunflower": "#F4C430",
-  "noun_clover": "#22C55E",
-  "noun_yarrow": "#84CC16",
-  "noun_rose": "#F43F5E",
+  "noun_poppy": "#ff5160",
+  "noun_sunflower": "#fff07a",
+  "noun_clover": "#25bb7e",
+  "noun_yarrow": "#feffe8",
+  "noun_rose": "#d92b43",
 
-  "noun_tile": "yellow",
-  "noun_dirt": "yellow",
-  "noun_grass": "#8B5A2B",
-  "noun_loam": "#A16207",
+  "noun_tile": "#a37546",
+  "noun_dirt": "#d7a471",
+  "noun_grass": "#00d459",
+  "noun_loam": "#71d7cd",
 
   "highlight_target": "#22C55E",
   "highlight_delete": "#EF4444",
 
-  "upgrade_line": "yellow"
+  "upgrade_line": "white"
 }

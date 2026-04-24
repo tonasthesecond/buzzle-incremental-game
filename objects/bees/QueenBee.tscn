@@ -5,15 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="3_gxdci"]
 [ext_resource type="PackedScene" uid="uid://bfmgg3fmm16x0" path="res://components/EffectZoneComponent.tscn" id="3_ja3py"]
 [ext_resource type="Script" uid="uid://bh5m0xghyn8d2" path="res://components/QueenBeeEffectZoneComponent.cs" id="4_gxdci"]
-[ext_resource type="Texture2D" uid="uid://b7uj1wu380wo" path="res://assets/particles_heat.png" id="5_ja3py"]
+[ext_resource type="Texture2D" uid="uid://cak8mtxab0q06" path="res://assets/particles.png" id="6_gxdci"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kde60"]
 atlas = ExtResource("3_gxdci")
 region = Rect2(32, 0, 30, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ms37"]
-atlas = ExtResource("5_ja3py")
-region = Rect2(16, 0, 16, 16)
+[sub_resource type="AtlasTexture" id="AtlasTexture_v83s4"]
+atlas = ExtResource("6_gxdci")
+region = Rect2(0, 16, 16, 16)
 
 [node name="QueenBee" unique_id=384287205 instance=ExtResource("1_fbet4")]
 script = ExtResource("2_6ms37")
@@ -28,7 +28,7 @@ unique_name_in_owner = true
 script = ExtResource("4_gxdci")
 
 [node name="HeatVapor" parent="EffectZoneComponent" index="1" unique_id=1329572307]
-texture = SubResource("AtlasTexture_6ms37")
+texture = SubResource("AtlasTexture_v83s4")
 BaseAmount = 5
 ParticleLifetime = 0.5
 ParticleSize = 0.5
