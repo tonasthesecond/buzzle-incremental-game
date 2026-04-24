@@ -10,6 +10,9 @@ public partial class Game : GameSystem
     public BaseButton ShowUpgradesButton { get; private set; } = null!;
     public Control PlacementMenu { get; private set; } = null!;
     public Control CollapseButton { get; private set; } = null!;
+    public SelectContainer ObjectsSelect { get; private set; } = null!;
+    public SelectContainer TilesSelect { get; private set; } = null!;
+    public SelectContainer BeesSelect { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
@@ -28,6 +31,9 @@ public partial class Game : GameSystem
         ShowUpgradesButton = GetNode<BaseButton>("%ShowUpgradesButton");
         PlacementMenu = GetNode<Control>("%PlacementMenu");
         CollapseButton = UILayer.GetNode<Control>("CollapseButton");
+        ObjectsSelect = UILayer.GetNode<SelectContainer>("%ObjectsSelectContainer");
+        TilesSelect = UILayer.GetNode<SelectContainer>("%TilesSelectContainer");
+        BeesSelect = UILayer.GetNode<SelectContainer>("%BeesSelectContainer");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
@@ -62,6 +68,9 @@ public partial class Game : GameSystem
         }
         else
         {
+            ObjectsSelect.Reset();
+            TilesSelect.Reset();
+            BeesSelect.Reset();
             UpgradeLayer.Show();
             GameLayer.Hide();
             PlacementMenu.Hide();

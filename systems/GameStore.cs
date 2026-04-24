@@ -33,7 +33,7 @@ public partial class GameStore : Node
     public const float QueenBeeBeePriceReductionBuffMax = 0.99f;
     public static bool QueenBeeLeashRose { get; set; } = false;
 
-    public static Stat FatBeeSpeedDebuff { get; } = new(0.7f);
+    public static Stat FatBeeSpeedDebuff { get; } = new(0.6f);
     public static Stat FatBeeCapacityHoneyBonus { get; } = new(5f);
     public static Stat FatBeeSpeedPerRocketBeeBuff { get; } = new(0f);
     public static bool FatBeeCapacityHoneyInfinite { get; set; } = false;
@@ -46,23 +46,23 @@ public partial class GameStore : Node
     public static bool RocketBeeIsolatedHarvest { get; set; } = false;
 
     public static Stat PoppyHoneyCost { get; } = new(1f);
-    public static Stat PoppyHoneyGain { get; } = new(2f);
-    public static Stat PoppyPollinationTime { get; } = new(3f);
+    public static Stat PoppyHoneyGain { get; } = new(3f);
+    public static Stat PoppyPollinationTime { get; } = new(4f);
 
     public static Stat SunflowerHoneyCost { get; } = new(1f);
     public static Stat SunflowerHoneyGain { get; } = new(2f);
-    public static Stat SunflowerPollinationTime { get; } = new(6f);
+    public static Stat SunflowerPollinationTime { get; } = new(8f);
     public static Stat SunflowerHoneyGainPerFatBeeBonus { get; } = new(0f);
 
     public static Stat CloverHoneyCost { get; } = new(3f);
     public static Stat CloverRegularHoneyGain { get; } = new(3f);
     public static Stat CloverJackpotHoneyGain { get; set; } = new(7f);
-    public static Stat CloverPollinationTime { get; } = new(5f);
+    public static Stat CloverPollinationTime { get; } = new(6f);
     public static Stat CloverJackpotChance { get; set; } = new(0.1f);
 
     public static Stat YarrowHoneyCost { get; } = new(4f);
     public static Stat YarrowHoneyGain { get; } = new(6f);
-    public static Stat YarrowPollinationTime { get; } = new(7f);
+    public static Stat YarrowPollinationTime { get; } = new(5f);
     public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.05f);
 
     public static Stat RoseHoneyCost { get; } = new(5f);

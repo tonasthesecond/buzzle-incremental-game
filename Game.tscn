@@ -168,7 +168,7 @@ metadata/_custom_type_script = "uid://co550qpijgpnv"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8576b"]
 atlas = ExtResource("27_hxy8k")
-region = Rect2(96, 96, 32, 32)
+region = Rect2(96, 96, 32, 64)
 
 [sub_resource type="Resource" id="Resource_68r7h"]
 script = ExtResource("8_joorw")
@@ -275,12 +275,6 @@ region = Rect2(0, 64, 64, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_p7j3k"]
 atlas = ExtResource("40_fj2yu")
 region = Rect2(0, 32, 64, 32)
-
-[sub_resource type="Environment" id="Environment_v5dxo"]
-ssao_enabled = true
-ssao_intensity = 5.0
-fog_enabled = true
-fog_light_energy = 2.0
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
@@ -399,13 +393,14 @@ ButtonDropDistance = 65.0
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("22_0mevm")
-current_tab = 0
+current_tab = 2
 tab_0/title = "Objects"
 tab_1/title = "Tiles"
 tab_2/title = "Bees"
 
 [node name="ObjectsSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
+visible = false
 self_modulate = Color(0, 0.83137256, 0.34901962, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
@@ -426,7 +421,6 @@ metadata/_tab_name = "Tiles"
 
 [node name="BeesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
-visible = false
 self_modulate = Color(0.44313726, 0.84313726, 0.8039216, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
@@ -464,6 +458,3 @@ text = "error message right now"
 horizontal_alignment = 1
 script = ExtResource("45_iueff")
 offset = Vector2(0, -32)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1403709593]
-environment = SubResource("Environment_v5dxo")

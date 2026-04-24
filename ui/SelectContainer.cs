@@ -72,6 +72,11 @@ public partial class SelectContainer : PanelContainer
 
         selectable.Selected += (int i) =>
         {
+            if (SelectedIndex == i)
+            {
+                Reset();
+                return;
+            }
             SelectedIndex = i;
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.ResourceSelected,
