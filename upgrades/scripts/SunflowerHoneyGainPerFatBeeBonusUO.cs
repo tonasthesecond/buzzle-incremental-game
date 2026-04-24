@@ -7,8 +7,7 @@ public partial class SunflowerHoneyGainPerFatBeeBonusUO : IUpgradeOption
     public float IncreaseBy { get; set; } = 1f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Sunflowers", "noun_sunflower")} produce +{Style.NC(GameStore.SunflowerHoneyGainPerFatBeeBonus.Value, GameStore.SunflowerHoneyGainPerFatBeeBonus.Value + IncreaseBy)} extra honey per {Style.CK("Fat bee", "noun_fat")}";
+        $"{Style.CK("Sunflowers", "noun_sunflower")} gain +{Style.NC(GameStore.SunflowerHoneyGainPerFatBeeBonus.Value, GameStore.SunflowerHoneyGainPerFatBeeBonus.Value + IncreaseBy, showChange: !IsMaxLevel())} honey per {Style.CK("Fat bee", "noun_fat")} in hive";
 
-    public override void Apply() =>
-        GameStore.SunflowerHoneyGainPerFatBeeBonus.AddFlat(Name, IncreaseBy * Level);
+    public override void Apply() => GameStore.SunflowerHoneyGainPerFatBeeBonus.AddFlat(Name, IncreaseBy * Level);
 }

@@ -7,10 +7,7 @@ public partial class SunflowerHoneyCostUO : IUpgradeOption
     public float IncreaseBy { get; set; } = -0.5f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Sunflower Honey Cost", "noun_sunflower")} {Style.NumberChange(GameStore.SunflowerHoneyCost.Value, GameStore.SunflowerHoneyCost.Value + IncreaseBy)}";
+        $"{Style.CK("Sunflowers", "noun_sunflower")} cost {Style.NC(GameStore.SunflowerHoneyCost.Value, GameStore.SunflowerHoneyCost.Value + IncreaseBy, showChange: !IsMaxLevel())} honey to pollinate";
 
-    public override void Apply()
-    {
-        GameStore.SunflowerHoneyCost.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.SunflowerHoneyCost.AddFlat(Name, IncreaseBy * Level);
 }

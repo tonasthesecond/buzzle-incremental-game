@@ -195,6 +195,16 @@ public abstract partial class Bee
             fadeTween.TweenCallback(Callable.From(() => Visible = false));
     }
 
+    public void Remove()
+    {
+        SetJob(new NoneJob());
+        FadeTo(0f, 0.5f);
+        if (fadeTween != null)
+            fadeTween.Finished += () => QueueFree();
+        else
+            QueueFree();
+    }
+
     public string GetHoverTitle()
     {
         if (BeeTypeName == "")

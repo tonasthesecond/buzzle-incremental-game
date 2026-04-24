@@ -8,11 +8,8 @@ public partial class BeekeeperEffectZoneRadiusUO : IUpgradeOption
 
     private float value => GameStore.BeekeeperEffectZoneRadius.Value * 2;
 
-    public override string GetTechnicalText() => 
-        $"{Style.CK("Beekeeper Effect Zone", "noun_beekeeper")} covers {Style.NumberChange(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy))} tiles.";
+    public override string GetTechnicalText() =>
+        $"{Style.CK("Beekeeper aura", "noun_beekeeper")} covers {Style.NC(Utils.PixelsToTiles(value), Utils.PixelsToTiles(value + IncreaseBy), showChange: !IsMaxLevel())} tiles";
 
-    public override void Apply()
-    {
-        GameStore.BeekeeperEffectZoneRadius.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.BeekeeperEffectZoneRadius.AddFlat(Name, IncreaseBy * Level);
 }

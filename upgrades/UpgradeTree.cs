@@ -96,6 +96,8 @@ public partial class UpgradeTree : Control
 
     public override void _Draw()
     {
+        if (!Engine.IsEditorHint())
+            return;
         foreach (UpgradeNode node in nodes)
         {
             if (node.Dependencies == null || !node.IsShown)

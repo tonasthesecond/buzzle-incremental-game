@@ -10,10 +10,13 @@ public partial class CloverJackpotChanceJackpotHoneyGainSetUO : IUpgradeOption
     public float SetHoneyGainTo { get; set; } = 2f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Clovers", "noun_clover")} have a {Style.NCPercent(GameStore.CloverJackpotChance.Value, SetChanceTo)} of jackpot\n{Style.CK("Clovers", "noun_clover")} produce {Style.NC(GameStore.CloverJackpotHoneyGain.Value, SetHoneyGainTo)} honey on jackpot";
+        $"{Style.CK("Clover", "noun_clover")} jackpot chance {Style.NCPercent(GameStore.CloverJackpotChance.Value, SetChanceTo, !IsMaxLevel())}\n"
+        + $"{Style.CK("Clover", "noun_clover")} jackpot yield {Style.NC(GameStore.CloverJackpotHoneyGain.Value, SetHoneyGainTo, showChange: !IsMaxLevel())} honey";
 
     public override void Apply()
     {
+        if (Level <= 0)
+            return;
         GameStore.CloverJackpotChance.RemoveAll();
         GameStore.CloverJackpotHoneyGain.RemoveAll();
         GameStore.CloverJackpotChance = new Stat(() => SetChanceTo);

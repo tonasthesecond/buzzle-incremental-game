@@ -270,7 +270,8 @@ public partial class PlacementSystem : GameSystem
                     selectedScene != null
                     && highlighted is Hive hive
                     && TryCharge(selectedType, out cost, out fail)
-                    && Services.Get<BeeSystem>().SpawnBee(selectedScene, hive, out fail) != null
+                    && Services.Get<BeeSystem>().SpawnBee(selectedScene, hive, out fail, true)
+                        != null
                 )
                 {
                     GD.Print($"Spawning {selectedType.Name}");

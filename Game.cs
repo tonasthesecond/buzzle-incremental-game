@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public partial class Game : GameSystem
@@ -8,6 +10,14 @@ public partial class Game : GameSystem
     public BaseButton ShowUpgradesButton { get; private set; } = null!;
     public Control PlacementMenu { get; private set; } = null!;
     public Control CollapseButton { get; private set; } = null!;
+
+    [Export]
+    public bool AutoSave { get; set; } = true;
+
+    [Export]
+    public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
+
+    private Timer? autoSaveTimer;
 
     public override void _Ready()
     {
@@ -28,6 +38,16 @@ public partial class Game : GameSystem
 
         // load game
         GameStore.LoadGame();
+
+        // start autosave
+        if (AutoSave)
+        {
+            autoSaveTimer = new Timer();
+            autoSaveTimer.OneShot = false;
+            AddChild(autoSaveTimer);
+            autoSaveTimer.Timeout += GameStore.SaveGame;
+            autoSaveTimer.Start(AutoSaveInterval);
+        }
     }
 
     private void onUpgradesButtonPressed()
@@ -59,10 +79,14 @@ public partial class Game : GameSystem
         }
         if (Input.IsActionJustPressed("test"))
         {
-            foreach (string source in Services.Get<HoneyTracker>().GetHPSBySource().Keys)
-            {
-                GD.Print($"{source}: {Services.Get<HoneyTracker>().GetHPSBySource()[source]:P2}");
-            }
+            GD.Print($"Total: {Services.Get<HoneyTracker>().GetAllTime()}");
+            GD.Print(Services.Get<HoneyTracker>().samples.Count);
+            Dictionary<string, float> bySource = Services.Get<HoneyTracker>().GetHPSBySource();
+            GD.Print($"By Source:");
+            GD.Print($"Total: {bySource.Values.Sum()}");
+            float total = bySource.Values.Sum();
+            foreach (var (source, hps) in bySource)
+                GD.Print($"{source}: {(total > 0 ? hps / total : 0):P2}");
         }
     }
 }

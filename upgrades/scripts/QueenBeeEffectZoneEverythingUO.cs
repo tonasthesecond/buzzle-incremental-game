@@ -14,18 +14,14 @@ public partial class QueenBeeEffectZoneEverythingUO : IUpgradeOption
 
     public override string GetTechnicalText()
     {
-        string desc = "\n";
+        float radius = GameStore.QueenBeeEffectZoneRadius.Value;
+        float speed = GameStore.QueenBeeEffectZoneSpeedBuff.Value;
+        float pollination = GameStore.QueenBeeEffectZonePollinationTimeReductionBuff.Value;
+        bool show = !IsMaxLevel();
 
-        desc +=
-            $"\n{Style.CK("Queen Bee", "noun_queen")} boost {Style.CK("bees", "noun_bee")}' speed by {Style.NC(GameStore.QueenBeeEffectZoneSpeedBuff.Value, GameStore.QueenBeeEffectZoneSpeedBuff.Value + IncreaseBeeSpeedBuffBy)}";
-
-        desc +=
-            $"\n{Style.CK("Queen Bee", "noun_queen")} boost {Style.CK("bees", "noun_bee")}' upto {Style.NC(Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value), Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value + IncreaseEffectZoneRadiusBy))}";
-
-        desc +=
-            $"\n{Style.CK("Queen Bee", "noun_queen")} boost {Style.CK("bees", "noun_bee")}' pollination speed by {Style.NC(GameStore.QueenBeeEffectZonePollinationTimeReductionBuff.Value, GameStore.QueenBeeEffectZonePollinationTimeReductionBuff.Value + IncreaseBeePollinationTimeReductionBuffBy)}";
-
-        return desc;
+        return $"{Style.CK("Queen bee", "noun_queen")} aura range {Style.NC(Utils.PixelsToTiles(radius), Utils.PixelsToTiles(radius + IncreaseEffectZoneRadiusBy), 0, show)} tiles\n"
+            + $"{Style.CK("Queen bee", "noun_queen")} speed buff {Style.NCPercent(speed, speed + IncreaseBeeSpeedBuffBy, show)}\n"
+            + $"{Style.CK("Queen bee", "noun_queen")} pollination speed buff {Style.NCPercent(pollination, pollination + IncreaseBeePollinationTimeReductionBuffBy, show)}";
     }
 
     public override void Apply()

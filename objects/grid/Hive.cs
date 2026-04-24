@@ -1,11 +1,16 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 [GlobalClass]
-public partial class Hive : BaseGridObject
+public partial class Hive : BaseGridObject, IHasHoverRefresh, IHasHoverSubtitle
 {
     [Signal]
     public delegate void BeeAddedEventHandler(Bee bee);
+
+    [Signal]
+    public delegate void BeeRemovedEventHandler(Bee bee);
 
     public List<Bee> Bees = new();
 
@@ -16,6 +21,12 @@ public partial class Hive : BaseGridObject
         Bees.Add(bee);
         bee.Home = this;
         EmitSignal(SignalName.BeeAdded, bee);
+    }
+
+    public void RemoveBee(Bee bee)
+    {
+        Bees.Remove(bee);
+        EmitSignal(SignalName.BeeRemoved, bee);
     }
 
     /// Type name -> count for save data.
@@ -58,7 +69,7 @@ public partial class Hive : BaseGridObject
                 string noun = beeType.Key.ToLower().Substr(0, beeType.Key.Length - 3);
                 if (noun == "jetpack")
                     noun = "rocket";
-                if (noun == "basebee")
+                if (noun == "base")
                     desc += $"\n• {Style.CK(beeType.Value.ToString("F0"))} bees";
                 else
                     desc +=
@@ -66,5 +77,41 @@ public partial class Hive : BaseGridObject
             }
         }
         return desc;
+    }
+
+    public string GetHoverSubtitle()
+    {
+        if (!Placed)
+            return "";
+        int beeCount = GetBeeCounts().Values.Sum();
+        string text = "bees";
+        if (beeCount == 1)
+            text = "bee";
+        return $"{beeCount}/{GameStore.HiveCapacityBee.Value} {text}";
+    }
+
+    private BeeSystem.BeeSpawnedEventHandler? beeSpawnedHandler;
+    private BeeRemovedEventHandler? beeRemovedHandler;
+
+    public void RegisterRefresh(Action onRefresh)
+    {
+        beeSpawnedHandler = (_) => onRefresh();
+        beeRemovedHandler = (_) => onRefresh();
+        Services.Get<BeeSystem>().BeeSpawned += beeSpawnedHandler;
+        BeeRemoved += beeRemovedHandler;
+    }
+
+    public void UnregisterRefresh(Action onRefresh)
+    {
+        if (beeSpawnedHandler != null)
+        {
+            Services.Get<BeeSystem>().BeeSpawned -= beeSpawnedHandler;
+            beeSpawnedHandler = null;
+        }
+        if (beeRemovedHandler != null)
+        {
+            BeeRemoved -= beeRemovedHandler;
+            beeRemovedHandler = null;
+        }
     }
 }

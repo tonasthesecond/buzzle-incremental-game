@@ -7,10 +7,7 @@ public partial class QueenBeeEffectZoneSpeedBuffUO : IUpgradeOption
     public float IncreaseBy { get; set; } = 0.1f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Queens", "noun_queen")} {Style.NumberChange(GameStore.QueenBeeEffectZoneSpeedBuff.Value, GameStore.QueenBeeEffectZoneSpeedBuff.Value + IncreaseBy)}x";
+        $"{Style.CK("Queen bee", "noun_queen")} aura speeds up {Style.CK("bees", "noun_bee")} by {Style.NCPercent(GameStore.QueenBeeEffectZoneSpeedBuff.Value, GameStore.QueenBeeEffectZoneSpeedBuff.Value + IncreaseBy, !IsMaxLevel())}";
 
-    public override void Apply()
-    {
-        GameStore.QueenBeeEffectZoneSpeedBuff.AddFlat(Name, IncreaseBy * Level);
-    }
+    public override void Apply() => GameStore.QueenBeeEffectZoneSpeedBuff.AddFlat(Name, IncreaseBy * Level);
 }

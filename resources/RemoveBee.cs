@@ -14,7 +14,7 @@ public partial class RemoveBee : SelectedResource
     public override string GetHoverDescription()
     {
         string color_code = "noun_" + BeeTypeName.ToLower();
-        if (color_code == "noun_")
+        if (color_code == "noun_base")
             color_code = "noun_bee";
 
         if (BeeTypeName == "Rocket")

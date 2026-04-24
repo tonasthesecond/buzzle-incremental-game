@@ -6,9 +6,9 @@ using Godot;
 /// Call Record() at deposit sites; query with windowed or all-time methods.
 public partial class HoneyTracker : GameSystem
 {
-    private record Sample(ulong TimeMs, string Source, int Amount);
+    public record Sample(ulong TimeMs, string Source, int Amount);
 
-    private readonly List<Sample> samples = new();
+    public readonly List<Sample> samples = new();
     private readonly Dictionary<string, int> allTime = new();
 
     public static HoneyTracker Instance { get; private set; } = null!;
@@ -34,9 +34,12 @@ public partial class HoneyTracker : GameSystem
         return samples.Where(s => s.TimeMs >= cutoff);
     }
 
-    private void Prune(ulong keepMs = 300000) // drop samples older than 5 min by default
+    private void Prune(ulong keepMs = 300000)
     {
-        ulong cutoff = Time.GetTicksMsec() - keepMs;
+        ulong now = Time.GetTicksMsec();
+        if (now < keepMs)
+            return;
+        ulong cutoff = now - keepMs;
         samples.RemoveAll(s => s.TimeMs < cutoff);
     }
 

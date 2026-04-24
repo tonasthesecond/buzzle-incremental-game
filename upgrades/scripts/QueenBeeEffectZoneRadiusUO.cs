@@ -7,9 +7,7 @@ public partial class QueenBeeEffectZoneRadiusUO : IUpgradeOption
     public float IncreaseBy { get; set; } = 16f;
 
     public override string GetTechnicalText() =>
-        $"{Style.CK("Queen bees", "noun_queen")} influence {Style.CK("bees", "noun_bee")} upto {Style.NC(Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value), Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value + IncreaseBy))} away"
-        + " tiles";
+        $"{Style.CK("Queen bee", "noun_queen")} aura reaches {Style.NC(Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value), Utils.PixelsToTiles(GameStore.QueenBeeEffectZoneRadius.Value + IncreaseBy), showChange: !IsMaxLevel())} tiles";
 
-    public override void Apply() =>
-        GameStore.QueenBeeEffectZoneRadius.AddFlat(Name, IncreaseBy * Level);
+    public override void Apply() => GameStore.QueenBeeEffectZoneRadius.AddFlat(Name, IncreaseBy * Level);
 }

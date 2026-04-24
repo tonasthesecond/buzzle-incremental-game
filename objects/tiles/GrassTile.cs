@@ -5,7 +5,7 @@ public partial class GrassTile : BaseTile, IHasHoverTitle, IHasHoverDescription
         flower.HoneyGain.AddPercent("grass", GameStore.GrassHoneyGainBuff.Value);
         if (flower is Clover clover)
             GameStore.CloverJackpotChance.AddPercent(
-                "natural habitat",
+                "natural_habitat",
                 GameStore.GrassCloverJackpotChanceBonus.Value
             );
     }

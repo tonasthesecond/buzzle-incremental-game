@@ -2,8 +2,18 @@
 
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="1_fbet4"]
 [ext_resource type="Script" uid="uid://b4fs1buhffdrm" path="res://objects/bees/QueenBee.cs" id="2_6ms37"]
+[ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="3_gxdci"]
 [ext_resource type="PackedScene" uid="uid://bfmgg3fmm16x0" path="res://components/EffectZoneComponent.tscn" id="3_ja3py"]
 [ext_resource type="Script" uid="uid://bh5m0xghyn8d2" path="res://components/QueenBeeEffectZoneComponent.cs" id="4_gxdci"]
+[ext_resource type="Texture2D" uid="uid://b7uj1wu380wo" path="res://assets/particles_heat.png" id="5_ja3py"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kde60"]
+atlas = ExtResource("3_gxdci")
+region = Rect2(32, 0, 30, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ms37"]
+atlas = ExtResource("5_ja3py")
+region = Rect2(16, 0, 16, 16)
 
 [node name="QueenBee" unique_id=384287205 instance=ExtResource("1_fbet4")]
 script = ExtResource("2_6ms37")
@@ -11,13 +21,14 @@ BeeTypeName = "Queen"
 Description = "Caste of [noun_bee](bees) that doesn't do work, but boost the speed of [noun_bee](bees) around it."
 
 [node name="Sprite2D" parent="." index="0" unique_id=2116123333]
-modulate = Color(1, 0.30980393, 1, 1)
+texture = SubResource("AtlasTexture_kde60")
 
 [node name="EffectZoneComponent" parent="." index="2" unique_id=513508709 instance=ExtResource("3_ja3py")]
 unique_name_in_owner = true
 script = ExtResource("4_gxdci")
 
 [node name="HeatVapor" parent="EffectZoneComponent" index="1" unique_id=1329572307]
+texture = SubResource("AtlasTexture_6ms37")
 BaseAmount = 5
 ParticleLifetime = 0.5
 ParticleSize = 0.5
