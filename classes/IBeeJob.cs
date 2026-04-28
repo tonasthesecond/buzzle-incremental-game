@@ -114,7 +114,9 @@ public abstract class FlowerJob : IBeeJob
                 var eligible = grid.GetObjectsOfType<Flower>()
                     .Where(f => IsEligible(f) && !beeSystem.IsClaimed(f))
                     .ToArray();
-                flower = GetCandidates(eligible).OrderBy(_ => GD.Randf()).FirstOrDefault();
+                flower = GetCandidates(eligible)
+                    .OrderBy(f => bee.GlobalPosition.DistanceSquaredTo(f.GlobalPosition))
+                    .FirstOrDefault();
                 if (flower == null)
                 {
                     bee.SetJob(new IdleJob());
@@ -157,7 +159,8 @@ public abstract class FlowerJob : IBeeJob
 
 public class HarvesterJob : FlowerJob
 {
-    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinated;
+    protected override bool IsEligible(Flower f) =>
+        (f.CurState == Flower.State.Pollinated) && !(f is Blackhole);
 
     protected override bool OnArrived(Bee bee)
     {
@@ -173,7 +176,7 @@ public class HarvesterJob : FlowerJob
 
 public class PollinatorJob : FlowerJob
 {
-    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinating;
+    protected override bool IsEligible(Flower f) => (f.CurState == Flower.State.Pollinating);
 
     protected override bool CanSeek(Bee bee) => GameStore.Honey > 0;
 
@@ -207,7 +210,7 @@ public class PollinatorJob : FlowerJob
             return;
         }
         bee.carryingHoney = 0;
-        if (flower.CurState == Flower.State.Pollinated)
+        if (flower.HoneyRequired() <= 0)
             flower.Pollinate();
         isDone = true;
     }
@@ -264,7 +267,8 @@ public abstract class RocketFlowerJob : FlowerJob
 
 public class RocketHarvesterJob : RocketFlowerJob
 {
-    protected override bool IsEligible(Flower f) => f.CurState == Flower.State.Pollinated;
+    protected override bool IsEligible(Flower f) =>
+        (f.CurState == Flower.State.Pollinating) && !(f is Blackhole);
 
     protected override bool OnRocketArrived(Bee bee)
     {
@@ -333,7 +337,7 @@ public class RocketPollinatorJob : RocketFlowerJob
             return;
         }
         bee.carryingHoney = 0;
-        if (flower.CurState == Flower.State.Pollinated)
+        if (flower.HoneyRequired() <= 0)
             flower.Pollinate();
         isDone = true;
     }

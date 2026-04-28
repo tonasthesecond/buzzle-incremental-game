@@ -1,1 +1,295 @@
-null
+{
+  "Honey": 111,
+  "Upgrades": [
+	{
+	  "Id": "PoppierPoppies",
+	  "Level": 0
+	},
+	{
+	  "Id": "GrassUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "NaturalHabitatPoppy",
+	  "Level": 0
+	},
+	{
+	  "Id": "GreenerOnYourSide",
+	  "Level": 0
+	},
+	{
+	  "Id": "RoseUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "Hermit",
+	  "Level": 0
+	},
+	{
+	  "Id": "Antisocial",
+	  "Level": 0
+	},
+	{
+	  "Id": "CloverUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "Luckier",
+	  "Level": 0
+	},
+	{
+	  "Id": "EvenLuckier",
+	  "Level": 0
+	},
+	{
+	  "Id": "RiskyPlay",
+	  "Level": 0
+	},
+	{
+	  "Id": "Jackpot",
+	  "Level": 0
+	},
+	{
+	  "Id": "PayDay",
+	  "Level": 0
+	},
+	{
+	  "Id": "FinalGambit",
+	  "Level": 0
+	},
+	{
+	  "Id": "NaturalHabitatClover",
+	  "Level": 0
+	},
+	{
+	  "Id": "SpreadWarmth",
+	  "Level": 0
+	},
+	{
+	  "Id": "Smoky",
+	  "Level": 0
+	},
+	{
+	  "Id": "Smokier",
+	  "Level": 0
+	},
+	{
+	  "Id": "QueenUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "HerDomain",
+	  "Level": 0
+	},
+	{
+	  "Id": "HerInfluence",
+	  "Level": 0
+	},
+	{
+	  "Id": "HerWill",
+	  "Level": 0
+	},
+	{
+	  "Id": "Matriarchy",
+	  "Level": 0
+	},
+	{
+	  "Id": "BefittingAQueen",
+	  "Level": 0
+	},
+	{
+	  "Id": "BeesAssemble",
+	  "Level": 0
+	},
+	{
+	  "Id": "Impression",
+	  "Level": 0
+	},
+	{
+	  "Id": "Presence",
+	  "Level": 0
+	},
+	{
+	  "Id": "AlwaysHereForYou",
+	  "Level": 0
+	},
+	{
+	  "Id": "HurryUp",
+	  "Level": 0
+	},
+	{
+	  "Id": "SunflowerUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "MightOfTheSun",
+	  "Level": 0
+	},
+	{
+	  "Id": "SpaciousHives",
+	  "Level": 0
+	},
+	{
+	  "Id": "SqueezeMoreIn",
+	  "Level": 0
+	},
+	{
+	  "Id": "Metropolis",
+	  "Level": 0
+	},
+	{
+	  "Id": "YarrowUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "Companionship",
+	  "Level": 0
+	},
+	{
+	  "Id": "NaturalHabitatYarrow",
+	  "Level": 0
+	},
+	{
+	  "Id": "ZoomZoom",
+	  "Level": 0
+	},
+	{
+	  "Id": "HoneyHungry",
+	  "Level": 0
+	},
+	{
+	  "Id": "FatUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "EvenFatterFatBees",
+	  "Level": 0
+	},
+	{
+	  "Id": "Gigantism",
+	  "Level": 0
+	},
+	{
+	  "Id": "JetpackUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "ImprovedJetpackSuits",
+	  "Level": 0
+	},
+	{
+	  "Id": "FlyToTheRescue",
+	  "Level": 0
+	},
+	{
+	  "Id": "LoamUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "SmootherSoil",
+	  "Level": 0
+	},
+	{
+	  "Id": "SharedSwiftness",
+	  "Level": 0
+	},
+	{
+	  "Id": "SharedStrength",
+	  "Level": 0
+	},
+	{
+	  "Id": "InfiniteGluttony",
+	  "Level": 0
+	},
+	{
+	  "Id": "BlackholeUnlock",
+	  "Level": 0
+	},
+	{
+	  "Id": "Rainbow",
+	  "Level": 0
+	}
+  ],
+  "Hives": [
+	{
+	  "X": 0,
+	  "Y": 0,
+	  "BeeCounts": {
+		"BaseBee": 5
+	  }
+	},
+	{
+	  "X": 0,
+	  "Y": 1,
+	  "BeeCounts": {
+		"QueenBee": 1
+	  }
+	}
+  ],
+  "Tiles": [
+	{
+	  "Type": "DirtTile",
+	  "Spans": [
+		[
+		  -1,
+		  1,
+		  -1
+		],
+		[
+		  -8,
+		  1,
+		  0
+		],
+		[
+		  -1,
+		  1,
+		  1
+		]
+	  ]
+	}
+  ],
+  "Objects": [
+	{
+	  "X": 0,
+	  "Y": 0,
+	  "Type": "Hive"
+	},
+	{
+	  "X": -7,
+	  "Y": 0,
+	  "Type": "Poppy"
+	},
+	{
+	  "X": 0,
+	  "Y": 1,
+	  "Type": "Hive"
+	},
+	{
+	  "X": -8,
+	  "Y": 0,
+	  "Type": "Blackhole"
+	}
+  ],
+  "UnlockedKeys": [
+	"Sunflower",
+	"Clover",
+	"Yarrow",
+	"Rose",
+	"Grass",
+	"Loam",
+	"Queen",
+	"Rocket",
+	"Fat",
+	"Blackhole",
+	"Sunflower",
+	"Clover",
+	"Yarrow",
+	"Rose",
+	"Grass",
+	"Loam",
+	"Queen",
+	"Rocket",
+	"Fat",
+    "Blackhole"
+  ]
+}

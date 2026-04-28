@@ -13,9 +13,14 @@ public partial class Game : GameSystem
     public SelectContainer ObjectsSelect { get; private set; } = null!;
     public SelectContainer TilesSelect { get; private set; } = null!;
     public SelectContainer BeesSelect { get; private set; } = null!;
+    public PlacementSystem PlacementSystem { get; private set; } = null!;
+    public UpgradeTree UpgradeTree { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
+
+    [Export]
+    public bool DebugMode { get; set; } = false;
 
     [Export]
     public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
@@ -34,6 +39,8 @@ public partial class Game : GameSystem
         ObjectsSelect = UILayer.GetNode<SelectContainer>("%ObjectsSelectContainer");
         TilesSelect = UILayer.GetNode<SelectContainer>("%TilesSelectContainer");
         BeesSelect = UILayer.GetNode<SelectContainer>("%BeesSelectContainer");
+        PlacementSystem = GetNode<PlacementSystem>("%PlacementSystem");
+        UpgradeTree = GetNode<UpgradeTree>("%UpgradeTree");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
@@ -53,6 +60,18 @@ public partial class Game : GameSystem
             AddChild(autoSaveTimer);
             autoSaveTimer.Timeout += GameStore.SaveGame;
             autoSaveTimer.Start(AutoSaveInterval);
+        }
+        if (DebugMode)
+        {
+            GD.Print("Debug Mode: ON");
+            PlacementSystem.FreePlace = true;
+            UpgradeTree.ShowAllUpgrades = true;
+        }
+        else
+        {
+            GD.Print("Debug Mode: OFF");
+            PlacementSystem.FreePlace = false;
+            UpgradeTree.ShowAllUpgrades = false;
         }
     }
 

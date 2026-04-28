@@ -60,7 +60,7 @@ public partial class Hive : BaseGridObject, IHasHoverRefresh, IHasHoverSubtitle
     {
         string desc = $"A home for {Style.CK(GameStore.HiveCapacityBee.Value.ToString())} bees.\n";
         if (!Placed)
-            return "";
+            return desc;
         if (GetBeeCounts().Count == 0)
             desc += "\nEmpty";
         else

@@ -4,8 +4,14 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
 {
     private string Key => "Beekeeper";
 
-    protected override void OnBeeEntered(Bee bee) =>
+    protected override void OnBeeEntered(Bee bee)
+    {
         bee.Speed.AddPercent(Key, GameStore.BeekeeperEffectZoneSpeedBuff.Value);
+        bee.PollinationTimeReductionBuff.AddFlat(
+            Key,
+            GameStore.BeekeeperEffectZonePollinationTimeReductionBuff.Value
+        );
+    }
 
     protected override void OnBeeExited(Bee bee) => bee.Speed.Remove(Key);
 

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://citjrte13rdnr"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_xkaii"]
+[ext_resource type="Script" uid="uid://d1itb8bc35b30" path="res://objects/grid/Blackhole.cs" id="2_67hmf"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="2_h151u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67hmf"]
+atlas = ExtResource("2_h151u")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxpie"]
+atlas = ExtResource("2_h151u")
+region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xkaii"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67hmf")
+}],
+"loop": true,
+"name": &"pollinated",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxpie")
+}],
+"loop": true,
+"name": &"unpollinated",
+"speed": 5.0
+}]
+
+[node name="Blackhole" unique_id=1691567109 instance=ExtResource("1_xkaii")]
+script = ExtResource("2_67hmf")
+FlavorText = ""
+ObjectName = "Blackhole"
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_xkaii")
+animation = &"unpollinated"

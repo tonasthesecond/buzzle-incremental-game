@@ -44,7 +44,9 @@ public partial class BeeSystem : GameSystem
     {
         Grid grid = Services.Get<Grid>()!;
         Flower[] pollinatedFlowers = grid.GetObjectsOfType<Flower>()
-            .Where(f => f.CurState == Flower.State.Pollinated && !IsClaimed(f))
+            .Where(f =>
+                (f.CurState == Flower.State.Pollinated) && (!IsClaimed(f)) && !(f is Blackhole)
+            )
             .ToArray();
         Flower[] unpollinatedFlowers = grid.GetObjectsOfType<Flower>()
             .Where(f => f.CurState == Flower.State.Pollinating && !IsClaimed(f))

@@ -43,6 +43,7 @@
 [ext_resource type="Texture2D" uid="uid://ciawes7fupkve" path="res://assets/tilemap_brown.png" id="27_hxy8k"]
 [ext_resource type="PackedScene" uid="uid://cvi41mdqkh0au" path="res://objects/tiles/DirtTile.tscn" id="28_hxy8k"]
 [ext_resource type="Texture2D" uid="uid://dfp788lbo7pfe" path="res://assets/tilemap_cyan.png" id="31_fj2yu"]
+[ext_resource type="PackedScene" uid="uid://citjrte13rdnr" path="res://objects/grid/Blackhole.tscn" id="32_dyvha"]
 [ext_resource type="Script" uid="uid://eem2ebdmliip" path="res://resources/RemoveBee.cs" id="36_7vltt"]
 [ext_resource type="PackedScene" uid="uid://cyqsoj4m042r5" path="res://objects/bees/RocketBee.tscn" id="36_8576b"]
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
@@ -159,6 +160,17 @@ script = ExtResource("8_joorw")
 Resource = ExtResource("24_wdm1y")
 Icon = SubResource("AtlasTexture_n7324")
 UnlockKey = "Rose"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lua15"]
+atlas = ExtResource("24_iueff")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="Resource" id="Resource_qirsl"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("32_dyvha")
+Icon = SubResource("AtlasTexture_lua15")
+UnlockKey = "Blackhole"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_hxy8k"]
@@ -278,18 +290,20 @@ region = Rect2(0, 32, 64, 32)
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
+DebugMode = true
 
 [node name="HoneyTracker" type="Node" parent="." unique_id=1552688911]
 script = ExtResource("2_n7324")
 metadata/_custom_type_script = "uid://bxiv6k7h3frth"
 
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
+unique_name_in_owner = true
 script = ExtResource("9_2vekm")
-FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
 unique_name_in_owner = true
+y_sort_enabled = true
 
 [node name="BeeSystem" type="Node" parent="GameLayer" unique_id=474014426]
 script = ExtResource("1_wbfu4")
@@ -326,6 +340,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
+unique_name_in_owner = true
 ShowAllUpgrades = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
@@ -404,7 +419,7 @@ visible = false
 self_modulate = Color(0, 0.83137256, 0.34901962, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
-SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
+SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt"), SubResource("Resource_qirsl")])
 ExpandDirection = 1
 metadata/_tab_index = 0
 metadata/_tab_name = "Objects"

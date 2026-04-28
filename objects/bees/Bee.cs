@@ -91,9 +91,18 @@ public abstract partial class Bee
             Callable.From(
                 (float t) =>
                 {
+                    float nextAngle = orbitAngle + orbitDir * 0.01f;
+                    Vector2 nextPos =
+                        orbitCenter
+                        + new Vector2(Mathf.Cos(nextAngle), Mathf.Sin(nextAngle)) * orbitRadius;
                     orbitAngle =
                         (GlobalPosition - orbitCenter).Angle()
-                        + orbitDir * (Speed.Value / orbitRadius) * (float)GetProcessDeltaTime();
+                        + orbitDir
+                            * (
+                                (Speed.Value + Blackhole.GetSpeedBonus(Position, nextPos))
+                                / orbitRadius
+                            )
+                            * (float)GetProcessDeltaTime();
                 }
             ),
             0f,
@@ -172,7 +181,10 @@ public abstract partial class Bee
     /// Move toward target position.
     void Move(double delta)
     {
-        Position = Position.MoveToward(targetPosition, Speed.Value * (float)delta);
+        Position = Position.MoveToward(
+            targetPosition,
+            (Speed.Value + Blackhole.GetSpeedBonus(Position, targetPosition)) * (float)delta
+        );
         latchedFlipH = FlipOverride ?? (targetPosition.X < Position.X);
         Sprite.FlipH = latchedFlipH;
     }
