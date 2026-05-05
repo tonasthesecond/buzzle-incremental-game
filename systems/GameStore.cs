@@ -165,11 +165,12 @@ public partial class GameStore : Node
         "Fat",
         "Blackhole",
     ];
-    private static readonly HashSet<string> unlockedKeys = new HashSet<string>([
+    private static readonly HashSet<string> defaultUnlockedKeys = new([
         "Poppy",
         "Dirt",
         "Bee",
     ]);
+    private static readonly HashSet<string> unlockedKeys = new(defaultUnlockedKeys);
 
     public static void Unlock(string key)
     {
@@ -248,15 +249,16 @@ public partial class GameStore : Node
                 ?? new SaveData()
             : new SaveData();
 
-        Honey = Save.Honey;
-        Services.Get<UpgradeTree>().ApplyUpgrades();
+        if (Save == null)
+            Save = new SaveData();
 
-        Callable
-            .From(() =>
-            {
-                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameLoaded);
-            })
-            .CallDeferred();
+        ApplyLoadedSave(Save);
+    }
+
+    public static void LoadFromSaveData(SaveData loadedSave)
+    {
+        Save = loadedSave ?? new SaveData();
+        ApplyLoadedSave(Save);
     }
 
     public static void SaveGame()
@@ -281,5 +283,30 @@ public partial class GameStore : Node
         Colors = JsonSerializer.Deserialize<Dictionary<string, string>>(
             FileAccess.GetFileAsString("res://resources/colors.json")
         )!;
+    }
+
+    private static void ApplyLoadedSave(SaveData loadedSave)
+    {
+        Save = loadedSave;
+        Save.UnlockedKeys ??= new List<string>();
+
+        unlockedKeys.Clear();
+        foreach (var key in defaultUnlockedKeys)
+            unlockedKeys.Add(key);
+
+        foreach (var key in Save.UnlockedKeys.Distinct())
+            unlockedKeys.Add(key);
+
+        Save.UnlockedKeys = unlockedKeys.ToList();
+
+        Honey = Save.Honey;
+        Services.Get<UpgradeTree>().ApplyUpgrades();
+
+        Callable
+            .From(() =>
+            {
+                SignalBus.Instance.EmitSignal(SignalBus.SignalName.GameLoaded);
+            })
+            .CallDeferred();
     }
 }

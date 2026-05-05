@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class Game : GameSystem
@@ -30,7 +31,7 @@ public partial class Game : GameSystem
 
     private Timer? autoSaveTimer;
 
-    public override void _Ready()
+    public override async void _Ready()
     {
         // get nodes
         GameLayer = GetNode<Node2D>("%GameLayer");
@@ -58,8 +59,8 @@ public partial class Game : GameSystem
         EndLayer.Hide();
         GameLayer.GetNode<Camera>("Camera").MakeCurrent();
 
-        // load game
-        GameStore.LoadGame();
+        // load the authenticated user's save from Firebase first, then fall back locally.
+        await LoadPlayerSaveAsync();
 
         // start autosave
         if (AutoSave)
@@ -82,6 +83,24 @@ public partial class Game : GameSystem
             PlacementSystem.FreePlace = false;
             UpgradeTree.ShowAllUpgrades = false;
         }
+    }
+
+    private async Task LoadPlayerSaveAsync()
+    {
+        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
+        var firebaseSave = GetNode<FirebaseSave>("/root/FirebaseSave");
+
+        if (!string.IsNullOrWhiteSpace(firebaseAuth.RefreshToken))
+        {
+            var remoteSave = await firebaseSave.LoadAsync(firebaseAuth);
+            if (remoteSave != null)
+            {
+                GameStore.LoadFromSaveData(remoteSave);
+                return;
+            }
+        }
+
+        GameStore.LoadGame();
     }
 
     private void onUpgradesButtonPressed()

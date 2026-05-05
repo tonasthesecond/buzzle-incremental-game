@@ -1,4 +1,5 @@
 using Godot;
+using System.Threading.Tasks;
 
 public partial class TitleScreen : Node
 {
@@ -10,7 +11,6 @@ public partial class TitleScreen : Node
     private BaseButton loginButton = null!;
     private TextEdit usernameField = null!;
     private TextEdit passwordField = null!;
-
     private float _time = 0f;
     private float _titleBaseY;
     private float _tile1BaseY;
@@ -105,11 +105,35 @@ public partial class TitleScreen : Node
         bee.Position = new Vector2(_beeX, beeY);
     }
 
-    private void OnLoginButtonPressed()
+    private async void OnLoginButtonPressed()
     {
-        string username = usernameField.Text;
-        string password = passwordField.Text;
-        // TODO: Authenticate here
+        string email = usernameField.Text.Trim();
+        string password = passwordField.Text.Trim();
+
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        {
+            GD.PrintErr("[TitleScreen] Email and password are required.");
+            return;
+        }
+
+        loginButton.Disabled = true;
+        var loginSucceeded = await TryLoginAsync(email, password);
+        loginButton.Disabled = false;
+
+        if (!loginSucceeded)
+            return;
+
         GetTree().ChangeSceneToFile("res://Game.tscn");
+    }
+
+    private async Task<bool> TryLoginAsync(string email, string password)
+    {
+        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
+        var loggedIn = await firebaseAuth.LoginAsync(email, password);
+
+        if (!loggedIn)
+            GD.PrintErr("[TitleScreen] Firebase login failed. Check credentials and Firebase config.");
+
+        return loggedIn;
     }
 }

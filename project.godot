@@ -23,6 +23,8 @@ buses/default_bus_layout="uid://cnj12ugxc3l28"
 
 GameStore="*uid://ce5tcfplcvouy"
 SignalBus="*uid://cdsqosi2l6cvd"
+FirebaseAuth="*res://scripts/Firebase/FirebaseAuth.cs"
+FirebaseSave="*res://scripts/Firebase/FirebaseSave.cs"
 
 [display]
 
