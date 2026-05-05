@@ -30,6 +30,7 @@ public partial class Game : GameSystem
     public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
 
     private Timer? autoSaveTimer;
+    private bool isSaving;
 
     public override async void _Ready()
     {
@@ -68,7 +69,7 @@ public partial class Game : GameSystem
             autoSaveTimer = new Timer();
             autoSaveTimer.OneShot = false;
             AddChild(autoSaveTimer);
-            autoSaveTimer.Timeout += GameStore.SaveGame;
+            autoSaveTimer.Timeout += OnAutoSaveTimeout;
             autoSaveTimer.Start(AutoSaveInterval);
         }
         if (DebugMode)
@@ -103,6 +104,11 @@ public partial class Game : GameSystem
         GameStore.LoadGame();
     }
 
+    private async void OnAutoSaveTimeout()
+    {
+        await GameStore.SaveGameAsync(false);
+    }
+
     private void onUpgradesButtonPressed()
     {
         Services.Get<AudioSystem>().PlaySound("click");
@@ -127,12 +133,11 @@ public partial class Game : GameSystem
         }
     }
 
-    public override void _Input(InputEvent @event)
+    public override async void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed("save_game"))
         {
-            GD.Print("Saved Game!");
-            GameStore.SaveGame();
+            await GameStore.SaveGameAsync(true);
         }
         if (Input.IsActionJustPressed("test"))
         {

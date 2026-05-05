@@ -263,9 +263,20 @@ public partial class GameStore : Node
 
     public static void SaveGame()
     {
+        CaptureCurrentSave();
+        WriteLocalSave();
+    }
+
+    public static SaveData CaptureCurrentSave()
+    {
         Save.Honey = Honey;
         Services.Get<Grid>().Snapshot();
         Services.Get<UpgradeTree>().SaveUpgrades();
+        return Save;
+    }
+
+    public static void WriteLocalSave()
+    {
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
         file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
     }

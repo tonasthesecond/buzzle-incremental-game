@@ -4,3 +4,5 @@
 .Bee Idle.sln
 .vscode/
 exports/*
+AGENT_GUIDELINES.md
+login_feature.md

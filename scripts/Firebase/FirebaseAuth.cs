@@ -156,6 +156,7 @@ public partial class FirebaseAuth : Node
             $"grant_type=refresh_token&refresh_token={Uri.EscapeDataString(RefreshToken)}";
         var headers = new string[] { "Content-Type: application/x-www-form-urlencoded" };
         var url = $"{FirebaseConfig.TokenBase}?key={FirebaseConfig.ApiKey}";
+        GD.Print($"[FirebaseAuth] Requesting: {url}");
         var responseBody = await SendHttpRequestAsync(url, headers, HttpClient.Method.Post, formBody);
 
         var response = JsonSerializer.Deserialize<TokenRefreshResponse>(responseBody, JsonOpts);
@@ -254,7 +255,11 @@ public partial class FirebaseAuth : Node
         }
     }
 
-    private sealed record AuthRequest(string Email, string Password, bool ReturnSecureToken);
+    private sealed record AuthRequest(
+    [property: JsonPropertyName("email")]             string Email,
+    [property: JsonPropertyName("password")]          string Password,
+    [property: JsonPropertyName("returnSecureToken")] bool ReturnSecureToken
+    );
 
     private sealed record AuthCacheData(string RefreshToken);
 
@@ -293,4 +298,4 @@ public partial class FirebaseAuth : Node
         [JsonPropertyName("message")]
         public string? Message { get; set; }
     }
-}
+}  
