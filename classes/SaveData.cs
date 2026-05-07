@@ -8,6 +8,8 @@ public class SaveData
     public List<SavedTileGroup> Tiles { get; set; } = new();
     public List<SavedObject> Objects { get; set; } = new();
     public List<string> UnlockedKeys { get; set; } = new();
+    public int VolumeSFX { get; set; } = 5;
+    public int VolumeBG { get; set; } = 5;
 }
 
 public class SavedUpgrade

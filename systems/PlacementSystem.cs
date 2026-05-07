@@ -91,6 +91,14 @@ public partial class PlacementSystem : GameSystem
             ClearHoverText();
             CurMode = Mode.None;
         };
+
+        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) =>
+        {
+            CurMode = Mode.None;
+            selectedScene = null;
+            selectedType = null;
+            ClearHoverText();
+        };
     }
 
     /// Deduct cost if affordable. Returns false + fail on rejection.
@@ -145,7 +153,7 @@ public partial class PlacementSystem : GameSystem
 
         void show()
         {
-            bool enough = t != null && GameStore.Honey >= GameStore.GetPlacementCost(t);
+            bool enough = (t != null) && (GameStore.Honey >= GameStore.GetPlacementCost(t));
             Services
                 .Get<HoverLabel>()
                 .ShowMessage(
@@ -169,6 +177,16 @@ public partial class PlacementSystem : GameSystem
         {
             GameStore.Instance.HoneyChanged -= honeyChangedHandler;
             honeyChangedHandler = null;
+        }
+        if (gridObjectPlacedHandler != null)
+        {
+            SignalBus.Instance.GridObjectPlaced -= gridObjectPlacedHandler;
+            gridObjectPlacedHandler = null;
+        }
+        if (gridObjectRemovedHandler != null)
+        {
+            SignalBus.Instance.GridObjectRemoved -= gridObjectRemovedHandler;
+            gridObjectRemovedHandler = null;
         }
         Services.Get<HoverLabel>().HideMessage();
     }
@@ -257,13 +275,14 @@ public partial class PlacementSystem : GameSystem
                 break;
 
             case Mode.Object:
+                Type? objType = selectedType;
                 if (
                     selectedScene != null
-                    && TryCharge(selectedType, out cost, out fail)
+                    && TryCharge(objType, out cost, out fail)
                     && grid.PlaceObject(selectedScene, pos, out fail)
                 )
                 {
-                    ChargeHoney(selectedType, cost);
+                    ChargeHoney(objType, cost);
                     placementParticles.Emit(grid.GridToWorld(pos));
                 }
                 break;

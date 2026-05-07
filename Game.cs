@@ -15,6 +15,8 @@ public partial class Game : GameSystem
     public SelectContainer BeesSelect { get; private set; } = null!;
     public PlacementSystem PlacementSystem { get; private set; } = null!;
     public UpgradeTree UpgradeTree { get; private set; } = null!;
+    public CanvasLayer EndLayer { get; private set; } = null!;
+    public Container EndingContentContainer { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
@@ -41,12 +43,16 @@ public partial class Game : GameSystem
         BeesSelect = UILayer.GetNode<SelectContainer>("%BeesSelectContainer");
         PlacementSystem = GetNode<PlacementSystem>("%PlacementSystem");
         UpgradeTree = GetNode<UpgradeTree>("%UpgradeTree");
+        EndLayer = GetNode<CanvasLayer>("%EndLayer");
+        EndingContentContainer = GetNode<Container>("%EndingContentContainer");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
+        SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
 
         // setup
         GameLayer.Show();
+        EndLayer.Hide();
         GameLayer.GetNode<Camera>("Camera").MakeCurrent();
 
         // load game
@@ -116,5 +122,53 @@ public partial class Game : GameSystem
             foreach (var (source, hps) in bySource)
                 GD.Print($"{source}: {(total > 0 ? hps / total : 0):P2}");
         }
+    }
+
+    private void onRainbowPlaced(Rainbow rainbow)
+    {
+        EndLayer.Show();
+        Camera camera = GameLayer.GetNode<Camera>("Camera");
+        camera.ControlsEnabled = false;
+        camera.SetTarget(rainbow.GlobalPosition);
+        camera.SetZoom(GameStore.GameEndStartZoom);
+
+        Tween tween = CreateTween();
+        tween.TweenMethod(
+            Callable.From((float v) => GameEndJob.SpeedScale = v),
+            GameEndJob.SpeedScale,
+            GameStore.RainbowSpeedScaleMax,
+            GameStore.GameEndAnimationTime
+        );
+        tween.SetEase(Tween.EaseType.In);
+        tween.SetTrans(Tween.TransitionType.Expo);
+
+        UILayer.Hide();
+
+        Tween cameraTween = CreateTween();
+        cameraTween.TweenMethod(
+            Callable.From((float v) => camera.SetZoom(v)),
+            GameStore.GameEndStartZoom,
+            GameStore.GameEndEndZoom,
+            GameStore.GameEndAnimationTime
+        );
+
+        ColorRect whiteScreen = GetNode<ColorRect>("%WhiteScreen");
+        whiteScreen.Show();
+        Tween whiteTween = null!;
+        GetTree().CreateTimer(GameStore.WhiteScreenDelayTime).Timeout += () =>
+        {
+            whiteTween = CreateTween();
+            whiteTween.TweenProperty(whiteScreen, "modulate:a", 1f, GameStore.WhiteScreenFadeTime);
+            whiteTween.SetEase(Tween.EaseType.In);
+            whiteTween.SetTrans(Tween.TransitionType.Quad);
+            whiteTween.Finished += () =>
+            {
+                Services.Get<BeeSystem>().ResetBees();
+                Tween containerTween = CreateTween();
+                containerTween.TweenProperty(EndingContentContainer, "modulate:a", 1f, 1f);
+                containerTween.SetEase(Tween.EaseType.In);
+                containerTween.SetTrans(Tween.TransitionType.Quad);
+            };
+        };
     }
 }

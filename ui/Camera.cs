@@ -29,6 +29,8 @@ public partial class Camera : Camera2D
     private Vector2 _dragStartMousePos;
     private Vector2 _dragStartCameraPos;
 
+    public bool ControlsEnabled = true;
+
     public override void _Ready()
     {
         _targetPosition = Position;
@@ -55,6 +57,8 @@ public partial class Camera : Camera2D
 
     public override void _Input(InputEvent @event)
     {
+        if (!ControlsEnabled)
+            return;
         if (GetViewport().GetCamera2D() != this)
             return;
         // Keyboard input
@@ -115,5 +119,18 @@ public partial class Camera : Camera2D
     {
         _targetPosition = new Vector2(0, 0); //center of the game
         _targetZoom = new Vector2(1, 1); // Reset zoom to default
+    }
+
+    public void SetTarget(Vector2 position)
+    {
+        _targetPosition = position;
+    }
+
+    public void SetZoom(float zoom)
+    {
+        _targetZoom = new Vector2(zoom, zoom).Clamp(
+            new Vector2(MinZoom, MinZoom),
+            new Vector2(MaxZoom, MaxZoom)
+        );
     }
 }

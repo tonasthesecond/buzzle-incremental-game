@@ -1,5 +1,5 @@
 {
-  "Honey": 111,
+  "Honey": 99,
   "Upgrades": [
 	{
 	  "Id": "PoppierPoppies",
@@ -206,8 +206,20 @@
 	  "Level": 0
 	},
 	{
-	  "Id": "Rainbow",
+	  "Id": "EventHorizon",
 	  "Level": 0
+	},
+	{
+	  "Id": "Attraction",
+	  "Level": 0
+	},
+	{
+	  "Id": "Attachment",
+	  "Level": 0
+	},
+	{
+	  "Id": "Rainbow",
+	  "Level": 1
 	}
   ],
   "Hives": [
@@ -290,6 +302,7 @@
 	"Queen",
 	"Rocket",
 	"Fat",
-    "Blackhole"
+	"Blackhole",
+    "Rainbow"
   ]
 }

@@ -440,3 +440,63 @@ public class QueenJob : IBeeJob
         }
     }
 }
+
+public class GameEndJob : IBeeJob
+{
+    private enum State
+    {
+        MovingToOrbit,
+        Orbiting,
+    }
+
+    private State state = State.MovingToOrbit;
+    private float angle;
+    private float radius;
+    private Rainbow rainbow = null!;
+    public static float SpeedScale = 1f;
+
+    private float direction;
+
+    public GameEndJob(Rainbow r)
+    {
+        rainbow = r;
+        radius = (float)GD.RandRange(GameStore.RainbowRadiusMin, GameStore.RainbowRadiusMax);
+        angle = (float)GD.RandRange(0f, Mathf.Tau);
+        direction = GD.Randf() > 0.5f ? 1f : -1f;
+    }
+
+    private Vector2? ringTarget;
+
+    public void Tick(Bee bee)
+    {
+        if (rainbow == null)
+            return;
+
+        switch (state)
+        {
+            case State.MovingToOrbit:
+                bee.FadeTo(1f);
+                ringTarget ??=
+                    rainbow.GlobalPosition
+                    - (rainbow.GlobalPosition - bee.GlobalPosition).Normalized() * radius;
+                bee.MoveTo(ringTarget.Value);
+                if (bee.GlobalPosition.DistanceTo(ringTarget.Value) <= 2f)
+                {
+                    angle = (bee.GlobalPosition - rainbow.GlobalPosition).Angle();
+                    state = State.Orbiting;
+                }
+                break;
+            case State.Orbiting:
+                angle +=
+                    direction
+                    * ((bee.Speed.Value * SpeedScale) / radius)
+                    * (float)bee.GetProcessDeltaTime();
+                bee.GlobalPosition = OrbitPoint();
+                bee.FlipOverride = (Mathf.Sin(angle) * direction) > 0f;
+                break;
+        }
+    }
+
+    private Vector2 OrbitPoint() =>
+        rainbow.GlobalPosition + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+}

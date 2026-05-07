@@ -75,8 +75,8 @@ public partial class GameStore : Node
     public static Stat BlackholeHoneyCost { get; } = new(1f);
     public static Stat BlackholeHoneyGain { get; } = new(1f);
     public static Stat BlackholePollinationTime { get; } = new(1f);
-    public static Stat BlackholePullRange { get; } = new(160f);
-    public static Stat BlackholeNegativePullSpeed { get; } = new(5f);
+    public static Stat BlackholePullRange { get; } = new(96f);
+    public static Stat BlackholeNegativePullSpeed { get; } = new(16f);
     public static Stat BlackholePositivePullSpeed { get; } = new(16f);
 
     public static Stat DirtPoppyHoneyGainBuff { get; } = new(0f);
@@ -86,6 +86,15 @@ public partial class GameStore : Node
 
     public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
     public static Stat LoamYarrowHoneyGainBuff { get; } = new(0f);
+
+    public const float RainbowRadiusMin = 32f;
+    public const float RainbowRadiusMax = 128f;
+    public const float RainbowSpeedScaleMax = 20f;
+    public const float GameEndAnimationTime = 15f;
+    public const float GameEndStartZoom = 2f;
+    public const float GameEndEndZoom = 0.5f;
+    public const float WhiteScreenDelayTime = 5f;
+    public const float WhiteScreenFadeTime = GameEndAnimationTime - WhiteScreenDelayTime;
 
     // --- Placement Price Models ---
     public static Dictionary<Type, IScaleModel> PriceModels { get; } =
@@ -113,6 +122,7 @@ public partial class GameStore : Node
             { typeof(FatBee), new PolynomialModel(10f, 0.6f) },
             { typeof(RocketBee), new PolynomialModel(10f, 0.6f) },
             { typeof(QueenBee), new PolynomialModel(50f, 0.6f) },
+            { typeof(Rainbow), new FlatModel(0f) },
         };
 
     public static int GetPlacementCost(Type t)
@@ -208,6 +218,14 @@ public partial class GameStore : Node
             Save.Honey = honey;
             Instance.EmitSignal(SignalName.HoneyChanged, value);
         }
+    }
+
+    // --- Volume ---
+    public static float StepToDb(int step, int max = 10, float minDb = -80f)
+    {
+        if (step <= 0)
+            return -80f;
+        return Mathf.Lerp(minDb, 0f, step / (float)max);
     }
 
     // --- Save Data ---

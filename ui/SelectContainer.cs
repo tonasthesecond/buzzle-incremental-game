@@ -52,6 +52,8 @@ public partial class SelectContainer : PanelContainer
                 if (res.UnlockKey == key)
                     Add(res);
         };
+
+        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) => Reset();
     }
 
     /// Input handling.

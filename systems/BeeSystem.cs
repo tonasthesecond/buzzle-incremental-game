@@ -38,6 +38,7 @@ public partial class BeeSystem : GameSystem
     {
         SignalBus.Instance.GridLoaded += SpawnFromSave;
         SignalBus.Instance.GridObjectRemoved += OnGridObjectRemoved;
+        SignalBus.Instance.RainbowPlaced += OnRainbowPlaced;
     }
 
     public override void _Process(double delta)
@@ -160,4 +161,16 @@ public partial class BeeSystem : GameSystem
 
     public Bee[] GetBeesWithJob<T>()
         where T : IBeeJob => GetBees().Where(b => b.job is T).ToArray();
+
+    public void OnRainbowPlaced(Rainbow rainbow)
+    {
+        foreach (Bee bee in GetBees())
+            bee.SetJob(new GameEndJob(rainbow));
+    }
+
+    public void ResetBees()
+    {
+        foreach (Bee bee in GetBees())
+            bee.SetJob(new GoToHiveJob());
+    }
 }

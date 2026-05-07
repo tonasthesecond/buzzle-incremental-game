@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
 [ext_resource type="Script" uid="uid://bxiv6k7h3frth" path="res://systems/HoneyTracker.cs" id="2_n7324"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
+[ext_resource type="Script" uid="uid://dvnw4q88t2grr" path="res://systems/AudioSystem.cs" id="3_ds8mp"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
 [ext_resource type="PackedScene" uid="uid://vkecggc367du" path="res://particles/PlacementExplosionParticles.tscn" id="4_n7324"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
@@ -31,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://rtbaieb6a50t" path="res://objects/grid/Sunflower.tscn" id="21_5he1h"]
 [ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
+[ext_resource type="PackedScene" uid="uid://coqsu3r23fb5b" path="res://objects/grid/Rainbow.tscn" id="22_xc54d"]
 [ext_resource type="PackedScene" uid="uid://brb5bcs3dh361" path="res://objects/grid/Yarrow.tscn" id="23_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
@@ -49,6 +51,9 @@
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
 [ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="40_o6tbt"]
 [ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
+[ext_resource type="Texture2D" uid="uid://i38f6dvn7ddt" path="res://assets/title.png" id="51_nyc7o"]
+[ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="52_ds8mp"]
+[ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="53_pbwgg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
 atlas = ExtResource("10_v5dxo")
@@ -91,6 +96,17 @@ texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qirsl"]
+atlas = ExtResource("24_iueff")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="Resource" id="Resource_pnh27"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("22_xc54d")
+Icon = SubResource("AtlasTexture_qirsl")
+UnlockKey = "Rainbow"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_wdm1y"]
 resource_name = "RemoveObject"
@@ -290,11 +306,14 @@ region = Rect2(0, 32, 64, 32)
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
-DebugMode = true
 
 [node name="HoneyTracker" type="Node" parent="." unique_id=1552688911]
 script = ExtResource("2_n7324")
 metadata/_custom_type_script = "uid://bxiv6k7h3frth"
+
+[node name="AudioSystem" type="Node" parent="." unique_id=1039161720]
+script = ExtResource("3_ds8mp")
+metadata/_custom_type_script = "uid://dvnw4q88t2grr"
 
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
 unique_name_in_owner = true
@@ -341,7 +360,6 @@ visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
 unique_name_in_owner = true
-ShowAllUpgrades = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
 
@@ -419,7 +437,7 @@ visible = false
 self_modulate = Color(0, 0.83137256, 0.34901962, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
-SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt"), SubResource("Resource_qirsl")])
+SelectedResources = Array[Object]([SubResource("Resource_pnh27"), SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt"), SubResource("Resource_qirsl")])
 ExpandDirection = 1
 metadata/_tab_index = 0
 metadata/_tab_name = "Objects"
@@ -442,6 +460,18 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_n7324"), SubResource("Resource_hwsgv"), SubResource("Resource_v5dxo"), SubResource("Resource_iueff"), SubResource("Resource_dyvha"), SubResource("Resource_8ktx7"), SubResource("Resource_xc54d")])
 metadata/_tab_index = 2
 metadata/_tab_name = "Bees"
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=172975608]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="CollapseButton" type="TextureButton" parent="UILayer" unique_id=1596705947]
 offset_left = 563.0
@@ -473,3 +503,55 @@ text = "error message right now"
 horizontal_alignment = 1
 script = ExtResource("45_iueff")
 offset = Vector2(0, -32)
+
+[node name="EndLayer" type="CanvasLayer" parent="." unique_id=1083758792]
+unique_name_in_owner = true
+layer = 3
+visible = false
+
+[node name="WhiteScreen" type="ColorRect" parent="EndLayer" unique_id=1549357252]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="EndLayer" unique_id=1887246064]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("22_0mevm")
+
+[node name="EndingContentContainer" type="VBoxContainer" parent="EndLayer/CenterContainer" unique_id=797850026]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EndingTitle" type="TextureRect" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=66192258]
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 2
+texture = ExtResource("51_nyc7o")
+stretch_mode = 5
+
+[node name="TitleLabel" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=470433628 instance=ExtResource("52_ds8mp")]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "[b]Beetopia achieved.[/b]"
+
+[node name="BodyLabel" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=1558216477 instance=ExtResource("53_pbwgg")]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "Thanks to your efforts, beecivilization will forever live in abundance and bliss."
+fit_content = true
+
+[node name="TitleLabel2" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=1500088954 instance=ExtResource("52_ds8mp")]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Bees thank you."

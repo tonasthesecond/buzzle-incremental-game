@@ -33,7 +33,7 @@ animations = [{
 
 [node name="Blackhole" unique_id=1691567109 instance=ExtResource("1_xkaii")]
 script = ExtResource("2_67hmf")
-FlavorText = ""
+FlavorText = "This [noun_flower](flower) makes [noun_bee](bees) move faster moving toward it, and slower moving away, within a certain range."
 ObjectName = "Blackhole"
 
 [node name="Sprite" parent="." index="0" unique_id=566324573]

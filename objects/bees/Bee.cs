@@ -236,7 +236,7 @@ public abstract partial class Bee
 
         desc +=
             $"\n\n{Style.CK("Speed")}: {Style.CK(speedTilesPerSec.ToString("F1"))} tiles per sec";
-        if (capacity > 5000)
+        if (capacity > 2000)
             desc += $"\n{Style.CK("Capacity")}: {Style.CK("inf")} honey";
         else
             desc += $"\n{Style.CK("Capacity")}: {Style.CK(capacity.ToString("F0"))} honey";

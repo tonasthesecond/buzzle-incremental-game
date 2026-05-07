@@ -35,6 +35,8 @@ public partial class PlacementMenu : Control
                 Collapse();
             })
             .CallDeferred();
+
+        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) => Collapse();
     }
 
     public void Toggle()

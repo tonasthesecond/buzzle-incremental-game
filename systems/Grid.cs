@@ -233,6 +233,10 @@ public partial class Grid : Node2D
         objects[pos] = obj;
         SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridObjectPlaced, obj);
         obj.Placed = true;
+        if (obj is Rainbow rainbow)
+        {
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.RainbowPlaced, rainbow);
+        }
         failMessage = null;
         return true;
     }
