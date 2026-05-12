@@ -1,5 +1,5 @@
 {
-  "Honey": 99,
+  "Honey": 23,
   "Upgrades": [
 	{
 	  "Id": "PoppierPoppies",
@@ -127,7 +127,7 @@
 	},
 	{
 	  "Id": "SpaciousHives",
-	  "Level": 0
+	  "Level": 1
 	},
 	{
 	  "Id": "SqueezeMoreIn",
@@ -151,7 +151,7 @@
 	},
 	{
 	  "Id": "ZoomZoom",
-	  "Level": 0
+	  "Level": 2
 	},
 	{
 	  "Id": "HoneyHungry",
@@ -229,34 +229,15 @@
 	  "BeeCounts": {
 		"BaseBee": 5
 	  }
-	},
-	{
-	  "X": 0,
-	  "Y": 1,
-	  "BeeCounts": {
-		"QueenBee": 1
-	  }
 	}
   ],
   "Tiles": [
 	{
 	  "Type": "DirtTile",
 	  "Spans": [
-		[
-		  -1,
-		  1,
-		  -1
-		],
-		[
-		  -8,
-		  1,
-		  0
-		],
-		[
-		  -1,
-		  1,
-		  1
-		]
+		[-1, 1, -1],
+		[-1, 1, 0],
+		[-1, 1, 1]
 	  ]
 	}
   ],
@@ -267,42 +248,32 @@
 	  "Type": "Hive"
 	},
 	{
-	  "X": -7,
+	  "X": -1,
 	  "Y": 0,
+	  "Type": "Poppy"
+	},
+	{
+	  "X": -1,
+	  "Y": 1,
 	  "Type": "Poppy"
 	},
 	{
 	  "X": 0,
 	  "Y": 1,
-	  "Type": "Hive"
+	  "Type": "Poppy"
 	},
 	{
-	  "X": -8,
+	  "X": 1,
+	  "Y": 1,
+	  "Type": "Poppy"
+	},
+	{
+	  "X": 1,
 	  "Y": 0,
-	  "Type": "Blackhole"
+	  "Type": "Poppy"
 	}
   ],
-  "UnlockedKeys": [
-	"Sunflower",
-	"Clover",
-	"Yarrow",
-	"Rose",
-	"Grass",
-	"Loam",
-	"Queen",
-	"Rocket",
-	"Fat",
-	"Blackhole",
-	"Sunflower",
-	"Clover",
-	"Yarrow",
-	"Rose",
-	"Grass",
-	"Loam",
-	"Queen",
-	"Rocket",
-	"Fat",
-	"Blackhole",
-    "Rainbow"
-  ]
+  "UnlockedKeys": [],
+  "VolumeSFX": 5,
+  "VolumeBG": 5
 }

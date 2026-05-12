@@ -41,6 +41,7 @@ public partial class PlacementMenu : Control
 
     public void Toggle()
     {
+        Services.Get<AudioSystem>().PlaySound("click");
         if (isCollapsed)
             Expand();
         else

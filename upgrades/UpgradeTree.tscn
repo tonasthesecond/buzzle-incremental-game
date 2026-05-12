@@ -644,13 +644,13 @@ script = ExtResource("6_c1vnt")
 Value = 200.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
-[sub_resource type="Resource" id="Resource_fyt5j"]
+[sub_resource type="Resource" id="Resource_4sfeq"]
 script = ExtResource("7_ftddy")
-UnlockKey = "Blackhole"
-Name = "Blackhole"
+UnlockKey = "Yarrow"
+Name = "Yarrow"
 MaxLevel = 1
 CostScaler = SubResource("Resource_3aonl")
-FlavorText = "Unlock [noun_blackhole](Blackhole), a [noun_flower](flower) that [noun_bee](bees) are attracted to, flying faster or slower in its range."
+FlavorText = "Unlock [noun_yarrow](Blackhole), a [noun_flower](flower) that produces more with more friends around!"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vfo37"]
 atlas = ExtResource("12_vfo37")
@@ -907,6 +907,14 @@ FlavorText = "No amount of honey can satisfy the [noun_fat](Fat bees)' hunger."
 atlas = ExtResource("5_mg5gc")
 region = Rect2(64, 224, 32, 32)
 
+[sub_resource type="Resource" id="Resource_fyt5j"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Blackhole"
+Name = "Blackhole"
+MaxLevel = 1
+CostScaler = SubResource("Resource_3aonl")
+FlavorText = "Unlock [noun_blackhole](Blackhole), a [noun_flower](flower) that [noun_bee](bees) are attracted to, flying faster or slower in its range."
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fyt5j"]
 atlas = ExtResource("12_vfo37")
 region = Rect2(32, 128, 32, 32)
@@ -964,6 +972,7 @@ region = Rect2(64, 416, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fk1kx"]
 script = ExtResource("6_c1vnt")
+Value = 100000.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_eag0h"]
@@ -1289,7 +1298,7 @@ NodePath("../SqueezeMoreIn"): 3
 
 [node name="YarrowUnlock" parent="." unique_id=1539636078 instance=ExtResource("2_5s8lu")]
 position = Vector2(-96, 160)
-UpgradeResource = SubResource("Resource_fyt5j")
+UpgradeResource = SubResource("Resource_4sfeq")
 Icon = SubResource("AtlasTexture_vfo37")
 Frame = ExtResource("15_0qucf")
 Dependencies = {

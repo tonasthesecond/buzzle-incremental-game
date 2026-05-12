@@ -17,6 +17,7 @@ public partial class Game : GameSystem
     public UpgradeTree UpgradeTree { get; private set; } = null!;
     public CanvasLayer EndLayer { get; private set; } = null!;
     public Container EndingContentContainer { get; private set; } = null!;
+    public BaseButton BackButton { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
@@ -44,11 +45,13 @@ public partial class Game : GameSystem
         PlacementSystem = GetNode<PlacementSystem>("%PlacementSystem");
         UpgradeTree = GetNode<UpgradeTree>("%UpgradeTree");
         EndLayer = GetNode<CanvasLayer>("%EndLayer");
+        BackButton = GetNode<BaseButton>("%BackButton");
         EndingContentContainer = GetNode<Container>("%EndingContentContainer");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
         SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
+        BackButton.Pressed += onBackButtonPressed;
 
         // setup
         GameLayer.Show();
@@ -83,6 +86,7 @@ public partial class Game : GameSystem
 
     private void onUpgradesButtonPressed()
     {
+        Services.Get<AudioSystem>().PlaySound("click");
         if (UpgradeLayer.Visible)
         {
             UpgradeLayer.Hide();
@@ -126,6 +130,8 @@ public partial class Game : GameSystem
 
     private void onRainbowPlaced(Rainbow rainbow)
     {
+        if (GameStore.GameEnd)
+            rainbow.QueueFree();
         EndLayer.Show();
         Camera camera = GameLayer.GetNode<Camera>("Camera");
         camera.ControlsEnabled = false;
@@ -141,6 +147,7 @@ public partial class Game : GameSystem
         );
         tween.SetEase(Tween.EaseType.In);
         tween.SetTrans(Tween.TransitionType.Expo);
+        GameStore.GameEnd = true;
 
         UILayer.Hide();
 
@@ -170,5 +177,19 @@ public partial class Game : GameSystem
                 containerTween.SetTrans(Tween.TransitionType.Quad);
             };
         };
+    }
+
+    private void onBackButtonPressed()
+    {
+        Services.Get<AudioSystem>().PlaySound("click");
+        EndLayer.Hide();
+        EndingContentContainer.Modulate = new Color(1, 1, 1, 0);
+        GameLayer.Show();
+        PlacementMenu.Hide();
+        UILayer.Show();
+        CollapseButton.Show();
+        Services.Get<PlacementSystem>().ClearHoverText();
+        GameLayer.GetNode<Camera>("Camera").MakeCurrent();
+        GameLayer.GetNode<Camera>("Camera").ControlsEnabled = true;
     }
 }

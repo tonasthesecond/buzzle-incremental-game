@@ -51,9 +51,11 @@
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
 [ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="40_o6tbt"]
 [ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
-[ext_resource type="Texture2D" uid="uid://i38f6dvn7ddt" path="res://assets/title.png" id="51_nyc7o"]
 [ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="52_ds8mp"]
+[ext_resource type="Texture2D" uid="uid://cl6bmmcjo3ody" path="res://assets/End_Screen-Background.png" id="52_ndmee"]
+[ext_resource type="Texture2D" uid="uid://cwd7kfibnb73x" path="res://assets/End_Screen-Flower.png" id="53_lua15"]
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="53_pbwgg"]
+[ext_resource type="Texture2D" uid="uid://b2v31dae4j6wj" path="res://assets/End_Screen-Title.png" id="54_qirsl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
 atlas = ExtResource("10_v5dxo")
@@ -304,6 +306,22 @@ region = Rect2(0, 64, 64, 32)
 atlas = ExtResource("40_fj2yu")
 region = Rect2(0, 32, 64, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnh27"]
+atlas = ExtResource("54_qirsl")
+region = Rect2(0, 0, 224, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw735"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvv74"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l0qi"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 32, 64, 32)
+
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
 
@@ -507,7 +525,6 @@ offset = Vector2(0, -32)
 [node name="EndLayer" type="CanvasLayer" parent="." unique_id=1083758792]
 unique_name_in_owner = true
 layer = 3
-visible = false
 
 [node name="WhiteScreen" type="ColorRect" parent="EndLayer" unique_id=1549357252]
 unique_name_in_owner = true
@@ -519,7 +536,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="EndLayer" unique_id=1887246064]
+[node name="EndingContentContainer" type="CenterContainer" parent="EndLayer" unique_id=1887246064]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -527,31 +546,50 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("22_0mevm")
 
-[node name="EndingContentContainer" type="VBoxContainer" parent="EndLayer/CenterContainer" unique_id=797850026]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0)
+[node name="Background" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=54510336]
+custom_minimum_size = Vector2(700, 480)
+layout_mode = 2
+texture = ExtResource("52_ndmee")
+stretch_mode = 5
+
+[node name="Background2" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=85465845]
+custom_minimum_size = Vector2(700, 480)
+layout_mode = 2
+texture = ExtResource("53_lua15")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndLayer/EndingContentContainer" unique_id=797850026]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="EndingTitle" type="TextureRect" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=66192258]
-custom_minimum_size = Vector2(300, 150)
+[node name="EndingTitle" type="TextureRect" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=66192258]
+custom_minimum_size = Vector2(500, 200)
 layout_mode = 2
-texture = ExtResource("51_nyc7o")
+texture = SubResource("AtlasTexture_pnh27")
 stretch_mode = 5
 
-[node name="TitleLabel" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=470433628 instance=ExtResource("52_ds8mp")]
+[node name="TitleLabel" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=470433628 instance=ExtResource("52_ds8mp")]
 layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
 text = "[b]Beetopia achieved.[/b]"
 
-[node name="BodyLabel" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=1558216477 instance=ExtResource("53_pbwgg")]
+[node name="BodyLabel" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=1558216477 instance=ExtResource("53_pbwgg")]
 layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
 bbcode_enabled = true
 text = "Thanks to your efforts, beecivilization will forever live in abundance and bliss."
 fit_content = true
+horizontal_alignment = 1
 
-[node name="TitleLabel2" parent="EndLayer/CenterContainer/EndingContentContainer" unique_id=1500088954 instance=ExtResource("52_ds8mp")]
+[node name="TitleLabel2" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=1500088954 instance=ExtResource("52_ds8mp")]
 layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
 text = "Bees thank you."
+
+[node name="BackButton" type="TextureButton" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=530823297]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_yw735")
+texture_pressed = SubResource("AtlasTexture_gvv74")
+texture_hover = SubResource("AtlasTexture_3l0qi")
+stretch_mode = 5

@@ -125,6 +125,8 @@ public partial class GameStore : Node
             { typeof(Rainbow), new FlatModel(0f) },
         };
 
+    public static bool GameEnd = false;
+
     public static int GetPlacementCost(Type t)
     {
         if (!PriceModels.TryGetValue(t, out var model))
