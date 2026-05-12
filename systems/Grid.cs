@@ -31,8 +31,8 @@ public partial class Grid : Node2D
 
     private void BuildDefault()
     {
-        for (int x = -2; x <= 2; x++)
-        for (int y = -2; y <= 2; y++)
+        for (int x = -1; x <= 1; x++)
+        for (int y = -1; y <= 1; y++)
             PlaceTile<DirtTile>(new Vector2I(x, y));
 
         PlaceObject<Hive>(new Vector2I(0, 0), out var hive);
@@ -233,6 +233,10 @@ public partial class Grid : Node2D
         objects[pos] = obj;
         SignalBus.Instance.EmitSignal(SignalBus.SignalName.GridObjectPlaced, obj);
         obj.Placed = true;
+        if (obj is Rainbow rainbow)
+        {
+            SignalBus.Instance.EmitSignal(SignalBus.SignalName.RainbowPlaced, rainbow);
+        }
         failMessage = null;
         return true;
     }

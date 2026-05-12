@@ -50,9 +50,14 @@
 [ext_resource type="Script" uid="uid://clyevppqs880p" path="res://upgrades/scripts/RocketBeeSpeedBuffUO.cs" id="42_psuir"]
 [ext_resource type="Script" uid="uid://bfcus0280l2k" path="res://upgrades/scripts/SunflowerHoneyGainPerFatBeeBonusUO.cs" id="43_08nwj"]
 [ext_resource type="Script" uid="uid://chime3rv0fv7g" path="res://upgrades/scripts/BeeCapacityHoneyUO.cs" id="44_f3y2j"]
+[ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="45_1fl7q"]
 [ext_resource type="Script" uid="uid://bikgiiypkq157" path="res://upgrades/scripts/FatBeeCapacityHoneySetInfiniteUO.cs" id="46_psuir"]
 [ext_resource type="Script" uid="uid://bpv7waomuyqb5" path="res://upgrades/scripts/FatBeeSpeedBuffPerRocketBeeBonusUO.cs" id="50_cpb0m"]
 [ext_resource type="Script" uid="uid://bosu5bea6ji25" path="res://upgrades/scripts/RocketBeeCapacityHoneyPerFatBeeBonusUO.cs" id="51_f3y2j"]
+[ext_resource type="Script" uid="uid://c26nbpbtj2sk" path="res://upgrades/scripts/BlackholePullRangeUO.cs" id="55_fyt5j"]
+[ext_resource type="Script" uid="uid://6uxavi60p4op" path="res://upgrades/scripts/BlackholePositivePullSpeedUO.cs" id="56_knk3e"]
+[ext_resource type="Script" uid="uid://ccc1nb4k8cvwx" path="res://resources/scale_models/StepsModel.cs" id="57_s6d4w"]
+[ext_resource type="Script" uid="uid://dcv0a7tmob0vt" path="res://upgrades/scripts/BlackholeNegativePullSpeedUO.cs" id="58_qanwl"]
 
 [sub_resource type="Resource" id="Resource_vvd1a"]
 script = ExtResource("3_m26cu")
@@ -65,7 +70,7 @@ script = ExtResource("4_dq57c")
 Name = "Poppier Poppies"
 MaxLevel = 3
 CostScaler = SubResource("Resource_vvd1a")
-FlavorText = "Poppies are poppier."
+FlavorText = "[noun_poppy](Poppies) are poppier."
 metadata/_custom_type_script = "uid://dpgbociariu82"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cte4y"]
@@ -74,7 +79,7 @@ region = Rect2(0, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_801hv"]
 script = ExtResource("6_c1vnt")
-Value = 100.0
+Value = 200.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_e6xll"]
@@ -87,10 +92,11 @@ FlavorText = "Unlock [noun_grass](Grass), a [noun_tile](tile) which boosts the h
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r2e1u"]
 atlas = ExtResource("9_25eif")
-region = Rect2(96, 96, 32, 32)
+region = Rect2(96, 96, 32, 64)
 
 [sub_resource type="Resource" id="Resource_psyav"]
 script = ExtResource("27_tcyta")
+Base = 150.0
 metadata/_custom_type_script = "uid://bmum0chjme3h4"
 
 [sub_resource type="Resource" id="Resource_etfk1"]
@@ -100,11 +106,14 @@ Name = "Natural Habitat"
 MaxLevel = 2
 CostScaler = SubResource("Resource_psyav")
 FlavorText = "[noun_poppy](Poppies) grow better on their natural habitat."
-metadata/_custom_type_script = "uid://dyusmper7s3tl"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6d4w"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fnqkb"]
 script = ExtResource("3_m26cu")
-Base = 75.0
+Base = 150.0
 Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
@@ -114,11 +123,14 @@ Name = "Greener On Your Side"
 MaxLevel = 3
 CostScaler = SubResource("Resource_fnqkb")
 FlavorText = "[noun_grass](Grass) is slightly greener!"
-metadata/_custom_type_script = "uid://dibxskqnfspn4"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3aonl"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 256, 32, 32)
 
 [sub_resource type="Resource" id="Resource_aneh0"]
 script = ExtResource("6_c1vnt")
-Value = 250.0
+Value = 300.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_0hbup"]
@@ -128,7 +140,6 @@ Name = "Rose"
 MaxLevel = 1
 CostScaler = SubResource("Resource_aneh0")
 FlavorText = "Unlock [noun_rose](Rose), a [noun_flower](flower) that produces more honey when isolated."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bhyaa"]
 atlas = ExtResource("12_vfo37")
@@ -146,7 +157,10 @@ Name = "Hermit"
 MaxLevel = 3
 CostScaler = SubResource("Resource_jvrcb")
 FlavorText = "[noun_rose](Roses) shy away from bee-vilization."
-metadata/_custom_type_script = "uid://cux1ml5vs1tm"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ny6u4"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 384, 32, 32)
 
 [sub_resource type="Resource" id="Resource_4kdt0"]
 script = ExtResource("27_tcyta")
@@ -160,7 +174,10 @@ Name = "Antisocial"
 MaxLevel = 3
 CostScaler = SubResource("Resource_4kdt0")
 FlavorText = "A [noun_queen](Queen) need no one but herself... Well maybe some hundred [noun_bee](bees) would be better..."
-metadata/_custom_type_script = "uid://c8ml1ht2jj346"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2kffd"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 384, 32, 32)
 
 [sub_resource type="Resource" id="Resource_7ix0q"]
 script = ExtResource("6_c1vnt")
@@ -174,7 +191,6 @@ Name = "Clover"
 MaxLevel = 1
 CostScaler = SubResource("Resource_7ix0q")
 FlavorText = "Unlock [noun_clover](clover), a [noun_flower](flower) that has a chance to produce significant honey."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pmee0"]
 atlas = ExtResource("12_vfo37")
@@ -192,7 +208,10 @@ Name = "Luckier"
 MaxLevel = 3
 CostScaler = SubResource("Resource_mg5gc")
 FlavorText = "You feel luckier."
-metadata/_custom_type_script = "uid://cbtp54s86g153"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iy5no"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 288, 32, 32)
 
 [sub_resource type="Resource" id="Resource_upkeo"]
 script = ExtResource("6_c1vnt")
@@ -206,7 +225,10 @@ Name = "Even Luckier"
 MaxLevel = 2
 CostScaler = SubResource("Resource_upkeo")
 FlavorText = "You feel even luckier!"
-metadata/_custom_type_script = "uid://cbtp54s86g153"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_780k2"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 288, 32, 32)
 
 [sub_resource type="Resource" id="Resource_cte4y"]
 script = ExtResource("6_c1vnt")
@@ -223,6 +245,10 @@ CostScaler = SubResource("Resource_cte4y")
 FlavorText = "Do you risk it?"
 metadata/_custom_type_script = "uid://di5nnjlai4xot"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ciphy"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 320, 32, 32)
+
 [sub_resource type="Resource" id="Resource_hbxd2"]
 script = ExtResource("6_c1vnt")
 Value = 77.0
@@ -236,6 +262,10 @@ MaxLevel = 2
 CostScaler = SubResource("Resource_hbxd2")
 FlavorText = "[noun_clover](Clovers)' jackpot produce more honey."
 metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ldxa"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 288, 32, 32)
 
 [sub_resource type="Resource" id="Resource_2napb"]
 script = ExtResource("6_c1vnt")
@@ -251,6 +281,10 @@ CostScaler = SubResource("Resource_2napb")
 FlavorText = "[noun_clover](Clovers) find even more honey on jackpot."
 metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ref67"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 288, 32, 32)
+
 [sub_resource type="Resource" id="Resource_vfo37"]
 script = ExtResource("6_c1vnt")
 Value = 7777.0
@@ -264,7 +298,10 @@ Name = "Final Gambit"
 MaxLevel = 1
 CostScaler = SubResource("Resource_vfo37")
 FlavorText = "All in."
-metadata/_custom_type_script = "uid://crragbfhec5s2"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqokv"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 320, 32, 32)
 
 [sub_resource type="Resource" id="Resource_25eif"]
 script = ExtResource("6_c1vnt")
@@ -278,7 +315,10 @@ Name = "Natural Habitat"
 MaxLevel = 1
 CostScaler = SubResource("Resource_25eif")
 FlavorText = "[noun_clover](Clovers) grow better on their natural habitats."
-metadata/_custom_type_script = "uid://eco5p6gpxqu5"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqu33"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 256, 32, 32)
 
 [sub_resource type="Resource" id="Resource_pmee0"]
 script = ExtResource("3_m26cu")
@@ -293,7 +333,6 @@ Name = "Spread Warmth"
 MaxLevel = 3
 CostScaler = SubResource("Resource_pmee0")
 FlavorText = "[noun_beekeeper](You) spread warmth and comfort to your [noun_bee](bees)."
-metadata/_custom_type_script = "uid://b5gptt5qf7qnq"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8pqeo"]
 atlas = ExtResource("5_mg5gc")
@@ -301,7 +340,7 @@ region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="Resource" id="Resource_8pqeo"]
 script = ExtResource("3_m26cu")
-Base = 300.0
+Base = 100.0
 Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
@@ -312,7 +351,6 @@ Name = "Smoky"
 MaxLevel = 3
 CostScaler = SubResource("Resource_8pqeo")
 FlavorText = "[noun_bee](Bees) feel more inspired to work in your presence."
-metadata/_custom_type_script = "uid://db5tsqjg333o0"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_25eif"]
 atlas = ExtResource("5_mg5gc")
@@ -320,8 +358,8 @@ region = Rect2(0, 64, 32, 32)
 
 [sub_resource type="Resource" id="Resource_r2e1u"]
 script = ExtResource("3_m26cu")
-Base = 400.0
-Step = 50.0
+Base = 300.0
+Step = 100.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_rb3gu"]
@@ -331,11 +369,10 @@ Name = "Smokier"
 MaxLevel = 2
 CostScaler = SubResource("Resource_r2e1u")
 FlavorText = "[noun_bee](Bees) feel more inspired to work in your presence."
-metadata/_custom_type_script = "uid://db5tsqjg333o0"
 
 [sub_resource type="Resource" id="Resource_cjepv"]
 script = ExtResource("6_c1vnt")
-Value = 500.0
+Value = 250.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_0qucf"]
@@ -345,12 +382,15 @@ Name = "Queen Bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_cjepv")
 FlavorText = "Unlock [noun_queen](Queen bee), a [noun_bee](bee) that doesn't do work, but boost [noun_bee](bees) around it."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fl7q"]
+atlas = ExtResource("45_1fl7q")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="Resource" id="Resource_mqxrb"]
 script = ExtResource("3_m26cu")
-Base = 500.0
-Step = 100.0
+Base = 300.0
+Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_6u1sw"]
@@ -360,12 +400,15 @@ Name = "Her Domain"
 MaxLevel = 3
 CostScaler = SubResource("Resource_mqxrb")
 FlavorText = "[noun_queen](She) expands her domain."
-metadata/_custom_type_script = "uid://drcxuvuwf5dk3"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj0ng"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 352, 32, 32)
 
 [sub_resource type="Resource" id="Resource_lrw2g"]
 script = ExtResource("3_m26cu")
-Base = 500.0
-Step = 100.0
+Base = 300.0
+Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_gkb3u"]
@@ -374,12 +417,15 @@ Name = "Her Influence"
 MaxLevel = 2
 CostScaler = SubResource("Resource_lrw2g")
 FlavorText = "[noun_queen](She) establishes her influence."
-metadata/_custom_type_script = "uid://bqwvwrati7y2r"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psyav"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 352, 32, 32)
 
 [sub_resource type="Resource" id="Resource_5mxo5"]
 script = ExtResource("3_m26cu")
-Base = 500.0
-Step = 100.0
+Base = 300.0
+Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_n8po2"]
@@ -388,11 +434,14 @@ Name = "Her Will"
 MaxLevel = 3
 CostScaler = SubResource("Resource_5mxo5")
 FlavorText = "[noun_queen](She) manifests her will."
-metadata/_custom_type_script = "uid://chk64awtk8kdi"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_etfk1"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 352, 32, 32)
 
 [sub_resource type="Resource" id="Resource_nal1u"]
 script = ExtResource("11_fnqkb")
-Base = 700.0
+Base = 300.0
 Exponent = 1.5
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -403,11 +452,14 @@ IncreaseBeePollinationTimeReductionBuffBy = 0.05
 Name = "Matriarchy"
 CostScaler = SubResource("Resource_nal1u")
 FlavorText = "All [noun_bee](bees) shall heed her."
-metadata/_custom_type_script = "uid://tod0173ft425"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih80e"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 384, 32, 32)
 
 [sub_resource type="Resource" id="Resource_ih80e"]
 script = ExtResource("6_c1vnt")
-Value = 600.0
+Value = 300.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_bdkte"]
@@ -416,7 +468,10 @@ Name = "Befitting a Queen"
 MaxLevel = 1
 CostScaler = SubResource("Resource_ih80e")
 FlavorText = "[noun_queen](Queen bees) desire beautiful [noun_rose](Roses)."
-metadata/_custom_type_script = "uid://dyjcdahhyrvt8"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdkte"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 384, 32, 32)
 
 [sub_resource type="Resource" id="Resource_canik"]
 script = ExtResource("11_fnqkb")
@@ -431,22 +486,19 @@ Name = "Bees, Assemble!"
 MaxLevel = 9
 CostScaler = SubResource("Resource_canik")
 FlavorText = "[noun_bee](Bees) gathers at the call of their trusted [noun_queen](Queens)."
-metadata/_custom_type_script = "uid://dlo0qub5tf4ui"
 
 [sub_resource type="Resource" id="Resource_psuir"]
 script = ExtResource("3_m26cu")
-Base = 300.0
+Base = 100.0
 Step = 50.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_d8jsh"]
 script = ExtResource("25_hbxd2")
-IncreaseBy = 0.5
 Name = "Impression"
 MaxLevel = 3
 CostScaler = SubResource("Resource_psuir")
 FlavorText = "[noun_beekeeper](You) leave a stronger impression on [noun_bee](bees)."
-metadata/_custom_type_script = "uid://b5iugn0740237"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08nwj"]
 atlas = ExtResource("5_mg5gc")
@@ -455,16 +507,16 @@ region = Rect2(64, 64, 32, 32)
 [sub_resource type="Resource" id="Resource_d6r41"]
 script = ExtResource("3_m26cu")
 Base = 300.0
-Step = 50.0
+Step = 100.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_mdxam"]
 script = ExtResource("25_hbxd2")
+IncreaseBy = 2.0
 Name = "Presence"
 MaxLevel = 2
 CostScaler = SubResource("Resource_d6r41")
 FlavorText = "[noun_beekeeper](Your presence lingers longer.)"
-metadata/_custom_type_script = "uid://b5iugn0740237"
 
 [sub_resource type="Resource" id="Resource_wxhmu"]
 script = ExtResource("6_c1vnt")
@@ -477,7 +529,10 @@ Name = "Always Here For You"
 MaxLevel = 1
 CostScaler = SubResource("Resource_wxhmu")
 FlavorText = "[noun_beekeeper](You) and your [noun_bee](bees) have an inseparable bond."
-metadata/_custom_type_script = "uid://ng3sb3wsia6v"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbyyp"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="Resource" id="Resource_f3y2j"]
 script = ExtResource("27_tcyta")
@@ -492,7 +547,10 @@ Name = "Hurry Up"
 MaxLevel = 5
 CostScaler = SubResource("Resource_f3y2j")
 FlavorText = "[noun_poppy](Poppies) pollinate faster."
-metadata/_custom_type_script = "uid://c3emdo7qrw31g"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knk3e"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_s6d4w"]
 script = ExtResource("6_c1vnt")
@@ -506,7 +564,6 @@ Name = "Sunflower"
 MaxLevel = 1
 CostScaler = SubResource("Resource_s6d4w")
 FlavorText = "Unlock [noun_sunflower](Sunflowers), a [noun_flower](flower) that costs more but produces more."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qanwl"]
 atlas = ExtResource("12_vfo37")
@@ -526,10 +583,14 @@ CostScaler = SubResource("Resource_q2lbx")
 FlavorText = "[noun_sunflower](Sunflowers) costs more, but also produce more."
 metadata/_custom_type_script = "uid://ceajcjsuncn1q"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_canik"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 96, 32, 32)
+
 [sub_resource type="Resource" id="Resource_1fl7q"]
 script = ExtResource("11_fnqkb")
-Base = 100.0
-Exponent = 1.1
+Base = 30.0
+Exponent = 1.2
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
 [sub_resource type="Resource" id="Resource_x7h8b"]
@@ -538,11 +599,14 @@ Name = "Spacious Hives"
 MaxLevel = 5
 CostScaler = SubResource("Resource_1fl7q")
 FlavorText = "[noun_hive](Hives) are more spacious!"
-metadata/_custom_type_script = "uid://h3271vl0m3x8"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7udnn"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 128, 32, 32)
 
 [sub_resource type="Resource" id="Resource_sbyyp"]
 script = ExtResource("11_fnqkb")
-Base = 600.0
+Base = 100.0
 Exponent = 0.3
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -553,7 +617,10 @@ Name = "Squeeze More In"
 MaxLevel = 3
 CostScaler = SubResource("Resource_sbyyp")
 FlavorText = "With some planning, you can squeeze a few more [noun_bee](bees) into these [noun_hive](hives)."
-metadata/_custom_type_script = "uid://h3271vl0m3x8"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2lbx"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 128, 32, 32)
 
 [sub_resource type="Resource" id="Resource_0akw4"]
 script = ExtResource("27_tcyta")
@@ -566,21 +633,24 @@ script = ExtResource("31_mqxrb")
 Name = "Metropolis"
 MaxLevel = 3
 CostScaler = SubResource("Resource_0akw4")
-metadata/_custom_type_script = "uid://dywr0eryk5vpc"
+FlavorText = "Diversity of bee-vilization."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wg08u"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 128, 32, 32)
 
 [sub_resource type="Resource" id="Resource_3aonl"]
 script = ExtResource("6_c1vnt")
-Value = 130.0
+Value = 200.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
-[sub_resource type="Resource" id="Resource_fyt5j"]
+[sub_resource type="Resource" id="Resource_4sfeq"]
 script = ExtResource("7_ftddy")
 UnlockKey = "Yarrow"
 Name = "Yarrow"
 MaxLevel = 1
 CostScaler = SubResource("Resource_3aonl")
-FlavorText = "Unlock [noun_yarrow](Yarrow), a [noun_flower](flower) that produces money the more of its kind is around."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
+FlavorText = "Unlock [noun_yarrow](Blackhole), a [noun_flower](flower) that produces more with more friends around!"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vfo37"]
 atlas = ExtResource("12_vfo37")
@@ -598,16 +668,30 @@ CostScaler = SubResource("Resource_ny6u4")
 FlavorText = "[noun_yarrow](Yarrows) enjoy each other's company."
 metadata/_custom_type_script = "uid://dqy55wig5fjrt"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_0akw4"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="Resource" id="Resource_y3vg8"]
+script = ExtResource("27_tcyta")
+Base = 300.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
 [sub_resource type="Resource" id="Resource_ty7u1"]
 script = ExtResource("40_d8jsh")
 Name = "Natural Habitat"
+MaxLevel = 2
+CostScaler = SubResource("Resource_y3vg8")
 FlavorText = "[noun_yarrow](Yarrows) grow better on their natural habitat."
-metadata/_custom_type_script = "uid://ckjh2cg06c47x"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ebyn"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 160, 32, 32)
 
 [sub_resource type="Resource" id="Resource_iy5no"]
 script = ExtResource("11_fnqkb")
 Base = 30.0
-Exponent = 1.8
+Exponent = 1.1
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
 [sub_resource type="Resource" id="Resource_780k2"]
@@ -615,7 +699,7 @@ script = ExtResource("33_1ww1q")
 Name = "Zoom Zoom"
 MaxLevel = 10
 CostScaler = SubResource("Resource_iy5no")
-metadata/_custom_type_script = "uid://cuyp0jsj48rwu"
+FlavorText = "[noun_bee](Bees) pick up the pace."
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ty56o"]
 atlas = ExtResource("5_mg5gc")
@@ -624,7 +708,7 @@ region = Rect2(32, 32, 32, 32)
 [sub_resource type="Resource" id="Resource_nprm6"]
 script = ExtResource("11_fnqkb")
 Base = 30.0
-Exponent = 1.9
+Exponent = 1.1
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
 [sub_resource type="Resource" id="Resource_nt58m"]
@@ -632,7 +716,7 @@ script = ExtResource("44_f3y2j")
 Name = "Honey Hungry"
 MaxLevel = 10
 CostScaler = SubResource("Resource_nprm6")
-metadata/_custom_type_script = "uid://hno7niifmwh"
+FlavorText = "[noun_bee](Bees) hoard as much honey as they can."
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1ww1q"]
 atlas = ExtResource("5_mg5gc")
@@ -640,7 +724,7 @@ region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_vml0s"]
 script = ExtResource("6_c1vnt")
-Value = 300.0
+Value = 150.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_aauu0"]
@@ -650,11 +734,14 @@ Name = "Fat bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_vml0s")
 FlavorText = "Unlock [noun_fat](Fat bee), a caste of [noun_bee](bees) that ate too much honey, becoming slow in movement but can carry more honey."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7h8b"]
+atlas = ExtResource("45_1fl7q")
+region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_ty56o"]
 script = ExtResource("3_m26cu")
-Base = 400.0
+Base = 250.0
 Step = 150.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
@@ -663,7 +750,11 @@ script = ExtResource("35_r2e1u")
 Name = "Even Fatter Fat Bees"
 MaxLevel = 3
 CostScaler = SubResource("Resource_ty56o")
-metadata/_custom_type_script = "uid://taxmnkanoeak"
+FlavorText = "[noun_fat](Fat bees) are even fatter!"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4cow"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 224, 32, 32)
 
 [sub_resource type="Resource" id="Resource_p45vh"]
 script = ExtResource("27_tcyta")
@@ -676,11 +767,14 @@ Name = "Giantism"
 MaxLevel = 5
 CostScaler = SubResource("Resource_p45vh")
 FlavorText = "[noun_sunflower](Sunflowers) and [noun_fat](Fat bees) form the \"Gigantic club\" where they can be big together."
-metadata/_custom_type_script = "uid://b3mr6nymxqvv5"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pdsp"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 224, 32, 32)
 
 [sub_resource type="Resource" id="Resource_8ldxa"]
 script = ExtResource("6_c1vnt")
-Value = 400.0
+Value = 150.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_ref67"]
@@ -689,12 +783,15 @@ UnlockKey = "Rocket"
 Name = "Jetpack Bee"
 MaxLevel = 1
 CostScaler = SubResource("Resource_8ldxa")
-FlavorText = "Unlock [noun_rocket](Jetpack bee), a caste of [noun_bee](bees) that uses jetpakcs to launch to their destinations. Probably safe."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
+FlavorText = "Unlock [noun_rocket](Jetpack bee), a caste of [noun_bee](bees) that uses jetpacks to launch to their destinations. Probably safe."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bowu7"]
+atlas = ExtResource("45_1fl7q")
+region = Rect2(0, 32, 32, 32)
 
 [sub_resource type="Resource" id="Resource_1pdsp"]
 script = ExtResource("3_m26cu")
-Base = 500.0
+Base = 300.0
 Step = 100.0
 metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
@@ -705,7 +802,10 @@ Name = "Improved Jetpack Suits"
 MaxLevel = 3
 CostScaler = SubResource("Resource_1pdsp")
 FlavorText = "[noun_rocket](Jetpack bees)' jetpacks use honey particle accelerators to speed themselves up."
-metadata/_custom_type_script = "uid://dbfhk2e0slj6c"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0s8b"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(0, 192, 32, 32)
 
 [sub_resource type="Resource" id="Resource_j2nm1"]
 script = ExtResource("6_c1vnt")
@@ -718,11 +818,14 @@ Name = "Fly to the Rescue!"
 MaxLevel = 1
 CostScaler = SubResource("Resource_j2nm1")
 FlavorText = "[noun_rocket](Jetpack bees) fly to [noun_flower](flowers)' rescue!"
-metadata/_custom_type_script = "uid://x76won3ygvdw"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2nm1"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 192, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fqokv"]
 script = ExtResource("6_c1vnt")
-Value = 100.0
+Value = 200.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_uqu33"]
@@ -732,21 +835,31 @@ Name = "Loam Tile"
 MaxLevel = 1
 CostScaler = SubResource("Resource_fqokv")
 FlavorText = "Unlock [noun_loam](Loam), a [noun_tile](tile) that speeds up pollination time of [noun_flower](flowers)."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rb3gu"]
 atlas = ExtResource("37_r2e1u")
-region = Rect2(96, 96, 32, 32)
+region = Rect2(96, 96, 32, 64)
+
+[sub_resource type="Resource" id="Resource_k3t4r"]
+script = ExtResource("11_fnqkb")
+Base = 200.0
+Exponent = 0.5
+metadata/_custom_type_script = "uid://bkk0od77fveep"
 
 [sub_resource type="Resource" id="Resource_vj0ng"]
 script = ExtResource("38_rb3gu")
 Name = "Smoother Soil"
 MaxLevel = 3
-metadata/_custom_type_script = "uid://w8owaql54efu"
+CostScaler = SubResource("Resource_k3t4r")
+FlavorText = "[noun_loam](Loam) tiles are smooth like butter."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7055"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 160, 32, 32)
 
 [sub_resource type="Resource" id="Resource_qkssm"]
 script = ExtResource("11_fnqkb")
-Base = 600.0
+Base = 300.0
 Exponent = 1.5
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -756,11 +869,14 @@ Name = "Shared Swiftness"
 MaxLevel = 3
 CostScaler = SubResource("Resource_qkssm")
 FlavorText = "[noun_fat](Fat bees) are jealous of the [noun_rocket](Jetpack bees') cool jetpacks, and decides to move faster."
-metadata/_custom_type_script = "uid://biyjiqtn4dufi"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fk1kx"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 224, 32, 32)
 
 [sub_resource type="Resource" id="Resource_wnxhy"]
 script = ExtResource("11_fnqkb")
-Base = 600.0
+Base = 300.0
 Exponent = 1.5
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -770,7 +886,10 @@ Name = "Shared Strength"
 MaxLevel = 3
 CostScaler = SubResource("Resource_wnxhy")
 FlavorText = "[noun_rocket](Jetpack bees) are in awe of the strength of [noun_fat](Fat bees) and decide to work harder."
-metadata/_custom_type_script = "uid://c5bpw24jk6l6y"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eag0h"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 192, 32, 32)
 
 [sub_resource type="Resource" id="Resource_m02lh"]
 script = ExtResource("6_c1vnt")
@@ -783,7 +902,73 @@ Name = "Infinite Gluttony"
 MaxLevel = 1
 CostScaler = SubResource("Resource_m02lh")
 FlavorText = "No amount of honey can satisfy the [noun_fat](Fat bees)' hunger."
-metadata/_custom_type_script = "uid://d332a5n3ju154"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty7u1"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 224, 32, 32)
+
+[sub_resource type="Resource" id="Resource_fyt5j"]
+script = ExtResource("7_ftddy")
+UnlockKey = "Blackhole"
+Name = "Blackhole"
+MaxLevel = 1
+CostScaler = SubResource("Resource_3aonl")
+FlavorText = "Unlock [noun_blackhole](Blackhole), a [noun_flower](flower) that [noun_bee](bees) are attracted to, flying faster or slower in its range."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyt5j"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="Resource" id="Resource_mo1ck"]
+script = ExtResource("27_tcyta")
+Base = 200.0
+Rate = 0.7
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_voy1w"]
+script = ExtResource("55_fyt5j")
+Name = "Event Horizon"
+CostScaler = SubResource("Resource_mo1ck")
+FlavorText = "[noun_blackhole](Blackholes) reach further."
+metadata/_custom_type_script = "uid://c26nbpbtj2sk"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p45vh"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(32, 416, 32, 32)
+
+[sub_resource type="Resource" id="Resource_bordk"]
+script = ExtResource("27_tcyta")
+Base = 100.0
+metadata/_custom_type_script = "uid://bmum0chjme3h4"
+
+[sub_resource type="Resource" id="Resource_kgrh4"]
+script = ExtResource("56_knk3e")
+Name = "Attraction"
+CostScaler = SubResource("Resource_bordk")
+FlavorText = "[noun_bee](Bees) make more effort to be closer to [noun_blackhole](Blackholes)."
+metadata/_custom_type_script = "uid://6uxavi60p4op"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utg4q"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 416, 32, 32)
+
+[sub_resource type="Resource" id="Resource_qgi1o"]
+script = ExtResource("57_s6d4w")
+Values = Array[float]([150.0, 160.0, 170.0])
+metadata/_custom_type_script = "uid://ccc1nb4k8cvwx"
+
+[sub_resource type="Resource" id="Resource_fawjq"]
+script = ExtResource("58_qanwl")
+IncreaseBy = -5.0
+Name = "Attachment"
+MaxLevel = 3
+CostScaler = SubResource("Resource_qgi1o")
+FlavorText = "[noun_bee](Bees) find it harder to move away from [noun_blackhole](Blackholes)."
+metadata/_custom_type_script = "uid://dcv0a7tmob0vt"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lrw2g"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(64, 416, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fk1kx"]
 script = ExtResource("6_c1vnt")
@@ -797,7 +982,10 @@ Name = "Rainbow"
 MaxLevel = 1
 CostScaler = SubResource("Resource_fk1kx")
 FlavorText = "Win the game. Doesn't do anything yet."
-metadata/_custom_type_script = "uid://bomacbqabtgga"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3y2j"]
+atlas = ExtResource("12_vfo37")
+region = Rect2(0, 160, 32, 32)
 
 [node name="UpgradeTree" type="Control" unique_id=549873726]
 layout_mode = 3
@@ -822,6 +1010,7 @@ NodePath("../PoppierPoppies"): 2
 [node name="NaturalHabitatPoppy" parent="." unique_id=561524672 instance=ExtResource("2_5s8lu")]
 position = Vector2(0, -192)
 UpgradeResource = SubResource("Resource_etfk1")
+Icon = SubResource("AtlasTexture_s6d4w")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../PoppierPoppies"): 3,
@@ -831,6 +1020,7 @@ NodePath("../GrassUnlock"): 1
 [node name="GreenerOnYourSide" parent="." unique_id=14557379 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, -256)
 UpgradeResource = SubResource("Resource_85qk5")
+Icon = SubResource("AtlasTexture_3aonl")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../GrassUnlock"): 1
@@ -848,6 +1038,7 @@ NodePath("../GreenerOnYourSide"): 1
 [node name="Hermit" parent="." unique_id=821325284 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, -448)
 UpgradeResource = SubResource("Resource_i2cq8")
+Icon = SubResource("AtlasTexture_ny6u4")
 Frame = ExtResource("13_cjepv")
 Dependencies = {
 NodePath("../RoseUnlock"): 1
@@ -856,6 +1047,7 @@ NodePath("../RoseUnlock"): 1
 [node name="Antisocial" parent="." unique_id=1088708515 instance=ExtResource("2_5s8lu")]
 position = Vector2(128, -448)
 UpgradeResource = SubResource("Resource_qanwl")
+Icon = SubResource("AtlasTexture_2kffd")
 Frame = ExtResource("13_cjepv")
 Dependencies = {
 NodePath("../RoseUnlock"): 1
@@ -873,6 +1065,7 @@ NodePath("../PoppierPoppies"): 3
 [node name="Luckier" parent="." unique_id=2094320003 instance=ExtResource("2_5s8lu")]
 position = Vector2(160, -224)
 UpgradeResource = SubResource("Resource_6qo0q")
+Icon = SubResource("AtlasTexture_iy5no")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../CloverUnlock"): 1
@@ -881,6 +1074,7 @@ NodePath("../CloverUnlock"): 1
 [node name="EvenLuckier" parent="." unique_id=1056437387 instance=ExtResource("2_5s8lu")]
 position = Vector2(224, -288)
 UpgradeResource = SubResource("Resource_f667q")
+Icon = SubResource("AtlasTexture_780k2")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../Luckier"): 3
@@ -889,22 +1083,25 @@ NodePath("../Luckier"): 3
 [node name="RiskyPlay" parent="." unique_id=2107240654 instance=ExtResource("2_5s8lu")]
 position = Vector2(288, -352)
 UpgradeResource = SubResource("Resource_nigh1")
+Icon = SubResource("AtlasTexture_ciphy")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../EvenLuckier"): 1
 }
 
 [node name="Jackpot" parent="." unique_id=1673654890 instance=ExtResource("2_5s8lu")]
-position = Vector2(224, -160)
+position = Vector2(256, -192)
 UpgradeResource = SubResource("Resource_75vtr")
+Icon = SubResource("AtlasTexture_8ldxa")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../CloverUnlock"): 1
 }
 
 [node name="PayDay" parent="." unique_id=517944291 instance=ExtResource("2_5s8lu")]
-position = Vector2(288, -224)
+position = Vector2(320, -256)
 UpgradeResource = SubResource("Resource_m8ywj")
+Icon = SubResource("AtlasTexture_ref67")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../Jackpot"): 2
@@ -913,6 +1110,7 @@ NodePath("../Jackpot"): 2
 [node name="FinalGambit" parent="." unique_id=169950039 instance=ExtResource("2_5s8lu")]
 position = Vector2(384, -384)
 UpgradeResource = SubResource("Resource_bhyaa")
+Icon = SubResource("AtlasTexture_fqokv")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../RiskyPlay"): 1,
@@ -922,6 +1120,7 @@ NodePath("../PayDay"): 2
 [node name="NaturalHabitatClover" parent="." unique_id=1775325875 instance=ExtResource("2_5s8lu")]
 position = Vector2(128, -320)
 UpgradeResource = SubResource("Resource_s0uq4")
+Icon = SubResource("AtlasTexture_uqu33")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../CloverUnlock"): 1,
@@ -955,6 +1154,7 @@ NodePath("../Smoky"): 1
 [node name="QueenUnlock" parent="." unique_id=1554209836 instance=ExtResource("2_5s8lu")]
 position = Vector2(-96, -288)
 UpgradeResource = SubResource("Resource_0qucf")
+Icon = SubResource("AtlasTexture_1fl7q")
 Frame = ExtResource("15_0qucf")
 Dependencies = {
 NodePath("../Smoky"): 2
@@ -963,6 +1163,7 @@ NodePath("../Smoky"): 2
 [node name="HerDomain" parent="." unique_id=312378780 instance=ExtResource("2_5s8lu")]
 position = Vector2(-32, -384)
 UpgradeResource = SubResource("Resource_6u1sw")
+Icon = SubResource("AtlasTexture_vj0ng")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../QueenUnlock"): 1
@@ -971,6 +1172,7 @@ NodePath("../QueenUnlock"): 1
 [node name="HerInfluence" parent="." unique_id=2076750553 instance=ExtResource("2_5s8lu")]
 position = Vector2(-96, -384)
 UpgradeResource = SubResource("Resource_gkb3u")
+Icon = SubResource("AtlasTexture_psyav")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../QueenUnlock"): 1
@@ -979,6 +1181,7 @@ NodePath("../QueenUnlock"): 1
 [node name="HerWill" parent="." unique_id=1117817270 instance=ExtResource("2_5s8lu")]
 position = Vector2(-160, -384)
 UpgradeResource = SubResource("Resource_n8po2")
+Icon = SubResource("AtlasTexture_etfk1")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../QueenUnlock"): 1
@@ -987,6 +1190,7 @@ NodePath("../QueenUnlock"): 1
 [node name="Matriarchy" parent="." unique_id=1796947850 instance=ExtResource("2_5s8lu")]
 position = Vector2(-96, -448)
 UpgradeResource = SubResource("Resource_mwxu3")
+Icon = SubResource("AtlasTexture_ih80e")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../HerDomain"): 2,
@@ -997,6 +1201,7 @@ NodePath("../HerInfluence"): 2
 [node name="BefittingAQueen" parent="." unique_id=1975943554 instance=ExtResource("2_5s8lu")]
 position = Vector2(0, -448)
 UpgradeResource = SubResource("Resource_bdkte")
+Icon = SubResource("AtlasTexture_bdkte")
 Frame = ExtResource("13_cjepv")
 Dependencies = {
 NodePath("../RoseUnlock"): 1,
@@ -1033,6 +1238,7 @@ NodePath("../Impression"): 3
 [node name="AlwaysHereForYou" parent="." unique_id=1477787691 instance=ExtResource("2_5s8lu")]
 position = Vector2(-256, -256)
 UpgradeResource = SubResource("Resource_cpb0m")
+Icon = SubResource("AtlasTexture_sbyyp")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../Smokier"): 2,
@@ -1042,6 +1248,7 @@ NodePath("../Presence"): 2
 [node name="HurryUp" parent="." unique_id=1852617575 instance=ExtResource("2_5s8lu")]
 position = Vector2(160, -64)
 UpgradeResource = SubResource("Resource_08nwj")
+Icon = SubResource("AtlasTexture_knk3e")
 Frame = ExtResource("13_cjepv")
 Dependencies = {
 NodePath("../PoppierPoppies"): 1
@@ -1059,6 +1266,7 @@ NodePath("../HurryUp"): 2
 [node name="MightOfTheSun" parent="." unique_id=1260614183 instance=ExtResource("2_5s8lu")]
 position = Vector2(352, -64)
 UpgradeResource = SubResource("Resource_wg08u")
+Icon = SubResource("AtlasTexture_canik")
 Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../SunflowerUnlock"): 1
@@ -1067,27 +1275,30 @@ NodePath("../SunflowerUnlock"): 1
 [node name="SpaciousHives" parent="." unique_id=1704045994 instance=ExtResource("2_5s8lu")]
 position = Vector2(-64, 64)
 UpgradeResource = SubResource("Resource_x7h8b")
+Icon = SubResource("AtlasTexture_7udnn")
 Frame = ExtResource("20_f667q")
 
 [node name="SqueezeMoreIn" parent="." unique_id=31183738 instance=ExtResource("2_5s8lu")]
-position = Vector2(-160, 64)
+position = Vector2(-160, 96)
 UpgradeResource = SubResource("Resource_bowu7")
+Icon = SubResource("AtlasTexture_q2lbx")
 Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../SpaciousHives"): 2
 }
 
 [node name="Metropolis" parent="." unique_id=2096160037 instance=ExtResource("2_5s8lu")]
-position = Vector2(-224, 128)
+position = Vector2(-224, 160)
 UpgradeResource = SubResource("Resource_4ebyn")
+Icon = SubResource("AtlasTexture_wg08u")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../SqueezeMoreIn"): 3
 }
 
 [node name="YarrowUnlock" parent="." unique_id=1539636078 instance=ExtResource("2_5s8lu")]
-position = Vector2(-64, 160)
-UpgradeResource = SubResource("Resource_fyt5j")
+position = Vector2(-96, 160)
+UpgradeResource = SubResource("Resource_4sfeq")
 Icon = SubResource("AtlasTexture_vfo37")
 Frame = ExtResource("15_0qucf")
 Dependencies = {
@@ -1095,8 +1306,9 @@ NodePath("../SpaciousHives"): 1
 }
 
 [node name="Companionship" parent="." unique_id=1311351367 instance=ExtResource("2_5s8lu")]
-position = Vector2(-128, 224)
+position = Vector2(-160, 224)
 UpgradeResource = SubResource("Resource_2kffd")
+Icon = SubResource("AtlasTexture_0akw4")
 Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../YarrowUnlock"): 1
@@ -1105,6 +1317,7 @@ NodePath("../YarrowUnlock"): 1
 [node name="NaturalHabitatYarrow" parent="." unique_id=670405780 instance=ExtResource("2_5s8lu")]
 position = Vector2(0, 224)
 UpgradeResource = SubResource("Resource_ty7u1")
+Icon = SubResource("AtlasTexture_4ebyn")
 Frame = ExtResource("10_s0uq4")
 Dependencies = {
 NodePath("../YarrowUnlock"): 1,
@@ -1129,6 +1342,7 @@ NodePath("../ZoomZoom"): 1
 [node name="FatUnlock" parent="." unique_id=918634065 instance=ExtResource("2_5s8lu")]
 position = Vector2(256, 64)
 UpgradeResource = SubResource("Resource_aauu0")
+Icon = SubResource("AtlasTexture_x7h8b")
 Frame = ExtResource("15_0qucf")
 Dependencies = {
 NodePath("../HoneyHungry"): 1
@@ -1137,6 +1351,7 @@ NodePath("../HoneyHungry"): 1
 [node name="EvenFatterFatBees" parent="." unique_id=1492197151 instance=ExtResource("2_5s8lu")]
 position = Vector2(352, 64)
 UpgradeResource = SubResource("Resource_ciphy")
+Icon = SubResource("AtlasTexture_c4cow")
 Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../FatUnlock"): 1
@@ -1145,6 +1360,7 @@ NodePath("../FatUnlock"): 1
 [node name="Gigantism" parent="." unique_id=315478389 instance=ExtResource("2_5s8lu")]
 position = Vector2(416, 0)
 UpgradeResource = SubResource("Resource_utg4q")
+Icon = SubResource("AtlasTexture_1pdsp")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
 NodePath("../EvenFatterFatBees"): 1,
@@ -1154,6 +1370,7 @@ NodePath("../MightOfTheSun"): 1
 [node name="JetpackUnlock" parent="." unique_id=61094089 instance=ExtResource("2_5s8lu")]
 position = Vector2(128, 128)
 UpgradeResource = SubResource("Resource_ref67")
+Icon = SubResource("AtlasTexture_bowu7")
 Frame = ExtResource("15_0qucf")
 Dependencies = {
 NodePath("../ZoomZoom"): 3
@@ -1162,6 +1379,7 @@ NodePath("../ZoomZoom"): 3
 [node name="ImprovedJetpackSuits" parent="." unique_id=1623868635 instance=ExtResource("2_5s8lu")]
 position = Vector2(192, 192)
 UpgradeResource = SubResource("Resource_w0s8b")
+Icon = SubResource("AtlasTexture_w0s8b")
 Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../JetpackUnlock"): 1
@@ -1170,6 +1388,7 @@ NodePath("../JetpackUnlock"): 1
 [node name="FlyToTheRescue" parent="." unique_id=1093825238 instance=ExtResource("2_5s8lu")]
 position = Vector2(192, 288)
 UpgradeResource = SubResource("Resource_c4cow")
+Icon = SubResource("AtlasTexture_j2nm1")
 Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../ImprovedJetpackSuits"): 3
@@ -1187,6 +1406,7 @@ NodePath("../ZoomZoom"): 2
 [node name="SmootherSoil" parent="." unique_id=403043899 instance=ExtResource("2_5s8lu")]
 position = Vector2(64, 256)
 UpgradeResource = SubResource("Resource_vj0ng")
+Icon = SubResource("AtlasTexture_q7055")
 Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../LoamUnlock"): 1
@@ -1195,6 +1415,7 @@ NodePath("../LoamUnlock"): 1
 [node name="SharedSwiftness" parent="." unique_id=107396499 instance=ExtResource("2_5s8lu")]
 position = Vector2(384, 128)
 UpgradeResource = SubResource("Resource_0kuy1")
+Icon = SubResource("AtlasTexture_fk1kx")
 Frame = ExtResource("34_25eif")
 Dependencies = {
 NodePath("../JetpackUnlock"): 1,
@@ -1204,6 +1425,7 @@ NodePath("../EvenFatterFatBees"): 2
 [node name="SharedStrength" parent="." unique_id=171551504 instance=ExtResource("2_5s8lu")]
 position = Vector2(288, 192)
 UpgradeResource = SubResource("Resource_fp4lt")
+Icon = SubResource("AtlasTexture_eag0h")
 Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../ImprovedJetpackSuits"): 2,
@@ -1213,11 +1435,51 @@ NodePath("../FatUnlock"): 1
 [node name="InfiniteGluttony" parent="." unique_id=938309548 instance=ExtResource("2_5s8lu")]
 position = Vector2(448, 64)
 UpgradeResource = SubResource("Resource_q7055")
+Icon = SubResource("AtlasTexture_ty7u1")
 Frame = ExtResource("20_f667q")
 Dependencies = {
 NodePath("../EvenFatterFatBees"): 3
 }
 
+[node name="BlackholeUnlock" parent="." unique_id=612949654 instance=ExtResource("2_5s8lu")]
+position = Vector2(-192, 0)
+UpgradeResource = SubResource("Resource_fyt5j")
+Icon = SubResource("AtlasTexture_fyt5j")
+Frame = ExtResource("15_0qucf")
+Dependencies = {
+NodePath("../SpaciousHives"): 1,
+NodePath("../Impression"): 1
+}
+
+[node name="EventHorizon" parent="." unique_id=1065422970 instance=ExtResource("2_5s8lu")]
+position = Vector2(-384, 0)
+UpgradeResource = SubResource("Resource_voy1w")
+Icon = SubResource("AtlasTexture_p45vh")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../Attraction"): 1,
+NodePath("../Attachment"): 1
+}
+
+[node name="Attraction" parent="." unique_id=1424018482 instance=ExtResource("2_5s8lu")]
+position = Vector2(-288, -32)
+UpgradeResource = SubResource("Resource_kgrh4")
+Icon = SubResource("AtlasTexture_utg4q")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../BlackholeUnlock"): 1
+}
+
+[node name="Attachment" parent="." unique_id=1178248746 instance=ExtResource("2_5s8lu")]
+position = Vector2(-288, 32)
+UpgradeResource = SubResource("Resource_fawjq")
+Icon = SubResource("AtlasTexture_lrw2g")
+Frame = ExtResource("18_6qo0q")
+Dependencies = {
+NodePath("../BlackholeUnlock"): 1
+}
+
 [node name="Rainbow" parent="." unique_id=1770383304 instance=ExtResource("2_5s8lu")]
 UpgradeResource = SubResource("Resource_eag0h")
+Icon = SubResource("AtlasTexture_f3y2j")
 Frame = ExtResource("15_0qucf")

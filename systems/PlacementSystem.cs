@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 [GlobalClass]
@@ -41,6 +42,16 @@ public partial class PlacementSystem : GameSystem
         }
     }
     private RemoveBee? removeBeeResource;
+
+    private static readonly Dictionary<Mode, string> PlaceSounds = new()
+    {
+        { Mode.Tile, "place_big" },
+        { Mode.Object, "place" },
+        { Mode.Bee, "ding" },
+        { Mode.RemoveTile, "break" },
+        { Mode.RemoveObject, "break" },
+        { Mode.RemoveBee, "break" },
+    };
 
     public override void _Ready()
     {
@@ -90,6 +101,14 @@ public partial class PlacementSystem : GameSystem
             selectedType = null;
             ClearHoverText();
             CurMode = Mode.None;
+        };
+
+        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) =>
+        {
+            CurMode = Mode.None;
+            selectedScene = null;
+            selectedType = null;
+            ClearHoverText();
         };
     }
 
@@ -145,7 +164,7 @@ public partial class PlacementSystem : GameSystem
 
         void show()
         {
-            bool enough = t != null && GameStore.Honey >= GameStore.GetPlacementCost(t);
+            bool enough = (t != null) && (GameStore.Honey >= GameStore.GetPlacementCost(t));
             Services
                 .Get<HoverLabel>()
                 .ShowMessage(
@@ -163,12 +182,22 @@ public partial class PlacementSystem : GameSystem
         show();
     }
 
-    private void ClearHoverText()
+    public void ClearHoverText()
     {
         if (honeyChangedHandler != null)
         {
             GameStore.Instance.HoneyChanged -= honeyChangedHandler;
             honeyChangedHandler = null;
+        }
+        if (gridObjectPlacedHandler != null)
+        {
+            SignalBus.Instance.GridObjectPlaced -= gridObjectPlacedHandler;
+            gridObjectPlacedHandler = null;
+        }
+        if (gridObjectRemovedHandler != null)
+        {
+            SignalBus.Instance.GridObjectRemoved -= gridObjectRemovedHandler;
+            gridObjectRemovedHandler = null;
         }
         Services.Get<HoverLabel>().HideMessage();
     }
@@ -242,6 +271,8 @@ public partial class PlacementSystem : GameSystem
         FailMessage? fail = null;
         int cost = 0;
 
+        bool success = false;
+
         switch (CurMode)
         {
             case Mode.Tile:
@@ -253,18 +284,21 @@ public partial class PlacementSystem : GameSystem
                 {
                     placementParticles.Emit(grid.GridToWorld(pos));
                     ChargeHoney(selectedType, cost);
+                    success = true;
                 }
                 break;
 
             case Mode.Object:
+                Type? objType = selectedType;
                 if (
                     selectedScene != null
-                    && TryCharge(selectedType, out cost, out fail)
+                    && TryCharge(objType, out cost, out fail)
                     && grid.PlaceObject(selectedScene, pos, out fail)
                 )
                 {
-                    ChargeHoney(selectedType, cost);
+                    ChargeHoney(objType, cost);
                     placementParticles.Emit(grid.GridToWorld(pos));
+                    success = true;
                 }
                 break;
 
@@ -280,24 +314,30 @@ public partial class PlacementSystem : GameSystem
                     GD.Print($"Spawning {selectedType.Name}");
                     placementParticles.Emit(grid.GridToWorld(pos));
                     ChargeHoney(selectedType, cost);
+                    success = true;
                 }
                 break;
 
             case Mode.RemoveTile:
                 if (grid.RemoveTile(pos, out fail))
+                {
                     removalParticles.Emit(grid.GridToWorld(pos));
+                    success = true;
+                }
                 break;
 
             case Mode.RemoveObject:
                 if (grid.RemoveObject(pos, out fail))
+                {
                     removalParticles.Emit(grid.GridToWorld(pos));
+                    success = true;
+                }
                 break;
 
             case Mode.RemoveBee:
                 if (highlighted is Hive targetHive && removeBeeResource != null)
                 {
                     string beeType = removeBeeResource.BeeTypeName;
-
                     Type t = beeType switch
                     {
                         "Base" => typeof(BaseBee),
@@ -307,7 +347,6 @@ public partial class PlacementSystem : GameSystem
                         "Fat" => typeof(FatBee),
                         _ => throw new ArgumentException($"Unknown bee type: {beeType}"),
                     };
-
                     if (!Services.Get<BeeSystem>().RemoveBee(t, targetHive))
                     {
                         if (beeType == "Rocket")
@@ -317,14 +356,22 @@ public partial class PlacementSystem : GameSystem
                             $"No {beeType} bee found at hive!"
                         );
                     }
+                    else
+                        success = true;
                 }
                 break;
         }
 
+        var audio = Services.Get<AudioSystem>();
         if (fail != null)
         {
             GD.Print($"[PlacementSystem] {fail.Log}");
             Services.Get<HoverLabel>().ShowError(fail);
+            audio.PlaySound("error");
+        }
+        else if (success && PlaceSounds.TryGetValue(CurMode, out var sound))
+        {
+            audio.PlaySound(sound);
         }
     }
 }

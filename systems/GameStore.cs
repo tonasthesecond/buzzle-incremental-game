@@ -18,22 +18,23 @@ public partial class GameStore : Node
     public static Stat HiveCapacityBee { get; } = new(5f);
     public static Stat HiveCapacityBeePerBeeCasteBonus { get; } = new(0f);
 
-    public static Stat BeeSpeed { get; } = new(30f);
+    public static Stat BeeSpeed { get; } = new(32f);
     public static Stat BeeCapacityHoney { get; } = new(1f);
 
     public static Stat BeekeeperEffectZoneRadius { get; } = new(32f);
-    public static Stat BeekeeperEffectZoneSpeedBuff { get; } = new(0.5f);
+    public static Stat BeekeeperEffectZoneSpeedBuff { get; } = new(0.8f);
     public static Stat BeekeeperEffectZoneFadeoutTime { get; } = new(1f);
+    public static Stat BeekeeperEffectZonePollinationTimeReductionBuff { get; } = new(0.2f);
     public static bool BeekeeperEffectZoneNeverFade { get; set; } = false;
 
     public static Stat QueenBeeEffectZoneRadius { get; } = new(32f);
-    public static Stat QueenBeeEffectZoneSpeedBuff { get; } = new(0.5f);
+    public static Stat QueenBeeEffectZoneSpeedBuff { get; } = new(0.8f);
     public static Stat QueenBeeEffectZonePollinationTimeReductionBuff { get; } = new(0.2f);
     public static Stat QueenBeeBeePriceReductionBuff { get; } = new(0f);
     public const float QueenBeeBeePriceReductionBuffMax = 0.99f;
     public static bool QueenBeeLeashRose { get; set; } = false;
 
-    public static Stat FatBeeSpeedDebuff { get; } = new(0.7f);
+    public static Stat FatBeeSpeedDebuff { get; } = new(0.6f);
     public static Stat FatBeeCapacityHoneyBonus { get; } = new(5f);
     public static Stat FatBeeSpeedPerRocketBeeBuff { get; } = new(0f);
     public static bool FatBeeCapacityHoneyInfinite { get; set; } = false;
@@ -47,22 +48,22 @@ public partial class GameStore : Node
 
     public static Stat PoppyHoneyCost { get; } = new(1f);
     public static Stat PoppyHoneyGain { get; } = new(2f);
-    public static Stat PoppyPollinationTime { get; } = new(3f);
+    public static Stat PoppyPollinationTime { get; } = new(3.5f);
 
     public static Stat SunflowerHoneyCost { get; } = new(1f);
     public static Stat SunflowerHoneyGain { get; } = new(2f);
-    public static Stat SunflowerPollinationTime { get; } = new(6f);
+    public static Stat SunflowerPollinationTime { get; } = new(8f);
     public static Stat SunflowerHoneyGainPerFatBeeBonus { get; } = new(0f);
 
     public static Stat CloverHoneyCost { get; } = new(3f);
     public static Stat CloverRegularHoneyGain { get; } = new(3f);
     public static Stat CloverJackpotHoneyGain { get; set; } = new(7f);
-    public static Stat CloverPollinationTime { get; } = new(5f);
+    public static Stat CloverPollinationTime { get; } = new(6f);
     public static Stat CloverJackpotChance { get; set; } = new(0.1f);
 
     public static Stat YarrowHoneyCost { get; } = new(4f);
     public static Stat YarrowHoneyGain { get; } = new(6f);
-    public static Stat YarrowPollinationTime { get; } = new(7f);
+    public static Stat YarrowPollinationTime { get; } = new(5f);
     public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.05f);
 
     public static Stat RoseHoneyCost { get; } = new(5f);
@@ -70,6 +71,13 @@ public partial class GameStore : Node
     public static Stat RosePollinationTime { get; } = new(15f);
     public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
     public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.1f);
+
+    public static Stat BlackholeHoneyCost { get; } = new(1f);
+    public static Stat BlackholeHoneyGain { get; } = new(1f);
+    public static Stat BlackholePollinationTime { get; } = new(1f);
+    public static Stat BlackholePullRange { get; } = new(96f);
+    public static Stat BlackholeNegativePullSpeed { get; } = new(16f);
+    public static Stat BlackholePositivePullSpeed { get; } = new(16f);
 
     public static Stat DirtPoppyHoneyGainBuff { get; } = new(0f);
 
@@ -79,33 +87,45 @@ public partial class GameStore : Node
     public static Stat LoamPollinationTimeReductionBuff { get; } = new(0.2f);
     public static Stat LoamYarrowHoneyGainBuff { get; } = new(0f);
 
+    public const float RainbowRadiusMin = 32f;
+    public const float RainbowRadiusMax = 128f;
+    public const float RainbowSpeedScaleMax = 20f;
+    public const float GameEndAnimationTime = 15f;
+    public const float GameEndStartZoom = 2f;
+    public const float GameEndEndZoom = 0.5f;
+    public const float WhiteScreenDelayTime = 5f;
+    public const float WhiteScreenFadeTime = GameEndAnimationTime - WhiteScreenDelayTime;
+
     // --- Placement Price Models ---
     public static Dictionary<Type, IScaleModel> PriceModels { get; } =
         new()
         {
             {
                 typeof(Poppy),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.7f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(2f, 0.7f))
             },
-            { typeof(Sunflower), new PolynomialModel(20f, 0.7f) },
-            { typeof(Clover), new PolynomialModel(25f, 0.4f) },
-            { typeof(Yarrow), new PolynomialModel(15f, 0.2f) },
-            { typeof(Rose), new PolynomialModel(50f, 0.2f) },
+            { typeof(Sunflower), new PolynomialModel(5f, 0.4f) },
+            { typeof(Clover), new PolynomialModel(5f, 0.3f) },
+            { typeof(Yarrow), new PolynomialModel(2, 0.2f) },
+            { typeof(Rose), new PolynomialModel(10, 0.5f) },
             { typeof(Hive), new PaddingModel(new float[] { 0f }, new ExponentialModel(10f, 1.5f)) },
             {
                 typeof(DirtTile),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(3f, 0.2f))
             },
-            { typeof(LoamTile), new PolynomialModel(10f, 0.6f) },
-            { typeof(GrassTile), new PolynomialModel(10f, 0.7f) },
+            { typeof(LoamTile), new PolynomialModel(5f, 0.6f) },
+            { typeof(GrassTile), new PolynomialModel(5f, 0.7f) },
             {
                 typeof(BaseBee),
-                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(10f, 0.5f))
+                new PaddingModel(new float[] { 0f, 0f }, new PolynomialModel(5f, 0.5f))
             },
             { typeof(FatBee), new PolynomialModel(10f, 0.6f) },
             { typeof(RocketBee), new PolynomialModel(10f, 0.6f) },
             { typeof(QueenBee), new PolynomialModel(50f, 0.6f) },
+            { typeof(Rainbow), new FlatModel(0f) },
         };
+
+    public static bool GameEnd = false;
 
     public static int GetPlacementCost(Type t)
     {
@@ -142,6 +162,7 @@ public partial class GameStore : Node
         "Queen",
         "Rocket",
         "Fat",
+        "Blackhole",
     ];
     private static readonly HashSet<string> unlockedKeys = new HashSet<string>([
         "Poppy",
@@ -164,23 +185,27 @@ public partial class GameStore : Node
             Unlock(key);
     }
 
-    public static string[] GetUnlockedBeeKeys()
-    {
-        string[] beeKeys = ["Queen", "Rocket", "Fat", "Bee"];
-        return beeKeys.Where(key => IsUnlocked(key)).ToArray();
-    }
+    public static readonly string[] beeKeys = new string[] { "Bee", "Fat", "Queen", "Rocket" };
 
-    public static string[] GetUnlockedTileKeys()
-    {
-        string[] tileKeys = ["Grass", "Loam"];
-        return tileKeys.Where(key => IsUnlocked(key)).ToArray();
-    }
+    public static string[] GetUnlockedBeeKeys() => beeKeys.Where(key => IsUnlocked(key)).ToArray();
 
-    public static string[] GetUnlockedFlowerKeys()
+    public static readonly string[] tileKeys = new string[] { "Dirt", "Grass", "Loam" };
+
+    public static string[] GetUnlockedTileKeys() =>
+        tileKeys.Where(key => IsUnlocked(key)).ToArray();
+
+    public static readonly string[] flowerKeys = new string[]
     {
-        string[] flowerKeys = ["Sunflower", "Clover", "Yarrow", "Rose", "Poppy"];
-        return flowerKeys.Where(key => IsUnlocked(key)).ToArray();
-    }
+        "Poppy",
+        "Sunflower",
+        "Blackhole",
+        "Clover",
+        "Rose",
+        "Yarrow",
+    };
+
+    public static string[] GetUnlockedFlowerKeys() =>
+        flowerKeys.Where(key => IsUnlocked(key)).ToArray();
 
     public static bool IsUnlocked(string key) => unlockedKeys.Contains(key);
 
@@ -195,6 +220,14 @@ public partial class GameStore : Node
             Save.Honey = honey;
             Instance.EmitSignal(SignalName.HoneyChanged, value);
         }
+    }
+
+    // --- Volume ---
+    public static float StepToDb(int step, int max = 10, float minDb = -80f)
+    {
+        if (step <= 0)
+            return -80f;
+        return Mathf.Lerp(minDb, 0f, step / (float)max);
     }
 
     // --- Save Data ---
@@ -242,7 +275,7 @@ public partial class GameStore : Node
 
     // --- Constants ---
     public const int TILE_SIZE = 32;
-    public const int ValidTileDistance = 3;
+    public const int ValidTileDistance = 6;
 
     public static readonly Dictionary<string, string> Colors = JsonSerializer.Deserialize<
         Dictionary<string, string>

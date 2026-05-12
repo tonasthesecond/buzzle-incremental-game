@@ -61,8 +61,6 @@ public partial class Flower
     {
         Honey += amount;
         CurState = State.Pollinating;
-        if (Honey >= HoneyCost.Value)
-            CurState = State.Pollinated;
     }
 
     /// How many honey is required to pollinate this flower.
@@ -76,8 +74,6 @@ public partial class Flower
     // Pollinate the flower.
     public void Pollinate()
     {
-        if (CurState != State.Pollinated)
-            return;
         OnPollinated();
     }
 
@@ -85,7 +81,6 @@ public partial class Flower
     protected virtual void OnPollinated()
     {
         CurState = State.Pollinated;
-        // SetModulate();
         Honey = (int)HoneyGain.Value;
         EmitSignal(SignalName.Pollinated, Honey);
         sprite.Play("pollinated");

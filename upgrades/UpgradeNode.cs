@@ -64,11 +64,15 @@ public partial class UpgradeNode
     {
         if (isDependencyMet(out FailMessage? failMessage))
         {
-            if (Upgrade.Buy(out failMessage)) { }
+            if (Upgrade.Buy(out failMessage))
+            {
+                Services.Get<AudioSystem>().PlaySound("upgrade");
+            }
             else
             {
                 Services.Get<HoverLabel>().ShowError(failMessage);
                 GD.Print($"[UpgradeNode] {failMessage.Log}");
+                Services.Get<AudioSystem>().PlaySound("error");
             }
         }
     }

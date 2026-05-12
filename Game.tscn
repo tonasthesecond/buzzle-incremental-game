@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cujy5b4g5vsan" path="res://Game.cs" id="1_yx171"]
 [ext_resource type="Script" uid="uid://bxiv6k7h3frth" path="res://systems/HoneyTracker.cs" id="2_n7324"]
 [ext_resource type="Script" uid="uid://bw2wen42y1dki" path="res://systems/Grid.cs" id="2_xkndl"]
+[ext_resource type="Script" uid="uid://dvnw4q88t2grr" path="res://systems/AudioSystem.cs" id="3_ds8mp"]
 [ext_resource type="PackedScene" uid="uid://5chk1akd7lfh" path="res://ui/Tilemap.tscn" id="3_r0x5m"]
 [ext_resource type="PackedScene" uid="uid://vkecggc367du" path="res://particles/PlacementExplosionParticles.tscn" id="4_n7324"]
 [ext_resource type="PackedScene" uid="uid://bhcs7an6umlen" path="res://ui/Camera.tscn" id="4_sb48q"]
@@ -31,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://rtbaieb6a50t" path="res://objects/grid/Sunflower.tscn" id="21_5he1h"]
 [ext_resource type="PackedScene" uid="uid://b8s7e2yvuum2v" path="res://objects/grid/Clover.tscn" id="21_aeq37"]
 [ext_resource type="Theme" uid="uid://chnmma08ljpaf" path="res://resources/main_theme.tres" id="22_0mevm"]
+[ext_resource type="PackedScene" uid="uid://coqsu3r23fb5b" path="res://objects/grid/Rainbow.tscn" id="22_xc54d"]
 [ext_resource type="PackedScene" uid="uid://brb5bcs3dh361" path="res://objects/grid/Yarrow.tscn" id="23_xwkxq"]
 [ext_resource type="PackedScene" uid="uid://bvxt44oxdw1xf" path="res://objects/bees/BaseBee.tscn" id="23_y5ctq"]
 [ext_resource type="PackedScene" uid="uid://dc6ql2kly3txf" path="res://objects/tiles/LoamTile.tscn" id="24_4my3f"]
@@ -43,11 +45,17 @@
 [ext_resource type="Texture2D" uid="uid://ciawes7fupkve" path="res://assets/tilemap_brown.png" id="27_hxy8k"]
 [ext_resource type="PackedScene" uid="uid://cvi41mdqkh0au" path="res://objects/tiles/DirtTile.tscn" id="28_hxy8k"]
 [ext_resource type="Texture2D" uid="uid://dfp788lbo7pfe" path="res://assets/tilemap_cyan.png" id="31_fj2yu"]
+[ext_resource type="PackedScene" uid="uid://citjrte13rdnr" path="res://objects/grid/Blackhole.tscn" id="32_dyvha"]
 [ext_resource type="Script" uid="uid://eem2ebdmliip" path="res://resources/RemoveBee.cs" id="36_7vltt"]
 [ext_resource type="PackedScene" uid="uid://cyqsoj4m042r5" path="res://objects/bees/RocketBee.tscn" id="36_8576b"]
 [ext_resource type="Texture2D" uid="uid://cfigd8vlacj6a" path="res://assets/button.png" id="40_fj2yu"]
 [ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="40_o6tbt"]
 [ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
+[ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="52_ds8mp"]
+[ext_resource type="Texture2D" uid="uid://cl6bmmcjo3ody" path="res://assets/End_Screen-Background.png" id="52_ndmee"]
+[ext_resource type="Texture2D" uid="uid://cwd7kfibnb73x" path="res://assets/End_Screen-Flower.png" id="53_lua15"]
+[ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="53_pbwgg"]
+[ext_resource type="Texture2D" uid="uid://b2v31dae4j6wj" path="res://assets/End_Screen-Title.png" id="54_qirsl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
 atlas = ExtResource("10_v5dxo")
@@ -90,6 +98,17 @@ texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qirsl"]
+atlas = ExtResource("24_iueff")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="Resource" id="Resource_pnh27"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("22_xc54d")
+Icon = SubResource("AtlasTexture_qirsl")
+UnlockKey = "Rainbow"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
 [sub_resource type="Resource" id="Resource_wdm1y"]
 resource_name = "RemoveObject"
@@ -161,6 +180,17 @@ Icon = SubResource("AtlasTexture_n7324")
 UnlockKey = "Rose"
 metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lua15"]
+atlas = ExtResource("24_iueff")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="Resource" id="Resource_qirsl"]
+script = ExtResource("8_joorw")
+Resource = ExtResource("32_dyvha")
+Icon = SubResource("AtlasTexture_lua15")
+UnlockKey = "Blackhole"
+metadata/_custom_type_script = "uid://yq5ra5q2w8oc"
+
 [sub_resource type="Resource" id="Resource_hxy8k"]
 script = ExtResource("26_xwkxq")
 Icon = ExtResource("16_5he1h")
@@ -168,7 +198,7 @@ metadata/_custom_type_script = "uid://co550qpijgpnv"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8576b"]
 atlas = ExtResource("27_hxy8k")
-region = Rect2(96, 96, 32, 32)
+region = Rect2(96, 96, 32, 64)
 
 [sub_resource type="Resource" id="Resource_68r7h"]
 script = ExtResource("8_joorw")
@@ -276,11 +306,21 @@ region = Rect2(0, 64, 64, 32)
 atlas = ExtResource("40_fj2yu")
 region = Rect2(0, 32, 64, 32)
 
-[sub_resource type="Environment" id="Environment_v5dxo"]
-ssao_enabled = true
-ssao_intensity = 5.0
-fog_enabled = true
-fog_light_energy = 2.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnh27"]
+atlas = ExtResource("54_qirsl")
+region = Rect2(0, 0, 224, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw735"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvv74"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 64, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l0qi"]
+atlas = ExtResource("40_fj2yu")
+region = Rect2(0, 32, 64, 32)
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
@@ -289,13 +329,18 @@ script = ExtResource("1_yx171")
 script = ExtResource("2_n7324")
 metadata/_custom_type_script = "uid://bxiv6k7h3frth"
 
+[node name="AudioSystem" type="Node" parent="." unique_id=1039161720]
+script = ExtResource("3_ds8mp")
+metadata/_custom_type_script = "uid://dvnw4q88t2grr"
+
 [node name="PlacementSystem" type="Node" parent="." unique_id=777760324]
+unique_name_in_owner = true
 script = ExtResource("9_2vekm")
-FreePlace = true
 metadata/_custom_type_script = "uid://s3j2s3crukmu"
 
 [node name="GameLayer" type="Node2D" parent="." unique_id=1535834630]
 unique_name_in_owner = true
+y_sort_enabled = true
 
 [node name="BeeSystem" type="Node" parent="GameLayer" unique_id=474014426]
 script = ExtResource("1_wbfu4")
@@ -332,7 +377,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="UpgradeTree" parent="UpgradeLayer" unique_id=2002805193 instance=ExtResource("7_yx171")]
-ShowAllUpgrades = true
+unique_name_in_owner = true
 
 [node name="Camera" parent="UpgradeLayer" unique_id=1898346476 instance=ExtResource("4_sb48q")]
 
@@ -399,17 +444,18 @@ ButtonDropDistance = 65.0
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("22_0mevm")
-current_tab = 0
+current_tab = 2
 tab_0/title = "Objects"
 tab_1/title = "Tiles"
 tab_2/title = "Bees"
 
 [node name="ObjectsSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=1610141216 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
+visible = false
 self_modulate = Color(0, 0.83137256, 0.34901962, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
-SelectedResources = Array[Object]([SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt")])
+SelectedResources = Array[Object]([SubResource("Resource_pnh27"), SubResource("Resource_wdm1y"), SubResource("Resource_elkpi"), SubResource("Resource_202ut"), SubResource("Resource_8576b"), SubResource("Resource_5he1h"), SubResource("Resource_fj2yu"), SubResource("Resource_o6tbt"), SubResource("Resource_qirsl")])
 ExpandDirection = 1
 metadata/_tab_index = 0
 metadata/_tab_name = "Objects"
@@ -426,13 +472,24 @@ metadata/_tab_name = "Tiles"
 
 [node name="BeesSelectContainer" parent="UILayer/PlacementMenu/TabContainer" unique_id=427795783 instance=ExtResource("7_3mrqo")]
 unique_name_in_owner = true
-visible = false
 self_modulate = Color(0.44313726, 0.84313726, 0.8039216, 1)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_edr7y")
 SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("Resource_n7324"), SubResource("Resource_hwsgv"), SubResource("Resource_v5dxo"), SubResource("Resource_iueff"), SubResource("Resource_dyvha"), SubResource("Resource_8ktx7"), SubResource("Resource_xc54d")])
 metadata/_tab_index = 2
 metadata/_tab_name = "Bees"
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=172975608]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="CollapseButton" type="TextureButton" parent="UILayer" unique_id=1596705947]
 offset_left = 563.0
@@ -465,5 +522,74 @@ horizontal_alignment = 1
 script = ExtResource("45_iueff")
 offset = Vector2(0, -32)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1403709593]
-environment = SubResource("Environment_v5dxo")
+[node name="EndLayer" type="CanvasLayer" parent="." unique_id=1083758792]
+unique_name_in_owner = true
+layer = 3
+
+[node name="WhiteScreen" type="ColorRect" parent="EndLayer" unique_id=1549357252]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EndingContentContainer" type="CenterContainer" parent="EndLayer" unique_id=1887246064]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("22_0mevm")
+
+[node name="Background" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=54510336]
+custom_minimum_size = Vector2(700, 480)
+layout_mode = 2
+texture = ExtResource("52_ndmee")
+stretch_mode = 5
+
+[node name="Background2" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=85465845]
+custom_minimum_size = Vector2(700, 480)
+layout_mode = 2
+texture = ExtResource("53_lua15")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndLayer/EndingContentContainer" unique_id=797850026]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EndingTitle" type="TextureRect" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=66192258]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 2
+texture = SubResource("AtlasTexture_pnh27")
+stretch_mode = 5
+
+[node name="TitleLabel" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=470433628 instance=ExtResource("52_ds8mp")]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
+text = "[b]Beetopia achieved.[/b]"
+
+[node name="BodyLabel" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=1558216477 instance=ExtResource("53_pbwgg")]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
+bbcode_enabled = true
+text = "Thanks to your efforts, beecivilization will forever live in abundance and bliss."
+fit_content = true
+horizontal_alignment = 1
+
+[node name="TitleLabel2" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=1500088954 instance=ExtResource("52_ds8mp")]
+layout_mode = 2
+theme_override_colors/default_color = Color(1, 1, 0.9019608, 1)
+text = "Bees thank you."
+
+[node name="BackButton" type="TextureButton" parent="EndLayer/EndingContentContainer/VBoxContainer" unique_id=530823297]
+unique_name_in_owner = true
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_yw735")
+texture_pressed = SubResource("AtlasTexture_gvv74")
+texture_hover = SubResource("AtlasTexture_3l0qi")
+stretch_mode = 5

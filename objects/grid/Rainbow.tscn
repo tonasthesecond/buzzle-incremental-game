@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://coqsu3r23fb5b"]
+
+[ext_resource type="PackedScene" uid="uid://cudgaf2wotesf" path="res://objects/grid/BaseGridObject.tscn" id="1_j1quc"]
+[ext_resource type="Script" uid="uid://cojyesrm6ltua" path="res://objects/grid/Rainbow.cs" id="2_idm0s"]
+[ext_resource type="Texture2D" uid="uid://bmvayt8t5myoc" path="res://assets/flowers.png" id="3_n7gx4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcap0"]
+atlas = ExtResource("3_n7gx4")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q21nf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcap0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Rainbow" unique_id=1691567109 instance=ExtResource("1_j1quc")]
+script = ExtResource("2_idm0s")
+ObjectName = "Rainbow"
+
+[node name="Sprite" parent="." index="0" unique_id=566324573]
+sprite_frames = SubResource("SpriteFrames_q21nf")

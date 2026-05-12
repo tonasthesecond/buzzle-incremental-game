@@ -37,6 +37,9 @@ public partial class SignalBus : Node
     [Signal]
     public delegate void GridObjectRemovedEventHandler(BaseGridObject obj);
 
+    [Signal]
+    public delegate void RainbowPlacedEventHandler(Rainbow rainbow);
+
     public override void _Ready()
     {
         Instance = this;

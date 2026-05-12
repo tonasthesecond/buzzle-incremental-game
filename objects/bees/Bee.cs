@@ -91,9 +91,18 @@ public abstract partial class Bee
             Callable.From(
                 (float t) =>
                 {
+                    float nextAngle = orbitAngle + orbitDir * 0.01f;
+                    Vector2 nextPos =
+                        orbitCenter
+                        + new Vector2(Mathf.Cos(nextAngle), Mathf.Sin(nextAngle)) * orbitRadius;
                     orbitAngle =
                         (GlobalPosition - orbitCenter).Angle()
-                        + orbitDir * (Speed.Value / orbitRadius) * (float)GetProcessDeltaTime();
+                        + orbitDir
+                            * (
+                                (Speed.Value + Blackhole.GetSpeedBonus(Position, nextPos))
+                                / orbitRadius
+                            )
+                            * (float)GetProcessDeltaTime();
                 }
             ),
             0f,
@@ -172,7 +181,10 @@ public abstract partial class Bee
     /// Move toward target position.
     void Move(double delta)
     {
-        Position = Position.MoveToward(targetPosition, Speed.Value * (float)delta);
+        Position = Position.MoveToward(
+            targetPosition,
+            (Speed.Value + Blackhole.GetSpeedBonus(Position, targetPosition)) * (float)delta
+        );
         latchedFlipH = FlipOverride ?? (targetPosition.X < Position.X);
         Sprite.FlipH = latchedFlipH;
     }
@@ -224,7 +236,7 @@ public abstract partial class Bee
 
         desc +=
             $"\n\n{Style.CK("Speed")}: {Style.CK(speedTilesPerSec.ToString("F1"))} tiles per sec";
-        if (capacity > 5000)
+        if (capacity > 2000)
             desc += $"\n{Style.CK("Capacity")}: {Style.CK("inf")} honey";
         else
             desc += $"\n{Style.CK("Capacity")}: {Style.CK(capacity.ToString("F0"))} honey";

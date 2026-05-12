@@ -10,9 +10,20 @@ public partial class Game : GameSystem
     public BaseButton ShowUpgradesButton { get; private set; } = null!;
     public Control PlacementMenu { get; private set; } = null!;
     public Control CollapseButton { get; private set; } = null!;
+    public SelectContainer ObjectsSelect { get; private set; } = null!;
+    public SelectContainer TilesSelect { get; private set; } = null!;
+    public SelectContainer BeesSelect { get; private set; } = null!;
+    public PlacementSystem PlacementSystem { get; private set; } = null!;
+    public UpgradeTree UpgradeTree { get; private set; } = null!;
+    public CanvasLayer EndLayer { get; private set; } = null!;
+    public Container EndingContentContainer { get; private set; } = null!;
+    public BaseButton BackButton { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
+
+    [Export]
+    public bool DebugMode { get; set; } = false;
 
     [Export]
     public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
@@ -28,12 +39,23 @@ public partial class Game : GameSystem
         ShowUpgradesButton = GetNode<BaseButton>("%ShowUpgradesButton");
         PlacementMenu = GetNode<Control>("%PlacementMenu");
         CollapseButton = UILayer.GetNode<Control>("CollapseButton");
+        ObjectsSelect = UILayer.GetNode<SelectContainer>("%ObjectsSelectContainer");
+        TilesSelect = UILayer.GetNode<SelectContainer>("%TilesSelectContainer");
+        BeesSelect = UILayer.GetNode<SelectContainer>("%BeesSelectContainer");
+        PlacementSystem = GetNode<PlacementSystem>("%PlacementSystem");
+        UpgradeTree = GetNode<UpgradeTree>("%UpgradeTree");
+        EndLayer = GetNode<CanvasLayer>("%EndLayer");
+        BackButton = GetNode<BaseButton>("%BackButton");
+        EndingContentContainer = GetNode<Container>("%EndingContentContainer");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
+        SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
+        BackButton.Pressed += onBackButtonPressed;
 
         // setup
         GameLayer.Show();
+        EndLayer.Hide();
         GameLayer.GetNode<Camera>("Camera").MakeCurrent();
 
         // load game
@@ -48,10 +70,23 @@ public partial class Game : GameSystem
             autoSaveTimer.Timeout += GameStore.SaveGame;
             autoSaveTimer.Start(AutoSaveInterval);
         }
+        if (DebugMode)
+        {
+            GD.Print("Debug Mode: ON");
+            PlacementSystem.FreePlace = true;
+            UpgradeTree.ShowAllUpgrades = true;
+        }
+        else
+        {
+            GD.Print("Debug Mode: OFF");
+            PlacementSystem.FreePlace = false;
+            UpgradeTree.ShowAllUpgrades = false;
+        }
     }
 
     private void onUpgradesButtonPressed()
     {
+        Services.Get<AudioSystem>().PlaySound("click");
         if (UpgradeLayer.Visible)
         {
             UpgradeLayer.Hide();
@@ -62,6 +97,9 @@ public partial class Game : GameSystem
         }
         else
         {
+            ObjectsSelect.Reset();
+            TilesSelect.Reset();
+            BeesSelect.Reset();
             UpgradeLayer.Show();
             GameLayer.Hide();
             PlacementMenu.Hide();
@@ -88,5 +126,70 @@ public partial class Game : GameSystem
             foreach (var (source, hps) in bySource)
                 GD.Print($"{source}: {(total > 0 ? hps / total : 0):P2}");
         }
+    }
+
+    private void onRainbowPlaced(Rainbow rainbow)
+    {
+        if (GameStore.GameEnd)
+            rainbow.QueueFree();
+        EndLayer.Show();
+        Camera camera = GameLayer.GetNode<Camera>("Camera");
+        camera.ControlsEnabled = false;
+        camera.SetTarget(rainbow.GlobalPosition);
+        camera.SetZoom(GameStore.GameEndStartZoom);
+
+        Tween tween = CreateTween();
+        tween.TweenMethod(
+            Callable.From((float v) => GameEndJob.SpeedScale = v),
+            GameEndJob.SpeedScale,
+            GameStore.RainbowSpeedScaleMax,
+            GameStore.GameEndAnimationTime
+        );
+        tween.SetEase(Tween.EaseType.In);
+        tween.SetTrans(Tween.TransitionType.Expo);
+        GameStore.GameEnd = true;
+
+        UILayer.Hide();
+
+        Tween cameraTween = CreateTween();
+        cameraTween.TweenMethod(
+            Callable.From((float v) => camera.SetZoom(v)),
+            GameStore.GameEndStartZoom,
+            GameStore.GameEndEndZoom,
+            GameStore.GameEndAnimationTime
+        );
+
+        ColorRect whiteScreen = GetNode<ColorRect>("%WhiteScreen");
+        whiteScreen.Show();
+        Tween whiteTween = null!;
+        GetTree().CreateTimer(GameStore.WhiteScreenDelayTime).Timeout += () =>
+        {
+            whiteTween = CreateTween();
+            whiteTween.TweenProperty(whiteScreen, "modulate:a", 1f, GameStore.WhiteScreenFadeTime);
+            whiteTween.SetEase(Tween.EaseType.In);
+            whiteTween.SetTrans(Tween.TransitionType.Quad);
+            whiteTween.Finished += () =>
+            {
+                Services.Get<BeeSystem>().ResetBees();
+                Tween containerTween = CreateTween();
+                containerTween.TweenProperty(EndingContentContainer, "modulate:a", 1f, 1f);
+                containerTween.SetEase(Tween.EaseType.In);
+                containerTween.SetTrans(Tween.TransitionType.Quad);
+            };
+        };
+    }
+
+    private void onBackButtonPressed()
+    {
+        Services.Get<AudioSystem>().PlaySound("click");
+        EndLayer.Hide();
+        EndingContentContainer.Modulate = new Color(1, 1, 1, 0);
+        GameLayer.Show();
+        PlacementMenu.Hide();
+        UILayer.Show();
+        CollapseButton.Show();
+        Services.Get<PlacementSystem>().ClearHoverText();
+        GameLayer.GetNode<Camera>("Camera").MakeCurrent();
+        GameLayer.GetNode<Camera>("Camera").ControlsEnabled = true;
     }
 }

@@ -52,6 +52,8 @@ public partial class SelectContainer : PanelContainer
                 if (res.UnlockKey == key)
                     Add(res);
         };
+
+        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) => Reset();
     }
 
     /// Input handling.
@@ -72,6 +74,11 @@ public partial class SelectContainer : PanelContainer
 
         selectable.Selected += (int i) =>
         {
+            if (SelectedIndex == i)
+            {
+                Reset();
+                return;
+            }
             SelectedIndex = i;
             SignalBus.Instance.EmitSignal(
                 SignalBus.SignalName.ResourceSelected,
