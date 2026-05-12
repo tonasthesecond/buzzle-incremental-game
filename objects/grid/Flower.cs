@@ -60,7 +60,8 @@ public partial class Flower
     public void AddHoney(int amount)
     {
         Honey += amount;
-        CurState = State.Pollinating;
+        if (Honey >= (int)HoneyCost.Value)
+            CurState = State.Pollinated;
     }
 
     /// How many honey is required to pollinate this flower.

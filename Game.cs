@@ -130,14 +130,13 @@ public partial class Game : GameSystem
 
     private void onRainbowPlaced(Rainbow rainbow)
     {
-        if (GameStore.GameEnd)
-            rainbow.QueueFree();
         EndLayer.Show();
         Camera camera = GameLayer.GetNode<Camera>("Camera");
         camera.ControlsEnabled = false;
         camera.SetTarget(rainbow.GlobalPosition);
         camera.SetZoom(GameStore.GameEndStartZoom);
 
+        GameEndJob.SpeedScale = 1.0f;
         Tween tween = CreateTween();
         tween.TweenMethod(
             Callable.From((float v) => GameEndJob.SpeedScale = v),
@@ -160,6 +159,7 @@ public partial class Game : GameSystem
         );
 
         ColorRect whiteScreen = GetNode<ColorRect>("%WhiteScreen");
+        whiteScreen.Modulate = new Color(1, 1, 1, 0);
         whiteScreen.Show();
         Tween whiteTween = null!;
         GetTree().CreateTimer(GameStore.WhiteScreenDelayTime).Timeout += () =>
