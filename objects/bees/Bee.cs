@@ -65,7 +65,11 @@ public abstract partial class Bee
 
     public void MoveTo(Vector2 position) => targetPosition = position;
 
-    public void SetJob(IBeeJob newJob) => job = newJob;
+    public void SetJob(IBeeJob newJob)
+    {
+        job = newJob;
+        FlipOverride = null;
+    }
 
     // orbit state for pollination animation
     private Vector2 orbitCenter;

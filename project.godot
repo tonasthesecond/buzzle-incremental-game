@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Buzzle"
-run/main_scene="uid://bj341en8f28fl"
+run/main_scene="uid://bfse172y707e6"
 config/features=PackedStringArray("4.6", "C#", "GL Compatibility")
 config/icon="uid://c4virkxoyn6xe"
+
+[audio]
+
+buses/default_bus_layout="uid://cnj12ugxc3l28"
 
 [autoload]
 

@@ -170,6 +170,10 @@ public partial class BeeSystem : GameSystem
 
     public void ResetBees()
     {
+        claimedObjects.Clear();
+        foreach (Flower flower in Services.Get<Grid>().GetObjectsOfType<Flower>())
+            if (flower.CurState == Flower.State.Pollinating && flower.HoneyRequired() <= 0)
+                flower.Pollinate();
         foreach (Bee bee in GetBees())
             bee.SetJob(new GoToHiveJob());
     }
