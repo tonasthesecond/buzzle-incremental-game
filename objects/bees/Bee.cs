@@ -55,10 +55,9 @@ public abstract partial class Bee
         Flower[] unpollinatedFlowers
     )
     {
-        BeeSystem beeSystem = Services.Get<BeeSystem>()!;
         if (pollinatedFlowers.Length > 0)
             return HarvestJob();
-        if (unpollinatedFlowers.Length > 0)
+        if (unpollinatedFlowers.Length > 0 && GameStore.Honey > 0)
             return PollinateJob();
         return null;
     }
@@ -213,8 +212,10 @@ public abstract partial class Bee
 
     public void Remove()
     {
+        if (job is NoneJob)
+            return; // already removing
         SetJob(new NoneJob());
-        FadeTo(0f, 0.5f);
+        FadeTo(0f, 0.3f);
         if (fadeTween != null)
             fadeTween.Finished += () => QueueFree();
         else

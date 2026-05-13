@@ -61,7 +61,7 @@ public partial class BeeSystem : GameSystem
         }
 
         // remove invalid objects
-        foreach (BaseGridObject obj in claimedObjects.Keys)
+        foreach (BaseGridObject obj in claimedObjects.Keys.ToArray())
         {
             if (!IsInstanceValid(claimedObjects[obj]))
                 claimedObjects.Remove(obj);
@@ -127,17 +127,22 @@ public partial class BeeSystem : GameSystem
         return SpawnBee(scene, Utils.GetRandom(hives), out FailMessage? failMessage);
     }
 
-    public bool RemoveBee(Type beeType, Hive hive)
+    public bool RemoveBee(Type beeType, Hive hive, out Vector2? beePos)
     {
-        Bee bee = GetBees().FirstOrDefault(b => b.GetType() == beeType && b.Home == hive)!;
+        Bee bee = GetBees()
+            .FirstOrDefault(b => b.GetType() == beeType && b.Home == hive && b.job is not NoneJob)!;
         if (bee == null)
+        {
+            beePos = null;
             return false;
+        }
 
         // release any object this bee has claimed
         var claimed = claimedObjects.Where(kv => kv.Value == bee).Select(kv => kv.Key).ToArray();
         foreach (var obj in claimed)
             claimedObjects.Remove(obj);
 
+        beePos = bee.GlobalPosition;
         hive.RemoveBee(bee);
         bee.Remove();
         EmitSignal(SignalName.BeeRemoved);

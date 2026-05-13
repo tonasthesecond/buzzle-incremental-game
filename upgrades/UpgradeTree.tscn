@@ -56,7 +56,6 @@
 [ext_resource type="Script" uid="uid://bosu5bea6ji25" path="res://upgrades/scripts/RocketBeeCapacityHoneyPerFatBeeBonusUO.cs" id="51_f3y2j"]
 [ext_resource type="Script" uid="uid://c26nbpbtj2sk" path="res://upgrades/scripts/BlackholePullRangeUO.cs" id="55_fyt5j"]
 [ext_resource type="Script" uid="uid://6uxavi60p4op" path="res://upgrades/scripts/BlackholePositivePullSpeedUO.cs" id="56_knk3e"]
-[ext_resource type="Script" uid="uid://ccc1nb4k8cvwx" path="res://resources/scale_models/StepsModel.cs" id="57_s6d4w"]
 [ext_resource type="Script" uid="uid://dcv0a7tmob0vt" path="res://upgrades/scripts/BlackholeNegativePullSpeedUO.cs" id="58_qanwl"]
 
 [sub_resource type="Resource" id="Resource_vvd1a"]
@@ -487,6 +486,10 @@ MaxLevel = 9
 CostScaler = SubResource("Resource_canik")
 FlavorText = "[noun_bee](Bees) gathers at the call of their trusted [noun_queen](Queens)."
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkb3u"]
+atlas = ExtResource("5_mg5gc")
+region = Rect2(96, 352, 32, 32)
+
 [sub_resource type="Resource" id="Resource_psuir"]
 script = ExtResource("3_m26cu")
 Base = 100.0
@@ -589,7 +592,7 @@ region = Rect2(96, 96, 32, 32)
 
 [sub_resource type="Resource" id="Resource_1fl7q"]
 script = ExtResource("11_fnqkb")
-Base = 30.0
+Base = 40.0
 Exponent = 1.2
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -606,7 +609,7 @@ region = Rect2(0, 128, 32, 32)
 
 [sub_resource type="Resource" id="Resource_sbyyp"]
 script = ExtResource("11_fnqkb")
-Base = 100.0
+Base = 200.0
 Exponent = 0.3
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
@@ -625,7 +628,7 @@ region = Rect2(32, 128, 32, 32)
 [sub_resource type="Resource" id="Resource_0akw4"]
 script = ExtResource("27_tcyta")
 Base = 1000.0
-Rate = 0.2
+Rate = 1.2
 metadata/_custom_type_script = "uid://bmum0chjme3h4"
 
 [sub_resource type="Resource" id="Resource_4ebyn"]
@@ -650,7 +653,7 @@ UnlockKey = "Yarrow"
 Name = "Yarrow"
 MaxLevel = 1
 CostScaler = SubResource("Resource_3aonl")
-FlavorText = "Unlock [noun_yarrow](Blackhole), a [noun_flower](flower) that produces more with more friends around!"
+FlavorText = "Unlock [noun_yarrow](Yarrow), a [noun_flower](flower) that produces more with more friends around!"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vfo37"]
 atlas = ExtResource("12_vfo37")
@@ -922,17 +925,16 @@ region = Rect2(32, 128, 32, 32)
 [sub_resource type="Resource" id="Resource_mo1ck"]
 script = ExtResource("27_tcyta")
 Base = 200.0
-Rate = 0.7
 metadata/_custom_type_script = "uid://bmum0chjme3h4"
 
-[sub_resource type="Resource" id="Resource_voy1w"]
+[sub_resource type="Resource" id="Resource_rsml3"]
 script = ExtResource("55_fyt5j")
 Name = "Event Horizon"
 CostScaler = SubResource("Resource_mo1ck")
 FlavorText = "[noun_blackhole](Blackholes) reach further."
 metadata/_custom_type_script = "uid://c26nbpbtj2sk"
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_p45vh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_voy1w"]
 atlas = ExtResource("5_mg5gc")
 region = Rect2(32, 416, 32, 32)
 
@@ -952,17 +954,18 @@ metadata/_custom_type_script = "uid://6uxavi60p4op"
 atlas = ExtResource("5_mg5gc")
 region = Rect2(96, 416, 32, 32)
 
-[sub_resource type="Resource" id="Resource_qgi1o"]
-script = ExtResource("57_s6d4w")
-Values = Array[float]([150.0, 160.0, 170.0])
-metadata/_custom_type_script = "uid://ccc1nb4k8cvwx"
+[sub_resource type="Resource" id="Resource_voy1w"]
+script = ExtResource("3_m26cu")
+Base = 150.0
+Step = 20.0
+metadata/_custom_type_script = "uid://chybk5t5vu0yc"
 
 [sub_resource type="Resource" id="Resource_fawjq"]
 script = ExtResource("58_qanwl")
 IncreaseBy = -5.0
 Name = "Attachment"
 MaxLevel = 3
-CostScaler = SubResource("Resource_qgi1o")
+CostScaler = SubResource("Resource_voy1w")
 FlavorText = "[noun_bee](Bees) find it harder to move away from [noun_blackhole](Blackholes)."
 metadata/_custom_type_script = "uid://dcv0a7tmob0vt"
 
@@ -1211,6 +1214,7 @@ NodePath("../HerDomain"): 1
 [node name="BeesAssemble" parent="." unique_id=1042474054 instance=ExtResource("2_5s8lu")]
 position = Vector2(-256, -416)
 UpgradeResource = SubResource("Resource_7udnn")
+Icon = SubResource("AtlasTexture_gkb3u")
 Frame = ExtResource("15_0qucf")
 Dependencies = {
 NodePath("../Smokier"): 1,
@@ -1451,14 +1455,14 @@ NodePath("../SpaciousHives"): 1,
 NodePath("../Impression"): 1
 }
 
-[node name="EventHorizon" parent="." unique_id=1065422970 instance=ExtResource("2_5s8lu")]
+[node name="EventHorizon" parent="." unique_id=1338307198 instance=ExtResource("2_5s8lu")]
 position = Vector2(-384, 0)
-UpgradeResource = SubResource("Resource_voy1w")
-Icon = SubResource("AtlasTexture_p45vh")
+UpgradeResource = SubResource("Resource_rsml3")
+Icon = SubResource("AtlasTexture_voy1w")
 Frame = ExtResource("18_6qo0q")
 Dependencies = {
-NodePath("../Attraction"): 1,
-NodePath("../Attachment"): 1
+NodePath("../Attachment"): 1,
+NodePath("../Attraction"): 1
 }
 
 [node name="Attraction" parent="." unique_id=1424018482 instance=ExtResource("2_5s8lu")]

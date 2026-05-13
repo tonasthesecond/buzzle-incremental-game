@@ -24,10 +24,11 @@ metadata/_custom_type_script = "uid://diauaougoh3gu"
 [node name="ContentsContainer" type="MarginContainer" parent="." unique_id=730491872]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 3
 
 [node name="SelectablesContainer" type="HBoxContainer" parent="ContentsContainer" unique_id=180348723]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
+alignment = 1

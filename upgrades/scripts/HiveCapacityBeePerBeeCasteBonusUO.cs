@@ -16,9 +16,10 @@ public partial class HiveCapacityBeePerBeeCasteBonusUO : IUpgradeOption
         if (currentBoost != null)
             newHiveCapacity -= (int)currentBoost;
 
-        return $"{Style.CK("Hives", "noun_hive")} gain +{IncreaseBy} capacity per unlocked {Style.CK("bee", "noun_bee")} caste\n"
-             + $"Total capacity {Style.NC(currentHiveCapacity, newHiveCapacity, !IsMaxLevel())} ({currentBeeCasteCount} castes unlocked)";
+        return $"{Style.CK("Hives", "noun_hive")} gain +{IncreaseBy} capacity per unlocked {Style.CK("bee", "noun_bee")} caste.\n"
+            + $"Total capacity {Style.NC(currentHiveCapacity, newHiveCapacity, !IsMaxLevel())} ({currentBeeCasteCount} castes unlocked)";
     }
 
-    public override void Apply() => GameStore.HiveCapacityBee.AddFlat(Name, Level * IncreaseBy * currentBeeCasteCount);
+    public override void Apply() =>
+        GameStore.HiveCapacityBee.AddFlat(Name, Level * IncreaseBy * currentBeeCasteCount);
 }
