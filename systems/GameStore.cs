@@ -233,7 +233,7 @@ public partial class GameStore : Node
     // --- Save Data ---
     public static SaveData Save { get; private set; } = new();
 
-    private const string SavePath = "res://user/save.json";
+    private const string SavePath = "user://save.json";
     private static readonly JsonSerializerOptions JsonOpts = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -242,17 +242,11 @@ public partial class GameStore : Node
 
     public static void LoadGame()
     {
-        using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Read);
-
-        // load save data
         Save = FileAccess.FileExists(SavePath)
-            ? JsonSerializer.Deserialize<SaveData>(FileAccess.GetFileAsString(SavePath), JsonOpts)!
+            ? JsonSerializer.Deserialize<SaveData>(FileAccess.GetFileAsString(SavePath), JsonOpts)
+                ?? new SaveData()
             : new SaveData();
 
-        if (Save == null)
-            Save = new SaveData();
-
-        // apply all dynamic contents
         Honey = Save.Honey;
         Services.Get<UpgradeTree>().ApplyUpgrades();
 
@@ -277,13 +271,14 @@ public partial class GameStore : Node
     public const int TILE_SIZE = 32;
     public const int ValidTileDistance = 6;
 
-    public static readonly Dictionary<string, string> Colors = JsonSerializer.Deserialize<
-        Dictionary<string, string>
-    >(FileAccess.GetFileAsString("res://resources/colors.json"))!;
+    public static Dictionary<string, string> Colors { get; private set; } = new();
 
     // --- Ready ---
     public override void _Ready()
     {
         Instance = this;
+        Colors = JsonSerializer.Deserialize<Dictionary<string, string>>(
+            FileAccess.GetFileAsString("res://resources/colors.json")
+        )!;
     }
 }
