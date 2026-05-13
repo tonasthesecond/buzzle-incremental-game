@@ -3,3 +3,4 @@
 /android/
 .Bee Idle.sln
 .vscode/
+exports/*

@@ -50,31 +50,31 @@ public partial class GameStore : Node
     public static Stat PoppyHoneyGain { get; } = new(2f);
     public static Stat PoppyPollinationTime { get; } = new(3.5f);
 
-    public static Stat SunflowerHoneyCost { get; } = new(1f);
-    public static Stat SunflowerHoneyGain { get; } = new(2f);
+    public static Stat SunflowerHoneyCost { get; } = new(3f);
+    public static Stat SunflowerHoneyGain { get; } = new(10f);
     public static Stat SunflowerPollinationTime { get; } = new(8f);
     public static Stat SunflowerHoneyGainPerFatBeeBonus { get; } = new(0f);
 
     public static Stat CloverHoneyCost { get; } = new(3f);
     public static Stat CloverRegularHoneyGain { get; } = new(3f);
-    public static Stat CloverJackpotHoneyGain { get; set; } = new(7f);
+    public static Stat CloverJackpotHoneyGain { get; set; } = new(20f);
     public static Stat CloverPollinationTime { get; } = new(6f);
     public static Stat CloverJackpotChance { get; set; } = new(0.1f);
 
-    public static Stat YarrowHoneyCost { get; } = new(4f);
+    public static Stat YarrowHoneyCost { get; } = new(3f);
     public static Stat YarrowHoneyGain { get; } = new(6f);
     public static Stat YarrowPollinationTime { get; } = new(5f);
     public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.05f);
 
     public static Stat RoseHoneyCost { get; } = new(5f);
-    public static Stat RoseHoneyGain { get; } = new(1f);
+    public static Stat RoseHoneyGain { get; } = new(5f);
     public static Stat RosePollinationTime { get; } = new(15f);
     public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
     public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.1f);
 
-    public static Stat BlackholeHoneyCost { get; } = new(1f);
-    public static Stat BlackholeHoneyGain { get; } = new(1f);
-    public static Stat BlackholePollinationTime { get; } = new(1f);
+    public static Stat BlackholeHoneyCost { get; } = new(20f);
+    public static Stat BlackholeHoneyGain { get; } = new(20f);
+    public static Stat BlackholePollinationTime { get; } = new(10f);
     public static Stat BlackholePullRange { get; } = new(96f);
     public static Stat BlackholeNegativePullSpeed { get; } = new(16f);
     public static Stat BlackholePositivePullSpeed { get; } = new(16f);
@@ -122,6 +122,7 @@ public partial class GameStore : Node
             { typeof(FatBee), new PolynomialModel(10f, 0.6f) },
             { typeof(RocketBee), new PolynomialModel(10f, 0.6f) },
             { typeof(QueenBee), new PolynomialModel(50f, 0.6f) },
+            { typeof(Blackhole), new ExponentialModel(50f, 1.3f) },
             { typeof(Rainbow), new FlatModel(0f) },
         };
 

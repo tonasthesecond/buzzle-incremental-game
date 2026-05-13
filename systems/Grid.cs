@@ -129,6 +129,33 @@ public partial class Grid : Node2D
         SyncTilemap();
     }
 
+    /// Replaces the tile at pos without disturbing any object on it.
+    public bool ReplaceTile(PackedScene scene, Vector2I pos, out FailMessage? failMessage)
+    {
+        var instance = scene.Instantiate();
+        if (instance is not BaseTile tile)
+        {
+            instance.QueueFree();
+            failMessage = new FailMessage("Scene is not a BaseTile.", "");
+            return false;
+        }
+
+        if (tiles.TryGetValue(pos, out var existing))
+        {
+            existing.QueueFree();
+            tiles.Remove(pos);
+        }
+
+        AddChild(tile);
+        tile.GlobalPosition = GridToWorld(pos);
+        tile.GridPosition = pos;
+        tiles[pos] = tile;
+        SyncTilemap();
+        SignalBus.Instance.EmitSignal(SignalBus.SignalName.TilePlaced, tile);
+        failMessage = null;
+        return true;
+    }
+
     // --- Tile Layer ---
 
     private void SyncTilemap() => Services.Get<Tilemap>().Update(tiles.Values);

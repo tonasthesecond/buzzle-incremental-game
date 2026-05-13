@@ -102,7 +102,7 @@ public partial class Flower
             sprite.Modulate = Colors.DarkGray;
     }
 
-    public string GetHoverSubtitle()
+    public virtual string GetHoverSubtitle()
     {
         if (!Placed)
             return "";

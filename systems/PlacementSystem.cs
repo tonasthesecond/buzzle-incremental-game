@@ -67,6 +67,7 @@ public partial class PlacementSystem : GameSystem
                 CurMode = Mode.RemoveObject;
             else if (resource is RemoveBee rb)
             {
+                ClearHoverText();
                 removeBeeResource = rb;
                 CurMode = Mode.RemoveBee;
                 return;
@@ -276,15 +277,25 @@ public partial class PlacementSystem : GameSystem
         switch (CurMode)
         {
             case Mode.Tile:
-                if (
-                    selectedScene != null
-                    && TryCharge(selectedType, out cost, out fail)
-                    && grid.PlaceTile(selectedScene, pos, out fail)
-                )
+                if (selectedScene == null)
+                    break;
+                var existingTile = grid.GetTileAt(pos);
+                if (existingTile?.GetType() == selectedType)
+                    break;
+
+                if (TryCharge(selectedType, out cost, out fail))
                 {
-                    placementParticles.Emit(grid.GridToWorld(pos));
-                    ChargeHoney(selectedType, cost);
-                    success = true;
+                    bool placed =
+                        existingTile != null
+                            ? grid.ReplaceTile(selectedScene, pos, out fail)
+                            : grid.PlaceTile(selectedScene, pos, out fail);
+
+                    if (placed)
+                    {
+                        placementParticles.Emit(grid.GridToWorld(pos));
+                        ChargeHoney(selectedType, cost);
+                        success = true;
+                    }
                 }
                 break;
 
@@ -347,7 +358,7 @@ public partial class PlacementSystem : GameSystem
                         "Fat" => typeof(FatBee),
                         _ => throw new ArgumentException($"Unknown bee type: {beeType}"),
                     };
-                    if (!Services.Get<BeeSystem>().RemoveBee(t, targetHive))
+                    if (!Services.Get<BeeSystem>().RemoveBee(t, targetHive, out Vector2? beePos))
                     {
                         if (beeType == "Rocket")
                             beeType = "Jetpack";
@@ -357,7 +368,10 @@ public partial class PlacementSystem : GameSystem
                         );
                     }
                     else
+                    {
                         success = true;
+                        removalParticles.Emit((Vector2)beePos!);
+                    }
                 }
                 break;
         }

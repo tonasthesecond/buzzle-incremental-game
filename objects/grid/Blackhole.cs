@@ -21,9 +21,10 @@ public partial class Blackhole : Flower
     protected override string GetTechnicalText()
     {
         string desc = "";
-        desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
         desc +=
-            $"{Style.CK("Pol. Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
+            $"{Style.CK("Activation Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
+        desc +=
+            $"{Style.CK("Activation Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
         desc +=
             $"\n{Style.CK("Pull Range")}: {Style.CK(Utils.PixelsToTiles(PullRange.Value).ToString("F0"))} tiles";
         desc +=
@@ -35,6 +36,20 @@ public partial class Blackhole : Flower
             desc += GetTileStats();
         }
         return desc;
+    }
+
+    public override string GetHoverSubtitle()
+    {
+        if (!Placed)
+            return "";
+        if (CurState == State.Pollinated)
+            return Style.CK($"{Honey} honey", "subtitle");
+        if (CurState == State.Pollinating)
+            return Style.CK(
+                $"activating {Honey}/{HoneyCost.Value} ({Honey / HoneyCost.Value:P0})",
+                "subtitle"
+            );
+        return "";
     }
 
     public static float GetSpeedBonus(Vector2 curPos, Vector2 targetPos)

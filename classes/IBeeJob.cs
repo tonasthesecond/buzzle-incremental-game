@@ -110,7 +110,10 @@ public abstract class FlowerJob : IBeeJob
         {
             case State.SeekingFlower:
                 if (!CanSeek(bee))
+                {
+                    bee.SetJob(new IdleJob());
                     return;
+                }
                 var eligible = grid.GetObjectsOfType<Flower>()
                     .Where(f => IsEligible(f) && !beeSystem.IsClaimed(f))
                     .ToArray();
@@ -135,6 +138,7 @@ public abstract class FlowerJob : IBeeJob
                     return;
                 if (!OnArrived(bee))
                 {
+                    beeSystem.ReleaseObject(flower!);
                     bee.SetJob(new IdleJob());
                     return;
                 }
@@ -216,7 +220,11 @@ public class PollinatorJob : FlowerJob
     }
 
     // pollinator doesn't deposit on home — honey was already spent
-    protected override void OnHome(Bee bee) => bee.SetJob(new IdleJob());
+    protected override void OnHome(Bee bee)
+    {
+        bee.FadeTo(0f);
+        bee.SetJob(new IdleJob());
+    }
 }
 
 /// Shared rocket charge behavior
@@ -230,8 +238,10 @@ public abstract class RocketFlowerJob : FlowerJob
     {
         if (chargeStartMs == 0)
         {
-            if (!PreCharge(bee)) // abort back to seeking if prep fails
+            if (!PreCharge(bee))
             {
+                Services.Get<BeeSystem>().ReleaseObject(flower!);
+                chargeStartMs = 0;
                 state = State.SeekingFlower;
                 return false;
             }
@@ -268,7 +278,7 @@ public abstract class RocketFlowerJob : FlowerJob
 public class RocketHarvesterJob : RocketFlowerJob
 {
     protected override bool IsEligible(Flower f) =>
-        (f.CurState == Flower.State.Pollinating) && !(f is Blackhole);
+        (f.CurState == Flower.State.Pollinated) && !(f is Blackhole);
 
     protected override bool OnRocketArrived(Bee bee)
     {
@@ -342,7 +352,11 @@ public class RocketPollinatorJob : RocketFlowerJob
         isDone = true;
     }
 
-    protected override void OnHome(Bee bee) => bee.SetJob(new IdleJob());
+    protected override void OnHome(Bee bee)
+    {
+        bee.FadeTo(0f);
+        bee.SetJob(new IdleJob());
+    }
 }
 
 public class QueenJob : IBeeJob
