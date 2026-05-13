@@ -20,9 +20,6 @@ public partial class Game : GameSystem
     public BaseButton BackButton { get; private set; } = null!;
 
     [Export]
-    public bool AutoSave { get; set; } = true;
-
-    [Export]
     public bool DebugMode { get; set; } = false;
 
     public override void _Ready()
