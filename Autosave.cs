@@ -6,7 +6,7 @@ public partial class Autosave : Node
     public bool Enabled { get; set; } = true;
 
     [Export]
-    public int IntervalMs { get; set; } = 10 * 1000;
+    public int IntervalMs { get; set; } = 2 * 60 * 1000;
 
     private Timer? timer;
 
