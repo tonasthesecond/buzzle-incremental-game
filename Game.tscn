@@ -59,6 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://cwd7kfibnb73x" path="res://assets/End_Screen-Flower.png" id="53_lua15"]
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="53_pbwgg"]
 [ext_resource type="Texture2D" uid="uid://b2v31dae4j6wj" path="res://assets/End_Screen-Title.png" id="54_qirsl"]
+[ext_resource type="Script" uid="uid://xiipxmuieevl" path="res://Autosave.cs" id="50_xc54d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
 atlas = ExtResource("10_v5dxo")
@@ -625,3 +626,6 @@ texture_normal = SubResource("AtlasTexture_yw735")
 texture_pressed = SubResource("AtlasTexture_gvv74")
 texture_hover = SubResource("AtlasTexture_3l0qi")
 stretch_mode = 5
+
+[node name="Autosave" type="Node" parent="." unique_id=643998580]
+script = ExtResource("50_xc54d")

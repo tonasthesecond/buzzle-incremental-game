@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 
 public partial class Game : GameSystem
@@ -26,13 +25,7 @@ public partial class Game : GameSystem
     [Export]
     public bool DebugMode { get; set; } = false;
 
-    [Export]
-    public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
-
-    private Timer? autoSaveTimer;
-    private bool isSaving;
-
-    public override async void _Ready()
+    public override void _Ready()
     {
         // get nodes
         GameLayer = GetNode<Node2D>("%GameLayer");
@@ -60,18 +53,10 @@ public partial class Game : GameSystem
         EndLayer.Hide();
         GameLayer.GetNode<Camera>("Camera").MakeCurrent();
 
-        // load the authenticated user's save from Firebase first, then fall back locally.
-        await LoadPlayerSaveAsync();
+        GameStore.LoadGame();
 
-        // start autosave
-        if (AutoSave)
-        {
-            autoSaveTimer = new Timer();
-            autoSaveTimer.OneShot = false;
-            AddChild(autoSaveTimer);
-            autoSaveTimer.Timeout += OnAutoSaveTimeout;
-            autoSaveTimer.Start(AutoSaveInterval);
-        }
+        AddChild(new Autosave());
+
         if (DebugMode)
         {
             GD.Print("Debug Mode: ON");
@@ -84,29 +69,6 @@ public partial class Game : GameSystem
             PlacementSystem.FreePlace = false;
             UpgradeTree.ShowAllUpgrades = false;
         }
-    }
-
-    private async Task LoadPlayerSaveAsync()
-    {
-        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
-        var firebaseSave = GetNode<FirebaseSave>("/root/FirebaseSave");
-
-        if (!string.IsNullOrWhiteSpace(firebaseAuth.RefreshToken))
-        {
-            var remoteSave = await firebaseSave.LoadAsync(firebaseAuth);
-            if (remoteSave != null)
-            {
-                GameStore.LoadFromSaveData(remoteSave);
-                return;
-            }
-        }
-
-        GameStore.LoadGame();
-    }
-
-    private async void OnAutoSaveTimeout()
-    {
-        await GameStore.SaveGameAsync(false);
     }
 
     private void onUpgradesButtonPressed()
@@ -137,7 +99,8 @@ public partial class Game : GameSystem
     {
         if (Input.IsActionJustPressed("save_game"))
         {
-            await GameStore.SaveGameAsync(true);
+            await GameStore.SaveGameAsync();
+            GD.Print("Saved Game!");
         }
         if (Input.IsActionJustPressed("test"))
         {

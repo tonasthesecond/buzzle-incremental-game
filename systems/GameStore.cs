@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class GameStore : Node
@@ -265,6 +266,35 @@ public partial class GameStore : Node
     {
         CaptureCurrentSave();
         WriteLocalSave();
+    }
+
+    private static bool isSaving;
+
+    public static async Task SaveGameAsync()
+    {
+        if (isSaving)
+            return;
+
+        isSaving = true;
+        try
+        {
+            CaptureCurrentSave();
+            WriteLocalSave();
+
+            var firebaseAuth = Instance.GetNode<FirebaseAuth>("/root/FirebaseAuth");
+            var firebaseSave = Instance.GetNode<FirebaseSave>("/root/FirebaseSave");
+
+            if (!string.IsNullOrWhiteSpace(firebaseAuth.RefreshToken))
+            {
+                var remoteSaved = await firebaseSave.SaveAsync(firebaseAuth, Save);
+                if (!remoteSaved)
+                    GD.PrintErr("[GameStore] Firebase save failed. Local fallback save was still written.");
+            }
+        }
+        finally
+        {
+            isSaving = false;
+        }
     }
 
     public static SaveData CaptureCurrentSave()

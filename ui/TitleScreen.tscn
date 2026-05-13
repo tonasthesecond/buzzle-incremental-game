@@ -35,6 +35,8 @@ region = Rect2(0, 64, 64, 32)
 atlas = ExtResource("4_xvltj")
 region = Rect2(0, 32, 64, 32)
 
+[sub_resource type="Theme" id="Theme_xvltj"]
+
 [node name="TitleScreen" type="Node" unique_id=1995645679]
 script = ExtResource("1_xvltj")
 
@@ -136,11 +138,49 @@ placeholder_text = "enter password"
 
 [node name="LoginButton" type="TextureButton" parent="." unique_id=1179486744]
 unique_name_in_owner = true
-offset_left = 224.0
-offset_top = 364.0
-offset_right = 416.0
-offset_bottom = 396.0
+offset_left = 142.0
+offset_top = 410.0
+offset_right = 342.0
+offset_bottom = 448.0
 texture_normal = SubResource("AtlasTexture_emmnt")
 texture_pressed = SubResource("AtlasTexture_kqn05")
 texture_hover = SubResource("AtlasTexture_p7j3k")
 stretch_mode = 5
+
+[node name="Label" type="Label" parent="LoginButton" unique_id=1481361013]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 1.0
+offset_right = 136.0
+offset_bottom = 52.0
+text = "Login
+"
+
+[node name="RegisterButton" type="TextureButton" parent="." unique_id=1137742442]
+unique_name_in_owner = true
+offset_left = 300.0
+offset_top = 409.0
+offset_right = 506.0
+offset_bottom = 447.0
+texture_normal = SubResource("AtlasTexture_emmnt")
+texture_pressed = SubResource("AtlasTexture_kqn05")
+texture_hover = SubResource("AtlasTexture_p7j3k")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RegisterButton" unique_id=324088276]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 73.0
+offset_top = -5.0
+offset_right = -68.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_xvltj")
+theme_override_font_sizes/font_size = 15
+text = "Register"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2

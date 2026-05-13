@@ -9,6 +9,7 @@ public partial class TitleScreen : Node
     private Control tile3 = null!;
     private Control bee = null!;
     private BaseButton loginButton = null!;
+    private BaseButton registerButton = null!;
     private TextEdit usernameField = null!;
     private TextEdit passwordField = null!;
     private float _time = 0f;
@@ -41,6 +42,7 @@ public partial class TitleScreen : Node
         tile3 = GetNode<Control>("%Tile3");
         bee = GetNode<Control>("%Bee");
         loginButton = GetNode<BaseButton>("%LoginButton");
+        registerButton = GetNode<BaseButton>("%RegisterButton");
         usernameField = GetNode<TextEdit>("%UsernameField");
         passwordField = GetNode<TextEdit>("%PasswordField");
 
@@ -52,6 +54,7 @@ public partial class TitleScreen : Node
         bee.Position = new Vector2(_beeX, _beeBaseY);
 
         loginButton.Pressed += OnLoginButtonPressed;
+        registerButton.Pressed += OnRegisterButtonPressed;
     }
 
     public override void _Process(double delta)
@@ -107,20 +110,29 @@ public partial class TitleScreen : Node
 
     private async void OnLoginButtonPressed()
     {
-        string email = usernameField.Text.Trim();
-        string password = passwordField.Text.Trim();
-
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
-        {
-            GD.PrintErr("[TitleScreen] Email and password are required.");
+        if (!TryGetCredentials(out var email, out var password))
             return;
-        }
 
-        loginButton.Disabled = true;
+        SetAuthButtonsDisabled(true);
         var loginSucceeded = await TryLoginAsync(email, password);
-        loginButton.Disabled = false;
+        SetAuthButtonsDisabled(false);
 
         if (!loginSucceeded)
+            return;
+
+        GetTree().ChangeSceneToFile("res://Game.tscn");
+    }
+
+    private async void OnRegisterButtonPressed()
+    {
+        if (!TryGetCredentials(out var email, out var password))
+            return;
+
+        SetAuthButtonsDisabled(true);
+        var registerSucceeded = await TryRegisterAsync(email, password);
+        SetAuthButtonsDisabled(false);
+
+        if (!registerSucceeded)
             return;
 
         GetTree().ChangeSceneToFile("res://Game.tscn");
@@ -135,5 +147,37 @@ public partial class TitleScreen : Node
             GD.PrintErr("[TitleScreen] Firebase login failed. Check credentials and Firebase config.");
 
         return loggedIn;
+    }
+
+    private async Task<bool> TryRegisterAsync(string email, string password)
+    {
+        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
+        var registered = await firebaseAuth.RegisterAsync(email, password);
+
+        if (!registered)
+            GD.PrintErr("[TitleScreen] Firebase register failed. Check credentials and Firebase config.");
+
+        return registered;
+    }
+
+    private const string EmailDomain = "@buzzle.local";
+
+    private bool TryGetCredentials(out string email, out string password)
+    {
+        var username = usernameField.Text.Trim();
+        password = passwordField.Text.Trim();
+        email = username + EmailDomain;
+
+        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+            return true;
+
+        GD.PrintErr("[TitleScreen] Username and password are required.");
+        return false;
+    }
+
+    private void SetAuthButtonsDisabled(bool disabled)
+    {
+        loginButton.Disabled = disabled;
+        registerButton.Disabled = disabled;
     }
 }
