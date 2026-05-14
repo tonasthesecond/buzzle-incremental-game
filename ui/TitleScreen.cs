@@ -114,13 +114,28 @@ public partial class TitleScreen : Node
             return;
 
         SetAuthButtonsDisabled(true);
-        var loginSucceeded = await TryLoginAsync(email, password);
-        SetAuthButtonsDisabled(false);
+        try
+        {
+            if (!await TryLoginAsync(email, password))
+                return;
 
-        if (!loginSucceeded)
-            return;
+            var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
+            var firebaseSave = GetNode<FirebaseSave>("/root/FirebaseSave");
+            var remoteSave = await firebaseSave.LoadAsync(firebaseAuth);
 
-        GetTree().ChangeSceneToFile("res://Game.tscn");
+            if (remoteSave == null)
+            {
+                GD.PrintErr("[TitleScreen] Could not load save from Firebase. Aborting scene change.");
+                return;
+            }
+
+            GameStore.WriteLocalSave(remoteSave);
+            GetTree().ChangeSceneToFile("res://Game.tscn");
+        }
+        finally
+        {
+            SetAuthButtonsDisabled(false);
+        }
     }
 
     private async void OnRegisterButtonPressed()
@@ -135,6 +150,7 @@ public partial class TitleScreen : Node
         if (!registerSucceeded)
             return;
 
+        GameStore.WriteLocalSave(new SaveData());
         GetTree().ChangeSceneToFile("res://Game.tscn");
     }
 

@@ -262,6 +262,12 @@ public partial class GameStore : Node
         ApplyLoadedSave(Save);
     }
 
+    public static void LoadDefaults()
+    {
+        Save = new SaveData();
+        ApplyLoadedSave(Save);
+    }
+
     public static void SaveGame()
     {
         CaptureCurrentSave();
@@ -305,10 +311,12 @@ public partial class GameStore : Node
         return Save;
     }
 
-    public static void WriteLocalSave()
+    public static void WriteLocalSave() => WriteLocalSave(Save);
+
+    public static void WriteLocalSave(SaveData save)
     {
         using var file = FileAccess.Open(SavePath, FileAccess.ModeFlags.Write);
-        file.StoreString(JsonSerializer.Serialize(Save, JsonOpts));
+        file.StoreString(JsonSerializer.Serialize(save, JsonOpts));
     }
 
     // --- Constants ---

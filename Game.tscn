@@ -54,12 +54,12 @@
 [ext_resource type="Texture2D" uid="uid://lv023lqec637" path="res://assets/bees.png" id="40_o6tbt"]
 [ext_resource type="Script" uid="uid://d4i5d4ki0xn8c" path="res://ui/HoverLabel.cs" id="45_iueff"]
 [ext_resource type="Texture2D" uid="uid://btxfkgcxnpy0b" path="res://assets/crosses.png" id="46_pnh27"]
+[ext_resource type="Script" uid="uid://xiipxmuieevl" path="res://Autosave.cs" id="50_xc54d"]
 [ext_resource type="PackedScene" uid="uid://bnxcd5eupioyr" path="res://ui/TitleLabel.tscn" id="52_ds8mp"]
 [ext_resource type="Texture2D" uid="uid://cl6bmmcjo3ody" path="res://assets/End_Screen-Background.png" id="52_ndmee"]
 [ext_resource type="Texture2D" uid="uid://cwd7kfibnb73x" path="res://assets/End_Screen-Flower.png" id="53_lua15"]
 [ext_resource type="PackedScene" uid="uid://dwbsjss10xoua" path="res://ui/BodyLabel.tscn" id="53_pbwgg"]
 [ext_resource type="Texture2D" uid="uid://b2v31dae4j6wj" path="res://assets/End_Screen-Title.png" id="54_qirsl"]
-[ext_resource type="Script" uid="uid://xiipxmuieevl" path="res://Autosave.cs" id="50_xc54d"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pbwgg"]
 atlas = ExtResource("10_v5dxo")
