@@ -106,6 +106,14 @@ modulate_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gvv74"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yw735"]
+texture = SubResource("AtlasTexture_biaja")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.8636574, 0.2529994, 0.19780889, 1)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbkdk"]
 atlas = ExtResource("22_qirsl")
 region = Rect2(0, 0, 32, 32)
@@ -498,7 +506,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TopRight" unique_id=106705382]
+[node name="VBoxContainer" type="HBoxContainer" parent="UILayer/TopRight" unique_id=1335223297]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
@@ -524,6 +532,27 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_pnh27")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_yw735")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_gvv74")
 text = "?"
+
+[node name="PanelContainer2" type="PanelContainer" parent="UILayer/TopRight/VBoxContainer" unique_id=1672403438]
+layout_mode = 2
+theme = ExtResource("22_0mevm")
+theme_override_styles/panel = SubResource("StyleBoxTexture_yw735")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UILayer/TopRight/VBoxContainer/PanelContainer2" unique_id=1226059708]
+visible = false
+layout_mode = 2
+text = "X"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="ExitButton" type="Button" parent="UILayer/TopRight/VBoxContainer/PanelContainer2" unique_id=1097790431]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pnh27")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yw735")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gvv74")
+text = "x"
 
 [node name="PlacementMenu" type="MarginContainer" parent="UILayer" unique_id=1434174203]
 unique_name_in_owner = true

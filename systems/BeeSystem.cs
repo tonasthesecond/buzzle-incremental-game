@@ -41,6 +41,15 @@ public partial class BeeSystem : GameSystem
         SignalBus.Instance.RainbowPlaced += OnRainbowPlaced;
     }
 
+    public override void _ExitTree()
+    {
+        if (!IsInstanceValid(SignalBus.Instance))
+            return;
+        SignalBus.Instance.GridLoaded -= SpawnFromSave;
+        SignalBus.Instance.GridObjectRemoved -= OnGridObjectRemoved;
+        SignalBus.Instance.RainbowPlaced -= OnRainbowPlaced;
+    }
+
     public override void _Process(double delta)
     {
         Grid grid = Services.Get<Grid>()!;

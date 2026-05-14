@@ -15,12 +15,24 @@ public partial class Yarrow : Flower
         HoneyGain = new(() => GameStore.YarrowHoneyGain.Value);
 
         // TEST: optimize by adding a condition
-        SignalBus.Instance.GridObjectPlaced += (_) => UpdateNeighborBonus();
-        SignalBus.Instance.GridObjectRemoved += (_) => UpdateNeighborBonus();
+        SignalBus.Instance.GridObjectPlaced += OnGridChanged;
+        SignalBus.Instance.GridObjectRemoved += OnGridChanged;
 
         // also update when the store value changes
         GameStore.YarrowPerSameNeighborHoneyGainBuff.Changed += UpdateNeighborBonus;
     }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(SignalBus.Instance))
+        {
+            SignalBus.Instance.GridObjectPlaced -= OnGridChanged;
+            SignalBus.Instance.GridObjectRemoved -= OnGridChanged;
+        }
+        GameStore.YarrowPerSameNeighborHoneyGainBuff.Changed -= UpdateNeighborBonus;
+    }
+
+    private void OnGridChanged(BaseGridObject _) => UpdateNeighborBonus();
 
     private void UpdateNeighborBonus()
     {

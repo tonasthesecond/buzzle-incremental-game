@@ -22,6 +22,14 @@ public partial class HoverPointer : Control
         SignalBus.Instance.Unhovered += Clear;
     }
 
+    public override void _ExitTree()
+    {
+        if (!IsInstanceValid(SignalBus.Instance))
+            return;
+        SignalBus.Instance.Hovered -= OnHovered;
+        SignalBus.Instance.Unhovered -= Clear;
+    }
+
     public override void _Process(double delta)
     {
         var mouse = GetGlobalMousePosition();

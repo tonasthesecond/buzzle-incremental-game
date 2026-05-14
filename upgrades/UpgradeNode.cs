@@ -29,6 +29,7 @@ public partial class UpgradeNode
 
     public bool IsShown { get; set; } = true; // default true for editor
     private TextureButton button = null!;
+    private readonly System.Collections.Generic.List<IUpgradeOption> subscribedDependencies = new();
 
     public override void _Ready()
     {
@@ -48,10 +49,24 @@ public partial class UpgradeNode
             if (!IsInstanceValid(node) || node.Upgrade == null)
                 continue;
             node.Upgrade.Applied += onDependencyApplied;
+            subscribedDependencies.Add(node.Upgrade);
         }
         button.Pressed += onButtonPressed;
         HideNode();
         onDependencyApplied(); // initial check for visibility
+    }
+
+    public override void _ExitTree()
+    {
+        if (Engine.IsEditorHint())
+            return;
+        foreach (var upgrade in subscribedDependencies)
+        {
+            if (upgrade is GodotObject obj && !IsInstanceValid(obj))
+                continue;
+            upgrade.Applied -= onDependencyApplied;
+        }
+        subscribedDependencies.Clear();
     }
 
     private void onDependencyApplied()

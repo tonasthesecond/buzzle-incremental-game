@@ -21,12 +21,21 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
         Radius = new(() => GameStore.BeekeeperEffectZoneRadius.Value);
         FadeoutTime = new(() => GameStore.BeekeeperEffectZoneFadeoutTime.Value);
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
-        GameStore.BeekeeperEffectZoneRadius.Changed += () =>
-            (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+        GameStore.BeekeeperEffectZoneRadius.Changed += OnRadiusChanged;
         fadeTimer.Timeout += () =>
         {
             heatVapor.Emitting = false;
         };
+    }
+
+    public override void _ExitTree()
+    {
+        GameStore.BeekeeperEffectZoneRadius.Changed -= OnRadiusChanged;
+    }
+
+    private void OnRadiusChanged()
+    {
+        (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
     }
 
     public override void _Process(double delta)

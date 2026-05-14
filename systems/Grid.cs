@@ -13,9 +13,15 @@ public partial class Grid : Node2D
     {
         Services.Register(this);
 
-        SignalBus.Instance.GameLoaded += () => OnGameLoaded();
+        SignalBus.Instance.GameLoaded += OnGameLoaded;
 
         Services.Get<Tilemap>().Update(tiles.Values);
+    }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.GameLoaded -= OnGameLoaded;
     }
 
     private void OnGameLoaded()

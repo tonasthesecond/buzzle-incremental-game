@@ -9,4 +9,10 @@ public partial class HoneyDisplay : NumberDisplay
         GameStore.Instance.HoneyChanged += SetNumber;
         SetNumber(GameStore.Honey);
     }
+
+    public override void _ExitTree()
+    {
+        if (GameStore.Instance != null)
+            GameStore.Instance.HoneyChanged -= SetNumber;
+    }
 }

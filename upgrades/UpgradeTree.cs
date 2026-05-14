@@ -9,6 +9,11 @@ public partial class UpgradeTree : Control
 
     private UpgradeNode[] nodes => GetChildren().OfType<UpgradeNode>().ToArray();
 
+    private readonly System.Collections.Generic.List<IUpgradeOption> subscribedUpgrades = new();
+    private IUpgradeOption.AppliedEventHandler? onUpgradeAppliedHandler;
+    private SignalBus.GameLoadedEventHandler? onGameLoadedHandler;
+    private SignalBus.GridLoadedEventHandler? onGridLoadedHandler;
+
     public override void _EnterTree()
     {
         if (Engine.IsEditorHint())
@@ -28,15 +33,18 @@ public partial class UpgradeTree : Control
             }
             return;
         }
+        onUpgradeAppliedHandler = () => RedrawLines();
         foreach (UpgradeNode node in nodes)
         {
             if (node.Upgrade == null)
                 continue;
-            node.Upgrade.Applied += () => RedrawLines();
+            node.Upgrade.Applied += onUpgradeAppliedHandler;
+            subscribedUpgrades.Add(node.Upgrade);
         }
-        SignalBus.Instance.GameLoaded += () => ApplyUpgrades();
+        onGameLoadedHandler = () => ApplyUpgrades();
+        SignalBus.Instance.GameLoaded += onGameLoadedHandler;
 
-        SignalBus.Instance.GridLoaded += () =>
+        onGridLoadedHandler = () =>
         {
             if (ShowAllUpgrades)
             {
@@ -44,6 +52,27 @@ public partial class UpgradeTree : Control
                 RedrawLines();
             }
         };
+        SignalBus.Instance.GridLoaded += onGridLoadedHandler;
+    }
+
+    public override void _ExitTree()
+    {
+        if (Engine.IsEditorHint())
+            return;
+        if (onUpgradeAppliedHandler != null)
+        {
+            foreach (var upgrade in subscribedUpgrades)
+            {
+                if (upgrade is GodotObject obj && !IsInstanceValid(obj))
+                    continue;
+                upgrade.Applied -= onUpgradeAppliedHandler;
+            }
+            subscribedUpgrades.Clear();
+        }
+        if (onGameLoadedHandler != null && IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.GameLoaded -= onGameLoadedHandler;
+        if (onGridLoadedHandler != null && IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.GridLoaded -= onGridLoadedHandler;
     }
 
     private void RedrawLines()

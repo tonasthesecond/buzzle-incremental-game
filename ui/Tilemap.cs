@@ -33,29 +33,37 @@ public partial class Tilemap : TileMapLayer
 
     public override void _Ready()
     {
-        var placement = Services.Get<PlacementSystem>();
-        placement.ModeChanged += (mode) =>
+        Services.Get<PlacementSystem>().ModeChanged += OnModeChanged;
+        SignalBus.Instance.ResourceSelected += OnResourceSelected;
+    }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.ResourceSelected -= OnResourceSelected;
+    }
+
+    private void OnModeChanged(PlacementSystem.Mode mode)
+    {
+        previewMode = false;
+        previewMode = mode == PlacementSystem.Mode.Tile || mode == PlacementSystem.Mode.RemoveTile;
+        removeMode = mode == PlacementSystem.Mode.RemoveTile;
+        if (!previewMode)
         {
-            previewMode = false;
-            previewMode =
-                mode == PlacementSystem.Mode.Tile || mode == PlacementSystem.Mode.RemoveTile;
-            removeMode = mode == PlacementSystem.Mode.RemoveTile;
-            if (!previewMode)
-            {
-                ghostPos = null;
-                Redraw();
-            }
-        };
-        SignalBus.Instance.ResourceSelected += (Resource resource) =>
+            ghostPos = null;
+            Redraw();
+        }
+    }
+
+    private void OnResourceSelected(Resource resource)
+    {
+        if (resource is PackedScene scene)
         {
-            if (resource is PackedScene scene)
-            {
-                var instance = scene.Instantiate();
-                if (instance is BaseTile tile)
-                    ghostSourceId = TileSources.GetValueOrDefault(tile.GetType(), 0);
-                instance.QueueFree();
-            }
-        };
+            var instance = scene.Instantiate();
+            if (instance is BaseTile tile)
+                ghostSourceId = TileSources.GetValueOrDefault(tile.GetType(), 0);
+            instance.QueueFree();
+        }
     }
 
     public override void _Process(double delta)

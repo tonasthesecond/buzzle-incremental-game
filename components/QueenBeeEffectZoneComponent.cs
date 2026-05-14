@@ -30,9 +30,18 @@ public partial class QueenBeeEffectZoneComponent : EffectZoneComponent
         Radius = new(() => GameStore.QueenBeeEffectZoneRadius.Value);
         (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
         Radius.Changed += () => UpdateHeatVapor();
-        GameStore.QueenBeeEffectZoneRadius.Changed += () =>
-            (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
+        GameStore.QueenBeeEffectZoneRadius.Changed += OnRadiusChanged;
         Activate();
+    }
+
+    public override void _ExitTree()
+    {
+        GameStore.QueenBeeEffectZoneRadius.Changed -= OnRadiusChanged;
+    }
+
+    private void OnRadiusChanged()
+    {
+        (collisionShape.Shape as CircleShape2D).Radius = Radius.Value;
     }
 
     public override void _Process(double delta)

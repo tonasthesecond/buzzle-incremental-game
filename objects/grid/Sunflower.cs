@@ -20,6 +20,11 @@ public partial class Sunflower : Flower
         };
     }
 
+    public override void _ExitTree()
+    {
+        GameStore.SunflowerHoneyGainPerFatBeeBonus.Changed -= UpdateGigantism;
+    }
+
     private void UpdateGigantism()
     {
         HoneyGain.Remove(GigantismKey);

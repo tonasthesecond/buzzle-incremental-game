@@ -59,58 +59,73 @@ public partial class PlacementSystem : GameSystem
             .GetNode<PlacementExplosionParticles>("%PlacementParticles");
         removalParticles = GetParent().GetNode<PlacementExplosionParticles>("%RemovalParticles");
 
-        SignalBus.Instance.ResourceSelected += (Resource resource) =>
+        SignalBus.Instance.ResourceSelected += OnResourceSelected;
+        SignalBus.Instance.ResourceUnselected += OnResourceUnselected;
+        SignalBus.Instance.RainbowPlaced += OnRainbowPlaced;
+    }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(SignalBus.Instance))
         {
-            if (resource is RemoveTile)
-                CurMode = Mode.RemoveTile;
-            else if (resource is RemoveObject)
-                CurMode = Mode.RemoveObject;
-            else if (resource is RemoveBee rb)
-            {
-                ClearHoverText();
-                removeBeeResource = rb;
-                CurMode = Mode.RemoveBee;
-                return;
-            }
-            if (resource is not PackedScene scene)
-                return;
+            SignalBus.Instance.ResourceSelected -= OnResourceSelected;
+            SignalBus.Instance.ResourceUnselected -= OnResourceUnselected;
+            SignalBus.Instance.RainbowPlaced -= OnRainbowPlaced;
+        }
+        ClearHoverText();
+    }
 
-            Node instance = scene.Instantiate();
-            if (instance is BaseTile)
-                CurMode = Mode.Tile;
-            else if (instance is BaseGridObject)
-                CurMode = Mode.Object;
-            else if (instance is Bee)
-                CurMode = Mode.Bee;
-            else
-            {
-                instance.QueueFree();
-                ClearHoverText();
-                CurMode = Mode.None;
-                return;
-            }
+    private void OnResourceSelected(Resource resource)
+    {
+        if (resource is RemoveTile)
+            CurMode = Mode.RemoveTile;
+        else if (resource is RemoveObject)
+            CurMode = Mode.RemoveObject;
+        else if (resource is RemoveBee rb)
+        {
+            ClearHoverText();
+            removeBeeResource = rb;
+            CurMode = Mode.RemoveBee;
+            return;
+        }
+        if (resource is not PackedScene scene)
+            return;
 
-            selectedType = instance.GetType();
-            UpdateHoverText(selectedType);
+        Node instance = scene.Instantiate();
+        if (instance is BaseTile)
+            CurMode = Mode.Tile;
+        else if (instance is BaseGridObject)
+            CurMode = Mode.Object;
+        else if (instance is Bee)
+            CurMode = Mode.Bee;
+        else
+        {
             instance.QueueFree();
-            selectedScene = scene;
-        };
-
-        SignalBus.Instance.ResourceUnselected += () =>
-        {
-            selectedScene = null;
-            selectedType = null;
             ClearHoverText();
             CurMode = Mode.None;
-        };
+            return;
+        }
 
-        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) =>
-        {
-            CurMode = Mode.None;
-            selectedScene = null;
-            selectedType = null;
-            ClearHoverText();
-        };
+        selectedType = instance.GetType();
+        UpdateHoverText(selectedType);
+        instance.QueueFree();
+        selectedScene = scene;
+    }
+
+    private void OnResourceUnselected()
+    {
+        selectedScene = null;
+        selectedType = null;
+        ClearHoverText();
+        CurMode = Mode.None;
+    }
+
+    private void OnRainbowPlaced(Rainbow rainbow)
+    {
+        CurMode = Mode.None;
+        selectedScene = null;
+        selectedType = null;
+        ClearHoverText();
     }
 
     /// Deduct cost if affordable. Returns false + fail on rejection.

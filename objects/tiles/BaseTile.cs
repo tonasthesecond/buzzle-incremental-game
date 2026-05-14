@@ -25,12 +25,22 @@ public partial class BaseTile : Node2D, IHasHoverTitle, IHasHoverDescription, IH
     public override void _Ready()
     {
         SignalBus.Instance.GridObjectPlaced += ModifyObject;
-        SignalBus.Instance.GameLoaded += () =>
-        {
-            BaseGridObject? obj = Services.Get<Grid>().GetObjectAt(GridPosition);
-            if (obj != null)
-                ModifyObject(obj);
-        };
+        SignalBus.Instance.GameLoaded += OnGameLoaded;
+    }
+
+    public override void _ExitTree()
+    {
+        if (!IsInstanceValid(SignalBus.Instance))
+            return;
+        SignalBus.Instance.GridObjectPlaced -= ModifyObject;
+        SignalBus.Instance.GameLoaded -= OnGameLoaded;
+    }
+
+    private void OnGameLoaded()
+    {
+        BaseGridObject? obj = Services.Get<Grid>().GetObjectAt(GridPosition);
+        if (obj != null)
+            ModifyObject(obj);
     }
 
     public virtual string GetHoverTitle() => "<Tile>";

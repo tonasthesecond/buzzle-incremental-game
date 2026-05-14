@@ -36,8 +36,16 @@ public partial class PlacementMenu : Control
             })
             .CallDeferred();
 
-        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) => Collapse();
+        SignalBus.Instance.RainbowPlaced += OnRainbowPlaced;
     }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.RainbowPlaced -= OnRainbowPlaced;
+    }
+
+    private void OnRainbowPlaced(Rainbow rainbow) => Collapse();
 
     public void Toggle()
     {

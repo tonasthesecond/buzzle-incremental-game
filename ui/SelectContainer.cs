@@ -46,15 +46,26 @@ public partial class SelectContainer : PanelContainer
             if (selectedResource.IsUnlocked())
                 Add(selectedResource);
 
-        GameStore.Instance.OnUnlocked += (string key) =>
-        {
-            foreach (SelectedResource res in SelectedResources)
-                if (res.UnlockKey == key)
-                    Add(res);
-        };
-
-        SignalBus.Instance.RainbowPlaced += (Rainbow rainbow) => Reset();
+        GameStore.Instance.OnUnlocked += OnUnlocked;
+        SignalBus.Instance.RainbowPlaced += OnRainbowPlaced;
     }
+
+    public override void _ExitTree()
+    {
+        if (IsInstanceValid(GameStore.Instance))
+            GameStore.Instance.OnUnlocked -= OnUnlocked;
+        if (IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.RainbowPlaced -= OnRainbowPlaced;
+    }
+
+    private void OnUnlocked(string key)
+    {
+        foreach (SelectedResource res in SelectedResources)
+            if (res.UnlockKey == key)
+                Add(res);
+    }
+
+    private void OnRainbowPlaced(Rainbow rainbow) => Reset();
 
     /// Input handling.
     public override void _UnhandledInput(InputEvent e)

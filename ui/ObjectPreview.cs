@@ -9,24 +9,35 @@ public partial class ObjectPreview : TextureRect
         Hide();
         MouseFilter = MouseFilterEnum.Ignore;
 
-        SignalBus.Instance.SelectedResourceSelected += (SelectedResource selected) =>
-        {
-            if (mode != PlacementSystem.Mode.Object && mode != PlacementSystem.Mode.Bee)
-                return;
-            Texture = selected.Icon;
-            Modulate = new Color(1, 1, 1, 0.6f);
-            Show();
-        };
-
+        SignalBus.Instance.SelectedResourceSelected += OnSelectedResourceSelected;
         SignalBus.Instance.ResourceUnselected += Hide;
-        Services.Get<PlacementSystem>().ModeChanged += (m) =>
-        {
-            mode = (PlacementSystem.Mode)m;
-            if (mode != PlacementSystem.Mode.Object && mode != PlacementSystem.Mode.Bee)
-                Hide();
-            if (mode == PlacementSystem.Mode.Bee)
-                Scale = Vector2.One;
-        };
+        Services.Get<PlacementSystem>().ModeChanged += OnModeChanged;
+    }
+
+    public override void _ExitTree()
+    {
+        if (!IsInstanceValid(SignalBus.Instance))
+            return;
+        SignalBus.Instance.SelectedResourceSelected -= OnSelectedResourceSelected;
+        SignalBus.Instance.ResourceUnselected -= Hide;
+    }
+
+    private void OnSelectedResourceSelected(SelectedResource selected)
+    {
+        if (mode != PlacementSystem.Mode.Object && mode != PlacementSystem.Mode.Bee)
+            return;
+        Texture = selected.Icon;
+        Modulate = new Color(1, 1, 1, 0.6f);
+        Show();
+    }
+
+    private void OnModeChanged(PlacementSystem.Mode m)
+    {
+        mode = m;
+        if (mode != PlacementSystem.Mode.Object && mode != PlacementSystem.Mode.Bee)
+            Hide();
+        if (mode == PlacementSystem.Mode.Bee)
+            Scale = Vector2.One;
     }
 
     public override void _Process(double delta)

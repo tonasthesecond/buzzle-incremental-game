@@ -22,17 +22,16 @@ public partial class Game : GameSystem
     public Control TutorialLayer { get; private set; } = null!;
     public BaseButton TutorialCloseButton { get; private set; } = null!;
 
+    public BaseButton ExitButton { get; private set; } = null!;
+
     [Export]
     public bool DebugMode { get; set; } = false;
 
-<<<<<<< HEAD
-=======
     [Export]
     public int AutoSaveInterval { get; set; } = 2 * 60;
 
     private Timer? autoSaveTimer;
 
->>>>>>> main
     public override void _Ready()
     {
         // get nodes
@@ -53,13 +52,14 @@ public partial class Game : GameSystem
         TutorialButton = GetNode<BaseButton>("%TutorialButton");
         TutorialCloseButton = GetNode<BaseButton>("%TutorialCloseButton");
         TutorialLayer = GetNode<Control>("%Tutorial");
-
+        ExitButton = GetNode<BaseButton>("%ExitButton");
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
         SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
         BackButton.Pressed += onBackButtonPressed;
         TutorialButton.Pressed += onTutorialButtonPressed;
         TutorialCloseButton.Pressed += TutorialLayer.Hide;
+        ExitButton.Pressed += onExitButtonPressed;
 
         // setup
         GameLayer.Show();
@@ -84,22 +84,10 @@ public partial class Game : GameSystem
         }
     }
 
-    private async Task LoadPlayerSaveAsync()
+    public override void _ExitTree()
     {
-        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
-        var firebaseSave = GetNode<FirebaseSave>("/root/FirebaseSave");
-
-        if (!string.IsNullOrWhiteSpace(firebaseAuth.RefreshToken))
-        {
-            var remoteSave = await firebaseSave.LoadAsync(firebaseAuth);
-            if (remoteSave != null)
-            {
-                GameStore.LoadFromSaveData(remoteSave);
-                return;
-            }
-        }
-
-        GameStore.LoadGame();
+        if (IsInstanceValid(SignalBus.Instance))
+            SignalBus.Instance.RainbowPlaced -= onRainbowPlaced;
     }
 
     private void onTutorialButtonPressed()
@@ -139,16 +127,20 @@ public partial class Game : GameSystem
         }
     }
 
+    private async void onExitButtonPressed()
+    {
+        Services.Get<AudioSystem>().PlaySound("click");
+        ExitButton.Disabled = true;
+        await GameStore.SaveGameAsync();
+        GetTree().ChangeSceneToFile("res://ui/TitleScreen.tscn");
+    }
+
     public override async void _Input(InputEvent @event)
     {
         if (Input.IsActionJustPressed("save_game"))
         {
-<<<<<<< HEAD
             await GameStore.SaveGameAsync();
             GD.Print("Saved Game!");
-=======
-            GameStore.SaveGame();
->>>>>>> main
         }
         if (Input.IsActionJustPressed("test"))
         {
