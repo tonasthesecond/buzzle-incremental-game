@@ -16,7 +16,7 @@ public partial class HiveCapacityBeePerBeeCasteBonusUO : IUpgradeOption
         if (currentBoost != null)
             newHiveCapacity -= (int)currentBoost;
 
-        return $"{Style.CK("Hives", "noun_hive")} gain +{IncreaseBy} capacity per unlocked {Style.CK("bee", "noun_bee")} caste.\n"
+        return $"{Style.CK("Hives", "noun_hive")} gain +{IncreaseBy} capacity per unlocked {Style.CK("bee", "noun_bee")} caste. Applied on future unlocks as well.\n"
             + $"Total capacity {Style.NC(currentHiveCapacity, newHiveCapacity, !IsMaxLevel())} ({currentBeeCasteCount} castes unlocked)";
     }
 

@@ -13,10 +13,26 @@ public partial class Rose : Flower
 
     public Rose()
     {
-        SignalBus.Instance.GridObjectPlaced += (_) => UpdateRoseBonuses();
-        SignalBus.Instance.GridObjectRemoved += (_) => UpdateRoseBonuses();
+        SignalBus.Instance.GridObjectPlaced += OnGridChanged;
+        SignalBus.Instance.GridObjectRemoved += OnGridChanged;
         GameStore.RosePerTileFromHiveHoneyGainBonus.Changed += UpdateRoseBonuses;
         GameStore.RosePerEmptyNeighborHoneyGainBuff.Changed += UpdateRoseBonuses;
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+        UpdateRoseBonuses();
+    }
+
+    private void OnGridChanged(BaseGridObject _) => UpdateRoseBonuses();
+
+    public override void _ExitTree()
+    {
+        SignalBus.Instance.GridObjectPlaced -= OnGridChanged;
+        SignalBus.Instance.GridObjectRemoved -= OnGridChanged;
+        GameStore.RosePerTileFromHiveHoneyGainBonus.Changed -= UpdateRoseBonuses;
+        GameStore.RosePerEmptyNeighborHoneyGainBuff.Changed -= UpdateRoseBonuses;
     }
 
     private void UpdateRoseBonuses()
@@ -41,14 +57,14 @@ public partial class Rose : Flower
         if (Placed)
         {
             desc +=
-                $"{Style.CK("Dist. From Hive Bonus")}: +{Style.CK(GameStore.RosePerTileFromHiveHoneyGainBonus.Value.ToString("F0"))} ({Style.CK(TilesFromHive().ToString())} honey {Style.CK("tiles", "noun_tile")})\n";
+                $"\n{Style.CK("Dist. From Hive Bonus")}: +{Style.CK(GameStore.RosePerTileFromHiveHoneyGainBonus.Value.ToString("F0"))} ({Style.CK(TilesFromHive().ToString())} {Style.CK("tiles", "noun_tile")})\n";
             desc +=
                 $"{Style.CK("Empty Neighbors Buff")}: +{Style.CKPercent(GameStore.RosePerEmptyNeighborHoneyGainBuff.Value)} honey ({Style.CK(GetEmptyNeighbors().ToString())} empty neighbors)\n";
         }
         else
         {
             desc +=
-                $"{Style.CK("Isolation Bonus")}: +{Style.CK(GameStore.RosePerTileFromHiveHoneyGainBonus.Value.ToString("F0"))} honey per tile from hive\n";
+                $"\n{Style.CK("Isolation Bonus")}: +{Style.CK(GameStore.RosePerTileFromHiveHoneyGainBonus.Value.ToString("F0"))} honey per tile from hive\n";
             desc +=
                 $"{Style.CK("Antisocial Buff")}: +{Style.CKPercent(GameStore.RosePerEmptyNeighborHoneyGainBuff.Value)} honey per empty neighbor";
         }

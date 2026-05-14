@@ -88,6 +88,23 @@ region = Rect2(0, 0, 64, 48)
 atlas = ExtResource("19_lua15")
 region = Rect2(0, 48, 64, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_biaja"]
+atlas = ExtResource("17_eu6ph")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pnh27"]
+texture = SubResource("AtlasTexture_biaja")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.5019608, 0.5019608, 0.5019608, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pnh27"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yw735"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gvv74"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qbkdk"]
 atlas = ExtResource("22_qirsl")
 region = Rect2(0, 0, 32, 32)
@@ -100,11 +117,11 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("22_qirsl")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_biaja"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib0bs"]
 atlas = ExtResource("17_eu6ph")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_edr7y"]
-texture = SubResource("AtlasTexture_biaja")
+texture = SubResource("AtlasTexture_ib0bs")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
@@ -337,6 +354,22 @@ region = Rect2(0, 64, 64, 32)
 atlas = ExtResource("40_fj2yu")
 region = Rect2(0, 32, 64, 32)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lk38o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h42ht"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qldve"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_pnh27"]
 atlas = ExtResource("54_qirsl")
 region = Rect2(0, 0, 224, 96)
@@ -355,6 +388,7 @@ region = Rect2(0, 32, 64, 32)
 
 [node name="Game" type="Node" unique_id=1808904952]
 script = ExtResource("1_yx171")
+DebugMode = true
 
 [node name="HoneyTracker" type="Node" parent="." unique_id=1552688911]
 script = ExtResource("2_n7324")
@@ -449,6 +483,47 @@ size_flags_horizontal = 0
 texture_normal = SubResource("AtlasTexture_f2b8v")
 texture_pressed = SubResource("AtlasTexture_bnith")
 
+[node name="TopRight" type="MarginContainer" parent="UILayer" unique_id=1652242149]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/TopRight" unique_id=106705382]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/TopRight/VBoxContainer" unique_id=264016045]
+layout_mode = 2
+theme = ExtResource("22_0mevm")
+theme_override_styles/panel = SubResource("StyleBoxTexture_pnh27")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UILayer/TopRight/VBoxContainer/PanelContainer" unique_id=771740366]
+visible = false
+layout_mode = 2
+text = " ? "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="TutorialButton" type="Button" parent="UILayer/TopRight/VBoxContainer/PanelContainer" unique_id=261841088]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_pnh27")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yw735")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_gvv74")
+text = "?"
+
 [node name="PlacementMenu" type="MarginContainer" parent="UILayer" unique_id=1434174203]
 unique_name_in_owner = true
 anchors_preset = 12
@@ -508,18 +583,6 @@ SelectedResources = Array[Object]([SubResource("Resource_w7ht3"), SubResource("R
 metadata/_tab_index = 2
 metadata/_tab_name = "Bees"
 
-[node name="MarginContainer" type="MarginContainer" parent="UILayer" unique_id=172975608]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
-grow_horizontal = 0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
 [node name="CollapseButton" type="TextureButton" parent="UILayer" unique_id=1596705947]
 offset_left = 563.0
 offset_top = 376.0
@@ -551,9 +614,116 @@ horizontal_alignment = 1
 script = ExtResource("45_iueff")
 offset = Vector2(0, -32)
 
+[node name="Tutorial" type="PanelContainer" parent="UILayer" unique_id=440296017]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("22_0mevm")
+theme_override_styles/panel = SubResource("StyleBoxTexture_pnh27")
+
+[node name="TabContainer" type="TabContainer" parent="UILayer/Tutorial" unique_id=1097664196]
+custom_minimum_size = Vector2(300, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lk38o")
+theme_override_styles/tab_focus = SubResource("StyleBoxEmpty_h42ht")
+current_tab = 1
+tab_0/title = "Game"
+tab_1/title = "Controls"
+
+[node name="GameTutorialContainer" type="MarginContainer" parent="UILayer/Tutorial/TabContainer" unique_id=1707190185]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "Game"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/Tutorial/TabContainer/GameTutorialContainer" unique_id=861045491]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UILayer/Tutorial/TabContainer/GameTutorialContainer/VBoxContainer" unique_id=1238627392]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Step 1: Place some bees in hives.
+
+Step 2: Place some flowers.
+
+Step 3: Profit, upgrade and expand.
+
+Step 4: Win!"
+fit_content = true
+vertical_alignment = 1
+
+[node name="ControlsTutorialContainer" type="MarginContainer" parent="UILayer/Tutorial/TabContainer" unique_id=1092768998]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_tab_index = 1
+metadata/_tab_name = "Controls"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/Tutorial/TabContainer/ControlsTutorialContainer" unique_id=1108298966]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UILayer/Tutorial/TabContainer/ControlsTutorialContainer/HBoxContainer" unique_id=318915729]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Left Click
+
+Right Click
+
+Hold Left Click
+
+Drag Right Click
+
+Scroll
+
+E
+
+Ctrl + S"
+vertical_alignment = 1
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="UILayer/Tutorial/TabContainer/ControlsTutorialContainer/HBoxContainer" unique_id=205799135]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Interact
+
+Clear Mouse Ghost
+
+Spread Warthm to Bees
+
+Pan Map Around
+
+Zoom
+
+Reset Camera
+
+Manual Save"
+vertical_alignment = 1
+
+[node name="TutorialCloseButton" type="Button" parent="UILayer/Tutorial" unique_id=1314269275]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_qldve")
+text = "x"
+
 [node name="EndLayer" type="CanvasLayer" parent="." unique_id=1083758792]
 unique_name_in_owner = true
 layer = 3
+visible = false
 
 [node name="WhiteScreen" type="ColorRect" parent="EndLayer" unique_id=1549357252]
 unique_name_in_owner = true
@@ -567,7 +737,6 @@ grow_vertical = 2
 
 [node name="EndingContentContainer" type="CenterContainer" parent="EndLayer" unique_id=1887246064]
 unique_name_in_owner = true
-visible = false
 modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -577,14 +746,12 @@ grow_vertical = 2
 theme = ExtResource("22_0mevm")
 
 [node name="Background" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=54510336]
-visible = false
 custom_minimum_size = Vector2(700, 480)
 layout_mode = 2
 texture = ExtResource("52_ndmee")
 stretch_mode = 5
 
 [node name="Background2" type="TextureRect" parent="EndLayer/EndingContentContainer" unique_id=85465845]
-visible = false
 custom_minimum_size = Vector2(700, 480)
 layout_mode = 2
 texture = ExtResource("53_lua15")

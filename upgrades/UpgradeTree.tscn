@@ -146,7 +146,8 @@ region = Rect2(64, 64, 32, 32)
 
 [sub_resource type="Resource" id="Resource_jvrcb"]
 script = ExtResource("11_fnqkb")
-Base = 300.0
+Base = 400.0
+Exponent = 2.5
 metadata/_custom_type_script = "uid://bkk0od77fveep"
 
 [sub_resource type="Resource" id="Resource_i2cq8"]
@@ -164,11 +165,12 @@ region = Rect2(64, 384, 32, 32)
 [sub_resource type="Resource" id="Resource_4kdt0"]
 script = ExtResource("27_tcyta")
 Base = 300.0
-Rate = 2.0
+Rate = 2.5
 metadata/_custom_type_script = "uid://bmum0chjme3h4"
 
 [sub_resource type="Resource" id="Resource_qanwl"]
 script = ExtResource("15_pmee0")
+IncreaseBy = 0.025
 Name = "Antisocial"
 MaxLevel = 3
 CostScaler = SubResource("Resource_4kdt0")
@@ -221,7 +223,7 @@ metadata/_custom_type_script = "uid://bbl6u512llin"
 script = ExtResource("13_85qk5")
 IncreaseBy = 0.05
 Name = "Even Luckier"
-MaxLevel = 2
+MaxLevel = 3
 CostScaler = SubResource("Resource_upkeo")
 FlavorText = "You feel even luckier!"
 
@@ -275,7 +277,7 @@ metadata/_custom_type_script = "uid://bbl6u512llin"
 script = ExtResource("15_jvrcb")
 IncreaseBy = 5.0
 Name = "Pay Day"
-MaxLevel = 2
+MaxLevel = 3
 CostScaler = SubResource("Resource_2napb")
 FlavorText = "[noun_clover](Clovers) find even more honey on jackpot."
 metadata/_custom_type_script = "uid://cg6t6u15dxyx0"
@@ -292,7 +294,7 @@ metadata/_custom_type_script = "uid://bbl6u512llin"
 [sub_resource type="Resource" id="Resource_bhyaa"]
 script = ExtResource("16_jvrcb")
 SetChanceTo = 0.02
-SetHoneyGainTo = 100.0
+SetHoneyGainTo = 777.0
 Name = "Final Gambit"
 MaxLevel = 1
 CostScaler = SubResource("Resource_vfo37")
@@ -331,7 +333,7 @@ IncreaseBy = 5.0
 Name = "Spread Warmth"
 MaxLevel = 3
 CostScaler = SubResource("Resource_pmee0")
-FlavorText = "[noun_beekeeper](You) spread warmth and comfort to your [noun_bee](bees)."
+FlavorText = "Hold left click to spread warmth and comfort to your [noun_bee](bees), making them work faster."
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8pqeo"]
 atlas = ExtResource("5_mg5gc")
@@ -700,7 +702,7 @@ metadata/_custom_type_script = "uid://bkk0od77fveep"
 [sub_resource type="Resource" id="Resource_780k2"]
 script = ExtResource("33_1ww1q")
 Name = "Zoom Zoom"
-MaxLevel = 10
+MaxLevel = 15
 CostScaler = SubResource("Resource_iy5no")
 FlavorText = "[noun_bee](Bees) pick up the pace."
 
@@ -717,7 +719,7 @@ metadata/_custom_type_script = "uid://bkk0od77fveep"
 [sub_resource type="Resource" id="Resource_nt58m"]
 script = ExtResource("44_f3y2j")
 Name = "Honey Hungry"
-MaxLevel = 10
+MaxLevel = 15
 CostScaler = SubResource("Resource_nprm6")
 FlavorText = "[noun_bee](Bees) hoard as much honey as they can."
 
@@ -767,7 +769,6 @@ metadata/_custom_type_script = "uid://bmum0chjme3h4"
 [sub_resource type="Resource" id="Resource_utg4q"]
 script = ExtResource("43_08nwj")
 Name = "Giantism"
-MaxLevel = 5
 CostScaler = SubResource("Resource_p45vh")
 FlavorText = "[noun_sunflower](Sunflowers) and [noun_fat](Fat bees) form the \"Gigantic club\" where they can be big together."
 
@@ -975,7 +976,7 @@ region = Rect2(64, 416, 32, 32)
 
 [sub_resource type="Resource" id="Resource_fk1kx"]
 script = ExtResource("6_c1vnt")
-Value = 100000.0
+Value = 30000.0
 metadata/_custom_type_script = "uid://bbl6u512llin"
 
 [sub_resource type="Resource" id="Resource_eag0h"]
@@ -984,7 +985,7 @@ UnlockKey = "Rainbow"
 Name = "Rainbow"
 MaxLevel = 1
 CostScaler = SubResource("Resource_fk1kx")
-FlavorText = "Win the game. Doesn't do anything yet."
+FlavorText = "A [noun_flower](flower) that upon being placed, wins the game."
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f3y2j"]
 atlas = ExtResource("12_vfo37")
