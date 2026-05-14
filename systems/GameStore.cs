@@ -68,10 +68,10 @@ public partial class GameStore : Node
     public static Stat YarrowPerSameNeighborHoneyGainBuff { get; } = new(0.05f);
 
     public static Stat RoseHoneyCost { get; } = new(5f);
-    public static Stat RoseHoneyGain { get; } = new(5f);
+    public static Stat RoseHoneyGain { get; } = new(1f);
     public static Stat RosePollinationTime { get; } = new(15f);
     public static Stat RosePerTileFromHiveHoneyGainBonus { get; } = new(1f);
-    public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.1f);
+    public static Stat RosePerEmptyNeighborHoneyGainBuff { get; } = new(0.05f);
 
     public static Stat BlackholeHoneyCost { get; } = new(20f);
     public static Stat BlackholeHoneyGain { get; } = new(20f);
@@ -89,7 +89,7 @@ public partial class GameStore : Node
     public static Stat LoamYarrowHoneyGainBuff { get; } = new(0f);
 
     public const float RainbowRadiusMin = 32f;
-    public const float RainbowRadiusMax = 128f;
+    public const float RainbowRadiusMax = 32f * 10;
     public const float RainbowSpeedScaleMax = 20f;
     public const float GameEndAnimationTime = 15f;
     public const float GameEndStartZoom = 2f;

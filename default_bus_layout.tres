@@ -1,9 +1,0 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://cnj12ugxc3l28"]
-
-[sub_resource type="AudioEffectLimiter" id="AudioEffectLimiter_j3pel"]
-resource_name = "Limiter"
-
-[resource]
-bus/0/bypass_fx = true
-bus/0/effect/0/effect = SubResource("AudioEffectLimiter_j3pel")
-bus/0/effect/0/enabled = true

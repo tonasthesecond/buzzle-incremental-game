@@ -18,10 +18,21 @@ public partial class Game : GameSystem
     public CanvasLayer EndLayer { get; private set; } = null!;
     public Container EndingContentContainer { get; private set; } = null!;
     public BaseButton BackButton { get; private set; } = null!;
+    public BaseButton TutorialButton { get; private set; } = null!;
+    public Control TutorialLayer { get; private set; } = null!;
+    public BaseButton TutorialCloseButton { get; private set; } = null!;
 
     [Export]
     public bool DebugMode { get; set; } = false;
 
+<<<<<<< HEAD
+=======
+    [Export]
+    public int AutoSaveInterval { get; set; } = 2 * 60;
+
+    private Timer? autoSaveTimer;
+
+>>>>>>> main
     public override void _Ready()
     {
         // get nodes
@@ -39,11 +50,16 @@ public partial class Game : GameSystem
         EndLayer = GetNode<CanvasLayer>("%EndLayer");
         BackButton = GetNode<BaseButton>("%BackButton");
         EndingContentContainer = GetNode<Container>("%EndingContentContainer");
+        TutorialButton = GetNode<BaseButton>("%TutorialButton");
+        TutorialCloseButton = GetNode<BaseButton>("%TutorialCloseButton");
+        TutorialLayer = GetNode<Control>("%Tutorial");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
         SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
         BackButton.Pressed += onBackButtonPressed;
+        TutorialButton.Pressed += onTutorialButtonPressed;
+        TutorialCloseButton.Pressed += TutorialLayer.Hide;
 
         // setup
         GameLayer.Show();
@@ -65,6 +81,37 @@ public partial class Game : GameSystem
             GD.Print("Debug Mode: OFF");
             PlacementSystem.FreePlace = false;
             UpgradeTree.ShowAllUpgrades = false;
+        }
+    }
+
+    private async Task LoadPlayerSaveAsync()
+    {
+        var firebaseAuth = GetNode<FirebaseAuth>("/root/FirebaseAuth");
+        var firebaseSave = GetNode<FirebaseSave>("/root/FirebaseSave");
+
+        if (!string.IsNullOrWhiteSpace(firebaseAuth.RefreshToken))
+        {
+            var remoteSave = await firebaseSave.LoadAsync(firebaseAuth);
+            if (remoteSave != null)
+            {
+                GameStore.LoadFromSaveData(remoteSave);
+                return;
+            }
+        }
+
+        GameStore.LoadGame();
+    }
+
+    private void onTutorialButtonPressed()
+    {
+        Services.Get<AudioSystem>().PlaySound("click");
+        if (TutorialLayer.Visible)
+        {
+            TutorialLayer.Hide();
+        }
+        else
+        {
+            TutorialLayer.Show();
         }
     }
 
@@ -96,8 +143,12 @@ public partial class Game : GameSystem
     {
         if (Input.IsActionJustPressed("save_game"))
         {
+<<<<<<< HEAD
             await GameStore.SaveGameAsync();
             GD.Print("Saved Game!");
+=======
+            GameStore.SaveGame();
+>>>>>>> main
         }
         if (Input.IsActionJustPressed("test"))
         {

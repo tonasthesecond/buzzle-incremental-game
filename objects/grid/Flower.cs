@@ -130,8 +130,8 @@ public partial class Flower
     protected virtual string GetTechnicalText()
     {
         string desc = "";
-        desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
         desc += $"{Style.CK("Total Prod.")}: {Style.CK(HoneyGain.Value.ToString("F0"))} honey\n";
+        desc += $"{Style.CK("Pol. Cost")}: {Style.CK(HoneyCost.Value.ToString("F0"))} honey\n";
         desc +=
             $"{Style.CK("Pol. Time")}: {Style.CK(PollinationTime.Value.ToString("F1"))} seconds";
         if (Placed)
