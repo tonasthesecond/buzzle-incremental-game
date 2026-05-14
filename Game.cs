@@ -18,6 +18,9 @@ public partial class Game : GameSystem
     public CanvasLayer EndLayer { get; private set; } = null!;
     public Container EndingContentContainer { get; private set; } = null!;
     public BaseButton BackButton { get; private set; } = null!;
+    public BaseButton TutorialButton { get; private set; } = null!;
+    public Control TutorialLayer { get; private set; } = null!;
+    public BaseButton TutorialCloseButton { get; private set; } = null!;
 
     [Export]
     public bool AutoSave { get; set; } = true;
@@ -26,7 +29,7 @@ public partial class Game : GameSystem
     public bool DebugMode { get; set; } = false;
 
     [Export]
-    public int AutoSaveInterval { get; set; } = 3 * 60 * 1000;
+    public int AutoSaveInterval { get; set; } = 2 * 60;
 
     private Timer? autoSaveTimer;
 
@@ -47,11 +50,16 @@ public partial class Game : GameSystem
         EndLayer = GetNode<CanvasLayer>("%EndLayer");
         BackButton = GetNode<BaseButton>("%BackButton");
         EndingContentContainer = GetNode<Container>("%EndingContentContainer");
+        TutorialButton = GetNode<BaseButton>("%TutorialButton");
+        TutorialCloseButton = GetNode<BaseButton>("%TutorialCloseButton");
+        TutorialLayer = GetNode<Control>("%Tutorial");
 
         // connect signals
         ShowUpgradesButton.Pressed += onUpgradesButtonPressed;
         SignalBus.Instance.RainbowPlaced += onRainbowPlaced;
         BackButton.Pressed += onBackButtonPressed;
+        TutorialButton.Pressed += onTutorialButtonPressed;
+        TutorialCloseButton.Pressed += TutorialLayer.Hide;
 
         // setup
         GameLayer.Show();
@@ -84,6 +92,19 @@ public partial class Game : GameSystem
         }
     }
 
+    private void onTutorialButtonPressed()
+    {
+        Services.Get<AudioSystem>().PlaySound("click");
+        if (TutorialLayer.Visible)
+        {
+            TutorialLayer.Hide();
+        }
+        else
+        {
+            TutorialLayer.Show();
+        }
+    }
+
     private void onUpgradesButtonPressed()
     {
         Services.Get<AudioSystem>().PlaySound("click");
@@ -112,7 +133,6 @@ public partial class Game : GameSystem
     {
         if (Input.IsActionJustPressed("save_game"))
         {
-            GD.Print("Saved Game!");
             GameStore.SaveGame();
         }
         if (Input.IsActionJustPressed("test"))

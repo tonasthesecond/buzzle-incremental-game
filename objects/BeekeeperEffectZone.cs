@@ -31,7 +31,7 @@ public partial class BeekeeperEffectZone : EffectZoneComponent
 
     public override void _Process(double delta)
     {
-        if (active && fadeTimer.IsStopped() && !GameStore.BeekeeperEffectZoneNeverFade)
+        if (active && (GameStore.BeekeeperEffectZoneNeverFade || fadeTimer.IsStopped()))
             GlobalPosition = GetGlobalMousePosition();
     }
 
